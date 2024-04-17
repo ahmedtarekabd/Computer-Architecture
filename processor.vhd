@@ -124,40 +124,7 @@ begin
             q => instruction_out
         );
 
-    -- take 3 bits: opcode, output 4 bits: opcode, write_enable
-    ctrl: controller PORT MAP (
-        clk,
-        instruction_out(15 downto 13),
-        operation,
-        write_enable
-    );
-
-    -- 3 bits: source1
-    -- 3 bits: source2
-    register_file: registers_array GENERIC MAP (8) PORT MAP (
-        clk,
-        reset,
-        enable => write_back_out(11), -- last bit of the instruction
-        address_read1 => instruction_out(12 downto 10), -- source1
-        address_read2 => instruction_out(9 downto 7), -- source2
-        address_write => write_back_out(2 downto 0), -- destination
-        input => write_back_out(10 downto 3),
-        output1 => register_file_out1,
-        output2 => register_file_out2
-    );
-
-    -- 4 bits: controller
-    -- 16 bits: 2 registers values
-    -- 3 bits: address write back (destination)
-    decode_execute_in <= write_enable & operation & register_file_out1 & register_file_out2 & instruction_out(6 downto 4);
-    decode_execute: my_nDFF 
-        GENERIC MAP (23)
-        PORT MAP (
-            clk,
-            reset,
-            d => decode_execute_in,
-            q => decode_execute_out
-        );
+    -- decode
 
 
     alu0: ALU generic map (8) port map (
