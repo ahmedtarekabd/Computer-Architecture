@@ -27,8 +27,8 @@ begin
 
     begin
         
-        A_integer := unsigned(A);
-        B_integer := unsigned(B);
+        A_integer := unsigned('0' & A);
+        B_integer := unsigned('0' & B);
 
         overflow_flag <= '0'; -- it will be one if overflow occurs in add operation
         
@@ -38,8 +38,7 @@ begin
                 
             when "001" => -- add (checks for overflow)
                 temp := A_integer + B_integer;
-                F_internal <= std_logic_vector(temp(n-1 downto 0));
-
+                    F_internal <= std_logic_vector(temp(n-1 downto 0));
                 -- Check for overflow
                 if temp(n) = '1' then 
                     overflow_flag <= '1';
@@ -59,20 +58,16 @@ begin
                     
             when "100" => -- and
                 temp := A_integer and B_integer;
-                F_internal <= std_logic_vector(temp(n-1 downto 0));
-                    
+                    F_internal <= std_logic_vector(temp(n-1 downto 0));                    
             when "101" => -- or
                 temp := A_integer or B_integer;
-                F_internal <= std_logic_vector(temp(n-1 downto 0));
-    
+                    F_internal <= std_logic_vector(temp(n-1 downto 0));    
             when "110" => -- xor
                 temp := A_integer xor B_integer;
-                F_internal <= std_logic_vector(temp(n-1 downto 0));
-    
+                    F_internal <= std_logic_vector(temp(n-1 downto 0));    
             when "111" => -- not
                 temp := not A_integer;
-                F_internal <= std_logic_vector(temp(n-1 downto 0));
-                
+                    F_internal <= std_logic_vector(temp(n-1 downto 0));                
             when others =>
                 F_internal <= (others => 'X');
    

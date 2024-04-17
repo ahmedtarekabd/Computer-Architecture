@@ -60,6 +60,7 @@ begin
         wait for 10 ns;
         -- Expected output: F = "00000000000000000000000000000010", zero_flag = '0', overflow_flag = '0'
 
+        --error
         -- SUB operation
         A <= "00000000000000000000000000000010"; B <= "00000000000000000000000000000001"; opcode <= "010";
         wait for 10 ns;
