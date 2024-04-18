@@ -10,22 +10,23 @@ z2
 cModel Technology
 dC:/intelFPGA/20.1
 Ealu
-Z0 w1713355158
-Z1 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
+Z0 w1713434212
+Z1 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
 Z2 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
-Z3 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
-Z4 dE:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/fetch
+Z3 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+!i122 341
+Z4 dE:/College/year4-2/comp arch/project/Computer-Architecture/fetch
 Z5 8alu.vhd
 Z6 Falu.vhd
 l0
-L5
+L5 1
 Vl:I<8^oZ7H6fHEXY<:0`Z0
 !s100 =e0nTCZ=`dT6bRHJIlYmg0
-Z7 OV;C;10.5b;63
+Z7 OV;C;2020.1;71
 32
-Z8 !s110 1713355305
+Z8 !s110 1713434222
 !i10b 1
-Z9 !s108 1713355305.000000
+Z9 !s108 1713434222.000000
 Z10 !s90 -reportprogress|300|alu.vhd|
 Z11 !s107 alu.vhd|
 !i113 1
@@ -35,10 +36,11 @@ R1
 R2
 R3
 DEx4 work 3 alu 0 22 l:I<8^oZ7H6fHEXY<:0`Z0
+!i122 341
 l21
-L18
-VoDWl43I]PbI@^DU4NXB6W2
-!s100 AWmO?<Ao]zZm6:oBP?b702
+L18 85
+VC@UCdDQM8YJ8>eZCEKeh]1
+!s100 _2_Sj87QC5O<W@z>Z_CZ<0
 R7
 32
 R8
@@ -49,15 +51,16 @@ R11
 !i113 1
 R12
 Ealu_tb
-Z13 w1713353789
+Z13 w1713434214
 R1
 R2
 R3
+!i122 342
 R4
 Z14 8alu_tb.vhd
 Z15 Falu_tb.vhd
 l0
-L5
+L5 1
 V81ELH5R;cX_ASV?l<;EJ10
 !s100 n>hbB`=Z7V]ULhfmL4blo3
 R7
@@ -66,356 +69,357 @@ R8
 !i10b 1
 R9
 Z16 !s90 -reportprogress|300|alu_tb.vhd|
-Z17 !s107 alu_tb.vhd|
+!s107 alu_tb.vhd|
 !i113 1
 R12
 Abehavior
 R1
 R2
 R3
-Z18 DEx4 work 6 alu_tb 0 22 81ELH5R;cX_ASV?l<;EJ10
+DEx4 work 6 alu_tb 0 22 81ELH5R;cX_ASV?l<;EJ10
+!i122 342
 l33
-L8
-Z19 VY:9C6`T[>K9giYd2SF4nn3
-Z20 !s100 OEAzR=gme3<fP[jBFO0873
+Z17 L8 102
+V]3Fjz_zLFmT0<8^][Vjah1
+Z18 !s100 IWgT^;mPFP<]C]adh7O;H2
 R7
 32
 R8
 !i10b 1
 R9
 R16
-R17
+Z19 !s107 alu_tb.vhd|
 !i113 1
 R12
 Efetch
-Z21 w1713211236
-Z22 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
+Z20 w1713211236
+R1
 R2
-Z23 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+R3
 !i122 306
-Z24 dE:/College/year4-2/comp arch/project/project
-Z25 8fetch.vhd
-Z26 Ffetch.vhd
+Z21 dE:/College/year4-2/comp arch/project/project
+Z22 8fetch.vhd
+Z23 Ffetch.vhd
 l0
 L5 1
 VBg7W:2^aVi:5QJYkY62GZ2
 !s100 A7Ii5n`>kB?I7mHCRhScR2
-Z27 OV;C;2020.1;71
+R7
 32
-Z28 !s110 1713211356
+Z24 !s110 1713211356
 !i10b 1
-Z29 !s108 1713211356.000000
-Z30 !s90 -reportprogress|300|fetch.vhd|
-Z31 !s107 fetch.vhd|
+Z25 !s108 1713211356.000000
+Z26 !s90 -reportprogress|300|fetch.vhd|
+Z27 !s107 fetch.vhd|
 !i113 1
 R12
 Aarch_fetch
-R22
+R1
 R2
-R23
+R3
 DEx4 work 5 fetch 0 22 Bg7W:2^aVi:5QJYkY62GZ2
 !i122 306
 l67
 L13 111
 V>FoCV3fb1SB^cQ<1VRAHo1
 !s100 XF32XSc<aj<m7]1H8^ElI3
-R27
+R7
 32
-R28
+R24
 !i10b 1
-R29
-R30
-R31
+R25
+R26
+R27
 !i113 1
 R12
 Efetch_tb
-Z32 w1713205094
+Z28 w1713205094
 R2
-R23
+R3
 !i122 307
-R24
-Z33 8fetch_tb.vhd
-Z34 Ffetch_tb.vhd
+R21
+Z29 8fetch_tb.vhd
+Z30 Ffetch_tb.vhd
 l0
 L4 1
 V8:W>QV_3ScIIk``__Vg:P0
 !s100 0CKK:Sha`KS0dM:FgZObk1
-R27
+R7
 32
-Z35 !s110 1713211357
+Z31 !s110 1713211357
 !i10b 1
-R29
-Z36 !s90 -reportprogress|300|fetch_tb.vhd|
-Z37 !s107 fetch_tb.vhd|
+R25
+Z32 !s90 -reportprogress|300|fetch_tb.vhd|
+Z33 !s107 fetch_tb.vhd|
 !i113 1
 R12
 Aarch
 R2
-R23
+R3
 DEx4 work 8 fetch_tb 0 22 8:W>QV_3ScIIk``__Vg:P0
 !i122 307
 l22
 L7 45
 V2nYSM4bkelLPbMiPWi0Xi1
 !s100 V0>LUdY@I:iSJKdBcCe]<2
-R27
+R7
 32
-R35
+R31
 !i10b 1
-R29
-R36
-R37
+R25
+R32
+R33
 !i113 1
 R12
 Einstruction_cache
-Z38 w1713193980
-R22
+Z34 w1713193980
+R1
 R2
-R23
+R3
 !i122 300
-R24
-Z39 8E:/College/year4-2/comp arch/project/project/instruction_cache.vhd
-Z40 FE:/College/year4-2/comp arch/project/project/instruction_cache.vhd
+R21
+Z35 8E:/College/year4-2/comp arch/project/project/instruction_cache.vhd
+Z36 FE:/College/year4-2/comp arch/project/project/instruction_cache.vhd
 l0
 L5 1
 VODReAJ14aHLWL^0l;_EWQ1
 !s100 E[^iS=o:X8QD6UP:3=>lk2
-R27
+R7
 32
-Z41 !s110 1713211350
+Z37 !s110 1713211350
 !i10b 1
-Z42 !s108 1713211350.000000
-Z43 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/year4-2/comp arch/project/project/instruction_cache.vhd|
-Z44 !s107 E:/College/year4-2/comp arch/project/project/instruction_cache.vhd|
+Z38 !s108 1713211350.000000
+Z39 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/year4-2/comp arch/project/project/instruction_cache.vhd|
+Z40 !s107 E:/College/year4-2/comp arch/project/project/instruction_cache.vhd|
 !i113 1
-Z45 o-work work -2002 -explicit
+Z41 o-work work -2002 -explicit
 R12
 Aic_behavioral
-R22
+R1
 R2
-R23
+R3
 DEx4 work 17 instruction_cache 0 22 ODReAJ14aHLWL^0l;_EWQ1
 !i122 300
 l19
 L14 11
 VnTE=SldKSIifz614aIfVP3
 !s100 W:OOjE91TTd2f7gHb23JL0
-R27
+R7
 32
-R41
+R37
 !i10b 1
-R42
-R43
-R44
+R38
+R39
+R40
 !i113 1
-R45
+R41
 R12
 Emux4x1
-Z46 w1713206010
+Z42 w1713206010
 R2
-R23
+R3
 !i122 301
-R24
-Z47 8E:/College/year4-2/comp arch/project/project/mux4x1.vhd
-Z48 FE:/College/year4-2/comp arch/project/project/mux4x1.vhd
+R21
+Z43 8E:/College/year4-2/comp arch/project/project/mux4x1.vhd
+Z44 FE:/College/year4-2/comp arch/project/project/mux4x1.vhd
 l0
 L5 1
 VZ3H9Pb??c`m>BcHCRzZYF0
 !s100 _2UDAUC3g7IildLSMjk8J0
-R27
+R7
 32
-R41
+R37
 !i10b 1
-R42
-Z49 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/year4-2/comp arch/project/project/mux4x1.vhd|
-Z50 !s107 E:/College/year4-2/comp arch/project/project/mux4x1.vhd|
+R38
+Z45 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/year4-2/comp arch/project/project/mux4x1.vhd|
+Z46 !s107 E:/College/year4-2/comp arch/project/project/mux4x1.vhd|
 !i113 1
-R45
+R41
 R12
 Abehavioral
 R2
-R23
+R3
 DEx4 work 6 mux4x1 0 22 Z3H9Pb??c`m>BcHCRzZYF0
 !i122 301
 l20
 L18 21
 VkGX[eg[X8Gice]SEhO:TM1
 !s100 IkTfFeRT95;ZW;``HeeN50
-R27
+R7
 32
-R41
+R37
 !i10b 1
-R42
-R49
-R50
-!i113 1
+R38
 R45
+R46
+!i113 1
+R41
 R12
 Emy_dff
-Z51 w1713154942
+Z47 w1713154942
 R2
-R23
+R3
 !i122 302
-R24
-Z52 8E:/College/year4-2/comp arch/project/project/my_DFF.vhd
-Z53 FE:/College/year4-2/comp arch/project/project/my_DFF.vhd
+R21
+Z48 8E:/College/year4-2/comp arch/project/project/my_DFF.vhd
+Z49 FE:/College/year4-2/comp arch/project/project/my_DFF.vhd
 l0
 L4 1
 VQzfI:L0>@g_o>B>_XKoWO1
 !s100 YSazj:fZc[zUcZbN6`I^L1
-R27
+R7
 32
-Z54 !s110 1713211351
+Z50 !s110 1713211351
 !i10b 1
-Z55 !s108 1713211351.000000
-Z56 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/year4-2/comp arch/project/project/my_DFF.vhd|
-Z57 !s107 E:/College/year4-2/comp arch/project/project/my_DFF.vhd|
+Z51 !s108 1713211351.000000
+Z52 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/year4-2/comp arch/project/project/my_DFF.vhd|
+Z53 !s107 E:/College/year4-2/comp arch/project/project/my_DFF.vhd|
 !i113 1
-R45
+R41
 R12
 Aa_my_dff
 R2
-R23
+R3
 DEx4 work 6 my_dff 0 22 QzfI:L0>@g_o>B>_XKoWO1
 !i122 302
 l10
 L9 11
 V^V@k@N1VB4j=PjXZbza:l0
 !s100 l]oP3<VOh0n^jXQD@i`kU0
-R27
+R7
 32
-R54
+R50
 !i10b 1
-R55
-R56
-R57
+R51
+R52
+R53
 !i113 1
-R45
+R41
 R12
 Emy_ndff
-R51
+R47
 R2
-R23
+R3
 !i122 303
-R24
-Z58 8E:/College/year4-2/comp arch/project/project/my_nDFF.vhd
-Z59 FE:/College/year4-2/comp arch/project/project/my_nDFF.vhd
+R21
+Z54 8E:/College/year4-2/comp arch/project/project/my_nDFF.vhd
+Z55 FE:/College/year4-2/comp arch/project/project/my_nDFF.vhd
 l0
 L4 1
 Vfjl`TNK3O=h<diS6FdioU2
 !s100 >;JahBR=5<0^A]AJIigT_3
-R27
+R7
 32
-R54
+R50
 !i10b 1
-R55
-Z60 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/year4-2/comp arch/project/project/my_nDFF.vhd|
-Z61 !s107 E:/College/year4-2/comp arch/project/project/my_nDFF.vhd|
+R51
+Z56 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/year4-2/comp arch/project/project/my_nDFF.vhd|
+Z57 !s107 E:/College/year4-2/comp arch/project/project/my_nDFF.vhd|
 !i113 1
-R45
+R41
 R12
 Ab_my_ndff
 R2
-R23
+R3
 DEx4 work 7 my_ndff 0 22 fjl`TNK3O=h<diS6FdioU2
 !i122 303
 l20
 L13 14
 VlzMO<zV2?IH0z^Z[<hTYn0
 !s100 h6U`0iSe?9c5WZ5<hHVd]3
-R27
+R7
 32
-R54
+R50
 !i10b 1
-R55
-R60
-R61
+R51
+R56
+R57
 !i113 1
-R45
+R41
 R12
 Epc
-Z62 w1713193272
-R22
+Z58 w1713193272
+R1
 R2
-R23
+R3
 !i122 304
-R24
-Z63 8E:/College/year4-2/comp arch/project/project/pc.vhd
-Z64 FE:/College/year4-2/comp arch/project/project/pc.vhd
+R21
+Z59 8E:/College/year4-2/comp arch/project/project/pc.vhd
+Z60 FE:/College/year4-2/comp arch/project/project/pc.vhd
 l0
 L5 1
 Vmogc=6@`Wjl50Vdl:M[=F2
 !s100 >0]m<5Z2M<c[C<0?IHn131
-R27
+R7
 32
-R54
+R50
 !i10b 1
-R55
-Z65 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/year4-2/comp arch/project/project/pc.vhd|
-Z66 !s107 E:/College/year4-2/comp arch/project/project/pc.vhd|
+R51
+Z61 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/year4-2/comp arch/project/project/pc.vhd|
+Z62 !s107 E:/College/year4-2/comp arch/project/project/pc.vhd|
 !i113 1
-R45
+R41
 R12
 Apc_behavioral
-R22
+R1
 R2
-R23
+R3
 DEx4 work 2 pc 0 22 mogc=6@`Wjl50Vdl:M[=F2
 !i122 304
 l15
 L13 23
 VZ]bYYVAaTKZ7lK=`Wke110
 !s100 <z:9V3J>ljHF`OSnOL2EO1
-R27
+R7
 32
-R54
+R50
 !i10b 1
-R55
-R65
-R66
+R51
+R61
+R62
 !i113 1
-R45
+R41
 R12
 Eregisters_array
-R51
-R22
+R47
+R1
 R2
-R23
+R3
 !i122 305
-R24
-Z67 8E:/College/year4-2/comp arch/project/project/registers_array.vhd
-Z68 FE:/College/year4-2/comp arch/project/project/registers_array.vhd
+R21
+Z63 8E:/College/year4-2/comp arch/project/project/registers_array.vhd
+Z64 FE:/College/year4-2/comp arch/project/project/registers_array.vhd
 l0
 L5 1
 VC?FRUHTjKD4;Nm?T6KY3o1
 !s100 GkWbT`PfdU6;Uc]a^cUPX0
-R27
+R7
 32
-Z69 !s110 1713211352
+Z65 !s110 1713211352
 !i10b 1
-R55
-Z70 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/year4-2/comp arch/project/project/registers_array.vhd|
-Z71 !s107 E:/College/year4-2/comp arch/project/project/registers_array.vhd|
+R51
+Z66 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/year4-2/comp arch/project/project/registers_array.vhd|
+Z67 !s107 E:/College/year4-2/comp arch/project/project/registers_array.vhd|
 !i113 1
-R45
+R41
 R12
 Aarch_registers_array
-R22
+R1
 R2
-R23
+R3
 DEx4 work 15 registers_array 0 22 C?FRUHTjKD4;Nm?T6KY3o1
 !i122 305
 l34
 L17 32
 VHBUon4knN<^2F8SJNIaz=0
 !s100 cNL[GTh;QJI4WRaf;ILTb1
-R27
+R7
 32
-R69
+R65
 !i10b 1
-R55
-R70
-R71
+R51
+R66
+R67
 !i113 1
-R45
+R41
 R12
