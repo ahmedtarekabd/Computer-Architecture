@@ -70,8 +70,7 @@ begin
         B <= "10000000000000000000000000000000"; -- -2147483648 in decimal (minimum negative value for 32-bit signed integer)
         opcode <= "010";
         wait for 10 ns;
-        -- Expected output: F = "10000000000000000000000000000001", zero_flag = '0', overflow_flag = '1'
-        --actual output: F = "0111111111111111", zero_flag = '0', overflow_flag = '1'
+        -- Expected output: F = "01111111111111111111111111111111", zero_flag = '0', overflow_flag = '1'
 
         -- MOVE operation
         A <= "00000000000000000000000000000001"; opcode <= "011";
