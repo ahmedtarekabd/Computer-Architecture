@@ -45,13 +45,25 @@ begin
                 end if;        
 
             when "010" => -- sub the value in src2 from src1 (checks for underflow)
-            temp := B_integer - A_integer;
-            F_internal <= std_logic_vector(temp(n-1 downto 0));
 
-            --overflow flag -> should it be used also for underflow??
-            if A_integer > B_integer then
-                overflow_flag <= '1';
-            end if;
+                A_integer := unsigned(A(31) & A);
+                B_integer := unsigned(B(31) & B);
+
+                temp := B_integer - A_integer;
+                F_internal <= std_logic_vector(temp(n-1 downto 0));
+
+                --overflow flag -> if B is positive, A is negative and the result is negative then overflow occurs
+                -- or if B is negative, A is positive and the result is positive then overflow occurs
+                -- if ((B_integer > 0 and A_integer < 0 and temp < 0) or (B_integer < 0 and A_integer > 0 and temp > 0)) then
+                --     overflow_flag <= '1';
+                -- else
+                --     overflow_flag <= '0';
+                -- end if;
+                if ((B_integer(n) = '1' and A_integer(n) = '0' and temp(n) = '1') or (B_integer(n) = '0' and A_integer(n) = '1' and temp(n) = '0')) then
+                    overflow_flag <= '1';
+                else
+                    overflow_flag <= '0';
+                end if;
         
             when "011" => -- move from src1 to destination so output is src1
                 F_internal <= A;
@@ -73,15 +85,18 @@ begin
    
         end case;
             
-        --zero flag
-        if F_internal = std_logic_vector(to_unsigned(0, F_internal'length)) then
+    end process;
+
+    --zero flag
+    process(F_internal)
+    begin
+        if unsigned(F_internal) = 0 then
             zero_flag <= '1';
         else
             zero_flag <= '0';
         end if;
-            
     end process;
-
+    
     F <= F_internal; -- Assign the internal signal to the output
 
 end architecture ALU_Behavior;

@@ -49,7 +49,7 @@ begin
         -- NOP operation
         opcode <= "000";
         wait for 10 ns;
-        
+
         -- ADD operation that triggers overflow
         A <= "11111111111111111111111111111111"; B <= "00000000000000000000000000000001"; opcode <= "001";
         wait for 10 ns;
@@ -60,11 +60,17 @@ begin
         wait for 10 ns;
         -- Expected output: F = "00000000000000000000000000000010", zero_flag = '0', overflow_flag = '0'
 
-        --error
         -- SUB operation
         A <= "00000000000000000000000000000010"; B <= "00000000000000000000000000000001"; opcode <= "010";
         wait for 10 ns;
-        -- Expected output: F = "00000000000000000000000000000001", zero_flag = '0', overflow_flag = '0'
+        -- Expected output: F = "11111111111111111111111111111111", zero_flag = '0', overflow_flag = '0'
+
+        -- SUB operation that triggers overflow
+        A <= "00000000000000000000000000000001"; -- 1 in decimal
+        B <= "10000000000000000000000000000000"; -- -2147483648 in decimal (minimum negative value for 32-bit signed integer)
+        opcode <= "010";
+        wait for 10 ns;
+        -- Expected output: F = "01111111111111111111111111111111", zero_flag = '0', overflow_flag = '1'
 
         -- MOVE operation
         A <= "00000000000000000000000000000001"; opcode <= "011";
@@ -72,19 +78,24 @@ begin
         -- Expected output: F = "00000000000000000000000000000001", zero_flag = '0', overflow_flag = '0'
 
         -- AND operation
-        A <= "00000000000000000000000000000001"; B <= "00000000000000000000000000000001"; opcode <= "100";
+        A <= "00000000000000000000000000001111"; B <= "00000000000000000000000000000001"; opcode <= "100";
         wait for 10 ns;
         -- Expected output: F = "00000000000000000000000000000001", zero_flag = '0', overflow_flag = '0'
 
         -- OR operation
-        A <= "00000000000000000000000000000001"; B <= "00000000000000000000000000000001"; opcode <= "101";
+        A <= "00000000000000000000000000000011"; B <= "00000000000000000000000000000101"; opcode <= "101";
         wait for 10 ns;
-        -- Expected output: F = "00000000000000000000000000000001", zero_flag = '0', overflow_flag = '0'
+        -- Expected output: F = "00000000000000000000000000000111", zero_flag = '0', overflow_flag = '0'
 
         -- XOR operation
         A <= "00000000000000000000000000000001"; B <= "00000000000000000000000000000001"; opcode <= "110";
         wait for 10 ns;
         -- Expected output: F = "00000000000000000000000000000000", zero_flag = '1', overflow_flag = '0'
+
+        -- XOR operation
+        A <= "00000000000000000000000000000011"; B <= "00000000000000000000000000000101"; opcode <= "110";
+        wait for 10 ns;
+        -- Expected output: F = "00000000000000000000000000000110", zero_flag = '0', overflow_flag = '0'
 
         -- NOT operation
         A <= "00000000000000000000000000000001"; opcode <= "111";

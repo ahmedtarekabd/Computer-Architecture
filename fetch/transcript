@@ -1,1170 +1,550 @@
-# Compile of fetch.vhd was successful.
-# Compile of fetch_tb.vhd was successful.
-# Compile of instruction_cache.vhd was successful.
-# Compile of mux4x1.vhd was successful.
-# Compile of my_DFF.vhd was successful.
-# Compile of my_nDFF.vhd was successful.
-# Compile of pc.vhd was successful.
-# Compile of registers_array.vhd was successful.
-# 8 compiles, 0 failed with no errors.
-do fetch_tb.do
+# 0 compiles, 2 failed with no errors.
+# Compile of alu.vhd was successful.
+# Compile of alu_tb.vhd was successful.
+# 2 compiles, 0 failed with no errors.
+do alu.do
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 20:23:53 on Apr 15,2024
-# vcom -reportprogress 300 fetch.vhd 
+# Start time: 11:06:03 on Apr 18,2024
+# vcom -reportprogress 300 alu.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
 # -- Loading package NUMERIC_STD
-# -- Compiling entity fetch
-# -- Compiling architecture arch_fetch of fetch
-# End time: 20:23:53 on Apr 15,2024, Elapsed time: 0:00:00
+# -- Compiling entity ALU
+# -- Compiling architecture ALU_Behavior of ALU
+# End time: 11:06:03 on Apr 18,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 20:23:53 on Apr 15,2024
-# vcom -reportprogress 300 fetch_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Compiling entity fetch_tb
-# -- Compiling architecture arch of fetch_tb
-# End time: 20:23:54 on Apr 15,2024, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-# vsim -gui work.fetch_tb 
-# Start time: 20:23:54 on Apr 15,2024
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading work.fetch_tb(arch)
-# Loading ieee.numeric_std(body)
-# Loading work.fetch(arch_fetch)
-# Loading work.pc(pc_behavioral)
-# Loading work.instruction_cache(ic_behavioral)
-# Loading work.mux4x1(behavioral)
-# ** Fatal: (vsim-3348) Port length (17) does not match actual length (16) for port "/fetch_tb/uut/inst_mux/inputA".
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_mux File: E:/College/year4-2/comp arch/project/project/mux4x1.vhd Line: 8
-# FATAL ERROR while loading design
-# Error loading design
-# Error: Error loading design
-#        Pausing macro execution
-# MACRO ./fetch_tb.do PAUSED at line 10
-# Compile of fetch.vhd was successful.
-# Compile of fetch_tb.vhd was successful.
-# Compile of instruction_cache.vhd was successful.
-# Compile of mux4x1.vhd was successful.
-# Compile of my_DFF.vhd was successful.
-# Compile of my_nDFF.vhd was successful.
-# Compile of pc.vhd was successful.
-# Compile of registers_array.vhd was successful.
-# 8 compiles, 0 failed with no errors.
-do fetch_tb.do
-# End time: 20:25:52 on Apr 15,2024, Elapsed time: 0:01:58
-# Errors: 1, Warnings: 8
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 20:25:52 on Apr 15,2024
-# vcom -reportprogress 300 fetch.vhd 
+# Start time: 11:06:03 on Apr 18,2024
+# vcom -reportprogress 300 alu_tb.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
 # -- Loading package NUMERIC_STD
-# -- Compiling entity fetch
-# -- Compiling architecture arch_fetch of fetch
-# End time: 20:25:53 on Apr 15,2024, Elapsed time: 0:00:01
+# -- Compiling entity ALU_tb
+# -- Compiling architecture behavior of ALU_tb
+# End time: 11:06:03 on Apr 18,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 20:25:53 on Apr 15,2024
-# vcom -reportprogress 300 fetch_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Compiling entity fetch_tb
-# -- Compiling architecture arch of fetch_tb
-# End time: 20:25:53 on Apr 15,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# vsim -gui work.fetch_tb 
-# Start time: 20:25:53 on Apr 15,2024
+# vsim -gui work.alu_tb 
+# Start time: 11:06:04 on Apr 18,2024
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
-# Loading work.fetch_tb(arch)
 # Loading ieee.numeric_std(body)
-# Loading work.fetch(arch_fetch)
-# Loading work.pc(pc_behavioral)
-# Loading work.instruction_cache(ic_behavioral)
-# Loading work.mux4x1(behavioral)
-# ** Fatal: (vsim-3348) Port length (16) does not match actual length (17) for port "/fetch_tb/uut/inst_mux/inputC".
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_mux File: E:/College/year4-2/comp arch/project/project/mux4x1.vhd Line: 10
-# FATAL ERROR while loading design
-# Error loading design
-# Error: Error loading design
-#        Pausing macro execution
-# MACRO ./fetch_tb.do PAUSED at line 10
-# Compile of fetch.vhd failed with 2 errors.
-# Compile of fetch_tb.vhd was successful.
-# Compile of instruction_cache.vhd was successful.
-# Compile of mux4x1.vhd was successful.
-# Compile of my_DFF.vhd was successful.
-# Compile of my_nDFF.vhd was successful.
-# Compile of pc.vhd was successful.
-# Compile of registers_array.vhd was successful.
-# 8 compiles, 1 failed with 2 errors.
-# Compile of fetch.vhd failed with 2 errors.
-# Compile of fetch_tb.vhd was successful.
-# Compile of instruction_cache.vhd was successful.
-# Compile of mux4x1.vhd was successful.
-# Compile of my_DFF.vhd was successful.
-# Compile of my_nDFF.vhd was successful.
-# Compile of pc.vhd was successful.
-# Compile of registers_array.vhd was successful.
-# 8 compiles, 1 failed with 2 errors.
-# Compile of fetch.vhd was successful.
-# Compile of fetch_tb.vhd was successful.
-# Compile of instruction_cache.vhd was successful.
-# Compile of mux4x1.vhd was successful.
-# Compile of my_DFF.vhd was successful.
-# Compile of my_nDFF.vhd was successful.
-# Compile of pc.vhd was successful.
-# Compile of registers_array.vhd was successful.
-# 8 compiles, 0 failed with no errors.
-do fetch_tb.do
-# End time: 20:31:01 on Apr 15,2024, Elapsed time: 0:05:08
-# Errors: 1, Warnings: 4
+# Loading work.alu_tb(behavior)
+# Loading work.alu(alu_behavior)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Omar  Hostname: DESKTOP-QM07EUH  ProcessID: 1144
+#           Attempting to use alternate WLF file "./wlftwkz3kr".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftwkz3kr
+do alu.do
+# End time: 11:15:40 on Apr 18,2024, Elapsed time: 0:09:36
+# Errors: 0, Warnings: 11
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 20:31:01 on Apr 15,2024
-# vcom -reportprogress 300 fetch.vhd 
+# Start time: 11:15:40 on Apr 18,2024
+# vcom -reportprogress 300 alu.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
 # -- Loading package NUMERIC_STD
-# -- Compiling entity fetch
-# -- Compiling architecture arch_fetch of fetch
-# End time: 20:31:01 on Apr 15,2024, Elapsed time: 0:00:00
+# -- Compiling entity ALU
+# -- Compiling architecture ALU_Behavior of ALU
+# End time: 11:15:40 on Apr 18,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 20:31:01 on Apr 15,2024
-# vcom -reportprogress 300 fetch_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Compiling entity fetch_tb
-# -- Compiling architecture arch of fetch_tb
-# End time: 20:31:01 on Apr 15,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# vsim -gui work.fetch_tb 
-# Start time: 20:31:01 on Apr 15,2024
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading work.fetch_tb(arch)
-# Loading ieee.numeric_std(body)
-# Loading work.fetch(arch_fetch)
-# Loading work.pc(pc_behavioral)
-# Loading work.instruction_cache(ic_behavioral)
-# Loading work.mux4x1(behavioral)
-# ** Fatal: (vsim-3348) Port length (16) does not match actual length (17) for port "/fetch_tb/uut/inst_mux/inputC".
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_mux File: E:/College/year4-2/comp arch/project/project/mux4x1.vhd Line: 10
-# FATAL ERROR while loading design
-# Error loading design
-# Error: Error loading design
-#        Pausing macro execution
-# MACRO ./fetch_tb.do PAUSED at line 10
-# Compile of fetch.vhd was successful.
-# Compile of fetch_tb.vhd was successful.
-# Compile of instruction_cache.vhd was successful.
-# Compile of mux4x1.vhd was successful.
-# Compile of my_DFF.vhd was successful.
-# Compile of my_nDFF.vhd was successful.
-# Compile of pc.vhd was successful.
-# Compile of registers_array.vhd was successful.
-# 8 compiles, 0 failed with no errors.
-do fetch_tb.do
-# End time: 20:32:09 on Apr 15,2024, Elapsed time: 0:01:08
-# Errors: 1, Warnings: 2
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 20:32:09 on Apr 15,2024
-# vcom -reportprogress 300 fetch.vhd 
+# Start time: 11:15:40 on Apr 18,2024
+# vcom -reportprogress 300 alu_tb.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
 # -- Loading package NUMERIC_STD
-# -- Compiling entity fetch
-# -- Compiling architecture arch_fetch of fetch
-# End time: 20:32:10 on Apr 15,2024, Elapsed time: 0:00:01
+# -- Compiling entity ALU_tb
+# -- Compiling architecture behavior of ALU_tb
+# End time: 11:15:41 on Apr 18,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 20:32:10 on Apr 15,2024
-# vcom -reportprogress 300 fetch_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Compiling entity fetch_tb
-# -- Compiling architecture arch of fetch_tb
-# End time: 20:32:10 on Apr 15,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# vsim -gui work.fetch_tb 
-# Start time: 20:32:10 on Apr 15,2024
+# vsim -gui work.alu_tb 
+# Start time: 11:15:41 on Apr 18,2024
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
-# Loading work.fetch_tb(arch)
 # Loading ieee.numeric_std(body)
-# Loading work.fetch(arch_fetch)
-# Loading work.pc(pc_behavioral)
-# Loading work.instruction_cache(ic_behavioral)
-# ** Fatal: (vsim-3420) Array lengths do not match. Left is 17 (16 downto 0). Right is 16 (16 downto 1).
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut File: fetch.vhd Line: 86
-# FATAL ERROR while loading design
-# Error loading design
-# Error: Error loading design
-#        Pausing macro execution
-# MACRO ./fetch_tb.do PAUSED at line 10
-# Compile of fetch.vhd was successful.
-# Compile of fetch_tb.vhd was successful.
-# Compile of instruction_cache.vhd was successful.
-# Compile of mux4x1.vhd was successful.
-# Compile of my_DFF.vhd was successful.
-# Compile of my_nDFF.vhd was successful.
-# Compile of pc.vhd was successful.
-# Compile of registers_array.vhd was successful.
-# 8 compiles, 0 failed with no errors.
-do fetch_tb.do
-# End time: 20:35:03 on Apr 15,2024, Elapsed time: 0:02:53
-# Errors: 1, Warnings: 2
+# Loading work.alu_tb(behavior)
+# Loading work.alu(alu_behavior)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Omar  Hostname: DESKTOP-QM07EUH  ProcessID: 1144
+#           Attempting to use alternate WLF file "./wlftm6aj0g".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftm6aj0g
+# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+#    Time: 0 ps  Iteration: 0  Instance: /alu_tb/uut
+# ** Warning: (vsim-151) NUMERIC_STD.TO_INTEGER: Value -2 is not in bounds of subtype NATURAL.
+#    Time: 40 ns  Iteration: 1  Instance: /alu_tb/uut
+do alu.do
+# End time: 11:22:20 on Apr 18,2024, Elapsed time: 0:06:39
+# Errors: 0, Warnings: 5
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 20:35:03 on Apr 15,2024
-# vcom -reportprogress 300 fetch.vhd 
+# Start time: 11:22:20 on Apr 18,2024
+# vcom -reportprogress 300 alu.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
 # -- Loading package NUMERIC_STD
-# -- Compiling entity fetch
-# -- Compiling architecture arch_fetch of fetch
-# End time: 20:35:03 on Apr 15,2024, Elapsed time: 0:00:00
+# -- Compiling entity ALU
+# -- Compiling architecture ALU_Behavior of ALU
+# End time: 11:22:20 on Apr 18,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 20:35:03 on Apr 15,2024
-# vcom -reportprogress 300 fetch_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Compiling entity fetch_tb
-# -- Compiling architecture arch of fetch_tb
-# End time: 20:35:03 on Apr 15,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# vsim -gui work.fetch_tb 
-# Start time: 20:35:03 on Apr 15,2024
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading work.fetch_tb(arch)
-# Loading ieee.numeric_std(body)
-# Loading work.fetch(arch_fetch)
-# Loading work.pc(pc_behavioral)
-# Loading work.instruction_cache(ic_behavioral)
-# Loading work.mux4x1(behavioral)
-# Loading work.my_ndff(b_my_ndff)
-# Loading work.my_dff(a_my_dff)
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-add wave -position insertpoint sim:/fetch_tb/uut/program_counter/*
-do fetch_tb.do
-# End time: 20:51:05 on Apr 15,2024, Elapsed time: 0:16:02
-# Errors: 0, Warnings: 3
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 20:51:05 on Apr 15,2024
-# vcom -reportprogress 300 fetch.vhd 
+# Start time: 11:22:20 on Apr 18,2024
+# vcom -reportprogress 300 alu_tb.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
 # -- Loading package NUMERIC_STD
-# -- Compiling entity fetch
-# -- Compiling architecture arch_fetch of fetch
-# End time: 20:51:05 on Apr 15,2024, Elapsed time: 0:00:00
+# -- Compiling entity ALU_tb
+# -- Compiling architecture behavior of ALU_tb
+# End time: 11:22:21 on Apr 18,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 20:51:05 on Apr 15,2024
-# vcom -reportprogress 300 fetch_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Compiling entity fetch_tb
-# -- Compiling architecture arch of fetch_tb
-# End time: 20:51:06 on Apr 15,2024, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-# vsim -gui work.fetch_tb 
-# Start time: 20:51:06 on Apr 15,2024
+# vsim -gui work.alu_tb 
+# Start time: 11:22:21 on Apr 18,2024
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
-# Loading work.fetch_tb(arch)
 # Loading ieee.numeric_std(body)
-# Loading work.fetch(arch_fetch)
-# Loading work.pc(pc_behavioral)
-# Loading work.instruction_cache(ic_behavioral)
-# Loading work.mux4x1(behavioral)
-# Loading work.my_ndff(b_my_ndff)
-# Loading work.my_dff(a_my_dff)
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-add wave -position end sim:/fetch_tb/uut/inst_mux/*
-restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-run
-# GetModuleFileName: The specified module could not be found.
-# 
-# 
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-run
-run
-run
-run
-run
-run
-run
-run
-run
-run
-# Break key hit
-# Break key hit
-clear
-# invalid command name "clear"
-clear
-# invalid command name "clear"
-clear
-# invalid command name "clear"
-do fetch_tb.do
-# End time: 20:55:49 on Apr 15,2024, Elapsed time: 0:04:43
-# Errors: 0, Warnings: 3
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 20:55:49 on Apr 15,2024
-# vcom -reportprogress 300 fetch.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity fetch
-# -- Compiling architecture arch_fetch of fetch
-# End time: 20:55:49 on Apr 15,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 20:55:49 on Apr 15,2024
-# vcom -reportprogress 300 fetch_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Compiling entity fetch_tb
-# -- Compiling architecture arch of fetch_tb
-# End time: 20:55:50 on Apr 15,2024, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-# vsim -gui work.fetch_tb 
-# Start time: 20:55:50 on Apr 15,2024
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading work.fetch_tb(arch)
-# Loading ieee.numeric_std(body)
-# Loading work.fetch(arch_fetch)
-# Loading work.pc(pc_behavioral)
-# Loading work.instruction_cache(ic_behavioral)
-# Loading work.mux4x1(behavioral)
-# Loading work.my_ndff(b_my_ndff)
-# Loading work.my_dff(a_my_dff)
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-add wave -position end sim:/fetch_tb/uut/inst_mux/*
-do fetch_tb.do
-# End time: 20:59:23 on Apr 15,2024, Elapsed time: 0:03:33
-# Errors: 0, Warnings: 3
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 20:59:23 on Apr 15,2024
-# vcom -reportprogress 300 fetch.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity fetch
-# -- Compiling architecture arch_fetch of fetch
-# End time: 20:59:24 on Apr 15,2024, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 20:59:24 on Apr 15,2024
-# vcom -reportprogress 300 fetch_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Compiling entity fetch_tb
-# -- Compiling architecture arch of fetch_tb
-# End time: 20:59:24 on Apr 15,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# vsim -gui work.fetch_tb 
-# Start time: 20:59:24 on Apr 15,2024
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading work.fetch_tb(arch)
-# Loading ieee.numeric_std(body)
-# Loading work.fetch(arch_fetch)
-# Loading work.pc(pc_behavioral)
-# Loading work.instruction_cache(ic_behavioral)
-# Loading work.mux4x1(behavioral)
-# Loading work.my_ndff(b_my_ndff)
-# Loading work.my_dff(a_my_dff)
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-do fetch_tb.do
-# End time: 20:59:58 on Apr 15,2024, Elapsed time: 0:00:34
-# Errors: 0, Warnings: 3
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 20:59:58 on Apr 15,2024
-# vcom -reportprogress 300 fetch.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity fetch
-# -- Compiling architecture arch_fetch of fetch
-# End time: 20:59:58 on Apr 15,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 20:59:58 on Apr 15,2024
-# vcom -reportprogress 300 fetch_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Compiling entity fetch_tb
-# -- Compiling architecture arch of fetch_tb
-# End time: 20:59:59 on Apr 15,2024, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-# vsim -gui work.fetch_tb 
-# Start time: 20:59:59 on Apr 15,2024
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading work.fetch_tb(arch)
-# Loading ieee.numeric_std(body)
-# Loading work.fetch(arch_fetch)
-# Loading work.pc(pc_behavioral)
-# Loading work.instruction_cache(ic_behavioral)
-# Loading work.mux4x1(behavioral)
-# Loading work.my_ndff(b_my_ndff)
-# Loading work.my_dff(a_my_dff)
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-do fetch_tb.do
-# End time: 21:00:37 on Apr 15,2024, Elapsed time: 0:00:38
-# Errors: 0, Warnings: 3
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 21:00:37 on Apr 15,2024
-# vcom -reportprogress 300 fetch.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity fetch
-# -- Compiling architecture arch_fetch of fetch
-# End time: 21:00:37 on Apr 15,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 21:00:37 on Apr 15,2024
-# vcom -reportprogress 300 fetch_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Compiling entity fetch_tb
-# -- Compiling architecture arch of fetch_tb
-# End time: 21:00:37 on Apr 15,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# vsim -gui work.fetch_tb 
-# Start time: 21:00:37 on Apr 15,2024
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading work.fetch_tb(arch)
-# Loading ieee.numeric_std(body)
-# Loading work.fetch(arch_fetch)
-# Loading work.pc(pc_behavioral)
-# Loading work.instruction_cache(ic_behavioral)
-# Loading work.mux4x1(behavioral)
-# Loading work.my_ndff(b_my_ndff)
-# Loading work.my_dff(a_my_dff)
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-# Compile of fetch.vhd was successful.
-# Compile of fetch_tb.vhd was successful.
-# Compile of instruction_cache.vhd was successful.
-# Compile of mux4x1.vhd was successful.
-# Compile of my_DFF.vhd was successful.
-# Compile of my_nDFF.vhd was successful.
-# Compile of pc.vhd was successful.
-# Compile of registers_array.vhd was successful.
-# 8 compiles, 0 failed with no errors.
-do fetch_tb.do
-# End time: 21:07:10 on Apr 15,2024, Elapsed time: 0:06:33
+# Loading work.alu_tb(behavior)
+# Loading work.alu(alu_behavior)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Omar  Hostname: DESKTOP-QM07EUH  ProcessID: 1144
+#           Attempting to use alternate WLF file "./wlft3xkccs".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlft3xkccs
+# ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
+#    Time: 0 ps  Iteration: 0  Instance: /alu_tb/uut
+do alu.do
+# End time: 11:23:21 on Apr 18,2024, Elapsed time: 0:01:00
 # Errors: 0, Warnings: 4
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 21:07:10 on Apr 15,2024
-# vcom -reportprogress 300 fetch.vhd 
+# Start time: 11:23:21 on Apr 18,2024
+# vcom -reportprogress 300 alu.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
 # -- Loading package NUMERIC_STD
-# -- Compiling entity fetch
-# -- Compiling architecture arch_fetch of fetch
-# End time: 21:07:10 on Apr 15,2024, Elapsed time: 0:00:00
+# -- Compiling entity ALU
+# -- Compiling architecture ALU_Behavior of ALU
+# End time: 11:23:21 on Apr 18,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 21:07:10 on Apr 15,2024
-# vcom -reportprogress 300 fetch_tb.vhd 
+# Start time: 11:23:21 on Apr 18,2024
+# vcom -reportprogress 300 alu_tb.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
-# -- Compiling entity fetch_tb
-# -- Compiling architecture arch of fetch_tb
-# End time: 21:07:10 on Apr 15,2024, Elapsed time: 0:00:00
+# -- Loading package NUMERIC_STD
+# -- Compiling entity ALU_tb
+# -- Compiling architecture behavior of ALU_tb
+# End time: 11:23:22 on Apr 18,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
-# vsim -gui work.fetch_tb 
-# Start time: 21:07:10 on Apr 15,2024
+# vsim -gui work.alu_tb 
+# Start time: 11:23:22 on Apr 18,2024
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
-# Loading work.fetch_tb(arch)
 # Loading ieee.numeric_std(body)
-# Loading work.fetch(arch_fetch)
-# Loading work.pc(pc_behavioral)
-# Loading work.instruction_cache(ic_behavioral)
-# Loading work.mux4x1(behavioral)
-# Loading work.my_ndff(b_my_ndff)
-# Loading work.my_dff(a_my_dff)
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-# Compile of fetch.vhd was successful.
-# Compile of fetch_tb.vhd was successful.
-# Compile of instruction_cache.vhd was successful.
-# Compile of mux4x1.vhd was successful.
-# Compile of my_DFF.vhd was successful.
-# Compile of my_nDFF.vhd was successful.
-# Compile of pc.vhd was successful.
-# Compile of registers_array.vhd was successful.
-# 8 compiles, 0 failed with no errors.
-do fetch_tb.do
-# End time: 21:08:50 on Apr 15,2024, Elapsed time: 0:01:40
+# Loading work.alu_tb(behavior)
+# Loading work.alu(alu_behavior)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Omar  Hostname: DESKTOP-QM07EUH  ProcessID: 1144
+#           Attempting to use alternate WLF file "./wlft28nwvn".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlft28nwvn
+# ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
+#    Time: 0 ps  Iteration: 0  Instance: /alu_tb/uut
+do alu.do
+# End time: 11:24:18 on Apr 18,2024, Elapsed time: 0:00:56
 # Errors: 0, Warnings: 4
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 21:08:50 on Apr 15,2024
-# vcom -reportprogress 300 fetch.vhd 
+# Start time: 11:24:18 on Apr 18,2024
+# vcom -reportprogress 300 alu.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
 # -- Loading package NUMERIC_STD
-# -- Compiling entity fetch
-# -- Compiling architecture arch_fetch of fetch
-# End time: 21:08:50 on Apr 15,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
+# -- Compiling entity ALU
+# -- Compiling architecture ALU_Behavior of ALU
+# ** Error: alu.vhd(80): Illegal sequential statement.
+# ** Note: alu.vhd(93): VHDL Compiler exiting
+# End time: 11:24:18 on Apr 18,2024, Elapsed time: 0:00:00
+# Errors: 1, Warnings: 0
+# ** Error: C:/intelFPGA/20.1/modelsim_ase/win32aloem/vcom failed.
+# Error in macro ./alu.do line 6
+# C:/intelFPGA/20.1/modelsim_ase/win32aloem/vcom failed.
+#     while executing
+# "vcom alu.vhd"
+do alu.do
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 21:08:50 on Apr 15,2024
-# vcom -reportprogress 300 fetch_tb.vhd 
+# Start time: 11:25:22 on Apr 18,2024
+# vcom -reportprogress 300 alu.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
-# -- Compiling entity fetch_tb
-# -- Compiling architecture arch of fetch_tb
-# End time: 21:08:51 on Apr 15,2024, Elapsed time: 0:00:01
+# -- Loading package NUMERIC_STD
+# -- Compiling entity ALU
+# -- Compiling architecture ALU_Behavior of ALU
+# End time: 11:25:22 on Apr 18,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
-# vsim -gui work.fetch_tb 
-# Start time: 21:08:51 on Apr 15,2024
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 11:25:22 on Apr 18,2024
+# vcom -reportprogress 300 alu_tb.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity ALU_tb
+# -- Compiling architecture behavior of ALU_tb
+# End time: 11:25:23 on Apr 18,2024, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# vsim -gui work.alu_tb 
+# Start time: 11:25:23 on Apr 18,2024
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
-# Loading work.fetch_tb(arch)
 # Loading ieee.numeric_std(body)
-# Loading work.fetch(arch_fetch)
-# Loading work.pc(pc_behavioral)
-# Loading work.instruction_cache(ic_behavioral)
-# Loading work.mux4x1(behavioral)
-# Loading work.my_ndff(b_my_ndff)
-# Loading work.my_dff(a_my_dff)
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-# Compile of fetch.vhd was successful.
-# Compile of fetch_tb.vhd was successful.
-# Compile of instruction_cache.vhd was successful.
-# Compile of mux4x1.vhd was successful.
-# Compile of my_DFF.vhd was successful.
-# Compile of my_nDFF.vhd was successful.
-# Compile of pc.vhd was successful.
-# Compile of registers_array.vhd was successful.
-# 8 compiles, 0 failed with no errors.
-do fetch_tb.do
-# End time: 21:23:43 on Apr 15,2024, Elapsed time: 0:14:52
+# Loading work.alu_tb(behavior)
+# Loading work.alu(alu_behavior)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Omar  Hostname: DESKTOP-QM07EUH  ProcessID: 1144
+#           Attempting to use alternate WLF file "./wlft896vis".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlft896vis
+# ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
+#    Time: 0 ps  Iteration: 0  Instance: /alu_tb/uut
+do alu.do
+# End time: 11:33:27 on Apr 18,2024, Elapsed time: 0:08:04
+# Errors: 0, Warnings: 5
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 11:33:27 on Apr 18,2024
+# vcom -reportprogress 300 alu.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity ALU
+# -- Compiling architecture ALU_Behavior of ALU
+# End time: 11:33:27 on Apr 18,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 11:33:27 on Apr 18,2024
+# vcom -reportprogress 300 alu_tb.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity ALU_tb
+# -- Compiling architecture behavior of ALU_tb
+# End time: 11:33:27 on Apr 18,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -gui work.alu_tb 
+# Start time: 11:33:27 on Apr 18,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.alu_tb(behavior)
+# Loading work.alu(alu_behavior)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Omar  Hostname: DESKTOP-QM07EUH  ProcessID: 1144
+#           Attempting to use alternate WLF file "./wlft600mfd".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlft600mfd
+# ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
+#    Time: 0 ps  Iteration: 0  Instance: /alu_tb/uut
+# Compile of alu.vhd was successful.
+# Compile of alu_tb.vhd was successful.
+# 2 compiles, 0 failed with no errors.
+do alu.do
+# End time: 11:40:51 on Apr 18,2024, Elapsed time: 0:07:24
+# Errors: 0, Warnings: 5
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 11:40:51 on Apr 18,2024
+# vcom -reportprogress 300 alu.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity ALU
+# -- Compiling architecture ALU_Behavior of ALU
+# End time: 11:40:51 on Apr 18,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 11:40:51 on Apr 18,2024
+# vcom -reportprogress 300 alu_tb.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity ALU_tb
+# -- Compiling architecture behavior of ALU_tb
+# End time: 11:40:51 on Apr 18,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -gui work.alu_tb 
+# Start time: 11:40:51 on Apr 18,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.alu_tb(behavior)
+# Loading work.alu(alu_behavior)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Omar  Hostname: DESKTOP-QM07EUH  ProcessID: 1144
+#           Attempting to use alternate WLF file "./wlft2zfvcw".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlft2zfvcw
+# ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
+#    Time: 0 ps  Iteration: 0  Instance: /alu_tb/uut
+do alu.do
+# End time: 11:43:00 on Apr 18,2024, Elapsed time: 0:02:09
 # Errors: 0, Warnings: 4
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 21:23:43 on Apr 15,2024
-# vcom -reportprogress 300 fetch.vhd 
+# Start time: 11:43:00 on Apr 18,2024
+# vcom -reportprogress 300 alu.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
 # -- Loading package NUMERIC_STD
-# -- Compiling entity fetch
-# -- Compiling architecture arch_fetch of fetch
-# End time: 21:23:44 on Apr 15,2024, Elapsed time: 0:00:01
+# -- Compiling entity ALU
+# -- Compiling architecture ALU_Behavior of ALU
+# End time: 11:43:00 on Apr 18,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 21:23:44 on Apr 15,2024
-# vcom -reportprogress 300 fetch_tb.vhd 
+# Start time: 11:43:00 on Apr 18,2024
+# vcom -reportprogress 300 alu_tb.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
-# -- Compiling entity fetch_tb
-# -- Compiling architecture arch of fetch_tb
-# End time: 21:23:44 on Apr 15,2024, Elapsed time: 0:00:00
+# -- Loading package NUMERIC_STD
+# -- Compiling entity ALU_tb
+# -- Compiling architecture behavior of ALU_tb
+# End time: 11:43:00 on Apr 18,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
-# vsim -gui work.fetch_tb 
-# Start time: 21:23:44 on Apr 15,2024
+# vsim -gui work.alu_tb 
+# Start time: 11:43:00 on Apr 18,2024
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
-# Loading work.fetch_tb(arch)
 # Loading ieee.numeric_std(body)
-# Loading work.fetch(arch_fetch)
-# Loading work.pc(pc_behavioral)
-# Loading work.instruction_cache(ic_behavioral)
-# Loading work.mux4x1(behavioral)
-# Loading work.my_ndff(b_my_ndff)
-# Loading work.my_dff(a_my_dff)
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-# Compile of fetch.vhd was successful.
-# Compile of fetch_tb.vhd was successful.
-# Compile of instruction_cache.vhd was successful.
-# Compile of mux4x1.vhd was successful.
-# Compile of my_DFF.vhd was successful.
-# Compile of my_nDFF.vhd was successful.
-# Compile of pc.vhd was successful.
-# Compile of registers_array.vhd was successful.
-# 8 compiles, 0 failed with no errors.
-do fetch_tb.do
-# End time: 21:27:42 on Apr 15,2024, Elapsed time: 0:03:58
+# Loading work.alu_tb(behavior)
+# Loading work.alu(alu_behavior)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Omar  Hostname: DESKTOP-QM07EUH  ProcessID: 1144
+#           Attempting to use alternate WLF file "./wlft4h7mjv".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlft4h7mjv
+# ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
+#    Time: 0 ps  Iteration: 0  Instance: /alu_tb/uut
+do alu.do
+# End time: 11:43:57 on Apr 18,2024, Elapsed time: 0:00:57
 # Errors: 0, Warnings: 4
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 21:27:42 on Apr 15,2024
-# vcom -reportprogress 300 fetch.vhd 
+# Start time: 11:43:57 on Apr 18,2024
+# vcom -reportprogress 300 alu.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
 # -- Loading package NUMERIC_STD
-# -- Compiling entity fetch
-# -- Compiling architecture arch_fetch of fetch
-# End time: 21:27:42 on Apr 15,2024, Elapsed time: 0:00:00
+# -- Compiling entity ALU
+# -- Compiling architecture ALU_Behavior of ALU
+# End time: 11:43:57 on Apr 18,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 21:27:42 on Apr 15,2024
-# vcom -reportprogress 300 fetch_tb.vhd 
+# Start time: 11:43:57 on Apr 18,2024
+# vcom -reportprogress 300 alu_tb.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
-# -- Compiling entity fetch_tb
-# -- Compiling architecture arch of fetch_tb
-# End time: 21:27:43 on Apr 15,2024, Elapsed time: 0:00:01
+# -- Loading package NUMERIC_STD
+# -- Compiling entity ALU_tb
+# -- Compiling architecture behavior of ALU_tb
+# End time: 11:43:57 on Apr 18,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
-# vsim -gui work.fetch_tb 
-# Start time: 21:27:43 on Apr 15,2024
+# vsim -gui work.alu_tb 
+# Start time: 11:43:57 on Apr 18,2024
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
-# Loading work.fetch_tb(arch)
 # Loading ieee.numeric_std(body)
-# Loading work.fetch(arch_fetch)
-# Loading work.pc(pc_behavioral)
-# Loading work.instruction_cache(ic_behavioral)
-# Loading work.mux4x1(behavioral)
-# Loading work.my_ndff(b_my_ndff)
-# Loading work.my_dff(a_my_dff)
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-# Compile of fetch.vhd was successful.
-# Compile of fetch_tb.vhd was successful.
-# Compile of instruction_cache.vhd was successful.
-# Compile of mux4x1.vhd was successful.
-# Compile of my_DFF.vhd was successful.
-# Compile of my_nDFF.vhd was successful.
-# Compile of pc.vhd was successful.
-# Compile of registers_array.vhd was successful.
-# 8 compiles, 0 failed with no errors.
-do fetch_tb.do
-# End time: 21:29:30 on Apr 15,2024, Elapsed time: 0:01:47
+# Loading work.alu_tb(behavior)
+# Loading work.alu(alu_behavior)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Omar  Hostname: DESKTOP-QM07EUH  ProcessID: 1144
+#           Attempting to use alternate WLF file "./wlft82159c".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlft82159c
+# ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
+#    Time: 0 ps  Iteration: 0  Instance: /alu_tb/uut
+# Compile of alu.vhd was successful.
+# Compile of alu_tb.vhd was successful.
+# 2 compiles, 0 failed with no errors.
+do alu.do
+# End time: 11:44:58 on Apr 18,2024, Elapsed time: 0:01:01
+# Errors: 0, Warnings: 5
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 11:44:58 on Apr 18,2024
+# vcom -reportprogress 300 alu.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity ALU
+# -- Compiling architecture ALU_Behavior of ALU
+# End time: 11:44:58 on Apr 18,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 11:44:58 on Apr 18,2024
+# vcom -reportprogress 300 alu_tb.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity ALU_tb
+# -- Compiling architecture behavior of ALU_tb
+# End time: 11:44:58 on Apr 18,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -gui work.alu_tb 
+# Start time: 11:44:58 on Apr 18,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.alu_tb(behavior)
+# Loading work.alu(alu_behavior)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Omar  Hostname: DESKTOP-QM07EUH  ProcessID: 1144
+#           Attempting to use alternate WLF file "./wlftbr6ky7".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftbr6ky7
+# ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
+#    Time: 0 ps  Iteration: 0  Instance: /alu_tb/uut
+do alu.do
+# End time: 11:46:53 on Apr 18,2024, Elapsed time: 0:01:55
 # Errors: 0, Warnings: 4
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 21:29:30 on Apr 15,2024
-# vcom -reportprogress 300 fetch.vhd 
+# Start time: 11:46:53 on Apr 18,2024
+# vcom -reportprogress 300 alu.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
 # -- Loading package NUMERIC_STD
-# -- Compiling entity fetch
-# -- Compiling architecture arch_fetch of fetch
-# End time: 21:29:30 on Apr 15,2024, Elapsed time: 0:00:00
+# -- Compiling entity ALU
+# -- Compiling architecture ALU_Behavior of ALU
+# End time: 11:46:53 on Apr 18,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 21:29:30 on Apr 15,2024
-# vcom -reportprogress 300 fetch_tb.vhd 
+# Start time: 11:46:53 on Apr 18,2024
+# vcom -reportprogress 300 alu_tb.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
-# -- Compiling entity fetch_tb
-# -- Compiling architecture arch of fetch_tb
-# End time: 21:29:31 on Apr 15,2024, Elapsed time: 0:00:01
+# -- Loading package NUMERIC_STD
+# -- Compiling entity ALU_tb
+# -- Compiling architecture behavior of ALU_tb
+# End time: 11:46:53 on Apr 18,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
-# vsim -gui work.fetch_tb 
-# Start time: 21:29:31 on Apr 15,2024
+# vsim -gui work.alu_tb 
+# Start time: 11:46:53 on Apr 18,2024
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
-# Loading work.fetch_tb(arch)
 # Loading ieee.numeric_std(body)
-# Loading work.fetch(arch_fetch)
-# Loading work.pc(pc_behavioral)
-# Loading work.instruction_cache(ic_behavioral)
-# Loading work.mux4x1(behavioral)
-# Loading work.my_ndff(b_my_ndff)
-# Loading work.my_dff(a_my_dff)
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-add wave -position end sim:/fetch_tb/uut/inst_cache/*
-# Compile of fetch.vhd was successful.
-# Compile of fetch_tb.vhd was successful.
-# Compile of instruction_cache.vhd was successful.
-# Compile of mux4x1.vhd was successful.
-# Compile of my_DFF.vhd was successful.
-# Compile of my_nDFF.vhd was successful.
-# Compile of pc.vhd was successful.
-# Compile of registers_array.vhd was successful.
-# 8 compiles, 0 failed with no errors.
-do fetch_tb.do
-# End time: 21:33:42 on Apr 15,2024, Elapsed time: 0:04:11
+# Loading work.alu_tb(behavior)
+# Loading work.alu(alu_behavior)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Omar  Hostname: DESKTOP-QM07EUH  ProcessID: 1144
+#           Attempting to use alternate WLF file "./wlft5eamgc".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlft5eamgc
+# ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
+#    Time: 0 ps  Iteration: 0  Instance: /alu_tb/uut
+do alu.do
+# End time: 11:48:49 on Apr 18,2024, Elapsed time: 0:01:56
 # Errors: 0, Warnings: 4
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 21:33:42 on Apr 15,2024
-# vcom -reportprogress 300 fetch.vhd 
+# Start time: 11:48:50 on Apr 18,2024
+# vcom -reportprogress 300 alu.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
 # -- Loading package NUMERIC_STD
-# -- Compiling entity fetch
-# -- Compiling architecture arch_fetch of fetch
-# End time: 21:33:42 on Apr 15,2024, Elapsed time: 0:00:00
+# -- Compiling entity ALU
+# -- Compiling architecture ALU_Behavior of ALU
+# End time: 11:48:50 on Apr 18,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 21:33:42 on Apr 15,2024
-# vcom -reportprogress 300 fetch_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Compiling entity fetch_tb
-# -- Compiling architecture arch of fetch_tb
-# End time: 21:33:42 on Apr 15,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# vsim -gui work.fetch_tb 
-# Start time: 21:33:42 on Apr 15,2024
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading work.fetch_tb(arch)
-# Loading ieee.numeric_std(body)
-# Loading work.fetch(arch_fetch)
-# Loading work.pc(pc_behavioral)
-# Loading work.instruction_cache(ic_behavioral)
-# Loading work.mux4x1(behavioral)
-# Loading work.my_ndff(b_my_ndff)
-# Loading work.my_dff(a_my_dff)
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-# Compile of fetch.vhd was successful.
-# Compile of fetch_tb.vhd was successful.
-# Compile of instruction_cache.vhd was successful.
-# Compile of mux4x1.vhd was successful.
-# Compile of my_DFF.vhd was successful.
-# Compile of my_nDFF.vhd was successful.
-# Compile of pc.vhd was successful.
-# Compile of registers_array.vhd was successful.
-# 8 compiles, 0 failed with no errors.
-do fetch_tb.do
-# End time: 21:47:23 on Apr 15,2024, Elapsed time: 0:13:41
-# Errors: 0, Warnings: 4
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 21:47:24 on Apr 15,2024
-# vcom -reportprogress 300 fetch.vhd 
+# Start time: 11:48:50 on Apr 18,2024
+# vcom -reportprogress 300 alu_tb.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
 # -- Loading package NUMERIC_STD
-# -- Compiling entity fetch
-# -- Compiling architecture arch_fetch of fetch
-# End time: 21:47:24 on Apr 15,2024, Elapsed time: 0:00:00
+# -- Compiling entity ALU_tb
+# -- Compiling architecture behavior of ALU_tb
+# End time: 11:48:50 on Apr 18,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 21:47:24 on Apr 15,2024
-# vcom -reportprogress 300 fetch_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Compiling entity fetch_tb
-# -- Compiling architecture arch of fetch_tb
-# End time: 21:47:24 on Apr 15,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# vsim -gui work.fetch_tb 
-# Start time: 21:47:24 on Apr 15,2024
+# vsim -gui work.alu_tb 
+# Start time: 11:48:50 on Apr 18,2024
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
-# Loading work.fetch_tb(arch)
 # Loading ieee.numeric_std(body)
-# Loading work.fetch(arch_fetch)
-# Loading work.pc(pc_behavioral)
-# Loading work.instruction_cache(ic_behavioral)
-# Loading work.mux4x1(behavioral)
-# Loading work.my_ndff(b_my_ndff)
-# Loading work.my_dff(a_my_dff)
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-# Compile of fetch.vhd was successful.
-# Compile of fetch_tb.vhd was successful.
-# Compile of instruction_cache.vhd was successful.
-# Compile of mux4x1.vhd was successful.
-# Compile of my_DFF.vhd was successful.
-# Compile of my_nDFF.vhd was successful.
-# Compile of pc.vhd was successful.
-# Compile of registers_array.vhd was successful.
-# 8 compiles, 0 failed with no errors.
-do fetch_tb.do
-# End time: 21:58:02 on Apr 15,2024, Elapsed time: 0:10:38
-# Errors: 0, Warnings: 4
+# Loading work.alu_tb(behavior)
+# Loading work.alu(alu_behavior)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Omar  Hostname: DESKTOP-QM07EUH  ProcessID: 1144
+#           Attempting to use alternate WLF file "./wlft6fdf9c".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlft6fdf9c
+# ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
+#    Time: 0 ps  Iteration: 0  Instance: /alu_tb/uut
+# Compile of alu.vhd was successful.
+# Compile of alu_tb.vhd was successful.
+# 2 compiles, 0 failed with no errors.
+do alu.do
+# End time: 11:57:02 on Apr 18,2024, Elapsed time: 0:08:12
+# Errors: 0, Warnings: 5
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 21:58:02 on Apr 15,2024
-# vcom -reportprogress 300 fetch.vhd 
+# Start time: 11:57:02 on Apr 18,2024
+# vcom -reportprogress 300 alu.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
 # -- Loading package NUMERIC_STD
-# -- Compiling entity fetch
-# -- Compiling architecture arch_fetch of fetch
-# End time: 21:58:02 on Apr 15,2024, Elapsed time: 0:00:00
+# -- Compiling entity ALU
+# -- Compiling architecture ALU_Behavior of ALU
+# End time: 11:57:02 on Apr 18,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 21:58:02 on Apr 15,2024
-# vcom -reportprogress 300 fetch_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Compiling entity fetch_tb
-# -- Compiling architecture arch of fetch_tb
-# End time: 21:58:03 on Apr 15,2024, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-# vsim -gui work.fetch_tb 
-# Start time: 21:58:03 on Apr 15,2024
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading work.fetch_tb(arch)
-# Loading ieee.numeric_std(body)
-# Loading work.fetch(arch_fetch)
-# Loading work.pc(pc_behavioral)
-# Loading work.instruction_cache(ic_behavioral)
-# Loading work.mux4x1(behavioral)
-# Loading work.my_ndff(b_my_ndff)
-# Loading work.my_dff(a_my_dff)
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-do fetch_tb.do
-# End time: 22:00:47 on Apr 15,2024, Elapsed time: 0:02:44
-# Errors: 0, Warnings: 3
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 22:00:48 on Apr 15,2024
-# vcom -reportprogress 300 fetch.vhd 
+# Start time: 11:57:02 on Apr 18,2024
+# vcom -reportprogress 300 alu_tb.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
 # -- Loading package NUMERIC_STD
-# -- Compiling entity fetch
-# -- Compiling architecture arch_fetch of fetch
-# End time: 22:00:48 on Apr 15,2024, Elapsed time: 0:00:00
+# -- Compiling entity ALU_tb
+# -- Compiling architecture behavior of ALU_tb
+# End time: 11:57:02 on Apr 18,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 22:00:48 on Apr 15,2024
-# vcom -reportprogress 300 fetch_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Compiling entity fetch_tb
-# -- Compiling architecture arch of fetch_tb
-# End time: 22:00:48 on Apr 15,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# vsim -gui work.fetch_tb 
-# Start time: 22:00:48 on Apr 15,2024
+# vsim -gui work.alu_tb 
+# Start time: 11:57:02 on Apr 18,2024
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
-# Loading work.fetch_tb(arch)
 # Loading ieee.numeric_std(body)
-# Loading work.fetch(arch_fetch)
-# Loading work.pc(pc_behavioral)
-# Loading work.instruction_cache(ic_behavioral)
-# Loading work.mux4x1(behavioral)
-# Loading work.my_ndff(b_my_ndff)
-# Loading work.my_dff(a_my_dff)
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-#############  Autofindloop Analysis  ###############
-#############  Loop found at time 135 ns ###############
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/inst_mux/sel @ sub-iteration 0 at Value unknown (E:/College/year4-2/comp arch/project/project/mux4x1.vhd:19)
-#       Signal: /fetch_tb/uut/check_signal @ sub-iteration 0 at Value X (fetch.vhd:64)
-#   Active process: /fetch_tb/uut/return_Sel_lower_to_zero @ sub-iteration 1
-#     Source: fetch_tb.vhd:28
-#   Active process: /fetch_tb/uut/inst_mux/line__21 @ sub-iteration 1
-#     Source: fetch.vhd:109
-#   Active process: /fetch_tb/uut/inst_mux/line__23 @ sub-iteration 1
-#     Source: fetch.vhd:109
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/inst_mux/sel @ sub-iteration 2 at Value unknown (E:/College/year4-2/comp arch/project/project/mux4x1.vhd:19)
-################# END OF LOOP #################
-# ** Error (suppressible): (vsim-3601) Iteration limit 5000 reached at time 135 ns.
-# Compile of fetch.vhd was successful.
-# Compile of fetch_tb.vhd was successful.
-# Compile of instruction_cache.vhd was successful.
-# Compile of mux4x1.vhd was successful.
-# Compile of my_DFF.vhd was successful.
-# Compile of my_nDFF.vhd was successful.
-# Compile of pc.vhd was successful.
-# Compile of registers_array.vhd was successful.
-# 8 compiles, 0 failed with no errors.
-do fetch_tb.do
-# End time: 22:01:22 on Apr 15,2024, Elapsed time: 0:00:34
-# Errors: 1, Warnings: 4
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 22:01:22 on Apr 15,2024
-# vcom -reportprogress 300 fetch.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity fetch
-# -- Compiling architecture arch_fetch of fetch
-# End time: 22:01:22 on Apr 15,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 22:01:22 on Apr 15,2024
-# vcom -reportprogress 300 fetch_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Compiling entity fetch_tb
-# -- Compiling architecture arch of fetch_tb
-# End time: 22:01:22 on Apr 15,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# vsim -gui work.fetch_tb 
-# Start time: 22:01:22 on Apr 15,2024
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading work.fetch_tb(arch)
-# Loading ieee.numeric_std(body)
-# Loading work.fetch(arch_fetch)
-# Loading work.pc(pc_behavioral)
-# Loading work.instruction_cache(ic_behavioral)
-# Loading work.mux4x1(behavioral)
-# Loading work.my_ndff(b_my_ndff)
-# Loading work.my_dff(a_my_dff)
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-#############  Autofindloop Analysis  ###############
-#############  Loop found at time 135 ns ###############
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/inst_mux/sel @ sub-iteration 0 at Value unknown (E:/College/year4-2/comp arch/project/project/mux4x1.vhd:19)
-#       Signal: /fetch_tb/uut/check_signal @ sub-iteration 0 at Value X (fetch.vhd:64)
-#   Active process: /fetch_tb/uut/return_Sel_lower_to_zero @ sub-iteration 1
-#     Source: fetch_tb.vhd:28
-#   Active process: /fetch_tb/uut/inst_mux/line__21 @ sub-iteration 1
-#     Source: fetch.vhd:109
-#   Active process: /fetch_tb/uut/inst_mux/line__23 @ sub-iteration 1
-#     Source: fetch.vhd:109
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/inst_mux/sel @ sub-iteration 2 at Value unknown (E:/College/year4-2/comp arch/project/project/mux4x1.vhd:19)
-################# END OF LOOP #################
-# ** Error (suppressible): (vsim-3601) Iteration limit 5000 reached at time 135 ns.
-# Compile of fetch.vhd was successful.
-# Compile of fetch_tb.vhd was successful.
-# Compile of instruction_cache.vhd was successful.
-# Compile of mux4x1.vhd was successful.
-# Compile of my_DFF.vhd was successful.
-# Compile of my_nDFF.vhd was successful.
-# Compile of pc.vhd was successful.
-# Compile of registers_array.vhd was successful.
-# 8 compiles, 0 failed with no errors.
-do fetch_tb.do
-# End time: 22:02:36 on Apr 15,2024, Elapsed time: 0:01:14
-# Errors: 1, Warnings: 4
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 22:02:36 on Apr 15,2024
-# vcom -reportprogress 300 fetch.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity fetch
-# -- Compiling architecture arch_fetch of fetch
-# End time: 22:02:36 on Apr 15,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 22:02:36 on Apr 15,2024
-# vcom -reportprogress 300 fetch_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Compiling entity fetch_tb
-# -- Compiling architecture arch of fetch_tb
-# End time: 22:02:37 on Apr 15,2024, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-# vsim -gui work.fetch_tb 
-# Start time: 22:02:37 on Apr 15,2024
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading work.fetch_tb(arch)
-# Loading ieee.numeric_std(body)
-# Loading work.fetch(arch_fetch)
-# Loading work.pc(pc_behavioral)
-# Loading work.instruction_cache(ic_behavioral)
-# Loading work.mux4x1(behavioral)
-# Loading work.my_ndff(b_my_ndff)
-# Loading work.my_dff(a_my_dff)
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-# ** Warning: NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
-#    Time: 0 ps  Iteration: 0  Instance: /fetch_tb/uut/inst_cache
-#############  Autofindloop Analysis  ###############
-#############  Loop found at time 135 ns ###############
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 0 at Value X (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/inst_mux/sel @ sub-iteration 0 at Value unknown (E:/College/year4-2/comp arch/project/project/mux4x1.vhd:19)
-#       Signal: /fetch_tb/uut/check_signal @ sub-iteration 0 at Value X (fetch.vhd:64)
-#   Active process: /fetch_tb/uut/return_Sel_lower_to_zero @ sub-iteration 1
-#     Source: fetch_tb.vhd:28
-#   Active process: /fetch_tb/uut/inst_mux/line__21 @ sub-iteration 1
-#     Source: fetch.vhd:109
-#   Active process: /fetch_tb/uut/inst_mux/line__23 @ sub-iteration 1
-#     Source: fetch.vhd:109
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/instruction_out_from_mux @ sub-iteration 2 at Value Z (fetch.vhd:61)
-#       Signal: /fetch_tb/uut/inst_mux/sel @ sub-iteration 2 at Value unknown (E:/College/year4-2/comp arch/project/project/mux4x1.vhd:19)
-################# END OF LOOP #################
-# ** Error (suppressible): (vsim-3601) Iteration limit 5000 reached at time 135 ns.
+# Loading work.alu_tb(behavior)
+# Loading work.alu(alu_behavior)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Omar  Hostname: DESKTOP-QM07EUH  ProcessID: 1144
+#           Attempting to use alternate WLF file "./wlftsf4nhf".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftsf4nhf
+# ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
+#    Time: 0 ps  Iteration: 0  Instance: /alu_tb/uut
