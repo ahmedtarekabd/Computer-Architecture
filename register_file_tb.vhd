@@ -21,8 +21,8 @@ ARCHITECTURE behavior OF register_file_tb IS
             read_enable : IN STD_LOGIC;
             read_address1 : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
             read_address2 : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
-            dataout1 : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
-            dataout2 : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0)
+            read_data1 : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
+            read_data2 : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0)
         );
     END COMPONENT;
 
@@ -39,8 +39,8 @@ ARCHITECTURE behavior OF register_file_tb IS
     SIGNAL read_address2 : STD_LOGIC_VECTOR(2 DOWNTO 0) := (OTHERS => '0');
 
     --Outputs
-    SIGNAL dataout1 : STD_LOGIC_VECTOR(7 DOWNTO 0);
-    SIGNAL dataout2 : STD_LOGIC_VECTOR(7 DOWNTO 0);
+    SIGNAL read_data1 : STD_LOGIC_VECTOR(7 DOWNTO 0);
+    SIGNAL read_data2 : STD_LOGIC_VECTOR(7 DOWNTO 0);
 
     -- Clock period definitions
     CONSTANT clk_period : TIME := 10 ns;
@@ -59,8 +59,8 @@ BEGIN
         read_enable => read_enable,
         read_address1 => read_address1,
         read_address2 => read_address2,
-        dataout1 => dataout1,
-        dataout2 => dataout2
+        read_data1 => read_data1,
+        read_data2 => read_data2
     );
 
     -- Clock process definitions
@@ -104,6 +104,7 @@ BEGIN
         write_address2 <= "100";
         write_data2 <= "00000100";
         WAIT FOR clk_period;
+        ASSERT (read_data1 = "00000001") AND (read_data2 = "00000010") REPORT "Read test 1 failed" SEVERITY error;
 
         write_enable1 <= '0';
         write_enable2 <= '0';
@@ -111,6 +112,7 @@ BEGIN
         read_address1 <= "011";
         read_address2 <= "100";
         WAIT FOR clk_period;
+        ASSERT (read_data1 = "00000011") AND (read_data2 = "00000100") REPORT "Read test 2 failed" SEVERITY error;
 
         -- Insert more test cases here
         -- Wait forever, so the simulation does not end.

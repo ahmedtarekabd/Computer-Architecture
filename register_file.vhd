@@ -17,8 +17,8 @@ ENTITY register_file IS
         read_address1 : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
         read_address2 : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
 
-        dataout1 : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
-        dataout2 : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0)
+        read_data1 : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
+        read_data2 : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0)
     );
 END ENTITY register_file;
 
@@ -30,17 +30,19 @@ ARCHITECTURE register_file_arch OF register_file IS
 BEGIN
     PROCESS (clk) IS
     BEGIN
-        IF falling_edge(clk) THEN
+        IF rising_edge(clk) THEN
             IF write_enable1 = '1' THEN
                 registers_array(to_integer(unsigned(write_address1))) <= write_data1;
             END IF;
             IF write_enable2 = '1' THEN
                 registers_array(to_integer(unsigned(write_address2))) <= write_data2;
             END IF;
-            dataout1 <= registers_array(to_integer(unsigned(read_address1)));
-            dataout2 <= registers_array(to_integer(unsigned(read_address2)));
+        END IF;
+        IF falling_edge(clk) THEN
+            IF read_enable = '1' THEN
+                read_data1 <= registers_array(to_integer(unsigned(read_address1)));
+                read_data2 <= registers_array(to_integer(unsigned(read_address2)));
+            END IF;
         END IF;
     END PROCESS;
-    -- dataout1 <= registers_array(to_integer(unsigned(read_address1)));
-    -- dataout2 <= registers_array(to_integer(unsigned(read_address2)));
 END register_file_arch;
