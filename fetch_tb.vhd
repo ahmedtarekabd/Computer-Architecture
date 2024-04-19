@@ -6,21 +6,25 @@ end fetch_tb;
 
 architecture arch of fetch_tb is
     constant clk_period : time := 10 ns;
+
     signal clk : std_logic := '0';
-    signal reset : std_logic := '0';
+    signal reset : std_logic := '1';
+    signal selected_instruction_out : std_logic_vector(15 downto 0);
 
     component fetch is
         port (
             clk : in std_logic; 
-            reset : in std_logic
+            reset : in std_logic;
+            selected_instruction_out : out std_logic_vector(15 downto 0)
         );
-    end component fetch;
+    end component;
 
 begin
-    -- Instantiate the Unit Under Test (UUT)
+    -- Instantiate the unit under test (UUT)
     uut: fetch port map (
         clk => clk,
-        reset => reset
+        reset => reset,
+        selected_instruction_out => selected_instruction_out
     );
 
     -- Clock process definitions
@@ -37,11 +41,11 @@ begin
     begin
         -- hold reset state for 100 ns.
         wait for 100 ns;  
+        
+        -- release reset state
         reset <= '0'; 
-
-        -- insert stimulus here 
 
         wait;
     end process;
 
-end arch;
+end architecture arch;

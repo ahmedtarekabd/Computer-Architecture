@@ -11,92 +11,83 @@ entity ALU is
         F: out std_logic_vector(n-1 downto 0);
         zero_flag: out std_logic;
 
-        overflow_flag: out std_logic -- Overflow flag
+        overflow_flag: out std_logic; -- Overflow flag
+        carry_flag: out std_logic; -- Carry flag
+        negative_flag: out std_logic; -- Negative flag
+
+        --old flags
+        old_negative_flag: in std_logic := '0'; -- Old negative flag
+        old_zero_flag: in std_logic := '0'; -- Old zero flag
+        old_overflow_flag: in std_logic := '0'; -- Old overflow flag
+        old_carry_flag: in std_logic := '0' -- Old carry flag
+
     );
 end ALU;
 
+-- 000 -> nop (changes nothing)
+-- 001 -> add (changes all flags)
+-- 010 -> sub (changes all flags)
+-- 011 -> mov (changes nothing)
+-- 100 -> and (changes zero and negative flags only)
+-- 101 -> or (changes zero and negative flags only)
+-- 110 -> xor (changes zero and negative flags only)
+-- 111 -> not (changes zero and negative flags only)
+
 architecture ALU_Behavior of ALU is
-    signal F_internal : std_logic_vector(n-1 downto 0);
+    -- signal F_internal : std_logic_vector(n-1 downto 0);
+    signal zero_neg_flags : std_logic; 
+    signal A_integer, B_integer: unsigned(n-1 downto 0);
+    signal A_extended, B_extended: unsigned(n downto 0);
+    signal sum, difference: unsigned(n downto 0);
+    signal F_internal: std_logic_vector(n-1 downto 0);
 
 begin
+
+    A_integer <= unsigned(A);
+    B_integer <= unsigned(B);
+    A_extended <= unsigned('0' & A);
+    B_extended <= unsigned('0' & B);
+
+    sum <= A_extended + B_extended;
+    difference <= A_extended - B_extended;
+
+    F_internal <= (others => '0') when opcode = "000" else
+        std_logic_vector(sum(n-1 downto 0)) when opcode = "001" else
+        std_logic_vector(difference(n-1 downto 0)) when opcode = "010" else
+        A when opcode = "011" else
+        std_logic_vector(A_integer and B_integer) when opcode = "100" else
+        std_logic_vector(A_integer or B_integer) when opcode = "101" else
+        std_logic_vector(A_integer xor B_integer) when opcode = "110" else
+        std_logic_vector(not A_integer) when opcode = "111" else
+        (others => '0');
+
+    --carry flag
+    carry_flag <= '1' when opcode = "001" and sum(n) = '1' else
+        '1' when opcode = "010" and A_integer < B_integer else
+        '0' when opcode = "010" or opcode = "001" else
+        old_carry_flag;
+
+    --overflow flag
+    overflow_flag <= '1' when opcode = "001" and A_integer(n-1) = B_integer(n-1) and A_integer(n-1) /= sum(n-1) else
+        '1' when opcode = "010" and A_integer(n-1) /= B_integer(n-1) and A_integer(n-1) /= difference(n-1) else
+        '0' when opcode = "001" or opcode = "010" else
+        old_overflow_flag;
     
-    process(A, B, opcode)
-        variable A_integer, B_integer: unsigned(n downto 0);
-        --used to store the result of the operation before assigning it to the output because A_integer and B_integer are 33bits and F_internal is 32bits
-        variable temp : unsigned(n downto 0);
-
-    begin
-        
-        A_integer := unsigned('0' & A);
-        B_integer := unsigned('0' & B);
-
-        overflow_flag <= '0'; -- it will be one if overflow occurs in add operation
-        
-        case opcode is
-            when "000" => -- NOP
-                F_internal <= (others => '0');
-                
-            when "001" => -- add (checks for overflow)
-                temp := A_integer + B_integer;
-                    F_internal <= std_logic_vector(temp(n-1 downto 0));
-                -- Check for overflow
-                if temp(n) = '1' then 
-                    overflow_flag <= '1';
-                end if;        
-
-            when "010" => -- sub the value in src2 from src1 (checks for underflow)
-
-                A_integer := unsigned(A(31) & A);
-                B_integer := unsigned(B(31) & B);
-
-                temp := B_integer - A_integer;
-                F_internal <= std_logic_vector(temp(n-1 downto 0));
-
-                --overflow flag -> if B is positive, A is negative and the result is negative then overflow occurs
-                -- or if B is negative, A is positive and the result is positive then overflow occurs
-                -- if ((B_integer > 0 and A_integer < 0 and temp < 0) or (B_integer < 0 and A_integer > 0 and temp > 0)) then
-                --     overflow_flag <= '1';
-                -- else
-                --     overflow_flag <= '0';
-                -- end if;
-                if ((B_integer(n) = '1' and A_integer(n) = '0' and temp(n) = '1') or (B_integer(n) = '0' and A_integer(n) = '1' and temp(n) = '0')) then
-                    overflow_flag <= '1';
-                else
-                    overflow_flag <= '0';
-                end if;
-        
-            when "011" => -- move from src1 to destination so output is src1
-                F_internal <= A;
-                    
-            when "100" => -- and
-                temp := A_integer and B_integer;
-                    F_internal <= std_logic_vector(temp(n-1 downto 0));                    
-            when "101" => -- or
-                temp := A_integer or B_integer;
-                    F_internal <= std_logic_vector(temp(n-1 downto 0));    
-            when "110" => -- xor
-                temp := A_integer xor B_integer;
-                    F_internal <= std_logic_vector(temp(n-1 downto 0));    
-            when "111" => -- not
-                temp := not A_integer;
-                    F_internal <= std_logic_vector(temp(n-1 downto 0));                
-            when others =>
-                F_internal <= (others => 'X');
-   
-        end case;
-            
-    end process;
-
+    --zero and negative flags -> check if its supposed to upadate these flags or no
+    zero_neg_flags <= '1' when opcode = "001" or opcode = "010" or opcode = "100" or opcode = "101" or opcode = "110" or opcode = "111" else
+        '0';
+    
     --zero flag
-    process(F_internal)
-    begin
-        if unsigned(F_internal) = 0 then
-            zero_flag <= '1';
-        else
-            zero_flag <= '0';
-        end if;
-    end process;
-    
+    zero_flag <= '1' when zero_neg_flags = '1' and unsigned(F_internal) = 0 else 
+        '0' when zero_neg_flags = '1' else
+        old_zero_flag;
+
+    --negative flag
+    negative_flag <= '1' when zero_neg_flags = '1' and F_internal(n-1) = '1' else
+        '0' when zero_neg_flags = '1' else
+        old_negative_flag;
+
+
     F <= F_internal; -- Assign the internal signal to the output
 
 end architecture ALU_Behavior;
