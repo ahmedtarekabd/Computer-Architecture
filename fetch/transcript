@@ -279,3 +279,360 @@ do alu.do
 #           Using alternate file: ./wlft66y132
 # ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
 #    Time: 0 ps  Iteration: 2  Instance: /alu_tb/uut
+# Compile of memory.vhd failed with 8 errors.
+# Compile of memory.vhd failed with 13 errors.
+# Compile of memory.vhd failed with 9 errors.
+# Compile of memory.vhd failed with 5 errors.
+# Compile of memory.vhd failed with 1 errors.
+# Compile of memory.vhd was successful.
+# Load canceled
+# Compile of memory.vhd was successful.
+vsim -gui work.memory
+# End time: 15:42:25 on Apr 19,2024, Elapsed time: 2:13:50
+# Errors: 0, Warnings: 15
+# vsim -gui work.memory 
+# Start time: 15:42:25 on Apr 19,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.memory(memory_arch)
+mem save -o {E:/College/year4-2/comp arch/project/Computer-Architecture/fetch/memory.mem} -f mti -data symbolic -addr hex -wordsperline 1 /memory/memory_array
+mem save -o {E:/College/year4-2/comp arch/project/Computer-Architecture/fetch/memory.mem} -f mti -data symbolic -addr decimal /memory/memory_array
+mem save -o {E:/College/year4-2/comp arch/project/Computer-Architecture/fetch/memory.mem} -f mti -data symbolic -addr decimal -wordsperline 1 /memory/memory_array
+# Compile of memory.vhd was successful.
+# Compile of memory_tb.vhd was successful.
+# 2 compiles, 0 failed with no errors.
+vsim -gui work.memory_tb
+# End time: 15:52:03 on Apr 19,2024, Elapsed time: 0:09:38
+# Errors: 0, Warnings: 3
+# vsim -gui work.memory_tb 
+# Start time: 15:52:03 on Apr 19,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.memory_tb(behavior)
+# Loading work.memory(memory_arch)
+do memory_tb.do
+# End time: 15:53:56 on Apr 19,2024, Elapsed time: 0:01:53
+# Errors: 0, Warnings: 1
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 15:53:56 on Apr 19,2024
+# vcom -reportprogress 300 memory.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity memory
+# -- Compiling architecture memory_arch of memory
+# End time: 15:53:57 on Apr 19,2024, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 15:53:57 on Apr 19,2024
+# vcom -reportprogress 300 memory_tb.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity memory_tb
+# -- Compiling architecture behavior of memory_tb
+# End time: 15:53:57 on Apr 19,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -gui work.memory_tb 
+# Start time: 15:53:57 on Apr 19,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.memory_tb(behavior)
+# Loading work.memory(memory_arch)
+# ** Error: invalid command name "sim:/memory_tb/uut/*"
+# Error in macro ./memory_tb.do line 13
+# invalid command name "sim:/memory_tb/uut/*"
+#     while executing
+# "sim:/memory_tb/uut/*"
+do memory_tb.do
+# End time: 15:54:31 on Apr 19,2024, Elapsed time: 0:00:34
+# Errors: 1, Warnings: 1
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 15:54:31 on Apr 19,2024
+# vcom -reportprogress 300 memory.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity memory
+# -- Compiling architecture memory_arch of memory
+# End time: 15:54:31 on Apr 19,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 15:54:31 on Apr 19,2024
+# vcom -reportprogress 300 memory_tb.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity memory_tb
+# -- Compiling architecture behavior of memory_tb
+# End time: 15:54:31 on Apr 19,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -gui work.memory_tb 
+# Start time: 15:54:31 on Apr 19,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.memory_tb(behavior)
+# Loading work.memory(memory_arch)
+# ** Error: invalid command name "sim:/memory_tb/*"
+# Error in macro ./memory_tb.do line 13
+# invalid command name "sim:/memory_tb/*"
+#     while executing
+# "sim:/memory_tb/*"
+vsim -gui work.memory_tb
+# End time: 15:55:57 on Apr 19,2024, Elapsed time: 0:01:26
+# Errors: 1, Warnings: 1
+# vsim -gui work.memory_tb 
+# Start time: 15:55:57 on Apr 19,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.memory_tb(behavior)
+# Loading work.memory(memory_arch)
+add wave -position end  sim:/memory_tb/clk
+add wave -position end  sim:/memory_tb/address
+add wave -position end  sim:/memory_tb/write_enable
+add wave -position end  sim:/memory_tb/write_data
+add wave -position end  sim:/memory_tb/read_enable
+add wave -position end  sim:/memory_tb/protect_signal
+add wave -position end  sim:/memory_tb/free_signal
+add wave -position end  sim:/memory_tb/read_data
+add wave -position end  sim:/memory_tb/clk_period
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Omar  Hostname: DESKTOP-QM07EUH  ProcessID: 1144
+#           Attempting to use alternate WLF file "./wlftms8x7d".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftms8x7d
+do memory_tb.do
+# End time: 16:50:03 on Apr 19,2024, Elapsed time: 0:54:06
+# Errors: 0, Warnings: 3
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 16:50:03 on Apr 19,2024
+# vcom -reportprogress 300 memory.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity memory
+# -- Compiling architecture memory_arch of memory
+# End time: 16:50:04 on Apr 19,2024, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 16:50:04 on Apr 19,2024
+# vcom -reportprogress 300 memory_tb.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity memory_tb
+# -- Compiling architecture behavior of memory_tb
+# End time: 16:50:04 on Apr 19,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -gui work.memory_tb 
+# Start time: 16:50:04 on Apr 19,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.memory_tb(behavior)
+# Loading work.memory(memory_arch)
+# ** Error: invalid command name "sim:"
+# Error in macro ./memory_tb.do line 13
+# invalid command name "sim:"
+#     while executing
+# "sim:"
+add wave -position end  sim:/memory_tb/clk
+add wave -position end  sim:/memory_tb/address
+add wave -position end  sim:/memory_tb/write_enable
+add wave -position end  sim:/memory_tb/write_data
+add wave -position end  sim:/memory_tb/read_enable
+add wave -position end  sim:/memory_tb/protect_signal
+add wave -position end  sim:/memory_tb/free_signal
+add wave -position end  sim:/memory_tb/read_data
+add wave -position end  sim:/memory_tb/clk_period
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Omar  Hostname: DESKTOP-QM07EUH  ProcessID: 1144
+#           Attempting to use alternate WLF file "./wlft6akxt7".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlft6akxt7
+do memory_tb.do
+# End time: 16:50:42 on Apr 19,2024, Elapsed time: 0:00:38
+# Errors: 1, Warnings: 3
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 16:50:42 on Apr 19,2024
+# vcom -reportprogress 300 memory.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity memory
+# -- Compiling architecture memory_arch of memory
+# End time: 16:50:42 on Apr 19,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 16:50:42 on Apr 19,2024
+# vcom -reportprogress 300 memory_tb.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity memory_tb
+# -- Compiling architecture behavior of memory_tb
+# End time: 16:50:42 on Apr 19,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -gui work.memory_tb 
+# Start time: 16:50:42 on Apr 19,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.memory_tb(behavior)
+# Loading work.memory(memory_arch)
+# ** Error: invalid command name "sim:"
+# Error in macro ./memory_tb.do line 13
+# invalid command name "sim:"
+#     while executing
+# "sim:"
+do memory_tb.do
+# End time: 16:50:58 on Apr 19,2024, Elapsed time: 0:00:16
+# Errors: 1, Warnings: 1
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 16:50:58 on Apr 19,2024
+# vcom -reportprogress 300 memory.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity memory
+# -- Compiling architecture memory_arch of memory
+# End time: 16:50:58 on Apr 19,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 16:50:58 on Apr 19,2024
+# vcom -reportprogress 300 memory_tb.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity memory_tb
+# -- Compiling architecture behavior of memory_tb
+# End time: 16:50:58 on Apr 19,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -gui work.memory_tb 
+# Start time: 16:50:58 on Apr 19,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.memory_tb(behavior)
+# Loading work.memory(memory_arch)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Omar  Hostname: DESKTOP-QM07EUH  ProcessID: 1144
+#           Attempting to use alternate WLF file "./wlftj8f6c2".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftj8f6c2
+run
+run
+run
+run
+run
+run
+run
+run
+run
+do memory_tb.do
+# End time: 16:59:12 on Apr 19,2024, Elapsed time: 0:08:14
+# Errors: 0, Warnings: 3
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 16:59:12 on Apr 19,2024
+# vcom -reportprogress 300 memory.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity memory
+# -- Compiling architecture memory_arch of memory
+# End time: 16:59:12 on Apr 19,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 16:59:12 on Apr 19,2024
+# vcom -reportprogress 300 memory_tb.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity memory_tb
+# -- Compiling architecture behavior of memory_tb
+# End time: 16:59:12 on Apr 19,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -gui work.memory_tb 
+# Start time: 16:59:12 on Apr 19,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.memory_tb(behavior)
+# Loading work.memory(memory_arch)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Omar  Hostname: DESKTOP-QM07EUH  ProcessID: 1144
+#           Attempting to use alternate WLF file "./wlftr36mhd".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftr36mhd
+do memory_tb.do
+# End time: 16:59:42 on Apr 19,2024, Elapsed time: 0:00:30
+# Errors: 0, Warnings: 3
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 16:59:42 on Apr 19,2024
+# vcom -reportprogress 300 memory.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity memory
+# -- Compiling architecture memory_arch of memory
+# End time: 16:59:42 on Apr 19,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 16:59:42 on Apr 19,2024
+# vcom -reportprogress 300 memory_tb.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity memory_tb
+# -- Compiling architecture behavior of memory_tb
+# End time: 16:59:42 on Apr 19,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -gui work.memory_tb 
+# Start time: 16:59:43 on Apr 19,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.memory_tb(behavior)
+# Loading work.memory(memory_arch)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Omar  Hostname: DESKTOP-QM07EUH  ProcessID: 1144
+#           Attempting to use alternate WLF file "./wlftgqvn13".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftgqvn13
+run
+run
+run
+run
+run
+run
+run
+run
