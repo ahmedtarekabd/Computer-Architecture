@@ -49,6 +49,23 @@ begin
 
     tb : process
     begin
+
+        -- -- Initialize old flags
+        -- old_negative_flag <= '0';
+        -- old_zero_flag <= '0';
+        -- old_overflow_flag <= '0';
+        -- old_carry_flag <= '0';
+
+        -- Test case 1: ADD operation
+        A <= "00000000000000000000000000000001"; B <= "00000000000000000000000000000001"; opcode <= "001";
+        wait for 10 ns;
+
+        -- Update old flags
+        old_negative_flag <= negative_flag;
+        old_zero_flag <= zero_flag;
+        old_overflow_flag <= overflow_flag;
+        old_carry_flag <= carry_flag;
+
         -- -- Test case 1: ADD operation
         -- A <= "00000000000000000000000000000001"; B <= "00000000000000000000000000000001"; opcode <= "001";
         -- wait for 10 ns;
@@ -69,9 +86,15 @@ begin
         -- A <= "00000000000000000000000000001111"; B <= "00000000000000000000000000001111"; opcode <= "110";
         -- wait for 10 ns;
 
-        -- --test case 7 : move operation
-        -- A <= "00000000000000000000000000001111"; opcode <= "011";
-        -- wait for 10 ns;
+        --test case 7 : move operation
+        A <= "00000000000000000000000000001111"; opcode <= "011";
+        wait for 10 ns;
+
+        -- Update old flags
+        old_negative_flag <= negative_flag;
+        old_zero_flag <= zero_flag;
+        old_overflow_flag <= overflow_flag;
+        old_carry_flag <= carry_flag;
 
         -- -- Test case 8: ADD operation that triggers overflow
         -- A <= "01111111111111111111111111111111"; B <= "00000000000000000000000000000001"; opcode <= "001";
@@ -89,14 +112,38 @@ begin
         -- -- Test case 11: SUB that triggers carry
         A <= "00000000000000000000000000000000"; B <= "00000000000000000000000000000001"; opcode <= "010";
         wait for 10 ns;
+        -- Update old flags
+        old_negative_flag <= negative_flag;
+        old_zero_flag <= zero_flag;
+        old_overflow_flag <= overflow_flag;
+        old_carry_flag <= carry_flag;
 
         A <= "00000000000000000000000000000001"; B <= "00000000000000000000000000000010"; opcode <= "010";
         wait for 10 ns;
+        -- Update old flags
+        old_negative_flag <= negative_flag;
+        old_zero_flag <= zero_flag;
+        old_overflow_flag <= overflow_flag;
+        old_carry_flag <= carry_flag;
 
         --test case 12 : ADD that triggers overflow
         A <= "10000000000000000000000000000000"; -- A = -2147483648 (32-bit signed integer)
         B <= "01111111111111111111111111111111"; -- B = 2147483647 (32-bit signed integer)
         opcode <= "010"; -- SUB operation
+        wait for 10 ns;
+        -- Update old flags
+        old_negative_flag <= negative_flag;
+        old_zero_flag <= zero_flag;
+        old_overflow_flag <= overflow_flag;
+        old_carry_flag <= carry_flag;
+
+        --test case 7 : move operation
+        A <= "00000000000000000000000000001111"; opcode <= "011";
+        -- Update old flags
+        old_negative_flag <= negative_flag;
+        old_zero_flag <= zero_flag;
+        old_overflow_flag <= overflow_flag;
+        old_carry_flag <= carry_flag;
         wait;
 
 

@@ -16,10 +16,10 @@ entity ALU is
         negative_flag: out std_logic; -- Negative flag
 
         --old flags
-        old_negative_flag: in std_logic := '0'; -- Old negative flag
-        old_zero_flag: in std_logic := '0'; -- Old zero flag
-        old_overflow_flag: in std_logic := '0'; -- Old overflow flag
-        old_carry_flag: in std_logic := '0' -- Old carry flag
+        old_negative_flag: in std_logic; -- Old negative flag
+        old_zero_flag: in std_logic; -- Old zero flag
+        old_overflow_flag: in std_logic; -- Old overflow flag
+        old_carry_flag: in std_logic -- Old carry flag
 
     );
 end ALU;
@@ -42,12 +42,6 @@ architecture ALU_Behavior of ALU is
     signal F_internal: std_logic_vector(n-1 downto 0);
 
 begin
-
-    -- -- Assign the old flags to the new flags in case the operation doesn't change them
-    -- overflow_flag <= old_overflow_flag;
-    -- carry_flag <= old_carry_flag;
-    -- zero_flag <= old_zero_flag; 
-    -- negative_flag <= old_negative_flag; 
 
     A_integer <= unsigned(A);
     B_integer <= unsigned(B);
@@ -92,17 +86,6 @@ begin
     negative_flag <= '1' when zero_neg_flags = '1' and F_internal(n-1) = '1' else
         '0' when zero_neg_flags = '1' else
         old_negative_flag;
-
-
-    --overflow flag for add and sub
-    -- if opcode = "001" or opcode = "010" then
-    --     overflow_flag <= '1' when A_integer(n-1) = B_integer(n-1) and A_integer(n-1) /= (A_integer + B_integer)(n-1) else
-    --                      '0';
-    -- end if;
-        -- overflow = '0' when opcode = "001" and A_integer(n-1) = B_integer(n-1) and A_integer(n-1) /= (A_integer + B_integer)(n-1) else
-        --            '0' when opcode = "010" and A_integer(n-1) /= B_integer(n-1) and A_integer(n-1) /= (A_integer - B_integer)(n-1) else
-        --            '1' when opcode = "001" or opcode = "010" else
-        --            old_overflow_flag;
 
 
     F <= F_internal; -- Assign the internal signal to the output

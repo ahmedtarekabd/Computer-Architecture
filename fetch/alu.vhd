@@ -16,10 +16,10 @@ entity ALU is
         negative_flag: out std_logic; -- Negative flag
 
         --old flags
-        old_negative_flag: in std_logic := '0'; -- Old negative flag
-        old_zero_flag: in std_logic := '0'; -- Old zero flag
-        old_overflow_flag: in std_logic := '0'; -- Old overflow flag
-        old_carry_flag: in std_logic := '0' -- Old carry flag
+        old_negative_flag: in std_logic; -- Old negative flag
+        old_zero_flag: in std_logic; -- Old zero flag
+        old_overflow_flag: in std_logic; -- Old overflow flag
+        old_carry_flag: in std_logic -- Old carry flag
 
     );
 end ALU;

@@ -1,36 +1,9 @@
-# Compile of alu.vhd failed with 5 errors.
-# Compile of alu_tb.vhd was successful.
-# 2 compiles, 1 failed with 5 errors.
-# Compile of alu.vhd failed with 5 errors.
-# Compile of alu_tb.vhd was successful.
-# 2 compiles, 1 failed with 5 errors.
-# Compile of alu.vhd failed with 14 errors.
-# Compile of alu_tb.vhd was successful.
-# 2 compiles, 1 failed with 14 errors.
-# Compile of alu.vhd failed with 7 errors.
-# Compile of alu_tb.vhd was successful.
-# 2 compiles, 1 failed with 7 errors.
-# Compile of alu.vhd failed with 7 errors.
-# Compile of alu_tb.vhd was successful.
-# 2 compiles, 1 failed with 7 errors.
-# Compile of alu.vhd failed with 1 errors.
-# Compile of alu_tb.vhd was successful.
-# 2 compiles, 1 failed with 1 error.
-# Compile of alu.vhd failed with 6 errors.
-# Compile of alu_tb.vhd was successful.
-# 2 compiles, 1 failed with 6 errors.
-# Compile of alu.vhd failed with 4 errors.
-# Compile of alu_tb.vhd was successful.
-# 2 compiles, 1 failed with 4 errors.
-# Compile of alu.vhd failed with 2 errors.
-# Compile of alu_tb.vhd was successful.
-# 2 compiles, 1 failed with 2 errors.
 # Compile of alu.vhd was successful.
 # Compile of alu_tb.vhd was successful.
 # 2 compiles, 0 failed with no errors.
 do alu.do
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 00:24:58 on Apr 19,2024
+# Start time: 13:19:10 on Apr 19,2024
 # vcom -reportprogress 300 alu.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -38,10 +11,10 @@ do alu.do
 # -- Loading package NUMERIC_STD
 # -- Compiling entity ALU
 # -- Compiling architecture ALU_Behavior of ALU
-# End time: 00:24:58 on Apr 19,2024, Elapsed time: 0:00:00
+# End time: 13:19:11 on Apr 19,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 00:24:59 on Apr 19,2024
+# Start time: 13:19:11 on Apr 19,2024
 # vcom -reportprogress 300 alu_tb.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -49,10 +22,10 @@ do alu.do
 # -- Loading package NUMERIC_STD
 # -- Compiling entity ALU_tb
 # -- Compiling architecture behavior of ALU_tb
-# End time: 00:24:59 on Apr 19,2024, Elapsed time: 0:00:00
+# End time: 13:19:11 on Apr 19,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vsim -gui work.alu_tb 
-# Start time: 00:24:59 on Apr 19,2024
+# Start time: 13:19:11 on Apr 19,2024
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
@@ -61,30 +34,16 @@ do alu.do
 # Loading work.alu(alu_behavior)
 # ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
 #           File in use by: Omar  Hostname: DESKTOP-QM07EUH  ProcessID: 1144
-#           Attempting to use alternate WLF file "./wlftj9c7t1".
+#           Attempting to use alternate WLF file "./wlftiyazg6".
 # ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
-#           Using alternate file: ./wlftj9c7t1
+#           Using alternate file: ./wlftiyazg6
 # ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
 #    Time: 0 ps  Iteration: 2  Instance: /alu_tb/uut
-# ** Error: Test case 1 failed
-#    Time: 10 ns  Iteration: 0  Instance: /alu_tb
-# ** Error: Test case 2 failed
-#    Time: 20 ns  Iteration: 0  Instance: /alu_tb
-# ** Error: Test case 3 failed
-#    Time: 30 ns  Iteration: 0  Instance: /alu_tb
-# ** Error: Test case 4 failed
-#    Time: 40 ns  Iteration: 0  Instance: /alu_tb
-# ** Error: Test case 5 failed
-#    Time: 50 ns  Iteration: 0  Instance: /alu_tb
-# ** Error: Test case 6 failed
-#    Time: 60 ns  Iteration: 0  Instance: /alu_tb
-# ** Error: Test case 7 failed
-#    Time: 70 ns  Iteration: 0  Instance: /alu_tb
 do alu.do
-# End time: 00:30:48 on Apr 19,2024, Elapsed time: 0:05:49
-# Errors: 7, Warnings: 15
+# End time: 13:19:52 on Apr 19,2024, Elapsed time: 0:00:41
+# Errors: 0, Warnings: 6
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 00:30:48 on Apr 19,2024
+# Start time: 13:19:52 on Apr 19,2024
 # vcom -reportprogress 300 alu.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -92,10 +51,10 @@ do alu.do
 # -- Loading package NUMERIC_STD
 # -- Compiling entity ALU
 # -- Compiling architecture ALU_Behavior of ALU
-# End time: 00:30:48 on Apr 19,2024, Elapsed time: 0:00:00
+# End time: 13:19:52 on Apr 19,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 00:30:48 on Apr 19,2024
+# Start time: 13:19:52 on Apr 19,2024
 # vcom -reportprogress 300 alu_tb.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -103,10 +62,10 @@ do alu.do
 # -- Loading package NUMERIC_STD
 # -- Compiling entity ALU_tb
 # -- Compiling architecture behavior of ALU_tb
-# End time: 00:30:48 on Apr 19,2024, Elapsed time: 0:00:00
+# End time: 13:19:52 on Apr 19,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vsim -gui work.alu_tb 
-# Start time: 00:30:48 on Apr 19,2024
+# Start time: 13:19:52 on Apr 19,2024
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
@@ -115,16 +74,16 @@ do alu.do
 # Loading work.alu(alu_behavior)
 # ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
 #           File in use by: Omar  Hostname: DESKTOP-QM07EUH  ProcessID: 1144
-#           Attempting to use alternate WLF file "./wlfthm7nz2".
+#           Attempting to use alternate WLF file "./wlftr51kh5".
 # ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
-#           Using alternate file: ./wlfthm7nz2
+#           Using alternate file: ./wlftr51kh5
 # ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
 #    Time: 0 ps  Iteration: 2  Instance: /alu_tb/uut
 do alu.do
-# End time: 00:33:33 on Apr 19,2024, Elapsed time: 0:02:45
+# End time: 13:20:18 on Apr 19,2024, Elapsed time: 0:00:26
 # Errors: 0, Warnings: 4
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 00:33:33 on Apr 19,2024
+# Start time: 13:20:19 on Apr 19,2024
 # vcom -reportprogress 300 alu.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -132,10 +91,10 @@ do alu.do
 # -- Loading package NUMERIC_STD
 # -- Compiling entity ALU
 # -- Compiling architecture ALU_Behavior of ALU
-# End time: 00:33:33 on Apr 19,2024, Elapsed time: 0:00:00
+# End time: 13:20:19 on Apr 19,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 00:33:33 on Apr 19,2024
+# Start time: 13:20:19 on Apr 19,2024
 # vcom -reportprogress 300 alu_tb.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -143,10 +102,10 @@ do alu.do
 # -- Loading package NUMERIC_STD
 # -- Compiling entity ALU_tb
 # -- Compiling architecture behavior of ALU_tb
-# End time: 00:33:33 on Apr 19,2024, Elapsed time: 0:00:00
+# End time: 13:20:19 on Apr 19,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vsim -gui work.alu_tb 
-# Start time: 00:33:33 on Apr 19,2024
+# Start time: 13:20:19 on Apr 19,2024
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
@@ -155,16 +114,16 @@ do alu.do
 # Loading work.alu(alu_behavior)
 # ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
 #           File in use by: Omar  Hostname: DESKTOP-QM07EUH  ProcessID: 1144
-#           Attempting to use alternate WLF file "./wlftnb2vwj".
+#           Attempting to use alternate WLF file "./wlftv6y9sr".
 # ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
-#           Using alternate file: ./wlftnb2vwj
+#           Using alternate file: ./wlftv6y9sr
 # ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
 #    Time: 0 ps  Iteration: 2  Instance: /alu_tb/uut
 do alu.do
-# End time: 00:35:38 on Apr 19,2024, Elapsed time: 0:02:05
+# End time: 13:21:35 on Apr 19,2024, Elapsed time: 0:01:16
 # Errors: 0, Warnings: 4
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 00:35:39 on Apr 19,2024
+# Start time: 13:21:35 on Apr 19,2024
 # vcom -reportprogress 300 alu.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -172,10 +131,10 @@ do alu.do
 # -- Loading package NUMERIC_STD
 # -- Compiling entity ALU
 # -- Compiling architecture ALU_Behavior of ALU
-# End time: 00:35:39 on Apr 19,2024, Elapsed time: 0:00:00
+# End time: 13:21:36 on Apr 19,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 00:35:39 on Apr 19,2024
+# Start time: 13:21:36 on Apr 19,2024
 # vcom -reportprogress 300 alu_tb.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -183,52 +142,10 @@ do alu.do
 # -- Loading package NUMERIC_STD
 # -- Compiling entity ALU_tb
 # -- Compiling architecture behavior of ALU_tb
-# End time: 00:35:39 on Apr 19,2024, Elapsed time: 0:00:00
+# End time: 13:21:36 on Apr 19,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vsim -gui work.alu_tb 
-# Start time: 00:35:39 on Apr 19,2024
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading ieee.numeric_std(body)
-# Loading work.alu_tb(behavior)
-# Loading work.alu(alu_behavior)
-# ** Warning: (vsim-8683) Uninitialized out port /alu_tb/uut/overflow_flag has no driver.
-# This port will contribute value (U) to the signal network.
-# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
-#           File in use by: Omar  Hostname: DESKTOP-QM07EUH  ProcessID: 1144
-#           Attempting to use alternate WLF file "./wlft8zfrrc".
-# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
-#           Using alternate file: ./wlft8zfrrc
-# ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
-#    Time: 0 ps  Iteration: 2  Instance: /alu_tb/uut
-do alu.do
-# End time: 01:00:38 on Apr 19,2024, Elapsed time: 0:24:59
-# Errors: 0, Warnings: 5
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 01:00:38 on Apr 19,2024
-# vcom -reportprogress 300 alu.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity ALU
-# -- Compiling architecture ALU_Behavior of ALU
-# End time: 01:00:39 on Apr 19,2024, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 01:00:39 on Apr 19,2024
-# vcom -reportprogress 300 alu_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity ALU_tb
-# -- Compiling architecture behavior of ALU_tb
-# End time: 01:00:39 on Apr 19,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# vsim -gui work.alu_tb 
-# Start time: 01:00:39 on Apr 19,2024
+# Start time: 13:21:36 on Apr 19,2024
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
@@ -237,16 +154,16 @@ do alu.do
 # Loading work.alu(alu_behavior)
 # ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
 #           File in use by: Omar  Hostname: DESKTOP-QM07EUH  ProcessID: 1144
-#           Attempting to use alternate WLF file "./wlft1dm25f".
+#           Attempting to use alternate WLF file "./wlftw8vrib".
 # ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
-#           Using alternate file: ./wlft1dm25f
+#           Using alternate file: ./wlftw8vrib
 # ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
 #    Time: 0 ps  Iteration: 2  Instance: /alu_tb/uut
 do alu.do
-# End time: 01:08:01 on Apr 19,2024, Elapsed time: 0:07:22
+# End time: 13:22:58 on Apr 19,2024, Elapsed time: 0:01:22
 # Errors: 0, Warnings: 4
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 01:08:01 on Apr 19,2024
+# Start time: 13:22:58 on Apr 19,2024
 # vcom -reportprogress 300 alu.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -254,10 +171,10 @@ do alu.do
 # -- Loading package NUMERIC_STD
 # -- Compiling entity ALU
 # -- Compiling architecture ALU_Behavior of ALU
-# End time: 01:08:02 on Apr 19,2024, Elapsed time: 0:00:01
+# End time: 13:22:58 on Apr 19,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 01:08:02 on Apr 19,2024
+# Start time: 13:22:58 on Apr 19,2024
 # vcom -reportprogress 300 alu_tb.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -265,10 +182,10 @@ do alu.do
 # -- Loading package NUMERIC_STD
 # -- Compiling entity ALU_tb
 # -- Compiling architecture behavior of ALU_tb
-# End time: 01:08:02 on Apr 19,2024, Elapsed time: 0:00:00
+# End time: 13:22:58 on Apr 19,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vsim -gui work.alu_tb 
-# Start time: 01:08:02 on Apr 19,2024
+# Start time: 13:22:58 on Apr 19,2024
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
@@ -277,16 +194,16 @@ do alu.do
 # Loading work.alu(alu_behavior)
 # ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
 #           File in use by: Omar  Hostname: DESKTOP-QM07EUH  ProcessID: 1144
-#           Attempting to use alternate WLF file "./wlftsn14kb".
+#           Attempting to use alternate WLF file "./wlftwgx32k".
 # ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
-#           Using alternate file: ./wlftsn14kb
+#           Using alternate file: ./wlftwgx32k
 # ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
 #    Time: 0 ps  Iteration: 2  Instance: /alu_tb/uut
 do alu.do
-# End time: 01:09:29 on Apr 19,2024, Elapsed time: 0:01:27
+# End time: 13:26:01 on Apr 19,2024, Elapsed time: 0:03:03
 # Errors: 0, Warnings: 4
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 01:09:29 on Apr 19,2024
+# Start time: 13:26:01 on Apr 19,2024
 # vcom -reportprogress 300 alu.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -294,10 +211,10 @@ do alu.do
 # -- Loading package NUMERIC_STD
 # -- Compiling entity ALU
 # -- Compiling architecture ALU_Behavior of ALU
-# End time: 01:09:29 on Apr 19,2024, Elapsed time: 0:00:00
+# End time: 13:26:02 on Apr 19,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 01:09:29 on Apr 19,2024
+# Start time: 13:26:02 on Apr 19,2024
 # vcom -reportprogress 300 alu_tb.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -305,10 +222,10 @@ do alu.do
 # -- Loading package NUMERIC_STD
 # -- Compiling entity ALU_tb
 # -- Compiling architecture behavior of ALU_tb
-# End time: 01:09:30 on Apr 19,2024, Elapsed time: 0:00:01
+# End time: 13:26:02 on Apr 19,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vsim -gui work.alu_tb 
-# Start time: 01:09:30 on Apr 19,2024
+# Start time: 13:26:02 on Apr 19,2024
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
@@ -317,16 +234,16 @@ do alu.do
 # Loading work.alu(alu_behavior)
 # ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
 #           File in use by: Omar  Hostname: DESKTOP-QM07EUH  ProcessID: 1144
-#           Attempting to use alternate WLF file "./wlft4a6wiw".
+#           Attempting to use alternate WLF file "./wlftg2dak4".
 # ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
-#           Using alternate file: ./wlft4a6wiw
+#           Using alternate file: ./wlftg2dak4
 # ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
 #    Time: 0 ps  Iteration: 2  Instance: /alu_tb/uut
 do alu.do
-# End time: 01:45:54 on Apr 19,2024, Elapsed time: 0:36:24
+# End time: 13:28:34 on Apr 19,2024, Elapsed time: 0:02:32
 # Errors: 0, Warnings: 4
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 01:45:54 on Apr 19,2024
+# Start time: 13:28:34 on Apr 19,2024
 # vcom -reportprogress 300 alu.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -334,10 +251,10 @@ do alu.do
 # -- Loading package NUMERIC_STD
 # -- Compiling entity ALU
 # -- Compiling architecture ALU_Behavior of ALU
-# End time: 01:45:55 on Apr 19,2024, Elapsed time: 0:00:01
+# End time: 13:28:34 on Apr 19,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 01:45:55 on Apr 19,2024
+# Start time: 13:28:34 on Apr 19,2024
 # vcom -reportprogress 300 alu_tb.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -345,109 +262,10 @@ do alu.do
 # -- Loading package NUMERIC_STD
 # -- Compiling entity ALU_tb
 # -- Compiling architecture behavior of ALU_tb
-# ** Error (suppressible): alu_tb.vhd(101): (vcom-1272) Length of expected is 32; length of actual is 8.
-# ** Error (suppressible): alu_tb.vhd(102): (vcom-1272) Length of expected is 32; length of actual is 8.
-# ** Note: alu_tb.vhd(108): VHDL Compiler exiting
-# End time: 01:45:55 on Apr 19,2024, Elapsed time: 0:00:00
-# Errors: 2, Warnings: 0
-# ** Error: C:/intelFPGA/20.1/modelsim_ase/win32aloem/vcom failed.
-# Error in macro ./alu.do line 7
-# C:/intelFPGA/20.1/modelsim_ase/win32aloem/vcom failed.
-#     while executing
-# "vcom alu_tb.vhd"
-do alu.do
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 01:46:16 on Apr 19,2024
-# vcom -reportprogress 300 alu.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity ALU
-# -- Compiling architecture ALU_Behavior of ALU
-# End time: 01:46:17 on Apr 19,2024, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 01:46:17 on Apr 19,2024
-# vcom -reportprogress 300 alu_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity ALU_tb
-# -- Compiling architecture behavior of ALU_tb
-# ** Error (suppressible): alu_tb.vhd(101): (vcom-1272) Length of expected is 32; length of actual is 8.
-# ** Error (suppressible): alu_tb.vhd(102): (vcom-1272) Length of expected is 32; length of actual is 8.
-# ** Note: alu_tb.vhd(108): VHDL Compiler exiting
-# End time: 01:46:17 on Apr 19,2024, Elapsed time: 0:00:00
-# Errors: 2, Warnings: 0
-# ** Error: C:/intelFPGA/20.1/modelsim_ase/win32aloem/vcom failed.
-# Error in macro ./alu.do line 7
-# C:/intelFPGA/20.1/modelsim_ase/win32aloem/vcom failed.
-#     while executing
-# "vcom alu_tb.vhd"
-# Compile of alu.vhd was successful.
-# Compile of alu_tb.vhd failed with 2 errors.
-# 2 compiles, 1 failed with 2 errors.
-do alu.do
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 01:47:07 on Apr 19,2024
-# vcom -reportprogress 300 alu.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity ALU
-# -- Compiling architecture ALU_Behavior of ALU
-# End time: 01:47:07 on Apr 19,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 01:47:07 on Apr 19,2024
-# vcom -reportprogress 300 alu_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity ALU_tb
-# -- Compiling architecture behavior of ALU_tb
-# ** Error (suppressible): alu_tb.vhd(101): (vcom-1272) Length of expected is 32; length of actual is 16.
-# ** Error (suppressible): alu_tb.vhd(102): (vcom-1272) Length of expected is 32; length of actual is 16.
-# ** Note: alu_tb.vhd(108): VHDL Compiler exiting
-# End time: 01:47:07 on Apr 19,2024, Elapsed time: 0:00:00
-# Errors: 2, Warnings: 0
-# ** Error: C:/intelFPGA/20.1/modelsim_ase/win32aloem/vcom failed.
-# Error in macro ./alu.do line 7
-# C:/intelFPGA/20.1/modelsim_ase/win32aloem/vcom failed.
-#     while executing
-# "vcom alu_tb.vhd"
-# Compile of alu.vhd was successful.
-# Compile of alu_tb.vhd failed with 2 errors.
-# 2 compiles, 1 failed with 2 errors.
-do alu.do
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 01:48:44 on Apr 19,2024
-# vcom -reportprogress 300 alu.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity ALU
-# -- Compiling architecture ALU_Behavior of ALU
-# End time: 01:48:44 on Apr 19,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 01:48:44 on Apr 19,2024
-# vcom -reportprogress 300 alu_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity ALU_tb
-# -- Compiling architecture behavior of ALU_tb
-# End time: 01:48:45 on Apr 19,2024, Elapsed time: 0:00:01
+# End time: 13:28:35 on Apr 19,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 # vsim -gui work.alu_tb 
-# Start time: 01:48:45 on Apr 19,2024
+# Start time: 13:28:35 on Apr 19,2024
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
@@ -456,52 +274,8 @@ do alu.do
 # Loading work.alu(alu_behavior)
 # ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
 #           File in use by: Omar  Hostname: DESKTOP-QM07EUH  ProcessID: 1144
-#           Attempting to use alternate WLF file "./wlftyr8hf5".
+#           Attempting to use alternate WLF file "./wlft66y132".
 # ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
-#           Using alternate file: ./wlftyr8hf5
-# ** Warning: NUMERIC_STD."<": metavalue detected, returning FALSE
-#    Time: 0 ps  Iteration: 1  Instance: /alu_tb/uut
-# ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
-#    Time: 0 ps  Iteration: 2  Instance: /alu_tb/uut
-do alu.do
-# End time: 01:55:23 on Apr 19,2024, Elapsed time: 0:06:38
-# Errors: 0, Warnings: 10
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 01:55:24 on Apr 19,2024
-# vcom -reportprogress 300 alu.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity ALU
-# -- Compiling architecture ALU_Behavior of ALU
-# End time: 01:55:24 on Apr 19,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 01:55:24 on Apr 19,2024
-# vcom -reportprogress 300 alu_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity ALU_tb
-# -- Compiling architecture behavior of ALU_tb
-# End time: 01:55:24 on Apr 19,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# vsim -gui work.alu_tb 
-# Start time: 01:55:24 on Apr 19,2024
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading ieee.numeric_std(body)
-# Loading work.alu_tb(behavior)
-# Loading work.alu(alu_behavior)
-# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
-#           File in use by: Omar  Hostname: DESKTOP-QM07EUH  ProcessID: 1144
-#           Attempting to use alternate WLF file "./wlft61a0rx".
-# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
-#           Using alternate file: ./wlft61a0rx
-# ** Warning: NUMERIC_STD."<": metavalue detected, returning FALSE
-#    Time: 0 ps  Iteration: 1  Instance: /alu_tb/uut
+#           Using alternate file: ./wlft66y132
 # ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
 #    Time: 0 ps  Iteration: 2  Instance: /alu_tb/uut
