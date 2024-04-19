@@ -65,10 +65,10 @@ PROCESS (clk) IS
                     --if it is 1 then don't write on it
 
                     if memory_array(to_integer(unsigned(address)))(n) = '0' THEN
-                    --default is that the last bit is 0 (free)
-                    memory_array(to_integer(unsigned(address))) <= '0' & write_data;
+                        --default is that the last bit is 0 (free)
+                        memory_array(to_integer(unsigned(address))) <= '0' & write_data;
                     -- ELSE
-                    --what should i output if the protected bit is 1?
+                        --what should i output if the protected bit is 1?
                     end if;
 
                 END IF;
@@ -83,6 +83,7 @@ PROCESS (clk) IS
     END PROCESS;
 END memory_arch;
 
+--not important
 --------questions--------
 
 --should the read data be indebendent of the write data?

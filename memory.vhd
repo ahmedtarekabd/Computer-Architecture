@@ -83,6 +83,7 @@ PROCESS (clk) IS
     END PROCESS;
 END memory_arch;
 
+--not important
 --------questions--------
 
 --should the read data be indebendent of the write data?
