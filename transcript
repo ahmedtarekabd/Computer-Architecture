@@ -189,3 +189,6 @@ run
 # Compile of execute.vhd was successful.
 # 7 compiles, 1 failed with 1 error.
 # Compile of execute.vhd was successful.
+vsim -version
+# Model Technology ModelSim - INTEL FPGA STARTER EDITION vsim 2020.1 Simulator 2020.02 Feb 28 2020
+# 

@@ -10,12 +10,14 @@ architecture arch of fetch_tb is
     signal clk : std_logic := '0';
     signal reset : std_logic := '1';
     signal selected_instruction_out : std_logic_vector(15 downto 0);
+    signal selected_immediate_out : std_logic_vector(15 downto 0);
 
     component fetch is
         port (
             clk : in std_logic; 
             reset : in std_logic;
-            selected_instruction_out : out std_logic_vector(15 downto 0)
+            selected_instruction_out : out std_logic_vector(15 downto 0);
+            selected_immediate_out : out std_logic_vector(15 downto 0)
         );
     end component;
 
@@ -24,7 +26,8 @@ begin
     uut: fetch port map (
         clk => clk,
         reset => reset,
-        selected_instruction_out => selected_instruction_out
+        selected_instruction_out => selected_instruction_out,
+        selected_immediate_out => selected_immediate_out
     );
 
     -- Clock process definitions

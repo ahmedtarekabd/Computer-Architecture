@@ -6,7 +6,8 @@ entity fetch is
     port (
         clk : in std_logic; 
         reset : in std_logic;
-        selected_instruction_out : out std_logic_vector(15 downto 0)
+        selected_instruction_out : out std_logic_vector(15 downto 0);
+        selected_immediate_out : out std_logic_vector(15 downto 0)
     );
 end entity fetch;
 
@@ -122,6 +123,6 @@ begin
         );
 
     selected_instruction_out <= selected_instruction; -- Assign new signal to output port
-
+    selected_immediate_out <= instruction_out_from_instr_cache; -- Assign new signal to output port
 
 end architecture arch_fetch;
