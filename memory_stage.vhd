@@ -24,8 +24,8 @@ entity memory_stage is
         pc_in : in std_logic_vector(15 downto 0);
 
         mem_write_data : in std_logic_vector(31 downto 0);
-        -- depends on the control signal same as ALU out
-        mem_read_or_write_addr : in std_logic_vector(12 downto 0);
+        -- depends on the control signal same as ALU out which is 32 bits
+        mem_read_or_write_addr : in std_logic_vector(11 downto 0);
         
 
 -----------------------------------------outputs-----------------------------------------
@@ -45,16 +45,15 @@ end memory_stage;
 architecture memory_stage_arch of memory_stage is
 
     COMPONENT memory IS
-        GENERIC (n : INTEGER := 16);
         PORT (
             clk : IN STD_LOGIC;
-            address : IN STD_LOGIC_VECTOR(12 DOWNTO 0);
+            address : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
 
             write_enable : IN STD_LOGIC;
-            write_data : IN STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
+            write_data : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
 
             read_enable : IN STD_LOGIC;
-            read_data : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
+            read_data : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
 
             protect_signal : IN STD_LOGIC;
             free_signal : IN STD_LOGIC
@@ -62,15 +61,26 @@ architecture memory_stage_arch of memory_stage is
         );
     END COMPONENT memory;
 
-    signal mem_read_data_internal : std_logic_vector(31 downto 0);
+    COMPONENT my_nDFF IS
+        GENERIC ( n : integer := 16);
+        PORT(
+            Clk, reset : IN std_logic;
+            d : IN std_logic_vector(n-1 DOWNTO 0);
+            q : OUT std_logic_vector(n-1 DOWNTO 0)
+            );
+    END COMPONENT my_nDFF;
 
+
+    signal mem_read_data_internal : std_logic_vector(31 downto 0);
+    signal d_internal : std_logic_vector(123 downto 0);
+    signal q_output : std_logic_vector(123 downto 0);
 
 begin
     mem: memory
-    GENERIC MAP (n => 31)
     PORT MAP (
         clk => clk,
-        address => mem_read_or_write_addr,
+        -- addressing the memory using the 12 bits only
+        address => mem_read_or_write_addr(11 downto 0),
         write_enable => mem_wb_control_signals_in(1),
         write_data => mem_write_data,
         read_enable => mem_wb_control_signals_in(0),
@@ -79,13 +89,34 @@ begin
         free_signal => mem_wb_control_signals_in(3)
     );
 
-    mem_read_data <= mem_read_data_internal;
-    read_data1_out <= read_data1_in;
-    read_data2_out <= read_data2_in;
-    read_address1_out <= read_address1_in;
-    read_address2_out <= read_address2_in;
-    destination_address_out <= destination_address_in;
-    pc_out <= pc_in;
-    wb_control_signals_out <= mem_wb_control_signals_in(6 downto 4);
+    -- mem_read_data <= mem_read_data_internal;
+    -- read_data1_out <= read_data1_in;
+    -- read_data2_out <= read_data2_in;
+    -- read_address1_out <= read_address1_in;
+    -- read_address2_out <= read_address2_in;
+    -- destination_address_out <= destination_address_in;
+    -- pc_out <= pc_in;
+    -- wb_control_signals_out <= mem_wb_control_signals_in(6 downto 4);
+
+    d_internal <= mem_read_data_internal & read_data1_in & read_data2_in & read_address1_in & read_address2_in & destination_address_in & pc_in & mem_wb_control_signals_in(6 downto 4);
+    mem_wb_reg: my_nDFF
+    GENERIC MAP (n => 124)
+    PORT MAP (
+        Clk => clk,
+        reset => '0',
+        d => d_internal,
+        q => q_output
+    );
+
+
+    mem_read_data <= q_output(31 downto 0);
+    read_data1_out <= q_output(63 downto 32);
+    read_data2_out <= q_output(95 downto 64);
+    read_address1_out <= q_output(98 downto 96);
+    read_address2_out <= q_output(101 downto 99);
+    destination_address_out <= q_output(104 downto 102);
+    pc_out <= q_output(120 downto 105);
+    wb_control_signals_out <= q_output(123 downto 121);
+
 
 end memory_stage_arch;

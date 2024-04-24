@@ -18,7 +18,7 @@ ARCHITECTURE behavior OF memory_stage_tb IS
         mem_wb_control_signals_in : IN std_logic_vector(6 downto 0);
         pc_in : IN std_logic_vector(15 downto 0);
         mem_write_data : IN std_logic_vector(31 downto 0);
-        mem_read_or_write_addr : IN std_logic_vector(12 downto 0);
+        mem_read_or_write_addr : IN std_logic_vector(11 downto 0);
         mem_read_data : OUT std_logic_vector(31 downto 0);
         read_data1_out : OUT std_logic_vector(31 downto 0);
         read_data2_out : OUT std_logic_vector(31 downto 0);
@@ -40,7 +40,7 @@ ARCHITECTURE behavior OF memory_stage_tb IS
    signal mem_wb_control_signals_in : std_logic_vector(6 downto 0) := (others => '0');
    signal pc_in : std_logic_vector(15 downto 0) := (others => '0');
    signal mem_write_data : std_logic_vector(31 downto 0) := (others => '0');
-   signal mem_read_or_write_addr : std_logic_vector(12 downto 0) := (others => '0');
+   signal mem_read_or_write_addr : std_logic_vector(11 downto 0) := (others => '0');
 
     --Outputs
    signal mem_read_data : std_logic_vector(31 downto 0);
@@ -107,11 +107,10 @@ BEGIN
     read_address2_in <= "010";
     destination_address_in <= "011";
     pc_in <= "0000000000000001";
-  
-   
+    ----
     mem_wb_control_signals_in <= "0000000";
     --write in address 0 the value 1010101010101010
-    mem_read_or_write_addr <= "0000000000000";
+    mem_read_or_write_addr <= "000000000000";
     mem_wb_control_signals_in(1) <= '1'; -- memWrite
     mem_write_data <= "00000000000000001010101010101010";
     wait for clk_period;
@@ -123,12 +122,12 @@ BEGIN
 
     --protect this memory location 
     mem_wb_control_signals_in(2) <= '1'; -- protect_signal
-    mem_read_or_write_addr <= "0000000000001";
+    mem_read_or_write_addr <= "000000000001";
     wait for clk_period;
 
     --try to write in the protected memory location
     mem_wb_control_signals_in(2) <= '0'; -- protect_signal
-    mem_read_or_write_addr <= "0000000000010";
+    mem_read_or_write_addr <= "000000000010";
     mem_wb_control_signals_in(1) <= '1'; -- memWrite
     mem_write_data <= "00000000000000000101010101010101";
     wait for clk_period;

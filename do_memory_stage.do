@@ -12,5 +12,4 @@ vsim -gui work.memory_stage_tb
 # Add waves
 add wave -position insertpoint sim:/memory_stage_tb/uut/*
 
-# RUN Testbench
-run             1000 ns
+# doesn't run to see the results manually
