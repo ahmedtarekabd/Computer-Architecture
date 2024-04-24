@@ -27,7 +27,7 @@ end ALU;
 -- 000 -> negate (changes zero and negative flags only)
 -- 001 -> add (changes all flags)
 -- 010 -> sub (changes all flags)
--- 011 -> mov (changes nothing)
+-- 011 -> mov (changes nothing) (returns B -> src2)
 -- 100 -> and (changes zero and negative flags only)
 -- 101 -> or (changes zero and negative flags only)
 -- 110 -> xor (changes zero and negative flags only)
@@ -50,11 +50,11 @@ begin
 
     sum <= A_extended + B_extended;
     difference <= A_extended - B_extended;
-
+ 
     F_internal <= std_logic_vector((not A_integer)+1) when opcode = "000" else  --negate
         std_logic_vector(sum(n-1 downto 0)) when opcode = "001" else            --add
         std_logic_vector(difference(n-1 downto 0)) when opcode = "010" else     --sub
-        A when opcode = "011" else                                              --mov
+        B when opcode = "011" else                                              --mov
         std_logic_vector(A_integer and B_integer) when opcode = "100" else      --and
         std_logic_vector(A_integer or B_integer) when opcode = "101" else       --or
         std_logic_vector(A_integer xor B_integer) when opcode = "110" else      --xor
