@@ -192,3 +192,402 @@ run
 vsim -version
 # Model Technology ModelSim - INTEL FPGA STARTER EDITION vsim 2020.1 Simulator 2020.02 Feb 28 2020
 # 
+# Compile of memory_tb.vhd was successful.
+# Compile of memory.vhd was successful.
+# Compile of memory_stage.vhd was successful.
+# Compile of memory_stage_tb.vhd was successful.
+# Compile of my_DFF.vhd was successful.
+# Compile of my_nDFF.vhd was successful.
+# Compile of execute.vhd was successful.
+# 7 compiles, 0 failed with no errors.
+do do_execute.do
+# End time: 22:43:37 on Apr 24,2024, Elapsed time: 1:06:07
+# Errors: 0, Warnings: 8
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 22:43:37 on Apr 24,2024
+# vcom -reportprogress 300 execute.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity execute
+# -- Compiling architecture arch_execute of execute
+# End time: 22:43:37 on Apr 24,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 22:43:37 on Apr 24,2024
+# vcom -reportprogress 300 execute_tb.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity execute_tb
+# -- Compiling architecture execute_tb_tb of execute_tb
+# -- Loading entity execute
+# End time: 22:43:37 on Apr 24,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -gui work.execute_tb 
+# Start time: 22:43:37 on Apr 24,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.execute_tb(execute_tb_tb)
+# Loading work.execute(arch_execute)
+# Loading work.my_ndff(b_my_ndff)
+# Loading work.my_dff(a_my_dff)
+# ** Fatal: (vsim-3381) Obsolete library format for design unit. Design unit 'E:/College/year4-2/comp arch/project/Computer-Architecture/work.alu(alu_behavior)'
+#    Time: 0 ps  Iteration: 0  Instance: /execute_tb/uut/alu_component File: execute.vhd Line: 69
+# FATAL ERROR while loading design
+# Error loading design
+# Error: Error loading design
+#        Pausing macro execution
+# MACRO ./do_execute.do PAUSED at line 10
+do do_execute.do
+# End time: 22:47:21 on Apr 24,2024, Elapsed time: 0:03:44
+# Errors: 1, Warnings: 1
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 22:47:21 on Apr 24,2024
+# vcom -reportprogress 300 execute.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity execute
+# -- Compiling architecture arch_execute of execute
+# End time: 22:47:21 on Apr 24,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 22:47:21 on Apr 24,2024
+# vcom -reportprogress 300 execute_tb.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity execute_tb
+# -- Compiling architecture execute_tb_tb of execute_tb
+# -- Loading entity execute
+# End time: 22:47:21 on Apr 24,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -gui work.execute_tb 
+# Start time: 22:47:21 on Apr 24,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.execute_tb(execute_tb_tb)
+# Loading work.execute(arch_execute)
+# Loading work.my_ndff(b_my_ndff)
+# Loading work.my_dff(a_my_dff)
+# ** Fatal: (vsim-3381) Obsolete library format for design unit. Design unit 'E:/College/year4-2/comp arch/project/Computer-Architecture/work.alu(alu_behavior)'
+#    Time: 0 ps  Iteration: 0  Instance: /execute_tb/uut/alu_component File: execute.vhd Line: 69
+# FATAL ERROR while loading design
+# Error loading design
+# Error: Error loading design
+#        Pausing macro execution
+# MACRO ./do_execute.do PAUSED at line 10
+vsim -version
+# Model Technology ModelSim - INTEL FPGA STARTER EDITION vsim 2020.1 Simulator 2020.02 Feb 28 2020
+# 
+do do_execute.do
+# End time: 22:47:45 on Apr 24,2024, Elapsed time: 0:00:24
+# Errors: 1, Warnings: 1
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 22:47:45 on Apr 24,2024
+# vcom -reportprogress 300 execute.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity execute
+# -- Compiling architecture arch_execute of execute
+# ** Error: execute.vhd(70): (vcom-1136) Unknown identifier "n".
+# ** Error: execute.vhd(70): (vcom-1591) Bad expression in left bound of range expression.
+# ** Error: execute.vhd(70): Type error in range expression.
+# ** Error: execute.vhd(72): (vcom-1136) Unknown identifier "n".
+# ** Error: execute.vhd(72): (vcom-1591) Bad expression in left bound of range expression.
+# ** Error: execute.vhd(72): Type error in range expression.
+# ** Note: execute.vhd(173): VHDL Compiler exiting
+# End time: 22:47:45 on Apr 24,2024, Elapsed time: 0:00:00
+# Errors: 6, Warnings: 0
+# ** Error: C:/intelFPGA/20.1/modelsim_ase/win32aloem/vcom failed.
+# Error in macro ./do_execute.do line 6
+# C:/intelFPGA/20.1/modelsim_ase/win32aloem/vcom failed.
+#     while executing
+# "vcom execute.vhd"
+do do_execute.do
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 22:51:17 on Apr 24,2024
+# vcom -reportprogress 300 execute.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity execute
+# -- Compiling architecture arch_execute of execute
+# End time: 22:51:17 on Apr 24,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 22:51:17 on Apr 24,2024
+# vcom -reportprogress 300 execute_tb.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity execute_tb
+# -- Compiling architecture execute_tb_tb of execute_tb
+# -- Loading entity execute
+# End time: 22:51:17 on Apr 24,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -gui work.execute_tb 
+# Start time: 22:51:17 on Apr 24,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.execute_tb(execute_tb_tb)
+# Loading work.execute(arch_execute)
+# Loading work.my_ndff(b_my_ndff)
+# Loading work.my_dff(a_my_dff)
+# ** Fatal: (vsim-3381) Obsolete library format for design unit. Design unit 'E:/College/year4-2/comp arch/project/Computer-Architecture/work.alu(alu_behavior)'
+#    Time: 0 ps  Iteration: 0  Instance: /execute_tb/uut/alu_component File: execute.vhd Line: 69
+# FATAL ERROR while loading design
+# Error loading design
+# Error: Error loading design
+#        Pausing macro execution
+# MACRO ./do_execute.do PAUSED at line 10
+# Compile of execute.vhd was successful.
+# Compile of execute_tb.vhd was successful.
+# Compile of alu.vhd was successful.
+# Compile of my_DFF.vhd was successful.
+# Compile of my_nDFF.vhd was successful.
+# 5 compiles, 0 failed with no errors.
+do do_execute.do
+# End time: 22:54:59 on Apr 24,2024, Elapsed time: 0:03:42
+# Errors: 1, Warnings: 8
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 22:54:59 on Apr 24,2024
+# vcom -reportprogress 300 execute.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity execute
+# -- Compiling architecture arch_execute of execute
+# End time: 22:54:59 on Apr 24,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 22:54:59 on Apr 24,2024
+# vcom -reportprogress 300 execute_tb.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity execute_tb
+# -- Compiling architecture execute_tb_tb of execute_tb
+# -- Loading entity execute
+# End time: 22:55:00 on Apr 24,2024, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# vsim -gui work.execute_tb 
+# Start time: 22:55:00 on Apr 24,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.execute_tb(execute_tb_tb)
+# Loading work.execute(arch_execute)
+# Loading work.my_ndff(b_my_ndff)
+# Loading work.my_dff(a_my_dff)
+# Loading work.alu(alu_behavior)
+# ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
+#    Time: 0 ps  Iteration: 1  Instance: /execute_tb/uut/alu_component
+do do_execute.do
+# End time: 23:02:34 on Apr 24,2024, Elapsed time: 0:07:34
+# Errors: 0, Warnings: 2
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 23:02:34 on Apr 24,2024
+# vcom -reportprogress 300 execute.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity execute
+# -- Compiling architecture arch_execute of execute
+# End time: 23:02:34 on Apr 24,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 23:02:34 on Apr 24,2024
+# vcom -reportprogress 300 execute_tb.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity execute_tb
+# -- Compiling architecture execute_tb_tb of execute_tb
+# -- Loading entity execute
+# End time: 23:02:34 on Apr 24,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -gui work.execute_tb 
+# Start time: 23:02:34 on Apr 24,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.execute_tb(execute_tb_tb)
+# Loading work.execute(arch_execute)
+# Loading work.my_ndff(b_my_ndff)
+# Loading work.my_dff(a_my_dff)
+# Loading work.alu(alu_behavior)
+# ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
+#    Time: 0 ps  Iteration: 1  Instance: /execute_tb/uut/alu_component
+do alu.do
+# End time: 23:07:02 on Apr 24,2024, Elapsed time: 0:04:28
+# Errors: 0, Warnings: 2
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 23:07:02 on Apr 24,2024
+# vcom -reportprogress 300 alu.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity ALU
+# -- Compiling architecture ALU_Behavior of ALU
+# End time: 23:07:02 on Apr 24,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 23:07:02 on Apr 24,2024
+# vcom -reportprogress 300 alu_tb.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity ALU_tb
+# -- Compiling architecture behavior of ALU_tb
+# End time: 23:07:02 on Apr 24,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -gui work.alu_tb 
+# Start time: 23:07:03 on Apr 24,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.alu_tb(behavior)
+# Loading work.alu(alu_behavior)
+# ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
+#    Time: 0 ps  Iteration: 2  Instance: /alu_tb/uut
+# ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
+#    Time: 30 ns  Iteration: 2  Instance: /alu_tb/uut
+# Compile of execute.vhd was successful.
+# Compile of execute_tb.vhd was successful.
+# Compile of alu.vhd was successful.
+# Compile of my_DFF.vhd was successful.
+# Compile of my_nDFF.vhd was successful.
+# 5 compiles, 0 failed with no errors.
+do do_execute.do
+# End time: 23:16:59 on Apr 24,2024, Elapsed time: 0:09:56
+# Errors: 0, Warnings: 4
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 23:16:59 on Apr 24,2024
+# vcom -reportprogress 300 execute.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity execute
+# -- Compiling architecture arch_execute of execute
+# End time: 23:16:59 on Apr 24,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 23:16:59 on Apr 24,2024
+# vcom -reportprogress 300 execute_tb.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity execute_tb
+# -- Compiling architecture execute_tb_tb of execute_tb
+# -- Loading entity execute
+# End time: 23:16:59 on Apr 24,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -gui work.execute_tb 
+# Start time: 23:16:59 on Apr 24,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.execute_tb(execute_tb_tb)
+# Loading work.execute(arch_execute)
+# Loading work.alu(alu_behavior)
+# Loading work.my_ndff(b_my_ndff)
+# Loading work.my_dff(a_my_dff)
+# ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
+#    Time: 0 ps  Iteration: 1  Instance: /execute_tb/uut/alu_component
+do do_execute.do
+# End time: 23:22:26 on Apr 24,2024, Elapsed time: 0:05:27
+# Errors: 0, Warnings: 2
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 23:22:26 on Apr 24,2024
+# vcom -reportprogress 300 execute.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity execute
+# -- Compiling architecture arch_execute of execute
+# End time: 23:22:26 on Apr 24,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 23:22:26 on Apr 24,2024
+# vcom -reportprogress 300 execute_tb.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity execute_tb
+# -- Compiling architecture execute_tb_tb of execute_tb
+# -- Loading entity execute
+# End time: 23:22:26 on Apr 24,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -gui work.execute_tb 
+# Start time: 23:22:26 on Apr 24,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.execute_tb(execute_tb_tb)
+# Loading work.execute(arch_execute)
+# Loading work.alu(alu_behavior)
+# Loading work.my_ndff(b_my_ndff)
+# Loading work.my_dff(a_my_dff)
+# ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
+#    Time: 0 ps  Iteration: 1  Instance: /execute_tb/uut/alu_component
+do do_execute.do
+# End time: 23:23:58 on Apr 24,2024, Elapsed time: 0:01:32
+# Errors: 0, Warnings: 2
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 23:23:58 on Apr 24,2024
+# vcom -reportprogress 300 execute.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity execute
+# -- Compiling architecture arch_execute of execute
+# End time: 23:23:58 on Apr 24,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 23:23:58 on Apr 24,2024
+# vcom -reportprogress 300 execute_tb.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity execute_tb
+# -- Compiling architecture execute_tb_tb of execute_tb
+# -- Loading entity execute
+# End time: 23:23:59 on Apr 24,2024, Elapsed time: 0:00:01
+# Errors: 0, Warnings: 0
+# vsim -gui work.execute_tb 
+# Start time: 23:23:59 on Apr 24,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.execute_tb(execute_tb_tb)
+# Loading work.execute(arch_execute)
+# Loading work.alu(alu_behavior)
+# Loading work.my_ndff(b_my_ndff)
+# Loading work.my_dff(a_my_dff)
+# ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
+#    Time: 0 ps  Iteration: 1  Instance: /execute_tb/uut/alu_component

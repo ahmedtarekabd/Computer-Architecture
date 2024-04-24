@@ -68,13 +68,17 @@ ARCHITECTURE arch_execute OF execute IS
     COMPONENT ALU IS
         GENERIC (n : INTEGER := 32);
         PORT (
-            A, B : IN STD_LOGIC_VECTOR(n - 1 DOWNTO 0); -- A-> data1 , B -> data2
-            opcode : IN STD_LOGIC_VECTOR(2 DOWNTO 0); -- operation
-            F : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0); -- result
+            A, B : IN STD_LOGIC_VECTOR(n - 1 DOWNTO 0); -- A-> src1 , B -> src2
+            -- 3 bits opcode
+            opcode : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+            F : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
             zero_flag : OUT STD_LOGIC;
+
             overflow_flag : OUT STD_LOGIC; -- Overflow flag
             carry_flag : OUT STD_LOGIC; -- Carry flag
             negative_flag : OUT STD_LOGIC; -- Negative flag
+
+            --old flags
             old_negative_flag : IN STD_LOGIC; -- Old negative flag
             old_zero_flag : IN STD_LOGIC; -- Old zero flag
             old_overflow_flag : IN STD_LOGIC; -- Old overflow flag
@@ -105,28 +109,16 @@ ARCHITECTURE arch_execute OF execute IS
         );
     END COMPONENT;
 
-    SIGNAL old_negative_flag_temp : STD_LOGIC;
-    SIGNAL old_zero_flag_temp : STD_LOGIC;
-    SIGNAL old_overflow_flag_temp : STD_LOGIC;
-    SIGNAL old_carry_flag_temp : STD_LOGIC;
-
     SIGNAL flags_temp_in : STD_LOGIC_VECTOR(3 DOWNTO 0);
     SIGNAL flags_temp_out : STD_LOGIC_VECTOR(3 DOWNTO 0);
 
     SIGNAL d_internal : STD_LOGIC_VECTOR(127 DOWNTO 0);
     SIGNAL q_output : STD_LOGIC_VECTOR(127 DOWNTO 0);
-    signal alu_out_temp : std_logic_vector(31 downto 0);
+    SIGNAL alu_out_temp : STD_LOGIC_VECTOR(31 DOWNTO 0);
 
 BEGIN
 
     -- flags_temp_out <= old_negative_flag_temp & old_zero_flag_temp & old_overflow_flag_temp & old_carry_flag_temp;
-
-    -- DFF for the flags
-    flags_dff : my_nDFF GENERIC MAP(4)
-    PORT MAP(
-        clk, '0', flags_temp_in, flags_temp_out
-        );
-
 
     alu_component : ALU
     PORT MAP(
@@ -144,7 +136,11 @@ BEGIN
         old_carry_flag => flags_temp_out(3)
     );
 
-    
+    -- DFF for the flags
+    flags_dff : my_nDFF GENERIC MAP(4)
+    PORT MAP(
+        clk, '0', flags_temp_in, flags_temp_out
+    );
 
     -- -- output signals + alu out
     -- pc_out <= pc_in;
@@ -162,32 +158,30 @@ BEGIN
         clk, '0', d_internal, q_output
     );
 
-    alu_out <= q_output(127 downto 96);
-    pc_out <= q_output(95 downto 80);
-    mem_wb_control_signals_out <= q_output(79 downto 73); -- Corrected slice length
-    address_read1_out <= q_output(72 downto 70); -- Corrected slice length
-    address_read2_out <= q_output(69 downto 67);
-    data1_out <= q_output(66 downto 35);
-    data2_out <= q_output(34 downto 3);
-    destination_address_out <= q_output(2 downto 0); 
-    
-    END arch_execute;
+    alu_out <= q_output(127 DOWNTO 96);
+    pc_out <= q_output(95 DOWNTO 80);
+    mem_wb_control_signals_out <= q_output(79 DOWNTO 73);
+    address_read1_out <= q_output(72 DOWNTO 70);
+    address_read2_out <= q_output(69 DOWNTO 67);
+    data1_out <= q_output(66 DOWNTO 35);
+    data2_out <= q_output(34 DOWNTO 3);
+    destination_address_out <= q_output(2 DOWNTO 0);
 
-
-    -- forwarding_unit : forwarding_unit
-    -- port map(
-    --     forwarding_unit_signals => forwarding_unit_signals,
-    --     address_read1_in => address_read1_in,
-    --     address_read2_in => address_read2_in,
-    --     data1_in => data1_in,
-    --     data2_in => data2_in,
-    --     alu_result_forward => alu_result_forward,
-    --     memory_result_forward => memory_result_forward,
-    --     alu_mem_wb_control_signals => alu_mem_wb_control_signals,
-    --     address_read1_out => address_read1_out,
-    --     address_read2_out => address_read2_out,
-    --     data1_out => data1_out,
-    --     data2_out => data2_out,
-    --     destination_address_out => destination_address_out,
-    --     mem_wb_control_signals => mem_wb_control_signals
-    -- );
+END arch_execute;
+-- forwarding_unit : forwarding_unit
+-- port map(
+--     forwarding_unit_signals => forwarding_unit_signals,
+--     address_read1_in => address_read1_in,
+--     address_read2_in => address_read2_in,
+--     data1_in => data1_in,
+--     data2_in => data2_in,
+--     alu_result_forward => alu_result_forward,
+--     memory_result_forward => memory_result_forward,
+--     alu_mem_wb_control_signals => alu_mem_wb_control_signals,
+--     address_read1_out => address_read1_out,
+--     address_read2_out => address_read2_out,
+--     data1_out => data1_out,
+--     data2_out => data2_out,
+--     destination_address_out => destination_address_out,
+--     mem_wb_control_signals => mem_wb_control_signals
+-- );
