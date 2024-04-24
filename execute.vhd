@@ -21,8 +21,10 @@ entity execute is
         data1_in : in std_logic_vector(31 downto 0);
         data2_in : in std_logic_vector(31 downto 0);
 
-        -- propagated from decode stage 1 bit for memread memwrite (1 or 0), 5 bits for WB and shi (we still did not decide)
-        mem_wb_control_signals_in : in std_logic_vector(6 downto 0);
+        -- from controller
+        -- propagated from decode stage 1 bit for memread, memwrite (1 bit each), protect & free 1 bit each, 1 regwrite, 1 regRead, 2 selectors for (WB, src1, src2), 1 of them is given to the 3rd MUX to know which mode it is in
+        -- bit 0 -> memread, bit 1 -> memwrite, bit 2 -> protect, bit 3 -> free, bit 4 -> regwrite, bit 5 -> regread, bit 6 & 7 -> selectors for WB, src1, src2
+        mem_wb_control_signals_in : in std_logic_vector(7 downto 0);
 
         -- -- flags in
         -- old_negative_flag : in std_logic;
@@ -48,7 +50,7 @@ entity execute is
         -- alu output
         alu_out : out std_logic_vector(31 downto 0);
         -- mem and wb control signals
-        mem_wb_control_signals_out : out std_logic_vector(3 downto 0);
+        mem_wb_control_signals_out : out std_logic_vector(7 downto 0);
         -- addresses
         address_read1_out : out std_logic_vector(2 downto 0);
         address_read2_out : out std_logic_vector(2 downto 0);
@@ -98,25 +100,12 @@ architecture arch_execute of execute is
     COMPONENT my_nDFF IS
         GENERIC ( n : integer := 16);
         PORT(
-            Clk, Rst : IN std_logic;
+            Clk, reset : IN std_logic;
             d : IN std_logic_vector(n-1 DOWNTO 0);
             q : OUT std_logic_vector(n-1 DOWNTO 0)
             );
     END COMPONENT;
-
-    signal pc_out_temp : std_logic_vector(15 downto 0);
-    signal alu_out_temp : std_logic_vector(31 downto 0);
-    signal mem_wb_control_signals_temp : std_logic_vector(6 downto 0);
-    signal address_read1_out_temp : std_logic_vector(2 downto 0);
-    signal address_read2_out_temp : std_logic_vector(2 downto 0);
-    signal data1_out_temp : std_logic_vector(31 downto 0);
-    signal data2_out_temp : std_logic_vector(31 downto 0);
-    signal destination_address_out_temp : std_logic_vector(2 downto 0);
     
-    signal zero_flag_temp : std_logic;
-    signal overflow_flag_temp : std_logic;
-    signal carry_flag_temp : std_logic;
-    signal negative_flag_temp : std_logic;
     signal old_negative_flag_temp : std_logic;
     signal old_zero_flag_temp : std_logic;
     signal old_overflow_flag_temp : std_logic;
@@ -125,84 +114,38 @@ architecture arch_execute of execute is
     signal flags_temp_in : std_logic_vector(3 downto 0);
     signal flags_temp_out : std_logic_vector(3 downto 0);
 
--- commented out for now
-    -- component forwarding_unit is
-    --     port(
-    --         forwarding_unit_signals : in std_logic_vector(1 downto 0);
-    --         address_read1_in : in std_logic_vector(2 downto 0);
-    --         address_read2_in : in std_logic_vector(2 downto 0);
-    --         data1_in : in std_logic_vector(31 downto 0);
-    --         data2_in : in std_logic_vector(31 downto 0);
-    --         alu_result_forward : in std_logic_vector(31 downto 0);
-    --         memory_result_forward : in std_logic_vector(31 downto 0);
-    --         alu_mem_wb_control_signals : in std_logic_vector(5 downto 0);
-    --         address_read1_out : out std_logic_vector(2 downto 0);
-    --         address_read2_out : out std_logic_vector(2 downto 0);
-    --         data1_out : out std_logic_vector(31 downto 0);
-    --         data2_out : out std_logic_vector(31 downto 0);
-    --         destination_address_out : out std_logic_vector(2 downto 0);
-    --         mem_wb_control_signals : out std_logic_vector(3 downto 0)
-    --     );
-    -- end component;
-
-    signal alu_out_temp : std_logic_vector(31 downto 0);
-    signal mem_wb_control_signals_temp : std_logic_vector(3 downto 0);
-    signal address_read1_out_temp : std_logic_vector(2 downto 0);
-    signal address_read2_out_temp : std_logic_vector(2 downto 0);
-    signal data1_out_temp : std_logic_vector(31 downto 0);
-    signal data2_out_temp : std_logic_vector(31 downto 0);
-    signal destination_address_out_temp : std_logic_vector(2 downto 0);
-    signal pc_out_temp : std_logic_vector(15 downto 0);
-
-    signal alu_result_forward_temp : std_logic_vector(31 downto 0);
-    signal memory_result_forward_temp : std_logic_vector(31 downto 0);
-
-    signal forwarding_unit_signals_temp : std_logic_vector(1 downto 0);
-
-    signal alu_mem_wb_control_signals_temp : std_logic_vector(5 downto 0);
-
 begin
     
-    flags_temp_in <= old_negative_flag_temp & old_zero_flag_temp & old_overflow_flag_temp & old_carry_flag_temp;
+    -- flags_temp_out <= old_negative_flag_temp & old_zero_flag_temp & old_overflow_flag_temp & old_carry_flag_temp;
 
     -- DFF for the flags
     flags_dff : my_nDFF GENERIC MAP(4) PORT MAP(clk, '0', flags_temp_in, flags_temp_out);
 
 
-    alu : ALU
+    alu_component : ALU
     port map(
         A => data1_in,
         B => data2_in,
         opcode => operation,
-        F => alu_out_temp,
-        zero_flag => flags_temp_out(0),
-        overflow_flag => flags_temp_out(1),
-        carry_flag => flags_temp_out(2),
-        negative_flag => flags_temp_out(3),
-        old_negative_flag => old_negative_flag_temp,
-        old_zero_flag => old_zero_flag_temp,
-        old_overflow_flag => old_overflow_flag_temp,
-        old_carry_flag => old_carry_flag_temp
+        F => alu_out,
+        negative_flag => flags_temp_in(0),
+        zero_flag => flags_temp_in(1),
+        overflow_flag => flags_temp_in(2),
+        carry_flag => flags_temp_in(3),
+        old_negative_flag => flags_temp_out(0),
+        old_zero_flag => flags_temp_out(1),
+        old_overflow_flag => flags_temp_out(2),
+        old_carry_flag => flags_temp_out(3)
     );
 
-    -- rest of the signals
-    pc_out_temp <= pc_in;
-    mem_wb_control_signals_temp <= mem_wb_control_signals_in;
-    address_read1_out_temp <= address_read1_in;
-    address_read2_out_temp <= address_read2_in;
-    data1_out_temp <= data1_in;
-    data2_out_temp <= data2_in;
-    destination_address_out_temp <= destination_address;
-
     -- output signals
-    pc_out <= pc_out_temp;
-    alu_out <= alu_out_temp;
-    mem_wb_control_signals_out <= mem_wb_control_signals_temp;
-    address_read1_out <= address_read1_out_temp;
-    address_read2_out <= address_read2_out_temp;
-    data1_out <= data1_out_temp;
-    data2_out <= data2_out_temp;
-    destination_address_out <= destination_address_out_temp;
+    pc_out <= pc_in;
+    mem_wb_control_signals_out <= mem_wb_control_signals_in;
+    address_read1_out <= address_read1_in;
+    address_read2_out <= address_read2_in;
+    data1_out <= data1_in;
+    data2_out <= data2_in;
+    destination_address_out <= destination_address;
     
 
     
