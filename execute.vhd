@@ -24,7 +24,7 @@ entity execute is
         -- from controller
         -- propagated from decode stage 1 bit for memread, memwrite (1 bit each), protect & free 1 bit each, 1 regwrite, 1 regRead(i believe no regreads), 2 selectors for (WB, src1, src2), 1 of them is given to the 3rd MUX to know which mode it is in
         -- bit 0 -> memread, bit 1 -> memwrite, bit 2 -> protect, bit 3 -> free, bit 4 -> regwrite, bit 5 -> regread (i believe no regreads), bit 6 & 7 -> selectors for WB, src1, src2
-        mem_wb_control_signals_in : in std_logic_vector(7 downto 0);
+        mem_wb_control_signals_in : in std_logic_vector(6 downto 0);
 
         -- -- flags in
         -- old_negative_flag : in std_logic;
@@ -50,7 +50,7 @@ entity execute is
         -- alu output
         alu_out : out std_logic_vector(31 downto 0);
         -- mem and wb control signals
-        mem_wb_control_signals_out : out std_logic_vector(7 downto 0);
+        mem_wb_control_signals_out : out std_logic_vector(6 downto 0);
         -- addresses
         address_read1_out : out std_logic_vector(2 downto 0);
         address_read2_out : out std_logic_vector(2 downto 0);

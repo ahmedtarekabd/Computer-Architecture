@@ -14,7 +14,7 @@ entity write_back is
         mem_read_data : in std_logic_vector(31 downto 0);
         pc_in : in std_logic_vector(15 downto 0);
         --bit 0 -> regwrite, bit 3 -> regread (i believe no regreads), bit 1 & 2 -> selectors for WB, src1, src2
-        wb_control_signals_in : in std_logic_vector(3 downto 0);
+        wb_control_signals_in : in std_logic_vector(2 downto 0);
 
     ------------output signals------------------
     selected_data_out1 : out std_logic_vector(31 downto 0);

@@ -18,7 +18,7 @@ entity memory_stage is
 
         -- propagated from decode stage 1 bit for memread, memwrite (1 bit each), protect & free 1 bit each, 1 regwrite, 1 regRead(i believe no regreads), 2 selectors for (WB, src1, src2), 1 of them is given to the 3rd MUX to know which mode it is in
         -- bit 0 -> memread, bit 1 -> memwrite, bit 2 -> protect, bit 3 -> free, bit 4 -> regwrite, bit 5 -> regread (i believe no regreads), bit 6 & 7 -> selectors for WB, src1, src2
-        mem_wb_control_signals_in : in std_logic_vector(7 downto 0);
+        mem_wb_control_signals_in : in std_logic_vector(6 downto 0);
 
         -- PC + 1
         pc_in : in std_logic_vector(15 downto 0);
@@ -36,7 +36,7 @@ entity memory_stage is
         read_address2_out : out std_logic_vector(31 downto 0);
         destination_address_out : out std_logic_vector(2 downto 0);
         pc_out : out std_logic_vector(15 downto 0);
-        wb_control_signals_out : out std_logic_vector(3 downto 0)
+        wb_control_signals_out : out std_logic_vector(2 downto 0)
 
         -- for forwarding make another output for the write data
     );
@@ -86,6 +86,6 @@ begin
     read_address2_out <= read_address2_in;
     destination_address_out <= destination_address_in;
     pc_out <= pc_in;
-    wb_control_signals_out <= mem_wb_control_signals_in(7 downto 4);
+    wb_control_signals_out <= mem_wb_control_signals_in(6 downto 4);
 
 end memory_stage_arch;
