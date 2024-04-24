@@ -24,7 +24,7 @@ entity ALU is
     );
 end ALU;
 
--- 000 -> negate ()
+-- 000 -> negate (changes zero and negative flags only)
 -- 001 -> add (changes all flags)
 -- 010 -> sub (changes all flags)
 -- 011 -> mov (changes nothing)
@@ -74,7 +74,7 @@ begin
         old_overflow_flag;
     
     --zero and negative flags -> check if its supposed to upadate these flags or no
-    zero_neg_flags <= '1' when opcode = "001" or opcode = "010" or opcode = "100" or opcode = "101" or opcode = "110" or opcode = "111" else
+    zero_neg_flags <= '1' when opcode = "000" or opcode = "001" or opcode = "010" or opcode = "100" or opcode = "101" or opcode = "110" or opcode = "111" else
         '0';
     
     --zero flag
