@@ -12,10 +12,10 @@ architecture execute_tb_tb of execute_tb is
     signal operation : std_logic_vector(2 downto 0) := (others => '0');
     signal address_read1_in, address_read2_in, destination_address : std_logic_vector(2 downto 0) := (others => '0');
     signal data1_in, data2_in : std_logic_vector(31 downto 0) := (others => '0');
-    signal mem_wb_control_signals_in : std_logic_vector(7 downto 0) := (others => '0');
+    signal mem_wb_control_signals_in : std_logic_vector(6 downto 0) := (others => '0');
 
     signal alu_out, data1_out, data2_out : std_logic_vector(31 downto 0);
-    signal mem_wb_control_signals_out : std_logic_vector(7 downto 0);
+    signal mem_wb_control_signals_out : std_logic_vector(6 downto 0);
     signal address_read1_out, address_read2_out, destination_address_out : std_logic_vector(2 downto 0);
     signal pc_out : std_logic_vector(15 downto 0);
 

@@ -67,7 +67,7 @@ architecture memory_stage_arch of memory_stage is
 
 begin
     mem: memory
-    GENERIC MAP (n => 33)
+    GENERIC MAP (n => 31)
     PORT MAP (
         clk => clk,
         address => mem_read_or_write_addr,

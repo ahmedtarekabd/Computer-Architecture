@@ -113,7 +113,7 @@ BEGIN
     --write in address 0 the value 1010101010101010
     mem_read_or_write_addr <= "0000000000000";
     mem_wb_control_signals_in(1) <= '1'; -- memWrite
-    mem_write_data <= "1010101010101010";
+    mem_write_data <= "00000000000000001010101010101010";
     wait for clk_period;
 
     --output the value in address 0 which is 1010101010101010
@@ -130,7 +130,7 @@ BEGIN
     mem_wb_control_signals_in(2) <= '0'; -- protect_signal
     mem_read_or_write_addr <= "0000000000010";
     mem_wb_control_signals_in(1) <= '1'; -- memWrite
-    mem_write_data <= "0101010101010101";
+    mem_write_data <= "00000000000000000101010101010101";
     wait for clk_period;
 
     --try to read from the protected memory location the expected -> 1010101010101010
@@ -145,7 +145,7 @@ BEGIN
     --try to write in the freed memory location
     mem_wb_control_signals_in(3) <= '0'; -- free_signal
     mem_wb_control_signals_in(1) <= '1'; -- memWrite
-    mem_write_data <= "1111000011110000";
+    mem_write_data <= "00000000000000001111000011110000";
     wait for clk_period;
 
     --try to read from the freed memory location the expected -> 0000000000000000
