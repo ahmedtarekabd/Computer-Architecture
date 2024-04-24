@@ -12,8 +12,8 @@ entity memory_stage is
         -- Propagated stuff innit
         read_data1_in : in std_logic_vector(31 downto 0);
         read_data2_in : in std_logic_vector(31 downto 0);
-        read_address1_in : in std_logic_vector(31 downto 0);
-        read_address2_in : in std_logic_vector(31 downto 0);
+        read_address1_in : in std_logic_vector(2 downto 0);
+        read_address2_in : in std_logic_vector(2 downto 0);
         destination_address_in : in std_logic_vector(2 downto 0);
 
         -- propagated from decode stage 1 bit for memread, memwrite (1 bit each), protect & free 1 bit each, 1 regwrite, 1 regRead(i believe no regreads), 2 selectors for (WB, src1, src2), 1 of them is given to the 3rd MUX to know which mode it is in
@@ -32,8 +32,8 @@ entity memory_stage is
         mem_read_data : out std_logic_vector(31 downto 0);
         read_data1_out : out std_logic_vector(31 downto 0);
         read_data2_out : out std_logic_vector(31 downto 0);
-        read_address1_out : out std_logic_vector(31 downto 0);
-        read_address2_out : out std_logic_vector(31 downto 0);
+        read_address1_out : out std_logic_vector(2 downto 0);
+        read_address2_out : out std_logic_vector(2 downto 0);
         destination_address_out : out std_logic_vector(2 downto 0);
         pc_out : out std_logic_vector(15 downto 0);
         wb_control_signals_out : out std_logic_vector(2 downto 0)
