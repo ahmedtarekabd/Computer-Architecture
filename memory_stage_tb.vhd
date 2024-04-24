@@ -99,7 +99,7 @@ BEGIN
    stim_proc: process
    begin      
     -- hold reset state for 100 ns.
-    wait for 100 ns;
+    wait for 105 ns;
     -- dummies for propagation  
     read_data1_in <= "00000000000000000000000000000001";
     read_data2_in <= "00000000000000000000000000000010";
@@ -112,23 +112,27 @@ BEGIN
     --write in address 0 the value 1010101010101010
     mem_read_or_write_addr <= "000000000000";
     mem_wb_control_signals_in(1) <= '1'; -- memWrite
+    mem_wb_control_signals_in(0) <= '0'; -- memRead
     mem_write_data <= "00000000000000001010101010101010";
     wait for clk_period;
 
     --output the value in address 0 which is 1010101010101010
     mem_wb_control_signals_in(0) <= '1'; -- memRead
-    mem_wb_control_signals_in(1) <= '0';
+    mem_wb_control_signals_in(1) <= '0'; -- memWrite
     wait for clk_period;
 
     --protect this memory location 
     mem_wb_control_signals_in(2) <= '1'; -- protect_signal
-    mem_read_or_write_addr <= "000000000001";
+    mem_read_or_write_addr <= "000000000000";
     wait for clk_period;
 
     --try to write in the protected memory location
-    mem_wb_control_signals_in(2) <= '0'; -- protect_signal
+    -- mem_wb_control_signals_in(2) <= '0'; -- protect_signal
     mem_read_or_write_addr <= "000000000010";
+    
+    mem_wb_control_signals_in(2) <= '0'; -- protect_signal
     mem_wb_control_signals_in(1) <= '1'; -- memWrite
+    mem_wb_control_signals_in(0) <= '0'; -- memRead
     mem_write_data <= "00000000000000000101010101010101";
     wait for clk_period;
 
