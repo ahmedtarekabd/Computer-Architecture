@@ -82,21 +82,27 @@ begin
     --to avoid infinty loop
     -- this acts as a buffer -> 
     --      thats why we are using (instruction_out_from_instr_cache) not the one out of the f/d reg
-    return_Sel_lower_to_zero: process(clk)
+    -- --TODO: make this process independent on the clk
+    return_Sel_lower_to_zero: process(instruction_out_from_instr_cache)
     begin
-        if rising_edge(clk) then
-            if instruction_out_from_instr_cache(0) = '1' then
-                if check_signal = '1' then 
-                    check_signal <= '0';
-                else
-                    check_signal <= '1';
-                end if;
-            else
+        -- if rising_edge(clk) then
+        if instruction_out_from_instr_cache(0) = '1' then
+            if check_signal = '1' then 
                 check_signal <= '0';
+            else
+                check_signal <= '1';
             end if;
+        else
+            check_signal <= '0';
         end if;
+        -- end if;
     end process return_Sel_lower_to_zero;
-    
+
+    -- -- Update the check_signal based on instruction_out_from_instr_cache(0)
+    -- check_signal <= '1' when instruction_out_from_instr_cache(0) = '1' and check_signal = '0' else
+    -- '0' when instruction_out_from_instr_cache(0) = '1' and check_signal = '1' else
+    -- '0';
+
     --currently used as mux 2x1
     inst_mux: mux4x1 generic map (16) 
         port map (
@@ -112,7 +118,6 @@ begin
             -- Sel =>  '0' & instruction_out_from_instr_cache(15),
             output => instruction_out_from_mux
         );
-
 
     fetch_decode: my_nDFF GENERIC MAP (16)
         PORT MAP (
