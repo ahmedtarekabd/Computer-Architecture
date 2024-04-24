@@ -1,341 +1,95 @@
-# 0 compiles, 12 failed with no errors.
-do alu.do
+do do_memory_stage.do
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 16:59:42 on Apr 24,2024
-# vcom -reportprogress 300 alu.vhd 
+# Start time: 21:33:20 on Apr 24,2024
+# vcom -reportprogress 300 memory_stage.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity memory_stage
+# -- Compiling architecture memory_stage_arch of memory_stage
+# End time: 21:33:20 on Apr 24,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 21:33:20 on Apr 24,2024
+# vcom -reportprogress 300 memory_stage_tb.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
 # -- Loading package std_logic_1164
 # -- Loading package NUMERIC_STD
-# -- Compiling entity ALU
-# -- Compiling architecture ALU_Behavior of ALU
-# End time: 16:59:43 on Apr 24,2024, Elapsed time: 0:00:01
+# -- Compiling entity memory_stage_tb
+# -- Compiling architecture behavior of memory_stage_tb
+# End time: 21:33:20 on Apr 24,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 16:59:43 on Apr 24,2024
-# vcom -reportprogress 300 alu_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity ALU_tb
-# -- Compiling architecture behavior of ALU_tb
-# End time: 16:59:43 on Apr 24,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# vsim -gui work.alu_tb 
-# Start time: 16:59:43 on Apr 24,2024
+# vsim -gui work.memory_stage_tb 
+# Start time: 21:33:21 on Apr 24,2024
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
 # Loading ieee.numeric_std(body)
-# Loading work.alu_tb(behavior)
-# Loading work.alu(alu_behavior)
-# ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
-#    Time: 10 ns  Iteration: 2  Instance: /alu_tb/uut
-do alu.do
-# End time: 17:04:15 on Apr 24,2024, Elapsed time: 0:04:32
-# Errors: 0, Warnings: 8
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 17:04:15 on Apr 24,2024
-# vcom -reportprogress 300 alu.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity ALU
-# -- Compiling architecture ALU_Behavior of ALU
-# End time: 17:04:15 on Apr 24,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 17:04:15 on Apr 24,2024
-# vcom -reportprogress 300 alu_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity ALU_tb
-# -- Compiling architecture behavior of ALU_tb
-# End time: 17:04:15 on Apr 24,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# vsim -gui work.alu_tb 
-# Start time: 17:04:15 on Apr 24,2024
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading ieee.numeric_std(body)
-# Loading work.alu_tb(behavior)
-# Loading work.alu(alu_behavior)
-# ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
-#    Time: 20 ns  Iteration: 2  Instance: /alu_tb/uut
-do alu.do
-# End time: 17:05:46 on Apr 24,2024, Elapsed time: 0:01:31
-# Errors: 0, Warnings: 2
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 17:05:46 on Apr 24,2024
-# vcom -reportprogress 300 alu.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity ALU
-# -- Compiling architecture ALU_Behavior of ALU
-# End time: 17:05:46 on Apr 24,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 17:05:46 on Apr 24,2024
-# vcom -reportprogress 300 alu_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity ALU_tb
-# -- Compiling architecture behavior of ALU_tb
-# End time: 17:05:47 on Apr 24,2024, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-# vsim -gui work.alu_tb 
-# Start time: 17:05:47 on Apr 24,2024
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading ieee.numeric_std(body)
-# Loading work.alu_tb(behavior)
-# Loading work.alu(alu_behavior)
-# ** Warning: NUMERIC_STD."=": metavalue detected, returning FALSE
-#    Time: 30 ns  Iteration: 2  Instance: /alu_tb/uut
-do memory_tb.do
-# End time: 19:46:38 on Apr 24,2024, Elapsed time: 2:40:51
-# Errors: 0, Warnings: 6
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 19:46:38 on Apr 24,2024
-# vcom -reportprogress 300 memory.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity memory
-# -- Compiling architecture memory_arch of memory
-# End time: 19:46:39 on Apr 24,2024, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 19:46:39 on Apr 24,2024
-# vcom -reportprogress 300 memory_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity memory_tb
-# -- Compiling architecture behavior of memory_tb
-# End time: 19:46:39 on Apr 24,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# vsim -gui work.memory_tb 
-# Start time: 19:46:39 on Apr 24,2024
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading ieee.numeric_std(body)
-# Loading work.memory_tb(behavior)
+# Loading work.memory_stage_tb(behavior)
+# Loading work.memory_stage(memory_stage_arch)
 # Loading work.memory(memory_arch)
-# ** Fatal: (vsim-3348) Port length (32) does not match actual length (16) for port "/memory_tb/uut/write_data".
-#    Time: 0 ps  Iteration: 0  Instance: /memory_tb/uut File: memory.vhd Line: 12
+# ** Fatal: (vsim-3381) Obsolete library format for design unit. Design unit 'E:/College/year4-2/comp arch/project/Computer-Architecture/work.my_ndff(b_my_ndff)'
+#    Time: 0 ps  Iteration: 0  Instance: /memory_stage_tb/uut/mem_wb_reg File: memory_stage.vhd Line: 106
 # FATAL ERROR while loading design
 # Error loading design
 # Error: Error loading design
 #        Pausing macro execution
-# MACRO ./memory_tb.do PAUSED at line 10
-do memory_tb.do
-# End time: 19:48:00 on Apr 24,2024, Elapsed time: 0:01:21
-# Errors: 1, Warnings: 1
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 19:48:00 on Apr 24,2024
-# vcom -reportprogress 300 memory.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity memory
-# -- Compiling architecture memory_arch of memory
-# End time: 19:48:00 on Apr 24,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 19:48:00 on Apr 24,2024
-# vcom -reportprogress 300 memory_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity memory_tb
-# -- Compiling architecture behavior of memory_tb
-# End time: 19:48:00 on Apr 24,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# vsim -gui work.memory_tb 
-# Start time: 19:48:01 on Apr 24,2024
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading ieee.numeric_std(body)
-# Loading work.memory_tb(behavior)
-# Loading work.memory(memory_arch)
-# ** Warning: (vsim-8713) Suspect default binding for component instance 'uut'.
-# Entity has no generics at all; the component has generic:
-#           n
-#    Time: 0 ps  Iteration: 0  Instance: /memory_tb/uut File: memory_tb.vhd Line: 51
-run
-run
-do memory_tb.do
-# End time: 19:49:23 on Apr 24,2024, Elapsed time: 0:01:22
-# Errors: 0, Warnings: 2
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 19:49:23 on Apr 24,2024
-# vcom -reportprogress 300 memory.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity memory
-# -- Compiling architecture memory_arch of memory
-# End time: 19:49:23 on Apr 24,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 19:49:23 on Apr 24,2024
-# vcom -reportprogress 300 memory_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity memory_tb
-# -- Compiling architecture behavior of memory_tb
-# End time: 19:49:23 on Apr 24,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# vsim -gui work.memory_tb 
-# Start time: 19:49:23 on Apr 24,2024
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading ieee.numeric_std(body)
-# Loading work.memory_tb(behavior)
-# Loading work.memory(memory_arch)
-# ** Warning: (vsim-8713) Suspect default binding for component instance 'uut'.
-# Entity has no generics at all; the component has generic:
-#           n
-#    Time: 0 ps  Iteration: 0  Instance: /memory_tb/uut File: memory_tb.vhd Line: 51
-run
-run
-do memory_tb.do
-# End time: 19:50:31 on Apr 24,2024, Elapsed time: 0:01:08
-# Errors: 0, Warnings: 2
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 19:50:31 on Apr 24,2024
-# vcom -reportprogress 300 memory.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity memory
-# -- Compiling architecture memory_arch of memory
-# End time: 19:50:31 on Apr 24,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 19:50:31 on Apr 24,2024
-# vcom -reportprogress 300 memory_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity memory_tb
-# -- Compiling architecture behavior of memory_tb
-# End time: 19:50:32 on Apr 24,2024, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-# vsim -gui work.memory_tb 
-# Start time: 19:50:32 on Apr 24,2024
-# Loading std.standard
-# Loading std.textio(body)
-# Loading ieee.std_logic_1164(body)
-# Loading ieee.numeric_std(body)
-# Loading work.memory_tb(behavior)
-# Loading work.memory(memory_arch)
-# ** Warning: (vsim-8713) Suspect default binding for component instance 'uut'.
-# Entity has no generics at all; the component has generic:
-#           n
-#    Time: 0 ps  Iteration: 0  Instance: /memory_tb/uut File: memory_tb.vhd Line: 51
-run
-run
-run
-run
-run
-run
-run
-run
-run
-do memory_tb.do
-# End time: 19:56:05 on Apr 24,2024, Elapsed time: 0:05:33
-# Errors: 0, Warnings: 2
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 19:56:05 on Apr 24,2024
-# vcom -reportprogress 300 memory.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity memory
-# -- Compiling architecture memory_arch of memory
-# End time: 19:56:06 on Apr 24,2024, Elapsed time: 0:00:01
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 19:56:06 on Apr 24,2024
-# vcom -reportprogress 300 memory_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity memory_tb
-# -- Compiling architecture behavior of memory_tb
-# ** Error (suppressible): memory_tb.vhd(72): (vcom-1272) Length of expected is 13; length of actual is 12.
-# ** Note: memory_tb.vhd(115): VHDL Compiler exiting
-# End time: 19:56:06 on Apr 24,2024, Elapsed time: 0:00:00
-# Errors: 1, Warnings: 0
-# ** Error: C:/intelFPGA/20.1/modelsim_ase/win32aloem/vcom failed.
-# Error in macro ./memory_tb.do line 7
-# C:/intelFPGA/20.1/modelsim_ase/win32aloem/vcom failed.
-#     while executing
-# "vcom memory_tb.vhd"
-do memory_tb.do
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 19:56:31 on Apr 24,2024
-# vcom -reportprogress 300 memory.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity memory
-# -- Compiling architecture memory_arch of memory
-# End time: 19:56:31 on Apr 24,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 19:56:31 on Apr 24,2024
-# vcom -reportprogress 300 memory_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity memory_tb
-# -- Compiling architecture behavior of memory_tb
-# ** Error (suppressible): memory_tb.vhd(43): (vcom-1272) Length of formal "address" is 13; length of actual is 12.
-# ** Error (suppressible): memory_tb.vhd(82): (vcom-1272) Length of expected is 12; length of actual is 13.
-# ** Error (suppressible): memory_tb.vhd(87): (vcom-1272) Length of expected is 12; length of actual is 13.
-# ** Note: memory_tb.vhd(114): VHDL Compiler exiting
-# End time: 19:56:31 on Apr 24,2024, Elapsed time: 0:00:00
-# Errors: 3, Warnings: 0
-# ** Error: C:/intelFPGA/20.1/modelsim_ase/win32aloem/vcom failed.
-# Error in macro ./memory_tb.do line 7
-# C:/intelFPGA/20.1/modelsim_ase/win32aloem/vcom failed.
-#     while executing
-# "vcom memory_tb.vhd"
-# Compile of memory_tb.vhd failed with 3 errors.
+# MACRO ./do_memory_stage.do PAUSED at line 10
+# Compile of memory_tb.vhd was successful.
 # Compile of memory.vhd was successful.
-# 2 compiles, 1 failed with 3 errors.
-do memory_tb.do
+# Compile of memory_stage.vhd was successful.
+# Compile of memory_stage_tb.vhd was successful.
+# Compile of my_DFF.vhd was successful.
+# Compile of my_nDFF.vhd was successful.
+# 6 compiles, 0 failed with no errors.
+do do_memory_stage.do
+# End time: 21:35:09 on Apr 24,2024, Elapsed time: 0:01:48
+# Errors: 1, Warnings: 5
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 19:57:20 on Apr 24,2024
+# Start time: 21:35:09 on Apr 24,2024
+# vcom -reportprogress 300 memory_stage.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Compiling entity memory_stage
+# -- Compiling architecture memory_stage_arch of memory_stage
+# End time: 21:35:09 on Apr 24,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 21:35:09 on Apr 24,2024
+# vcom -reportprogress 300 memory_stage_tb.vhd 
+# -- Loading package STANDARD
+# -- Loading package TEXTIO
+# -- Loading package std_logic_1164
+# -- Loading package NUMERIC_STD
+# -- Compiling entity memory_stage_tb
+# -- Compiling architecture behavior of memory_stage_tb
+# End time: 21:35:09 on Apr 24,2024, Elapsed time: 0:00:00
+# Errors: 0, Warnings: 0
+# vsim -gui work.memory_stage_tb 
+# Start time: 21:35:09 on Apr 24,2024
+# Loading std.standard
+# Loading std.textio(body)
+# Loading ieee.std_logic_1164(body)
+# Loading ieee.numeric_std(body)
+# Loading work.memory_stage_tb(behavior)
+# Loading work.memory_stage(memory_stage_arch)
+# Loading work.memory(memory_arch)
+# Loading work.my_ndff(b_my_ndff)
+# Loading work.my_dff(a_my_dff)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Omar  Hostname: DESKTOP-QM07EUH  ProcessID: 5680
+#           Attempting to use alternate WLF file "./wlft2da0fw".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlft2da0fw
+run
+run
+do memory_tb.do
+# End time: 21:36:01 on Apr 24,2024, Elapsed time: 0:00:52
+# Errors: 0, Warnings: 3
+# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
+# Start time: 21:36:01 on Apr 24,2024
 # vcom -reportprogress 300 memory.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -343,10 +97,10 @@ do memory_tb.do
 # -- Loading package NUMERIC_STD
 # -- Compiling entity memory
 # -- Compiling architecture memory_arch of memory
-# End time: 19:57:20 on Apr 24,2024, Elapsed time: 0:00:00
+# End time: 21:36:01 on Apr 24,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 19:57:20 on Apr 24,2024
+# Start time: 21:36:01 on Apr 24,2024
 # vcom -reportprogress 300 memory_tb.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -354,85 +108,21 @@ do memory_tb.do
 # -- Loading package NUMERIC_STD
 # -- Compiling entity memory_tb
 # -- Compiling architecture behavior of memory_tb
-# ** Error (suppressible): memory_tb.vhd(43): (vcom-1272) Length of formal "address" is 13; length of actual is 12.
-# ** Error (suppressible): memory_tb.vhd(82): (vcom-1272) Length of expected is 12; length of actual is 13.
-# ** Error (suppressible): memory_tb.vhd(87): (vcom-1272) Length of expected is 12; length of actual is 13.
-# ** Note: memory_tb.vhd(114): VHDL Compiler exiting
-# End time: 19:57:21 on Apr 24,2024, Elapsed time: 0:00:01
-# Errors: 3, Warnings: 0
-# ** Error: C:/intelFPGA/20.1/modelsim_ase/win32aloem/vcom failed.
-# Error in macro ./memory_tb.do line 7
-# C:/intelFPGA/20.1/modelsim_ase/win32aloem/vcom failed.
-#     while executing
-# "vcom memory_tb.vhd"
-# Compile of memory_tb.vhd failed with 3 errors.
-# Compile of memory.vhd was successful.
-# 2 compiles, 1 failed with 3 errors.
-do memory_tb.do
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 19:58:49 on Apr 24,2024
-# vcom -reportprogress 300 memory.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity memory
-# -- Compiling architecture memory_arch of memory
-# End time: 19:58:49 on Apr 24,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 19:58:49 on Apr 24,2024
-# vcom -reportprogress 300 memory_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity memory_tb
-# -- Compiling architecture behavior of memory_tb
-# ** Error (suppressible): memory_tb.vhd(43): (vcom-1272) Length of formal "address" is 13; length of actual is 12.
-# ** Note: memory_tb.vhd(114): VHDL Compiler exiting
-# End time: 19:58:49 on Apr 24,2024, Elapsed time: 0:00:00
-# Errors: 1, Warnings: 0
-# ** Error: C:/intelFPGA/20.1/modelsim_ase/win32aloem/vcom failed.
-# Error in macro ./memory_tb.do line 7
-# C:/intelFPGA/20.1/modelsim_ase/win32aloem/vcom failed.
-#     while executing
-# "vcom memory_tb.vhd"
-# Compile of memory_tb.vhd failed with 1 errors.
-# Compile of memory.vhd was successful.
-# 2 compiles, 1 failed with 1 error.
-do memory_tb.do
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 19:59:14 on Apr 24,2024
-# vcom -reportprogress 300 memory.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity memory
-# -- Compiling architecture memory_arch of memory
-# End time: 19:59:14 on Apr 24,2024, Elapsed time: 0:00:00
-# Errors: 0, Warnings: 0
-# Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 19:59:14 on Apr 24,2024
-# vcom -reportprogress 300 memory_tb.vhd 
-# -- Loading package STANDARD
-# -- Loading package TEXTIO
-# -- Loading package std_logic_1164
-# -- Loading package NUMERIC_STD
-# -- Compiling entity memory_tb
-# -- Compiling architecture behavior of memory_tb
-# End time: 19:59:14 on Apr 24,2024, Elapsed time: 0:00:00
+# End time: 21:36:02 on Apr 24,2024, Elapsed time: 0:00:01
 # Errors: 0, Warnings: 0
 # vsim -gui work.memory_tb 
-# Start time: 19:59:14 on Apr 24,2024
+# Start time: 21:36:02 on Apr 24,2024
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
 # Loading ieee.numeric_std(body)
 # Loading work.memory_tb(behavior)
 # Loading work.memory(memory_arch)
-run
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Omar  Hostname: DESKTOP-QM07EUH  ProcessID: 5680
+#           Attempting to use alternate WLF file "./wlftf6ays6".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlftf6ays6
 run
 run
 run
@@ -446,10 +136,10 @@ run
 run
 run
 do memory_tb.do
-# End time: 20:00:29 on Apr 24,2024, Elapsed time: 0:01:15
-# Errors: 0, Warnings: 8
+# End time: 21:37:30 on Apr 24,2024, Elapsed time: 0:01:28
+# Errors: 0, Warnings: 3
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 20:00:29 on Apr 24,2024
+# Start time: 21:37:30 on Apr 24,2024
 # vcom -reportprogress 300 memory.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -457,10 +147,10 @@ do memory_tb.do
 # -- Loading package NUMERIC_STD
 # -- Compiling entity memory
 # -- Compiling architecture memory_arch of memory
-# End time: 20:00:29 on Apr 24,2024, Elapsed time: 0:00:00
+# End time: 21:37:30 on Apr 24,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # Model Technology ModelSim - Intel FPGA Edition vcom 2020.1 Compiler 2020.02 Feb 28 2020
-# Start time: 20:00:29 on Apr 24,2024
+# Start time: 21:37:30 on Apr 24,2024
 # vcom -reportprogress 300 memory_tb.vhd 
 # -- Loading package STANDARD
 # -- Loading package TEXTIO
@@ -468,14 +158,34 @@ do memory_tb.do
 # -- Loading package NUMERIC_STD
 # -- Compiling entity memory_tb
 # -- Compiling architecture behavior of memory_tb
-# End time: 20:00:29 on Apr 24,2024, Elapsed time: 0:00:00
+# End time: 21:37:30 on Apr 24,2024, Elapsed time: 0:00:00
 # Errors: 0, Warnings: 0
 # vsim -gui work.memory_tb 
-# Start time: 20:00:29 on Apr 24,2024
+# Start time: 21:37:30 on Apr 24,2024
 # Loading std.standard
 # Loading std.textio(body)
 # Loading ieee.std_logic_1164(body)
 # Loading ieee.numeric_std(body)
 # Loading work.memory_tb(behavior)
 # Loading work.memory(memory_arch)
+# ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
+#           File in use by: Omar  Hostname: DESKTOP-QM07EUH  ProcessID: 5680
+#           Attempting to use alternate WLF file "./wlft73r4a3".
+# ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
+#           Using alternate file: ./wlft73r4a3
 run
+run
+run
+run
+run
+run
+# Compile of execute.vhd failed with 2 errors.
+# Compile of memory_tb.vhd was successful.
+# Compile of memory.vhd was successful.
+# Compile of memory_stage.vhd failed with 1 errors.
+# Compile of memory_stage_tb.vhd was successful.
+# Compile of my_DFF.vhd was successful.
+# Compile of my_nDFF.vhd was successful.
+# Compile of execute.vhd was successful.
+# 7 compiles, 1 failed with 1 error.
+# Compile of execute.vhd was successful.

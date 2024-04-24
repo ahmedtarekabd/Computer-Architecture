@@ -62,7 +62,7 @@ BEGIN
    stim_proc: process
    begin		
     -- hold reset state for 100 ns.
-    wait for 100 ns;	
+    wait for 105 ns;	
     protect_signal <= '0';
     free_signal <= '0';
     read_enable <= '0';
@@ -103,7 +103,7 @@ BEGIN
     write_enable <= '1';
     write_data <= "11110000111100001111000011110000";
     wait for clk_period;
-
+ 
     --try to read from the freed memory location the expected -> 0000000000000000
     read_enable <= '1';
     wait for clk_period;

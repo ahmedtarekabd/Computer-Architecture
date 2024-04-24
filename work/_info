@@ -154,68 +154,70 @@ R9
 R12
 R13
 Eexecute
-Z23 w1713965790
+Z23 w1713988260
 R2
-R3
-R4
-Z24 8C:/Users/ziadg/Desktop/Computer-Architecture/execute.vhd
-Z25 FC:/Users/ziadg/Desktop/Computer-Architecture/execute.vhd
+Z24 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
+!i122 48
+Z25 dE:/College/year4-2/comp arch/project/Computer-Architecture
+Z26 8E:/College/year4-2/comp arch/project/Computer-Architecture/execute.vhd
+Z27 FE:/College/year4-2/comp arch/project/Computer-Architecture/execute.vhd
 l0
-L6
-VBBABQeN52jN8g]]Onc]b73
-!s100 6m8D4bAFN[bQ^ZUH>Od]<2
-R7
+L5 1
+VG?B4:H6fPaHg3CS==k?1I2
+!s100 JHU?ozO<59VLPMZ2f1h9G0
+Z28 OV;C;2020.1;71
 32
-R22
+Z29 !s110 1713988295
 !i10b 1
-Z26 !s108 1713974233.000000
-Z27 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/execute.vhd|
-Z28 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/execute.vhd|
+Z30 !s108 1713988295.000000
+Z31 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/year4-2/comp arch/project/Computer-Architecture/execute.vhd|
+Z32 !s107 E:/College/year4-2/comp arch/project/Computer-Architecture/execute.vhd|
 !i113 1
 R12
 R13
 Aarch_execute
 R2
-R3
-Z29 DEx4 work 7 execute 0 22 BBABQeN52jN8g]]Onc]b73
-l117
-L68
-VFHK_GmnX7I4];o@We6g5z3
-!s100 _`?n^Teg>METSB<3cW8UY0
-R7
-32
-R22
-!i10b 1
-R26
-R27
+R24
+Z33 DEx4 work 7 execute 0 22 G?B4:H6fPaHg3CS==k?1I2
+!i122 48
+l120
+Z34 L67 108
+Z35 VhnV9Vd39`Kz0]<XEYiG`Q0
+Z36 !s100 5izm]aJO]nJFcPSSA5Qk31
 R28
+32
+R29
+!i10b 1
+R30
+R31
+R32
 !i113 1
 R12
 R13
 Eexecute_tb
-Z30 w1713974342
+Z37 w1713974342
 R1
 R2
 R3
 R4
-Z31 8C:/Users/ziadg/Desktop/Computer-Architecture/execute_tb.vhd
-Z32 FC:/Users/ziadg/Desktop/Computer-Architecture/execute_tb.vhd
+Z38 8C:/Users/ziadg/Desktop/Computer-Architecture/execute_tb.vhd
+Z39 FC:/Users/ziadg/Desktop/Computer-Architecture/execute_tb.vhd
 l0
 L5
 VDNJPTj`0neRbZJch^5`>71
 !s100 az<1BoPz7LV:6TbM;hJ?G1
 R7
 32
-Z33 !s110 1713974353
+Z40 !s110 1713974353
 !i10b 1
-Z34 !s108 1713974353.000000
-Z35 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/execute_tb.vhd|
-Z36 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/execute_tb.vhd|
+Z41 !s108 1713974353.000000
+Z42 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/execute_tb.vhd|
+Z43 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/execute_tb.vhd|
 !i113 1
 R12
 R13
 Aexecute_tb_tb
-R29
+DEx4 work 7 execute 0 22 BBABQeN52jN8g]]Onc]b73
 R1
 R2
 R3
@@ -226,11 +228,11 @@ VT>ddZ_@=1TT]gTzPCbHTN0
 !s100 07R=P2;W<ccZh>Pk>]:Xe3
 R7
 32
-R33
+R40
 !i10b 1
-R34
-R35
-R36
+R41
+R42
+R43
 !i113 1
 R12
 R13
@@ -240,8 +242,8 @@ R1
 R2
 R3
 R4
-Z37 8C:/Users/ziadg/Desktop/Computer-Architecture/fetch.vhd
-Z38 FC:/Users/ziadg/Desktop/Computer-Architecture/fetch.vhd
+Z44 8C:/Users/ziadg/Desktop/Computer-Architecture/fetch.vhd
+Z45 FC:/Users/ziadg/Desktop/Computer-Architecture/fetch.vhd
 l0
 L5
 VYdg:46C5=HfcU@Kk^MzQ>2
@@ -250,9 +252,9 @@ R7
 32
 R22
 !i10b 1
-R26
-Z39 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/fetch.vhd|
-Z40 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/fetch.vhd|
+Z46 !s108 1713974233.000000
+Z47 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/fetch.vhd|
+Z48 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/fetch.vhd|
 !i113 1
 R12
 R13
@@ -269,9 +271,9 @@ R7
 32
 R22
 !i10b 1
-R26
-R39
-R40
+R46
+R47
+R48
 !i113 1
 R12
 R13
@@ -280,8 +282,8 @@ R0
 R2
 R3
 R4
-Z41 8C:/Users/ziadg/Desktop/Computer-Architecture/fetch_tb.vhd
-Z42 FC:/Users/ziadg/Desktop/Computer-Architecture/fetch_tb.vhd
+Z49 8C:/Users/ziadg/Desktop/Computer-Architecture/fetch_tb.vhd
+Z50 FC:/Users/ziadg/Desktop/Computer-Architecture/fetch_tb.vhd
 l0
 L4
 VjflaRW=hH_5K^hn2B_OQh1
@@ -290,9 +292,9 @@ R7
 32
 R22
 !i10b 1
-R26
-Z43 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/fetch_tb.vhd|
-Z44 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/fetch_tb.vhd|
+R46
+Z51 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/fetch_tb.vhd|
+Z52 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/fetch_tb.vhd|
 !i113 1
 R12
 R13
@@ -308,9 +310,9 @@ R7
 32
 R22
 !i10b 1
-R26
-R43
-R44
+R46
+R51
+R52
 !i113 1
 R12
 R13
@@ -342,8 +344,8 @@ R1
 R2
 R3
 R4
-Z45 8C:/Users/ziadg/Desktop/Computer-Architecture/instruction_cache.vhd
-Z46 FC:/Users/ziadg/Desktop/Computer-Architecture/instruction_cache.vhd
+Z53 8C:/Users/ziadg/Desktop/Computer-Architecture/instruction_cache.vhd
+Z54 FC:/Users/ziadg/Desktop/Computer-Architecture/instruction_cache.vhd
 l0
 L5
 VODReAJ14aHLWL^0l;_EWQ1
@@ -352,9 +354,9 @@ R7
 32
 R22
 !i10b 1
-R26
-Z47 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/instruction_cache.vhd|
-Z48 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/instruction_cache.vhd|
+R46
+Z55 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/instruction_cache.vhd|
+Z56 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/instruction_cache.vhd|
 !i113 1
 R12
 R13
@@ -371,188 +373,201 @@ R7
 32
 R22
 !i10b 1
-R26
-R47
-R48
+R46
+R55
+R56
 !i113 1
 R12
 R13
 Ememory
-Z49 w1713981360
-Z50 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
+Z57 w1713981360
+Z58 DPx4 ieee 11 numeric_std 0 22 aU^R8eGcicLcUFIaBQSL>3
 R2
-Z51 DPx4 ieee 14 std_logic_1164 0 22 cVAk:aDinOX8^VGI1ekP<3
-!i122 24
-Z52 dE:/College/year4-2/comp arch/project/Computer-Architecture
-Z53 8memory.vhd
-Z54 Fmemory.vhd
+R24
+!i122 42
+R25
+Z59 8E:/College/year4-2/comp arch/project/Computer-Architecture/memory.vhd
+Z60 FE:/College/year4-2/comp arch/project/Computer-Architecture/memory.vhd
 l0
 L5 1
-Vj8GoCWG@[8=baIRBUWmk51
+V1D?27A^]=eI2G_Z>FR@9m1
 !s100 0hK49l17hF2S3H287[LL]0
-Z55 OV;C;2020.1;71
+R28
 32
-Z56 !s110 1713981629
+Z61 !s110 1713988262
 !i10b 1
-Z57 !s108 1713981629.000000
-Z58 !s90 -reportprogress|300|memory.vhd|
-Z59 !s107 memory.vhd|
+Z62 !s108 1713988262.000000
+Z63 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/year4-2/comp arch/project/Computer-Architecture/memory.vhd|
+Z64 !s107 E:/College/year4-2/comp arch/project/Computer-Architecture/memory.vhd|
 !i113 1
+R12
 R13
 Amemory_arch
-R50
+R58
 R2
-R51
-DEx4 work 6 memory 0 22 j8GoCWG@[8=baIRBUWmk51
-!i122 24
+R24
+DEx4 work 6 memory 0 22 1D?27A^]=eI2G_Z>FR@9m1
+!i122 42
 l38
 L23 66
-VM<JU?OGdgU;C1SK<l@jZj0
+VVOSoTTzFXJ;4Yz]il7b:A2
 !s100 _;bXW:E[9Wg0K>n78fOTK3
-R55
+R28
 32
-R56
+R61
 !i10b 1
-R57
-R58
-R59
+R62
+R63
+R64
 !i113 1
+R12
 R13
 Ememory_stage
-Z60 w1713974777
+Z65 w1713988054
 R2
-R3
-R4
-Z61 8memory_stage.vhd
-Z62 Fmemory_stage.vhd
+R24
+!i122 43
+R25
+8E:/College/year4-2/comp arch/project/Computer-Architecture/memory_stage.vhd
+FE:/College/year4-2/comp arch/project/Computer-Architecture/memory_stage.vhd
 l0
-L6
-VnC;P:R[VbKg`jLD90WE=31
-!s100 dDm>ZTTLOPE;F0<ZKGo6Y2
-R7
+L6 1
+VBC=S6Tc1FAb]=;dRl@Y272
+!s100 H96TZV>fHX>k=Y<DbB9[L1
+R28
 32
-Z63 !s110 1713974784
+R61
 !i10b 1
-Z64 !s108 1713974784.000000
-Z65 !s90 -reportprogress|300|memory_stage.vhd|
-Z66 !s107 memory_stage.vhd|
+R62
+!s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/year4-2/comp arch/project/Computer-Architecture/memory_stage.vhd|
+!s107 E:/College/year4-2/comp arch/project/Computer-Architecture/memory_stage.vhd|
 !i113 1
+R12
 R13
 Amemory_stage_arch
 R2
-R3
-DEx4 work 12 memory_stage 0 22 nC;P:R[VbKg`jLD90WE=31
-l68
-L45
-VWeYbL3iNZKYJjg<ihd?Lm1
-!s100 4f9S?WD_jBY@ANjYlfG5U1
-R7
+R24
+DEx4 work 12 memory_stage 0 22 1F?TL[ULlM]]FlGMaAo9g3
+!i122 34
+l78
+L45 78
+VjTTYVjF:1bkM;2`S4ZBK70
+!s100 cTK_C1@_`NGe7kaY7W5IT1
+R28
 32
-R63
+!s110 1713987309
 !i10b 1
-R64
-R65
-R66
+!s108 1713987309.000000
+!s90 -reportprogress|300|memory_stage.vhd|
+!s107 memory_stage.vhd|
 !i113 1
 R13
+Fmemory_stage.vhd
+8memory_stage.vhd
 Ememory_stage_tb
-Z67 w1713974465
-R1
+Z66 w1713986682
+R58
 R2
-R3
-R4
-Z68 8memory_stage_tb.vhd
-Z69 Fmemory_stage_tb.vhd
+R24
+!i122 44
+R25
+Z67 8E:/College/year4-2/comp arch/project/Computer-Architecture/memory_stage_tb.vhd
+Z68 FE:/College/year4-2/comp arch/project/Computer-Architecture/memory_stage_tb.vhd
 l0
-L5
-VO0<e^lBVdUmN34NH[EaCn0
+L5 1
+VP>l:[1YWjB0ENIoezFzgG2
 !s100 eULfJ;CnbR_PYUND;NEoT3
-R7
+R28
 32
-R63
+Z69 !s110 1713988263
 !i10b 1
-R64
-Z70 !s90 -reportprogress|300|memory_stage_tb.vhd|
-Z71 !s107 memory_stage_tb.vhd|
+R62
+Z70 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/year4-2/comp arch/project/Computer-Architecture/memory_stage_tb.vhd|
+Z71 !s107 E:/College/year4-2/comp arch/project/Computer-Architecture/memory_stage_tb.vhd|
 !i113 1
+R12
 R13
 Abehavior
-R1
+R58
 R2
-R3
-DEx4 work 15 memory_stage_tb 0 22 O0<e^lBVdUmN34NH[EaCn0
+R24
+DEx4 work 15 memory_stage_tb 0 22 P>l:[1YWjB0ENIoezFzgG2
+!i122 44
 l58
-L8
-V95PT`QSiI@>RDkB85_z5Z0
-!s100 SSo5LLDcLdgcGOP<[g73:0
-R7
+L8 150
+V4m>7Y[P5Vd4nLnXB@hi823
+!s100 Qel;nNcm`>cNAlBH[E6Q<2
+R28
 32
-R63
+R69
 !i10b 1
-R64
+R62
 R70
 R71
 !i113 1
+R12
 R13
 Ememory_tb
-Z72 w1713981552
-R50
+Z72 w1713987446
+R58
 R2
-R51
-!i122 25
-R52
-Z73 8memory_tb.vhd
-Z74 Fmemory_tb.vhd
+R24
+!i122 41
+R25
+Z73 8E:/College/year4-2/comp arch/project/Computer-Architecture/memory_tb.vhd
+Z74 FE:/College/year4-2/comp arch/project/Computer-Architecture/memory_tb.vhd
 l0
 L5 1
-V@?@zlQT4SKT3Ocd6@NE^C2
+Vf[OV9CalemHl?bPPI=cSo3
 !s100 Q:X>fL[ThMMHS3gk0TX=83
-R55
+R28
 32
-R56
+R61
 !i10b 1
-R57
-Z75 !s90 -reportprogress|300|memory_tb.vhd|
-Z76 !s107 memory_tb.vhd|
+R62
+Z75 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/year4-2/comp arch/project/Computer-Architecture/memory_tb.vhd|
+Z76 !s107 E:/College/year4-2/comp arch/project/Computer-Architecture/memory_tb.vhd|
 !i113 1
+R12
 R13
 Abehavior
-R50
+R58
 R2
-R51
-Z77 DEx4 work 9 memory_tb 0 22 @?@zlQT4SKT3Ocd6@NE^C2
-!i122 25
+R24
+DEx4 work 9 memory_tb 0 22 f[OV9CalemHl?bPPI=cSo3
+!i122 41
 l38
-Z78 L8 107
-Z79 VV?aj[MGH:OlERY?QYiOb^0
-Z80 !s100 I9Mh;bIXeP_`Dz[Na_mB53
-R55
+L8 107
+V<U:T?Y^89nbO9D[Ph;VVa3
+!s100 X]4>NR<ZWoVnLj8jN=]z33
+R28
 32
-R56
+R61
 !i10b 1
-R57
+R62
 R75
 R76
 !i113 1
+R12
 R13
 Emux4x1
 R0
 R2
 R3
 R4
-Z81 8C:/Users/ziadg/Desktop/Computer-Architecture/mux4x1.vhd
-Z82 FC:/Users/ziadg/Desktop/Computer-Architecture/mux4x1.vhd
+Z77 8C:/Users/ziadg/Desktop/Computer-Architecture/mux4x1.vhd
+Z78 FC:/Users/ziadg/Desktop/Computer-Architecture/mux4x1.vhd
 l0
 L5
 VZ3H9Pb??c`m>BcHCRzZYF0
 !s100 _2UDAUC3g7IildLSMjk8J0
 R7
 32
-Z83 !s110 1713974234
+Z79 !s110 1713974234
 !i10b 1
-Z84 !s108 1713974234.000000
-Z85 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/mux4x1.vhd|
-Z86 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/mux4x1.vhd|
+Z80 !s108 1713974234.000000
+Z81 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/mux4x1.vhd|
+Z82 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/mux4x1.vhd|
 !i113 1
 R12
 R13
@@ -566,89 +581,93 @@ VkGX[eg[X8Gice]SEhO:TM1
 !s100 IkTfFeRT95;ZW;``HeeN50
 R7
 32
-R83
+R79
 !i10b 1
-R84
-R85
-R86
+R80
+R81
+R82
 !i113 1
 R12
 R13
 Emy_dff
-R0
+Z83 w1713154942
 R2
-R3
-R4
-Z87 8C:/Users/ziadg/Desktop/Computer-Architecture/my_DFF.vhd
-Z88 FC:/Users/ziadg/Desktop/Computer-Architecture/my_DFF.vhd
+R24
+!i122 45
+R25
+Z84 8E:/College/year4-2/comp arch/project/Computer-Architecture/my_DFF.vhd
+Z85 FE:/College/year4-2/comp arch/project/Computer-Architecture/my_DFF.vhd
 l0
-L4
+L4 1
 VQzfI:L0>@g_o>B>_XKoWO1
 !s100 YSazj:fZc[zUcZbN6`I^L1
-R7
+R28
 32
-R83
+R69
 !i10b 1
-R84
-Z89 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/my_DFF.vhd|
-Z90 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/my_DFF.vhd|
+Z86 !s108 1713988263.000000
+Z87 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/year4-2/comp arch/project/Computer-Architecture/my_DFF.vhd|
+Z88 !s107 E:/College/year4-2/comp arch/project/Computer-Architecture/my_DFF.vhd|
 !i113 1
 R12
 R13
 Aa_my_dff
 R2
-R3
+R24
 DEx4 work 6 my_dff 0 22 QzfI:L0>@g_o>B>_XKoWO1
+!i122 45
 l10
-L9
+L9 11
 V^V@k@N1VB4j=PjXZbza:l0
 !s100 l]oP3<VOh0n^jXQD@i`kU0
-R7
+R28
 32
-R83
+R69
 !i10b 1
-R84
-R89
-R90
+R86
+R87
+R88
 !i113 1
 R12
 R13
 Emy_ndff
-R0
+R83
 R2
-R3
-R4
-Z91 8C:/Users/ziadg/Desktop/Computer-Architecture/my_nDFF.vhd
-Z92 FC:/Users/ziadg/Desktop/Computer-Architecture/my_nDFF.vhd
+R24
+!i122 46
+R25
+Z89 8E:/College/year4-2/comp arch/project/Computer-Architecture/my_nDFF.vhd
+Z90 FE:/College/year4-2/comp arch/project/Computer-Architecture/my_nDFF.vhd
 l0
-L4
+L4 1
 Vfjl`TNK3O=h<diS6FdioU2
 !s100 >;JahBR=5<0^A]AJIigT_3
-R7
+R28
 32
-Z93 !s110 1713974235
+R69
 !i10b 1
-R84
-Z94 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/my_nDFF.vhd|
-Z95 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/my_nDFF.vhd|
+R86
+Z91 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/year4-2/comp arch/project/Computer-Architecture/my_nDFF.vhd|
+Z92 !s107 E:/College/year4-2/comp arch/project/Computer-Architecture/my_nDFF.vhd|
 !i113 1
 R12
 R13
 Ab_my_ndff
 R2
-R3
+R24
 DEx4 work 7 my_ndff 0 22 fjl`TNK3O=h<diS6FdioU2
+!i122 46
 l20
-L13
+L13 14
 VlzMO<zV2?IH0z^Z[<hTYn0
 !s100 h6U`0iSe?9c5WZ5<hHVd]3
-R7
+R28
 32
-R93
+R69
 !i10b 1
-R84
-R94
-R95
+R86
+R91
+R92
 !i113 1
 R12
 R13
@@ -658,19 +677,19 @@ R1
 R2
 R3
 R4
-Z96 8C:/Users/ziadg/Desktop/Computer-Architecture/pc.vhd
-Z97 FC:/Users/ziadg/Desktop/Computer-Architecture/pc.vhd
+Z93 8C:/Users/ziadg/Desktop/Computer-Architecture/pc.vhd
+Z94 FC:/Users/ziadg/Desktop/Computer-Architecture/pc.vhd
 l0
 L5
 Vmogc=6@`Wjl50Vdl:M[=F2
 !s100 >0]m<5Z2M<c[C<0?IHn131
 R7
 32
-Z98 !s110 1713974236
+Z95 !s110 1713974236
 !i10b 1
-Z99 !s108 1713974235.000000
-Z100 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/pc.vhd|
-Z101 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/pc.vhd|
+Z96 !s108 1713974235.000000
+Z97 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/pc.vhd|
+Z98 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/pc.vhd|
 !i113 1
 R12
 R13
@@ -685,11 +704,11 @@ VZ]bYYVAaTKZ7lK=`Wke110
 !s100 <z:9V3J>ljHF`OSnOL2EO1
 R7
 32
-R98
+R95
 !i10b 1
-R99
-R100
-R101
+R96
+R97
+R98
 !i113 1
 R12
 R13
@@ -699,19 +718,19 @@ R1
 R2
 R3
 R4
-Z102 8C:/Users/ziadg/Desktop/Computer-Architecture/processor2.vhd
-Z103 FC:/Users/ziadg/Desktop/Computer-Architecture/processor2.vhd
+Z99 8C:/Users/ziadg/Desktop/Computer-Architecture/processor2.vhd
+Z100 FC:/Users/ziadg/Desktop/Computer-Architecture/processor2.vhd
 l0
 L5
 VHA;f:_ONhNHX=V4[WT=jM2
 !s100 f[gAVZC`Hg<jWPEE[Ekb>1
 R7
 32
-R98
+R95
 !i10b 1
-Z104 !s108 1713974236.000000
-Z105 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/processor2.vhd|
-Z106 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/processor2.vhd|
+Z101 !s108 1713974236.000000
+Z102 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/processor2.vhd|
+Z103 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/processor2.vhd|
 !i113 1
 R12
 R13
@@ -726,11 +745,11 @@ V:=Z`WjFF9ld:HG]S8g9Tg3
 !s100 HRKifNPKF7n[[F34L76@V1
 R7
 32
-R98
+R95
 !i10b 1
-R104
-R105
-R106
+R101
+R102
+R103
 !i113 1
 R12
 R13
@@ -739,19 +758,19 @@ R0
 R2
 R3
 R4
-Z107 8C:/Users/ziadg/Desktop/Computer-Architecture/processor_tb2.vhd
-Z108 FC:/Users/ziadg/Desktop/Computer-Architecture/processor_tb2.vhd
+Z104 8C:/Users/ziadg/Desktop/Computer-Architecture/processor_tb2.vhd
+Z105 FC:/Users/ziadg/Desktop/Computer-Architecture/processor_tb2.vhd
 l0
 L6
 VT^eZim?NLgJ8BFSa@XG[B3
 !s100 A@j8z32GR3[1[bR]=7XGA2
 R7
 32
-R98
+R95
 !i10b 1
-R104
-Z109 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/processor_tb2.vhd|
-Z110 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/processor_tb2.vhd|
+R101
+Z106 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/processor_tb2.vhd|
+Z107 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/processor_tb2.vhd|
 !i113 1
 R12
 R13
@@ -765,11 +784,11 @@ Vf0;e<cWUVlK]I87Tz1o4e0
 !s100 ef0;Z4VblN1gS5gVV8coM1
 R7
 32
-R98
+R95
 !i10b 1
-R104
-R109
-R110
+R101
+R106
+R107
 !i113 1
 R12
 R13
@@ -779,19 +798,19 @@ R1
 R2
 R3
 R4
-Z111 8C:/Users/ziadg/Desktop/Computer-Architecture/ram.vhd
-Z112 FC:/Users/ziadg/Desktop/Computer-Architecture/ram.vhd
+Z108 8C:/Users/ziadg/Desktop/Computer-Architecture/ram.vhd
+Z109 FC:/Users/ziadg/Desktop/Computer-Architecture/ram.vhd
 l0
 L5
 VQWe39Oze:PacJc0M>]6al1
 !s100 eeD6^7KFcVVnfBo@gZO2T1
 R7
 32
-R98
+R95
 !i10b 1
-R104
-Z113 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/ram.vhd|
-Z114 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/ram.vhd|
+R101
+Z110 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/ram.vhd|
+Z111 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/ram.vhd|
 !i113 1
 R12
 R13
@@ -806,11 +825,11 @@ VDI^O9bck7Ea<JoS:j4YXG1
 !s100 l>3?O[zbj5D_CXR=kk7?a2
 R7
 32
-R98
+R95
 !i10b 1
-R104
-R113
-R114
+R101
+R110
+R111
 !i113 1
 R12
 R13
@@ -820,19 +839,19 @@ R1
 R2
 R3
 R4
-Z115 8C:/Users/ziadg/Desktop/Computer-Architecture/register_file.vhd
-Z116 FC:/Users/ziadg/Desktop/Computer-Architecture/register_file.vhd
+Z112 8C:/Users/ziadg/Desktop/Computer-Architecture/register_file.vhd
+Z113 FC:/Users/ziadg/Desktop/Computer-Architecture/register_file.vhd
 l0
 L5
 VO61K2]5_GzR[383F1DdFg0
 !s100 ?BiU9eEWHdT2U?`PoSTLO3
 R7
 32
-R98
+R95
 !i10b 1
-R104
-Z117 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/register_file.vhd|
-Z118 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/register_file.vhd|
+R101
+Z114 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/register_file.vhd|
+Z115 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/register_file.vhd|
 !i113 1
 R12
 R13
@@ -847,11 +866,11 @@ V_ogeLz`Q<fDle[m5GQ6Xz2
 !s100 gTzf`17Nh@=R3cVNio`kT1
 R7
 32
-R98
+R95
 !i10b 1
-R104
-R117
-R118
+R101
+R114
+R115
 !i113 1
 R12
 R13
@@ -861,19 +880,19 @@ R1
 R2
 R3
 R4
-Z119 8C:/Users/ziadg/Desktop/Computer-Architecture/register_file_tb.vhd
-Z120 FC:/Users/ziadg/Desktop/Computer-Architecture/register_file_tb.vhd
+Z116 8C:/Users/ziadg/Desktop/Computer-Architecture/register_file_tb.vhd
+Z117 FC:/Users/ziadg/Desktop/Computer-Architecture/register_file_tb.vhd
 l0
 L5
 VR6in@PL]2oAo;b[XBgz=51
 !s100 3^KgKRn`R4d7j6o:3kRez3
 R7
 32
-Z121 !s110 1713974237
+Z118 !s110 1713974237
 !i10b 1
-R104
-Z122 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/register_file_tb.vhd|
-Z123 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/register_file_tb.vhd|
+R101
+Z119 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/register_file_tb.vhd|
+Z120 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/register_file_tb.vhd|
 !i113 1
 R12
 R13
@@ -888,11 +907,11 @@ V>h8WYjL=5J5<NPGKm]mD01
 !s100 KI1Wd_3;STSg@PDB@=K3k3
 R7
 32
-R121
+R118
 !i10b 1
-R104
-R122
-R123
+R101
+R119
+R120
 !i113 1
 R12
 R13
@@ -902,19 +921,19 @@ R1
 R2
 R3
 R4
-Z124 8C:/Users/ziadg/Desktop/Computer-Architecture/registers_array.vhd
-Z125 FC:/Users/ziadg/Desktop/Computer-Architecture/registers_array.vhd
+Z121 8C:/Users/ziadg/Desktop/Computer-Architecture/registers_array.vhd
+Z122 FC:/Users/ziadg/Desktop/Computer-Architecture/registers_array.vhd
 l0
 L5
 VC?FRUHTjKD4;Nm?T6KY3o1
 !s100 GkWbT`PfdU6;Uc]a^cUPX0
 R7
 32
-R121
+R118
 !i10b 1
-Z126 !s108 1713974237.000000
-Z127 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/registers_array.vhd|
-Z128 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/registers_array.vhd|
+Z123 !s108 1713974237.000000
+Z124 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/registers_array.vhd|
+Z125 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/registers_array.vhd|
 !i113 1
 R12
 R13
@@ -929,11 +948,11 @@ VHBUon4knN<^2F8SJNIaz=0
 !s100 cNL[GTh;QJI4WRaf;ILTb1
 R7
 32
-R121
+R118
 !i10b 1
-R126
-R127
-R128
+R123
+R124
+R125
 !i113 1
 R12
 R13
@@ -943,19 +962,19 @@ R1
 R2
 R3
 R4
-Z129 8C:/Users/ziadg/Desktop/Computer-Architecture/SignExtend.vhd
-Z130 FC:/Users/ziadg/Desktop/Computer-Architecture/SignExtend.vhd
+Z126 8C:/Users/ziadg/Desktop/Computer-Architecture/SignExtend.vhd
+Z127 FC:/Users/ziadg/Desktop/Computer-Architecture/SignExtend.vhd
 l0
 L5
 VO<kWSa0g8;DYa;b^5G6`>0
 !s100 ZPOcfCYK]m7i04j;=AWbT0
 R7
 32
-R121
+R118
 !i10b 1
-R126
-Z131 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/SignExtend.vhd|
-Z132 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/SignExtend.vhd|
+R123
+Z128 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/SignExtend.vhd|
+Z129 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/SignExtend.vhd|
 !i113 1
 R12
 R13
@@ -970,11 +989,11 @@ V9m3W:SSkXAZXWjk_3UM7z2
 !s100 e0NP203;`c>U<Wf0:S;JF1
 R7
 32
-R121
+R118
 !i10b 1
-R126
-R131
-R132
+R123
+R128
+R129
 !i113 1
 R12
 R13
@@ -984,19 +1003,19 @@ R1
 R2
 R3
 R4
-Z133 8C:/Users/ziadg/Desktop/Computer-Architecture/SignExtend_tb.vhd
-Z134 FC:/Users/ziadg/Desktop/Computer-Architecture/SignExtend_tb.vhd
+Z130 8C:/Users/ziadg/Desktop/Computer-Architecture/SignExtend_tb.vhd
+Z131 FC:/Users/ziadg/Desktop/Computer-Architecture/SignExtend_tb.vhd
 l0
 L6
 V85[B_jm@AdJkKzeCA2d542
 !s100 `CnkFoQ;3cRiH6a^BQSDG0
 R7
 32
-R121
+R118
 !i10b 1
-R126
-Z135 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/SignExtend_tb.vhd|
-Z136 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/SignExtend_tb.vhd|
+R123
+Z132 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/SignExtend_tb.vhd|
+Z133 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/SignExtend_tb.vhd|
 !i113 1
 R12
 R13
@@ -1011,32 +1030,32 @@ V<]1jW=1HBAZBL<Al>Ef=z0
 !s100 H6a`>B0FKm5RzQfFU0dgI1
 R7
 32
-R121
+R118
 !i10b 1
-R126
-R135
-R136
+R123
+R132
+R133
 !i113 1
 R12
 R13
 Ewrite_back
-Z137 w1713970280
+Z134 w1713970280
 R2
 R3
 R4
-Z138 8C:/Users/ziadg/Desktop/Computer-Architecture/write_back.vhd
-Z139 FC:/Users/ziadg/Desktop/Computer-Architecture/write_back.vhd
+Z135 8C:/Users/ziadg/Desktop/Computer-Architecture/write_back.vhd
+Z136 FC:/Users/ziadg/Desktop/Computer-Architecture/write_back.vhd
 l0
 L4
 VU1fWb>;0^U]nKHSZBV]MS1
 !s100 mXVP6WAPc?A3G>_QPk:Tz0
 R7
 32
-R121
+R118
 !i10b 1
-R126
-Z140 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/write_back.vhd|
-Z141 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/write_back.vhd|
+R123
+Z137 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/write_back.vhd|
+Z138 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/write_back.vhd|
 !i113 1
 R12
 R13
@@ -1050,32 +1069,32 @@ VhM@fkea3a6K@mk5ORkTNE0
 !s100 bWz^iEFALdz_@78oVZ[9>3
 R7
 32
-R121
+R118
 !i10b 1
-R126
-R140
-R141
+R123
+R137
+R138
 !i113 1
 R12
 R13
 Ewrite_back_tb
-Z142 w1713969508
+Z139 w1713969508
 R2
 R3
 R4
-Z143 8C:/Users/ziadg/Desktop/Computer-Architecture/write_back_tb.vhd
-Z144 FC:/Users/ziadg/Desktop/Computer-Architecture/write_back_tb.vhd
+Z140 8C:/Users/ziadg/Desktop/Computer-Architecture/write_back_tb.vhd
+Z141 FC:/Users/ziadg/Desktop/Computer-Architecture/write_back_tb.vhd
 l0
 L4
 Vd<G36cOBYOP6<O3zbVgCF0
 !s100 R?mKVZ?R3;1GXl:nN8KT_3
 R7
 32
-R121
+R118
 !i10b 1
-R126
-Z145 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/write_back_tb.vhd|
-Z146 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/write_back_tb.vhd|
+R123
+Z142 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|C:/Users/ziadg/Desktop/Computer-Architecture/write_back_tb.vhd|
+Z143 !s107 C:/Users/ziadg/Desktop/Computer-Architecture/write_back_tb.vhd|
 !i113 1
 R12
 R13
@@ -1089,11 +1108,11 @@ VQ^Q^nEX8dOjhJ48kG9BDT0
 !s100 f1KKkQWJg:c7m;]U:nf0a0
 R7
 32
-R121
+R118
 !i10b 1
-R126
-R145
-R146
+R123
+R142
+R143
 !i113 1
 R12
 R13

@@ -109,14 +109,7 @@ begin
     );
 
 
-    mem_read_data <= q_output(31 downto 0);
-    read_data1_out <= q_output(63 downto 32);
-    read_data2_out <= q_output(95 downto 64);
-    read_address1_out <= q_output(98 downto 96);
-    read_address2_out <= q_output(101 downto 99);
-    destination_address_out <= q_output(104 downto 102);
-    pc_out <= q_output(120 downto 105);
-    wb_control_signals_out <= q_output(123 downto 121);
+    mem_read_data <= q_output(127 downto 0);
 
 
 end memory_stage_arch;
