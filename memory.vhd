@@ -3,16 +3,16 @@ USE IEEE.STD_LOGIC_1164.ALL;
 USE IEEE.numeric_std.ALL;
 
 ENTITY memory IS
-    GENERIC (n : INTEGER := 16);
+    -- GENERIC (n : INTEGER := 32);
     PORT (
         clk : IN STD_LOGIC;
-        address : IN STD_LOGIC_VECTOR(12 DOWNTO 0);
+        address : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
 
         write_enable : IN STD_LOGIC;
-        write_data : IN STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
+        write_data : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
 
         read_enable : IN STD_LOGIC;
-        read_data : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
+        read_data : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
 
         protect_signal : IN STD_LOGIC;
         free_signal : IN STD_LOGIC
@@ -22,7 +22,7 @@ END ENTITY memory;
 
 ARCHITECTURE memory_arch OF memory IS
 
-    TYPE register_array_type IS ARRAY(0 TO 4096) OF STD_LOGIC_VECTOR(n DOWNTO 0);
+    TYPE register_array_type IS ARRAY(0 TO 4096) OF STD_LOGIC_VECTOR(16 DOWNTO 0);
     SIGNAL memory_array : register_array_type := (OTHERS => (OTHERS => '0'));
 
     -- memory is 4k (4096 bits) and each one is 17 bits
@@ -40,9 +40,9 @@ BEGIN
 PROCESS (clk) IS
 
     --variable if it is ored with any address it will have the last bit on the left with 1
-    variable or_to_add_protected_bit : STD_LOGIC_VECTOR(n DOWNTO 0);
+    variable or_to_add_protected_bit : STD_LOGIC_VECTOR(16 DOWNTO 0);
     --variable if the free signal is 1 then the address will be reset and have the last bit on the left with 0
-    variable reset_address_content : STD_LOGIC_VECTOR(n DOWNTO 0);
+    variable reset_address_content : STD_LOGIC_VECTOR(16 DOWNTO 0);
 
     BEGIN
 
@@ -53,9 +53,11 @@ PROCESS (clk) IS
             --check on protect_signal and free_signal
             IF protect_signal = '1' THEN
                 memory_array(to_integer(unsigned(address))) <= (or_to_add_protected_bit or memory_array(to_integer(unsigned(address))));
+                memory_array(to_integer(unsigned(address)+1)) <= (or_to_add_protected_bit or memory_array(to_integer(unsigned(address)+1)));
 
             ELSIF free_signal = '1' THEN
                 memory_array(to_integer(unsigned(address))) <= reset_address_content;
+                memory_array(to_integer(unsigned(address)+1)) <= reset_address_content;
 
             --both free_signal and protect_signal are '0'
             --check on write_enable and read_enable
@@ -64,9 +66,10 @@ PROCESS (clk) IS
                     --check if the last bit is 1 (protected)
                     --if it is 1 then don't write on it
 
-                    if memory_array(to_integer(unsigned(address)))(n) = '0' THEN
+                    if memory_array(to_integer(unsigned(address)))(16) = '0' THEN
                     --default is that the last bit is 0 (free)
-                    memory_array(to_integer(unsigned(address))) <= '0' & write_data;
+                    memory_array(to_integer(unsigned(address))) <= '0' & write_data(31 DOWNTO 16);
+                    memory_array(to_integer(unsigned(address)+1)) <= '0' & write_data (15 DOWNTO 0);
                     -- ELSE
                     --what should i output if the protected bit is 1?
                     end if;
@@ -75,7 +78,8 @@ PROCESS (clk) IS
                 
                 --read the the 16 bits only don't read the last bit
                 IF read_enable = '1' THEN
-                    read_data <= memory_array(to_integer(unsigned(address)))(n-1 DOWNTO 0);
+                    read_data <= memory_array(to_integer(unsigned(address)))(15 DOWNTO 0) & memory_array(to_integer(unsigned(address)+1))(15 DOWNTO 0);
+
                 END IF;
             end if; 
             

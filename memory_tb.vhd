@@ -8,14 +8,13 @@ END ENTITY memory_tb;
 ARCHITECTURE behavior OF memory_tb IS 
 
     COMPONENT memory
-    GENERIC (n : INTEGER := 16);
     PORT(
         clk : IN  std_logic;
-        address : IN  std_logic_vector (12 downto 0);
+        address : IN  std_logic_vector (11 downto 0);
         write_enable : IN  std_logic;
-        write_data : IN  std_logic_vector (15 downto 0);
+        write_data : IN  std_logic_vector (31 downto 0);
         read_enable : IN  std_logic;
-        read_data : OUT  std_logic_vector (15 downto 0);
+        read_data : OUT  std_logic_vector (31 downto 0);
         protect_signal : IN  std_logic;
         free_signal : IN  std_logic
        );
@@ -23,15 +22,15 @@ ARCHITECTURE behavior OF memory_tb IS
 
    --Inputs
    signal clk : std_logic := '0';
-   signal address : std_logic_vector (12 downto 0) := (others => '0');
+   signal address : std_logic_vector (11 downto 0) := (others => '0');
    signal write_enable : std_logic := '0';
-   signal write_data : std_logic_vector (15 downto 0) := (others => '0');
+   signal write_data : std_logic_vector (31 downto 0) := (others => '0');
    signal read_enable : std_logic := '0';
    signal protect_signal : std_logic := '0';
    signal free_signal : std_logic := '0';
-
+ 
     --Outputs
-   signal read_data : std_logic_vector (15 downto 0);
+   signal read_data : std_logic_vector (31 downto 0);
 
   -- Clock period definitions
   constant clk_period : time := 10 ns;
@@ -69,9 +68,9 @@ BEGIN
     read_enable <= '0';
 
     --write in address 0 the value 1010101010101010
-    address <= "0000000000000";
+    address <= "000000000000";
     write_enable <= '1';
-    write_data <= "1010101010101010";
+    write_data <= "10101010101010101010111111111110";
     wait for clk_period;
 
     --output the value in address 0 which is 1010101010101010
@@ -80,14 +79,14 @@ BEGIN
 
     --protect this memory location 
     protect_signal <= '1';
-    address <= "0000000000000";
+    address <= "000000000000";
     wait for clk_period;
 
     --try to write in the protected memory location
     protect_signal <= '0';
-    address <= "0000000000000";
+    address <= "000000000000";
     write_enable <= '1';
-    write_data <= "0101010101010101";
+    write_data <= "01010101010101010101011111111111";
     wait for clk_period;
 
     --try to read from the protected memory location the expected -> 1010101010101010
@@ -102,7 +101,7 @@ BEGIN
     --try to write in the freed memory location
     free_signal <= '0';
     write_enable <= '1';
-    write_data <= "1111000011110000";
+    write_data <= "11110000111100001111000011110000";
     wait for clk_period;
 
     --try to read from the freed memory location the expected -> 0000000000000000
