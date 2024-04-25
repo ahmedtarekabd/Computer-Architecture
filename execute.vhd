@@ -8,6 +8,8 @@ ENTITY execute IS
         clk : IN STD_LOGIC;
         -- pc + 1 propagated
         pc_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
+        -- immediate value from decode stage
+        immediate_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
         -- opcode from controller
         operation : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
 
@@ -23,7 +25,7 @@ ENTITY execute IS
         -- from controller
         -- propagated from decode stage 1 bit for memread, memwrite (1 bit each), protect & free 1 bit each, 1 regwrite, 1 regRead(i believe no regreads), 2 selectors for (WB, src1, src2), 1 of them is given to the 3rd MUX to know which mode it is in
         -- bit 0 -> memread, bit 1 -> memwrite, bit 2 -> protect, bit 3 -> free, bit 4 -> regwrite, bit 5 -> regread (i believe no regreads), bit 6 & 7 -> selectors for WB, src1, src2
-        mem_wb_control_signals_in : IN STD_LOGIC_VECTOR(6 DOWNTO 0);
+        mem_wb_control_signals_in : IN STD_LOGIC_VECTOR(22 DOWNTO 0);
 
         -- -- flags in
         -- old_negative_flag : in std_logic;
@@ -49,7 +51,7 @@ ENTITY execute IS
         -- alu output
         alu_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
         -- mem and wb control signals
-        mem_wb_control_signals_out : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
+        mem_wb_control_signals_out : OUT STD_LOGIC_VECTOR(22 DOWNTO 0);
         -- addresses
         address_read1_out : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
         address_read2_out : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
@@ -112,8 +114,8 @@ ARCHITECTURE arch_execute OF execute IS
     SIGNAL flags_temp_in : STD_LOGIC_VECTOR(3 DOWNTO 0);
     SIGNAL flags_temp_out : STD_LOGIC_VECTOR(3 DOWNTO 0);
 
-    SIGNAL d_internal : STD_LOGIC_VECTOR(127 DOWNTO 0);
-    SIGNAL q_output : STD_LOGIC_VECTOR(127 DOWNTO 0);
+    SIGNAL d_internal : STD_LOGIC_VECTOR(143 DOWNTO 0);
+    SIGNAL q_output : STD_LOGIC_VECTOR(143 DOWNTO 0);
     SIGNAL alu_out_temp : STD_LOGIC_VECTOR(31 DOWNTO 0);
 
 BEGIN
@@ -154,19 +156,23 @@ BEGIN
 
     d_internal <= alu_out_temp & pc_in & mem_wb_control_signals_in & address_read1_in & address_read2_in & data1_in & data2_in & destination_address;
 
-    execute_mem_reg : my_nDFF GENERIC MAP(128)
+    execute_mem_reg : my_nDFF GENERIC MAP(145)
     PORT MAP(
         clk, '0', d_internal, q_output
     );
 
-    alu_out <= q_output(127 DOWNTO 96);
-    pc_out <= q_output(95 DOWNTO 80);
-    mem_wb_control_signals_out <= q_output(79 DOWNTO 73);
-    address_read1_out <= q_output(72 DOWNTO 70);
-    address_read2_out <= q_output(69 DOWNTO 67);
-    data1_out <= q_output(66 DOWNTO 35);
-    data2_out <= q_output(34 DOWNTO 3);
-    destination_address_out <= q_output(2 DOWNTO 0);
+    -- alu_out <= q_output(127 DOWNTO 96);
+    -- pc_out <= q_output(95 DOWNTO 80);
+    -- -- mem_wb_control_signals_out <= q_output(79 DOWNTO 73);
+    -- address_read1_out <= q_output(72 DOWNTO 70);
+    -- address_read2_out <= q_output(69 DOWNTO 67);
+    -- data1_out <= q_output(66 DOWNTO 35);
+    -- data2_out <= q_output(34 DOWNTO 3);
+    -- destination_address_out <= q_output(2 DOWNTO 0);
+
+    alu_out <= q_output(144 DOWNTO 113);
+    pc_out <= q_output(112 DOWNTO 97);
+    mem_wb_control_signals_out <= q_output(96 DOWNTO 
 
 END arch_execute;
 -- forwarding_unit : forwarding_unit
