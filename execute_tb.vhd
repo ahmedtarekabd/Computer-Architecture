@@ -1,129 +1,93 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
-USE ieee.numeric_std.ALL;
+USE ieee.std_logic_unsigned.ALL;
 
 ENTITY execute_tb IS
 END execute_tb;
 
-ARCHITECTURE execute_tb_tb OF execute_tb IS
+ARCHITECTURE behavior OF execute_tb IS 
 
-    SIGNAL clk : STD_LOGIC := '0';
-    SIGNAL pc_in : STD_LOGIC_VECTOR(15 DOWNTO 0) := (OTHERS => '0');
-    SIGNAL operation : STD_LOGIC_VECTOR(2 DOWNTO 0) := (OTHERS => '0');
-    SIGNAL address_read1_in, address_read2_in, destination_address : STD_LOGIC_VECTOR(2 DOWNTO 0) := (OTHERS => '0');
-    SIGNAL data1_in, data2_in : STD_LOGIC_VECTOR(31 DOWNTO 0) := (OTHERS => '0');
-    SIGNAL mem_wb_control_signals_in : STD_LOGIC_VECTOR(6 DOWNTO 0) := (OTHERS => '0');
+    COMPONENT execute
+    PORT(
+         clk : IN  std_logic;
+         immediate_in : IN  std_logic_vector (15 downto 0);
+         address_read1_in : IN  std_logic_vector (2 downto 0);
+         address_read2_in : IN  std_logic_vector (2 downto 0);
+         destination_address : IN  std_logic_vector (2 downto 0);
+         data1_in : IN  std_logic_vector (31 downto 0);
+         data2_in : IN  std_logic_vector (31 downto 0);
+         control_signals_in : IN  std_logic_vector (22 downto 0);
+         alu_out : OUT  std_logic_vector (31 downto 0);
+         outputed_control_signals : OUT  std_logic_vector (22 downto 0);
+         address_read1_out : OUT  std_logic_vector (2 downto 0);
+         address_read2_out : OUT  std_logic_vector (2 downto 0);
+         data1_out : OUT  std_logic_vector (31 downto 0);
+         data2_out : OUT  std_logic_vector (31 downto 0);
+         destination_address_out : OUT  std_logic_vector (2 downto 0)
+        );
+    END COMPONENT;
 
-    SIGNAL alu_out, data1_out, data2_out : STD_LOGIC_VECTOR(31 DOWNTO 0);
-    SIGNAL mem_wb_control_signals_out : STD_LOGIC_VECTOR(6 DOWNTO 0);
-    SIGNAL address_read1_out, address_read2_out, destination_address_out : STD_LOGIC_VECTOR(2 DOWNTO 0);
-    SIGNAL pc_out : STD_LOGIC_VECTOR(15 DOWNTO 0);
+   --Inputs
+   signal clk : std_logic := '0';
+   signal immediate_in : std_logic_vector (15 downto 0) := (others => '0');
+   signal address_read1_in : std_logic_vector (2 downto 0) := (others => '0');
+   signal address_read2_in : std_logic_vector (2 downto 0) := (others => '0');
+   signal destination_address : std_logic_vector (2 downto 0) := (others => '0');
+   signal data1_in : std_logic_vector (31 downto 0) := (others => '0');
+   signal data2_in : std_logic_vector (31 downto 0) := (others => '0');
+   signal control_signals_in : std_logic_vector (22 downto 0) := (others => '0');
+
+    --Outputs
+   signal alu_out : std_logic_vector (31 downto 0);
+   signal outputed_control_signals : std_logic_vector (22 downto 0);
+   signal address_read1_out : std_logic_vector (2 downto 0);
+   signal address_read2_out : std_logic_vector (2 downto 0);
+   signal data1_out : std_logic_vector (31 downto 0);
+   signal data2_out : std_logic_vector (31 downto 0);
+   signal destination_address_out : std_logic_vector (2 downto 0);
+
+   -- Clock period definitions
+   constant clk_period : time := 10 ns;
 
 BEGIN
-    -- Instantiate the unit under test (UUT)
-    uut : ENTITY work.execute
-        PORT MAP(
-            clk => clk,
-            pc_in => pc_in,
-            operation => operation,
-            address_read1_in => address_read1_in,
-            address_read2_in => address_read2_in,
-            destination_address => destination_address,
-            data1_in => data1_in,
-            data2_in => data2_in,
-            mem_wb_control_signals_in => mem_wb_control_signals_in,
-            alu_out => alu_out,
-            mem_wb_control_signals_out => mem_wb_control_signals_out,
-            address_read1_out => address_read1_out,
-            address_read2_out => address_read2_out,
-            data1_out => data1_out,
-            data2_out => data2_out,
-            destination_address_out => destination_address_out,
-            pc_out => pc_out
+
+    -- Instantiate the Unit Under Test (UUT)
+   uut: execute PORT MAP (
+          clk => clk,
+          immediate_in => immediate_in,
+          address_read1_in => address_read1_in,
+          address_read2_in => address_read2_in,
+          destination_address => destination_address,
+          data1_in => data1_in,
+          data2_in => data2_in,
+          control_signals_in => control_signals_in,
+          alu_out => alu_out,
+          outputed_control_signals => outputed_control_signals,
+          address_read1_out => address_read1_out,
+          address_read2_out => address_read2_out,
+          data1_out => data1_out,
+          data2_out => data2_out,
+          destination_address_out => destination_address_out
         );
 
-    -- Clock process definitions
-    clk_process : PROCESS
-    BEGIN
-        clk <= '1';
-        WAIT FOR 10 ns;
+   -- Clock process definitions
+   clk_process :process
+   begin
         clk <= '0';
-        WAIT FOR 10 ns;
-    END PROCESS;
+        wait for clk_period/2;
+        clk <= '1';
+        wait for clk_period/2;
+   end process;
 
-    -- 000 -> negate (changes zero and negative flags only)
-    -- 001 -> add (changes all flags)
-    -- 010 -> sub (changes all flags)
-    -- 011 -> mov (changes nothing) (returns B -> src2)
-    -- 100 -> and (changes zero and negative flags only)
-    -- 101 -> or (changes zero and negative flags only)
-    -- 110 -> xor (changes zero and negative flags only)
-    -- 111 -> not (changes zero and negative flags only)
+   -- Stimulus process
+   stim_proc: process
+   begin		
+      -- hold reset state for 100 ns.
+      wait for 100 ns;	
 
-    --flags: temp[3] = carry, temp[2] = overflow, temp[1] = zero, temp[0] = negative
+      -- insert stimulus here 
 
-    -- Stimulus process
+      wait;
+   end process;
 
-    stim_proc : PROCESS
-    BEGIN
-        -- Test case 1: ADD operation
-        -- triggers negative flag (right)
-        data1_in <= "10000000000000000000000000000001";
-        data2_in <= "00000000000000000000000000000001";
-        operation <= "001";
-        WAIT FOR 20 ns;
-        --expected output: 10000000000000000000000000000010 / flags 0 0 0 1
-
-        -- Test case 2: SUB operation
-        data1_in <= "00000000000000000000000000000010";
-        data2_in <= "00000000000000000000000000000001";
-        operation <= "010";
-        WAIT FOR 20 ns;
-        --expected output: 00000000000000000000000000000001 / flags: 0 0 0 0
-
-        -- Test case 3: AND operation
-        data1_in <= "00000000000000000000000000001111";
-        data2_in <= "00000000000000000000000000001111";
-        operation <= "100";
-        WAIT FOR 20 ns;
-        --expected output: 00000000000000000000000000001111 / flags: 0 0 0 0
-
-        -- Test case 4: OR operation
-        data1_in <= "00000000000000000000000000001111";
-        data2_in <= "00000000000000000000000000010000";
-        operation <= "101";
-        WAIT FOR 20 ns;
-        --expected output: 00000000000000000000000000011111 / flags: 0 0 0 0
-
-        -- Test case 5: XOR operation
-        data1_in <= "00000000000000000000000000001111";
-        data2_in <= "00000000000000000000000000001111";
-        operation <= "110";
-        WAIT FOR 20 ns;
-
-        -- Test case 6: Move operation
-        data1_in <= "00000000000000000000000000001111";
-        operation <= "011";
-        WAIT FOR 20 ns;
-
-        -- Test case 7: SUB operation that triggers carry and negative flags?
-        data1_in <= "00000000000000000000000000000000";
-        data2_in <= "00000000000000000000000000000001";
-        operation <= "010";
-        WAIT FOR 20 ns;
-
-        -- Test case 8: ADD operation that triggers negative flag
-        data1_in <= "10000000000000000000000000000000";
-        data2_in <= "01111111111111111111111111111111";
-        operation <= "001";
-        WAIT FOR 20 ns;
-
-        -- Test case 9: NOT operation that triggers negative flag
-        data1_in <= "00000000000000000000000000001111";
-        operation <= "111";
-        WAIT FOR 20 ns;
-
-        WAIT;
-    END PROCESS;
-
-END execute_tb_tb;
+END;
