@@ -40,7 +40,7 @@ ARCHITECTURE arch_fetch OF fetch IS
             q : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0)
         );
     END COMPONENT my_nDFF;
-    signal instruction_address : std_logic_vector(9 downto 0) := (others => '0');
+    SIGNAL instruction_address : STD_LOGIC_VECTOR(9 DOWNTO 0) := (OTHERS => '0');
     SIGNAL instruction_out_from_instr_cache : STD_LOGIC_VECTOR(15 DOWNTO 0);
     -- signal instruction_out_from_F_D_reg : std_logic_vector(15 downto 0);
     SIGNAL instruction_out_temp : STD_LOGIC_VECTOR(15 DOWNTO 0); -- New signal
@@ -68,19 +68,19 @@ BEGIN
 
     fetch_decode : my_nDFF GENERIC MAP(16)
     PORT MAP(
-        clk,
-        reset,
+        clk => clk,
+        reset => reset,
         enable => pipeline_enable,
         d => instruction_out_from_instr_cache,
         q => instruction_out_temp
     );
 
-    pipeline_enable_imm <= not pipeline_enable;
+    pipeline_enable_imm <= NOT pipeline_enable;
 
     fetch_decode_imm : my_nDFF GENERIC MAP(16)
     PORT MAP(
-        clk,
-        reset,
+        clk => clk,
+        reset => reset,
         enable => pipeline_enable_imm,
         d => instruction_out_from_instr_cache,
         q => instruction_out_temp_imm
@@ -103,6 +103,7 @@ BEGIN
                     state <= immediate;
                     pipeline_enable <= '1';
                 WHEN immediate =>
+                    -- check neroh le waitOnce wala la2
                     IF instruction_out_temp(0) = '1' THEN
                         state <= waitOnce;
                         pipeline_enable <= '0';
@@ -113,8 +114,6 @@ BEGIN
             END CASE;
         END IF;
     END PROCESS;
-
-
     selected_instruction_out <= instruction_out_temp; -- Assign new signal to output port
     selected_immediate_out <= instruction_out_temp_imm; -- Assign new signal to output port
 

@@ -1,112 +1,110 @@
-library ieee;
-use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+USE ieee.numeric_std.ALL;
 
-entity processor is
-    port (
-        clk : in std_logic; 
-        reset : in std_logic
+ENTITY processor2 IS
+    PORT (
+        clk : IN STD_LOGIC;
+        reset : IN STD_LOGIC
     );
-end entity processor;
+END ENTITY processor2;
 
-architecture arch_processor of processor is
+ARCHITECTURE arch_processor2 OF processor2 IS
 
     -- PC
-    component pc is
-        port (
-            reset : in std_logic;
-            clk : in std_logic;
-            pc_out : out std_logic_vector(9 downto 0)
+    COMPONENT pc IS
+        PORT (
+            reset : IN STD_LOGIC;
+            clk : IN STD_LOGIC;
+            pc_out : OUT STD_LOGIC_VECTOR(9 DOWNTO 0)
         );
-    end component;
+    END COMPONENT;
 
     -- Instruction Cache
-    component instruction_cache is
-        port (
+    COMPONENT instruction_cache IS
+        PORT (
             -- clk : in std_logic;
-            address_in : in std_logic_vector(9 downto 0);
-            data_out : out std_logic_vector(15 downto 0)
+            address_in : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
+            data_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
         );
-    end component;
+    END COMPONENT;
 
     -- Controller
-    component controller is
-        PORT(
-            clk : in std_logic;
-            opcode : in std_logic_vector(2 DOWNTO 0);
-            
-            operation : out std_logic_vector(2 DOWNTO 0);
-            write_enable : out std_logic
-            );
-    end component;
+    COMPONENT controller IS
+        PORT (
+            clk : IN STD_LOGIC;
+            opcode : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+
+            operation : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
+            write_enable : OUT STD_LOGIC
+        );
+    END COMPONENT;
 
     -- nDFF (register file)
-    component my_nDFF IS
-        GENERIC ( n : integer := 16);
-        PORT(
-            Clk, reset : IN std_logic;
-            d : IN std_logic_vector(n-1 DOWNTO 0);
-            q : OUT std_logic_vector(n-1 DOWNTO 0)
-            );
-    end component;
+    COMPONENT my_nDFF IS
+        GENERIC (n : INTEGER := 16);
+        PORT (
+            Clk, reset : IN STD_LOGIC;
+            d : IN STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
+            q : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0)
+        );
+    END COMPONENT;
 
     -- Registers array
-    component registers_array IS
-        GENERIC ( n : integer := 8 );
-        PORT(
-            clk, reset, enable : IN std_logic;
-            address_read1, address_read2 : IN std_logic_vector(2 DOWNTO 0);
-            address_write : IN std_logic_vector(2 DOWNTO 0);
-            
-            input : IN std_logic_vector(n-1 DOWNTO 0);
-            output1, output2 : OUT std_logic_vector(n-1 DOWNTO 0)
-            );
-    end component;
+    COMPONENT registers_array IS
+        GENERIC (n : INTEGER := 8);
+        PORT (
+            clk, reset, enable : IN STD_LOGIC;
+            address_read1, address_read2 : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+            address_write : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+
+            input : IN STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
+            output1, output2 : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0)
+        );
+    END COMPONENT;
 
     -- ALU
-    component ALU is
-        generic (n: integer := 8);
-        port (
-            A, B: in std_logic_vector(n-1 downto 0);
-            Sel: in std_logic_vector(2 downto 0);
-            F: out std_logic_vector(n-1 downto 0);
-            Cin: in std_logic;
-            Cout: out std_logic
+    COMPONENT ALU IS
+        GENERIC (n : INTEGER := 8);
+        PORT (
+            A, B : IN STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
+            Sel : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+            F : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
+            Cin : IN STD_LOGIC;
+            Cout : OUT STD_LOGIC
         );
-    end component;
-    
+    END COMPONENT;
+    SIGNAL d, q : STD_LOGIC_VECTOR(15 DOWNTO 0);
+    SIGNAL instruction_address : STD_LOGIC_VECTOR(9 DOWNTO 0);
+    SIGNAL instruction_in : STD_LOGIC_VECTOR(15 DOWNTO 0);
+    SIGNAL instruction_out : STD_LOGIC_VECTOR(15 DOWNTO 0);
 
-    signal d, q : std_logic_vector(15 downto 0);
-    signal instruction_address : std_logic_vector(9 downto 0);
-    signal instruction_in : std_logic_vector(15 downto 0);
-    signal instruction_out : std_logic_vector(15 downto 0);
+    SIGNAL operation : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAL write_enable : STD_LOGIC;
 
-    signal operation : std_logic_vector(2 downto 0);
-    signal write_enable : std_logic;
+    SIGNAL register_file_out1 : STD_LOGIC_VECTOR(7 DOWNTO 0);
+    SIGNAL register_file_out2 : STD_LOGIC_VECTOR(7 DOWNTO 0);
 
-    signal register_file_out1 : std_logic_vector(7 downto 0);
-    signal register_file_out2 : std_logic_vector(7 downto 0);
+    SIGNAL decode_execute_in : STD_LOGIC_VECTOR(22 DOWNTO 0);
+    SIGNAL decode_execute_out : STD_LOGIC_VECTOR(22 DOWNTO 0);
 
-    signal decode_execute_in : std_logic_vector(22 downto 0);
-    signal decode_execute_out : std_logic_vector(22 downto 0);
+    SIGNAL write_back_in : STD_LOGIC_VECTOR(11 DOWNTO 0);
+    SIGNAL write_back_out : STD_LOGIC_VECTOR(11 DOWNTO 0);
 
-    signal write_back_in : std_logic_vector(11 downto 0);
-    signal write_back_out : std_logic_vector(11 downto 0);
+    SIGNAL alu_out : STD_LOGIC_VECTOR(7 DOWNTO 0);
+    SIGNAL alu_cout : STD_LOGIC; -- not used
 
-    signal alu_out : std_logic_vector(7 downto 0);
-    signal alu_cout : std_logic; -- not used
+BEGIN
 
-begin
-
-    program_counter: pc PORT MAP (
+    program_counter : pc PORT MAP(
         reset,
         clk,
         instruction_address
     );
 
-    inst_cache: instruction_cache PORT MAP (
+    inst_cache : instruction_cache PORT MAP(
         -- clk, 
-        address_in => instruction_address, 
+        address_in => instruction_address,
         data_out => instruction_in
     );
 
@@ -115,22 +113,21 @@ begin
     -- 3 bits: register_src 2
     -- 3 bits: register_dst
     -- rest: not used
-    fetch_decode: my_nDFF 
-        GENERIC MAP (16)
-        PORT MAP (
-            clk,
-            reset,
-            d => instruction_in,
-            q => instruction_out
-        );
+    fetch_decode : my_nDFF
+    GENERIC MAP(16)
+    PORT MAP(
+        clk,
+        reset,
+        d => instruction_in,
+        q => instruction_out
+    );
 
     -- decode
-
-
-    alu0: ALU generic map (8) port map (
-        A => decode_execute_out(18 downto 11),
-        B => decode_execute_out(10 downto 3),
-        Sel => decode_execute_out(21 downto 19),
+    alu0 : ALU GENERIC MAP(
+        8) PORT MAP (
+        A => decode_execute_out(18 DOWNTO 11),
+        B => decode_execute_out(10 DOWNTO 3),
+        Sel => decode_execute_out(21 DOWNTO 19),
         F => alu_out,
         Cin => '0',
         Cout => alu_cout -- not used
@@ -139,14 +136,14 @@ begin
     -- 1 bit: write enable
     -- 8 bits: alu output
     -- 3 bits: address write back (destination)
-    write_back_in <= decode_execute_out(22) & alu_out & decode_execute_out(2 downto 0);
-    write_back: my_nDFF 
-        GENERIC MAP (12)
-        PORT MAP (
-            clk,
-            reset,
-            d => write_back_in,
-            q => write_back_out
-        );
+    write_back_in <= decode_execute_out(22) & alu_out & decode_execute_out(2 DOWNTO 0);
+    write_back : my_nDFF
+    GENERIC MAP(12)
+    PORT MAP(
+        clk,
+        reset,
+        d => write_back_in,
+        q => write_back_out
+    );
 
-end architecture arch_processor;
+END ARCHITECTURE arch_processor2;

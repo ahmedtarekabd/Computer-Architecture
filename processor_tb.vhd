@@ -3,10 +3,10 @@
 LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 
-ENTITY processor_tb2 IS
-END ENTITY processor_tb2;
+ENTITY processor_tb IS
+END ENTITY processor_tb;
 
-ARCHITECTURE tb_arch OF processor_tb2 IS
+ARCHITECTURE tb_arch OF processor_tb IS
     -- Component declaration
     COMPONENT processor
         PORT (

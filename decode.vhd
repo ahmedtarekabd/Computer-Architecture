@@ -9,9 +9,16 @@ ENTITY decode IS
 
         -- WB
         write_enable1 : IN STD_LOGIC;
+        write_enable2 : IN STD_LOGIC;
+        write_address1 : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+        write_address2 : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+        write_data1 : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+        write_data2 : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
 
-        -- lesaaa
-        decode_execute_out : OUT STD_LOGIC_VECTOR(23 DOWNTO 0)
+        -- Propagated signals
+        pc_plus_1 : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
+
+        decode_execute_out : OUT STD_LOGIC_VECTOR(91 DOWNTO 0)
     );
 END ENTITY decode;
 
@@ -23,9 +30,13 @@ ARCHITECTURE rtl OF decode IS
 
             -- 6-bit opcode
             opcode : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
+            isImmediate : IN STD_LOGIC;
+
+            -- pipeline signals
+            pipeline_enable : OUT STD_LOGIC;
 
             -- fetch signals
-            fetch_pc_sel : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
+            fetch_pc_sel : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);    
 
             -- decode signals
             decode_reg_read : OUT STD_LOGIC;
@@ -53,7 +64,7 @@ ARCHITECTURE rtl OF decode IS
     END COMPONENT;
 
     COMPONENT register_file IS
-        GENERIC (n : INTEGER := 8);
+        GENERIC (n : INTEGER := 16);
         PORT (
             clk : IN STD_LOGIC;
             write_enable1 : IN STD_LOGIC;
@@ -83,48 +94,75 @@ ARCHITECTURE rtl OF decode IS
     END COMPONENT;
 
     COMPONENT my_nDFF IS
-        GENERIC (
-            n : INTEGER
-        );
+        GENERIC (n : INTEGER := 16);
         PORT (
-            clk : IN STD_LOGIC;
-            reset : IN STD_LOGIC;
+            Clk, reset, enable : IN STD_LOGIC;
             d : IN STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
             q : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0)
         );
-    END COMPONENT my_nDFF;
+    END COMPONENT;
 
-    -- take 3 bits: opcode, output 4 bits: opcode, write_enable
-    SIGNAL opcode : STD_LOGIC_VECTOR(3 DOWNTO 0);
-    SIGNAL write_enable1 : STD_LOGIC;
-    SIGNAL write_enable2 : STD_LOGIC;
-    SIGNAL write_address1 : STD_LOGIC_VECTOR(2 DOWNTO 0);
-    SIGNAL write_address2 : STD_LOGIC_VECTOR(2 DOWNTO 0);
-    SIGNAL write_data1 : STD_LOGIC_VECTOR(7 DOWNTO 0);
-    SIGNAL write_data2 : STD_LOGIC_VECTOR(7 DOWNTO 0);
+    -- Instruction
+    SIGNAL opcode : STD_LOGIC_VECTOR(5 DOWNTO 0);
     SIGNAL read_enable : STD_LOGIC;
     SIGNAL read_address1 : STD_LOGIC_VECTOR(2 DOWNTO 0);
     SIGNAL read_address2 : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAL destination : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAL isImmediate : STD_LOGIC;
+
+    -- controller output
+    -- pipeline signals
+    SIGNAL pipeline_enable : STD_LOGIC;
+
+    -- fetch signals
+    SIGNAL fetch_pc_sel : STD_LOGIC_VECTOR(2 DOWNTO 0);
+
+    -- execute signals
+    SIGNAL alu_sel : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAL alu_src2 : STD_LOGIC_VECTOR(1 DOWNTO 0);
+    SIGNAL alu_register_write : STD_LOGIC;
+
+    -- memory signals
+    SIGNAL memory_write : STD_LOGIC;
+    SIGNAL memory_read : STD_LOGIC;
+    SIGNAL memory_stack_pointer : STD_LOGIC_VECTOR(1 DOWNTO 0);
+    SIGNAL memory_address : STD_LOGIC_VECTOR(1 DOWNTO 0); -- alu | sp | 0 (reset) | 2 (interrupt)
+    SIGNAL memory_write_data : STD_LOGIC_VECTOR(1 DOWNTO 0);
+
+    -- write back signals
+    SIGNAL write_back_register_write1 : STD_LOGIC;
+    SIGNAL write_back_register_write2 : STD_LOGIC;
+    SIGNAL write_back_register_write_data_1 : STD_LOGIC_VECTOR(1 DOWNTO 0);
+    SIGNAL write_back_register_write_address_1 : STD_LOGIC; -- Rdst | Rsrc1
+
+    -- decode: not propagated
+    SIGNAL decode_reg_read : STD_LOGIC;
+    SIGNAL decode_branch : STD_LOGIC; -- later
+    SIGNAL decode_sign_extend : STD_LOGIC;
+
+    SIGNAL control_signals : STD_LOGIC_VECTOR(22 DOWNTO 0);
 
     --Outputs
-    SIGNAL read_data1 : STD_LOGIC_VECTOR(7 DOWNTO 0) := (OTHERS => '0');
-    SIGNAL read_data2 : STD_LOGIC_VECTOR(7 DOWNTO 0) := (OTHERS => '0');
-
-    -- 4 bits: controller
-    -- 16 bits: 2 registers values
-    -- 3 bits: address write back (destination)
-    SIGNAL decode_execute_in : STD_LOGIC_VECTOR(22 DOWNTO 0);
+    SIGNAL read_data1 : STD_LOGIC_VECTOR(15 DOWNTO 0);
+    SIGNAL read_data2 : STD_LOGIC_VECTOR(15 DOWNTO 0);
+    SIGNAL immediate_out : STD_LOGIC_VECTOR(15 DOWNTO 0);
+    SIGNAL decode_execute_in : STD_LOGIC_VECTOR(91 DOWNTO 0);
 
 BEGIN
 
     opcode <= instruction_in(15 DOWNTO 10);
     read_address1 <= instruction_in(9 DOWNTO 7);
     read_address2 <= instruction_in(6 DOWNTO 4);
-
+    destination <= instruction_in(3 DOWNTO 1);
+    isImmediate <= instruction_in(0);
 
     ctrl : controller PORT MAP(
+        -- Inputs
         clk => clk,
-        opcode => operation,
+        opcode => opcode, -- 
+        isImmediate => isImmediate, --
+        -- Outputs
+        pipeline_enable => pipeline_enable,
         fetch_pc_sel => fetch_pc_sel,
         decode_reg_read => decode_reg_read,
         decode_branch => decode_branch,
@@ -143,38 +181,58 @@ BEGIN
         write_back_register_write_address_1 => write_back_register_write_address_1
     );
 
-    register_file : register_file GENERIC MAP(
-        8) PORT MAP(
+    register_file_instance : register_file GENERIC MAP(
+        16) PORT MAP(
+        -- Inputs
         clk => clk,
-        write_enable1 => write_enable1,
-        write_enable2 => write_enable2,
-        write_address1 => write_address1,
+        write_enable1 => write_enable1, -- WB
+        write_enable2 => write_enable2, -- WB
+        write_address1 => write_address1, -- WB
         write_address2 => write_address2,
-        write_data1 => write_data1,
-        write_data2 => write_data2,
-        read_enable => read_enable,
-        read_address1 => read_address1,
-        read_address2 => read_address2,
-        read_data1 => read_data1,
-        read_data2 => read_data2
+        write_data1 => write_data1, -- WB
+        write_data2 => write_data2, -- WB
+        read_enable => decode_reg_read, --
+        read_address1 => read_address1, --
+        read_address2 => read_address2, --
+        -- Outputs
+        read_data1 => read_data1, --
+        read_data2 => read_data2 --
     );
 
     -- sign extend
-    sign_extend : sign_extend PORT MAP(
+    sign_extend_instance : sign_extend PORT MAP(
         enable => decode_sign_extend,
-        input => instruction_immediate_in,
-        output => write_data2 -- TODO: Wady 3l decode_execute_in
+        input => immediate_in,
+        output => immediate_out
     );
 
-    -- 23 bits: 4 bits controller, 16 bits 2 registers values, 3 bits address write back (destination)
-    decode_execute_in <= write_enable & opcode & register_file_out1 & register_file_out2 & instruction_in(6 DOWNTO 4);
+    control_signals <= pipeline_enable
+        & fetch_pc_sel
+        & alu_sel
+        & alu_src2
+        & alu_register_write
+        & memory_write
+        & memory_read
+        & memory_stack_pointer
+        & memory_address
+        & memory_write_data
+        & write_back_register_write1
+        & write_back_register_write2
+        & write_back_register_write_data_1
+        & write_back_register_write_address_1;
+
+    -- 92 bits: 4 bits controller, 16 bits 2 registers values, 3 bits address write back (destination)
+    decode_execute_in <= control_signals & read_data1 & read_data2 & read_address1 & read_address2 & destination
+        & immediate_out & pc_plus_1;
+
     decode_execute : my_nDFF
-    GENERIC MAP(23)
+    GENERIC MAP(92)
     PORT MAP(
         clk,
         '0', -- reset signal
-        decode_execute_in,
-        decode_execute_out
+        '1', -- enable signal
+        d => decode_execute_in,
+        q => decode_execute_out
     );
 
 END ARCHITECTURE rtl;

@@ -3,7 +3,7 @@ USE IEEE.STD_LOGIC_1164.ALL;
 USE IEEE.numeric_std.ALL;
 
 ENTITY register_file IS
-    GENERIC (n : INTEGER := 8);
+    GENERIC (n : INTEGER := 16);
     PORT (
         clk : IN STD_LOGIC;
         write_enable1 : IN STD_LOGIC;

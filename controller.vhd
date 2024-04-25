@@ -63,130 +63,134 @@ BEGIN
 					state <= instruction;
 					pipeline_enable <= '0';
 			END CASE;
-
-			CASE opcode IS
-				WHEN "000000" =>
-
-				WHEN "000001" => -- not
-					-- m3ana
-					fetch_pc_sel <= "000";
-					decode_reg_read <= '1';
-					decode_branch <= '0';
-					decode_sign_extend <= 'X';
-					alu_sel <= "111";
-					alu_src2 <= "XX";
-					alu_register_write <= '1';
-					memory_write <= '0';
-					memory_read <= '0';
-					memory_stack_pointer <= "00";
-					memory_address <= "XX";
-					memory_write_data <= "XX";
-					write_back_register_write_data_1 <= "00";
-					write_back_register_write1 <= '1';
-					write_back_register_write2 <= '0';
-					write_back_register_write_address_1 <= '0';
-				WHEN "000010" =>
-				WHEN "000011" =>
-				WHEN "000100" => -- dec
-					-- m3ana
-					fetch_pc_sel <= "000";
-					decode_reg_read <= '1';
-					decode_branch <= '0';
-					decode_sign_extend <= 'X';
-					alu_sel <= "010";
-					alu_src2 <= "10";
-					alu_register_write <= '1';
-					memory_write <= '0';
-					memory_read <= '0';
-					memory_stack_pointer <= "00";
-					memory_address <= "XX";
-					memory_write_data <= "XX";
-					write_back_register_write_data_1 <= "00";
-					write_back_register_write1 <= '1';
-					write_back_register_write2 <= '0';
-					write_back_register_write_address_1 <= '0';
-
-				WHEN "000101" =>
-				WHEN "000110" =>
-				WHEN "000111" =>
-				WHEN "001000" =>
-					-- Continue with the rest of the cases up to "011111"
-				WHEN "010000" => -- mov
-					fetch_pc_sel <= "000";
-					decode_reg_read <= '1';
-					decode_branch <= '0';
-					decode_sign_extend <= 'X';
-					alu_sel <= "011";
-					alu_src2 <= "00";
-					alu_register_write <= '1';
-					memory_write <= '0';
-					memory_read <= '0';
-					memory_stack_pointer <= "00";
-					memory_address <= "XX";
-					memory_write_data <= "XX";
-					write_back_register_write_data_1 <= "00";
-					write_back_register_write1 <= '1';
-					write_back_register_write2 <= '0';
-					write_back_register_write_address_1 <= '0';
-				WHEN "011111" =>
-				WHEN "100100" => -- ldm
-					fetch_pc_sel <= "000";
-					decode_reg_read <= '1';
-					decode_branch <= '0';
-					decode_sign_extend <= '1';
-					alu_sel <= "011";
-					alu_src2 <= "01";
-					alu_register_write <= '1';
-					memory_write <= '0';
-					memory_read <= '0';
-					memory_stack_pointer <= "00";
-					memory_address <= "XX";
-					memory_write_data <= "XX";
-					write_back_register_write_data_1 <= "00";
-					write_back_register_write1 <= '1';
-					write_back_register_write2 <= '0';
-					write_back_register_write_address_1 <= '0';
-				WHEN "010101" => -- or
-					-- m3ana
-					fetch_pc_sel <= "000";
-					decode_reg_read <= '1';
-					decode_branch <= '0';
-					decode_sign_extend <= 'X';
-					alu_sel <= "101";
-					alu_src2 <= "00";
-					alu_register_write <= '1';
-					memory_write <= '0';
-					memory_read <= '0';
-					memory_stack_pointer <= "00";
-					memory_address <= "XX";
-					memory_write_data <= "XX";
-					write_back_register_write_data_1 <= "00";
-					write_back_register_write1 <= '1';
-					write_back_register_write2 <= '0';
-					write_back_register_write_address_1 <= '0';
-
-				WHEN "010111" => -- cmp
-					-- m3ana
-					fetch_pc_sel <= "000";
-					decode_reg_read <= '1';
-					decode_branch <= '0';
-					decode_sign_extend <= 'X';
-					alu_sel <= "010";
-					alu_src2 <= "00";
-					alu_register_write <= '0';
-					memory_write <= '0';
-					memory_read <= '0';
-					memory_stack_pointer <= "00";
-					memory_address <= "XX";
-					memory_write_data <= "XX";
-					write_back_register_write_data_1 <= "XX";
-					write_back_register_write1 <= '0';
-					write_back_register_write2 <= '0';
-					write_back_register_write_address_1 <= '0';
-
-				WHEN OTHERS =>
-			END CASE;
 		END IF;
+	END PROCESS;
+
+	opcode_process : PROCESS (opcode) IS
+	BEGIN
+
+		CASE opcode IS
+			WHEN "000000" =>
+
+			WHEN "000001" => -- not
+				-- m3ana
+				fetch_pc_sel <= "000";
+				decode_reg_read <= '1';
+				decode_branch <= '0';
+				decode_sign_extend <= 'X';
+				alu_sel <= "111";
+				alu_src2 <= "XX";
+				alu_register_write <= '1';
+				memory_write <= '0';
+				memory_read <= '0';
+				memory_stack_pointer <= "00";
+				memory_address <= "XX";
+				memory_write_data <= "XX";
+				write_back_register_write_data_1 <= "00";
+				write_back_register_write1 <= '1';
+				write_back_register_write2 <= '0';
+				write_back_register_write_address_1 <= '0';
+			WHEN "000010" =>
+			WHEN "000011" =>
+			WHEN "000100" => -- dec
+				-- m3ana
+				fetch_pc_sel <= "000";
+				decode_reg_read <= '1';
+				decode_branch <= '0';
+				decode_sign_extend <= 'X';
+				alu_sel <= "010";
+				alu_src2 <= "10";
+				alu_register_write <= '1';
+				memory_write <= '0';
+				memory_read <= '0';
+				memory_stack_pointer <= "00";
+				memory_address <= "XX";
+				memory_write_data <= "XX";
+				write_back_register_write_data_1 <= "00";
+				write_back_register_write1 <= '1';
+				write_back_register_write2 <= '0';
+				write_back_register_write_address_1 <= '0';
+
+			WHEN "000101" =>
+			WHEN "000110" =>
+			WHEN "000111" =>
+			WHEN "001000" =>
+				-- Continue with the rest of the cases up to "011111"
+			WHEN "010000" => -- mov
+				fetch_pc_sel <= "000";
+				decode_reg_read <= '1';
+				decode_branch <= '0';
+				decode_sign_extend <= 'X';
+				alu_sel <= "011";
+				alu_src2 <= "00";
+				alu_register_write <= '1';
+				memory_write <= '0';
+				memory_read <= '0';
+				memory_stack_pointer <= "00";
+				memory_address <= "XX";
+				memory_write_data <= "XX";
+				write_back_register_write_data_1 <= "00";
+				write_back_register_write1 <= '1';
+				write_back_register_write2 <= '0';
+				write_back_register_write_address_1 <= '0';
+			WHEN "011111" =>
+			WHEN "100100" => -- ldm
+				fetch_pc_sel <= "000";
+				decode_reg_read <= '1';
+				decode_branch <= '0';
+				decode_sign_extend <= '1';
+				alu_sel <= "011";
+				alu_src2 <= "01";
+				alu_register_write <= '1';
+				memory_write <= '0';
+				memory_read <= '0';
+				memory_stack_pointer <= "00";
+				memory_address <= "XX";
+				memory_write_data <= "XX";
+				write_back_register_write_data_1 <= "00";
+				write_back_register_write1 <= '1';
+				write_back_register_write2 <= '0';
+				write_back_register_write_address_1 <= '0';
+			WHEN "010101" => -- or
+				-- m3ana
+				fetch_pc_sel <= "000";
+				decode_reg_read <= '1';
+				decode_branch <= '0';
+				decode_sign_extend <= 'X';
+				alu_sel <= "101";
+				alu_src2 <= "00";
+				alu_register_write <= '1';
+				memory_write <= '0';
+				memory_read <= '0';
+				memory_stack_pointer <= "00";
+				memory_address <= "XX";
+				memory_write_data <= "XX";
+				write_back_register_write_data_1 <= "00";
+				write_back_register_write1 <= '1';
+				write_back_register_write2 <= '0';
+				write_back_register_write_address_1 <= '0';
+
+			WHEN "010111" => -- cmp
+				-- m3ana
+				fetch_pc_sel <= "000";
+				decode_reg_read <= '1';
+				decode_branch <= '0';
+				decode_sign_extend <= 'X';
+				alu_sel <= "010";
+				alu_src2 <= "00";
+				alu_register_write <= '0';
+				memory_write <= '0';
+				memory_read <= '0';
+				memory_stack_pointer <= "00";
+				memory_address <= "XX";
+				memory_write_data <= "XX";
+				write_back_register_write_data_1 <= "XX";
+				write_back_register_write1 <= '0';
+				write_back_register_write2 <= '0';
+				write_back_register_write_address_1 <= '0';
+
+			WHEN OTHERS =>
+		END CASE;
 	END PROCESS;
 
 END arch_controller;
