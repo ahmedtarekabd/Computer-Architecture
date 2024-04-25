@@ -33,9 +33,9 @@ begin
     -- Clock process definitions
     clk_process :process
     begin
-        clk <= '0';
-        wait for clk_period/2;
         clk <= '1';
+        wait for clk_period/2;
+        clk <= '0';
         wait for clk_period/2;
     end process;
 
@@ -52,3 +52,5 @@ begin
     end process;
 
 end architecture arch;
+
+--mux bydy el output bta3o mt2akhr cycle
