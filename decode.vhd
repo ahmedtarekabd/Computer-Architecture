@@ -221,7 +221,7 @@ BEGIN
         & write_back_register_write_data_1
         & write_back_register_write_address_1;
 
-    -- 140 bits:
+    -- 140 bits: 23 control signals + 32 read_data1 + 32 read_data2 + 3 read_address1 + 3 read_address2 + 3 destination + 32 immediate_out + 12 pc_plus_1
     decode_execute_in <= control_signals & read_data1 & read_data2 & read_address1 & read_address2 & destination
         & immediate_out & pc_plus_1;
 

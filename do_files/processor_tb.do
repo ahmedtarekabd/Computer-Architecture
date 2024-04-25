@@ -19,10 +19,9 @@ add wave -position insertpoint  \
 sim:/processor_tb/processor1/* \
 sim:/processor_tb/processor1/decode_inst/*
 
-# Instruction Cache
-# add wave -position insertpoint  \
-# sim:/processor_tb/processor1/inst_cache/address_in \
-# sim:/processor_tb/processor1/inst_cache/data_out
+# Execute
+ add wave -position insertpoint  \
+ sim:/processor_tb/processor1/decode_inst/*
 
 ## fetch_decode
 #add wave -position insertpoint \
