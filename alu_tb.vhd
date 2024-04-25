@@ -56,6 +56,18 @@ begin
         -- old_overflow_flag <= '0';
         -- old_carry_flag <= '0';
 
+        --test case 1 : negate
+        A <= "00000000000000000000000000000101"; opcode <= "000";
+        wait for 10 ns;
+
+        --test case 2 : negate 7
+        A <= "00000000000000000000000000000111"; opcode <= "000";
+        wait for 10 ns;
+
+        --test case 3 : negate 0
+        A <= "00000000000000000000000000000000"; opcode <= "000";
+        wait for 10 ns;
+
         -- Test case 1: ADD operation
         A <= "00000000000000000000000000000001"; B <= "00000000000000000000000000000001"; opcode <= "001";
         wait for 10 ns;

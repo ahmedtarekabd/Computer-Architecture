@@ -6,147 +6,186 @@ entity processor is
     port (
         clk : in std_logic; 
         reset : in std_logic
+        
+        -- add in port / out port
     );
 end entity processor;
 
 architecture arch_processor of processor is
 
-    -- PC
-    component pc is
+    component fetch is
         port (
+            clk : in std_logic; 
             reset : in std_logic;
+            selected_instruction_out : out std_logic_vector(15 downto 0)
+        );
+    end component fetch;
+
+    component execute is
+        port(
+    -------------------------inputs-------------------------
             clk : in std_logic;
-            pc_out : out std_logic_vector(9 downto 0)
-        );
-    end component;
-
-    -- Instruction Cache
-    component instruction_cache is
-        port (
-            -- clk : in std_logic;
-            address_in : in std_logic_vector(9 downto 0);
-            data_out : out std_logic_vector(15 downto 0)
-        );
-    end component;
-
-    -- Controller
-    component controller is
-        PORT(
-            clk : in std_logic;
-            opcode : in std_logic_vector(2 DOWNTO 0);
-            
-            operation : out std_logic_vector(2 DOWNTO 0);
-            write_enable : out std_logic
-            );
-    end component;
-
-    -- nDFF (register file)
-    component my_nDFF IS
-        GENERIC ( n : integer := 16);
-        PORT(
-            Clk, reset : IN std_logic;
-            d : IN std_logic_vector(n-1 DOWNTO 0);
-            q : OUT std_logic_vector(n-1 DOWNTO 0)
-            );
-    end component;
-
-    -- Registers array
-    component registers_array IS
-        GENERIC ( n : integer := 8 );
-        PORT(
-            clk, reset, enable : IN std_logic;
-            address_read1, address_read2 : IN std_logic_vector(2 DOWNTO 0);
-            address_write : IN std_logic_vector(2 DOWNTO 0);
-            
-            input : IN std_logic_vector(n-1 DOWNTO 0);
-            output1, output2 : OUT std_logic_vector(n-1 DOWNTO 0)
-            );
-    end component;
-
-    -- ALU
-    component ALU is
-        generic (n: integer := 8);
-        port (
-            A, B: in std_logic_vector(n-1 downto 0);
-            Sel: in std_logic_vector(2 downto 0);
-            F: out std_logic_vector(n-1 downto 0);
-            Cin: in std_logic;
-            Cout: out std_logic
-        );
-    end component;
+            -- pc + 1 propagated
+            pc_in : in std_logic_vector(15 downto 0);
+            -- opcode from controller
+            operation : in std_logic_vector(2 downto 0);
     
+            -- propagated from decode stage
+            address_read1_in : in std_logic_vector(2 downto 0);
+            address_read2_in : in std_logic_vector(2 downto 0);
+            destination_address : in std_logic_vector(2 downto 0);
+    
+            -- propagated from decode stage
+            data1_in : in std_logic_vector(31 downto 0);
+            data2_in : in std_logic_vector(31 downto 0);
+    
+            -- from controller
+            -- propagated from decode stage 1 bit for memread, memwrite (1 bit each), protect & free 1 bit each, 1 regwrite, 1 regRead(i believe no regreads), 2 selectors for (WB, src1, src2), 1 of them is given to the 3rd MUX to know which mode it is in
+            -- bit 0 -> memread, bit 1 -> memwrite, bit 2 -> protect, bit 3 -> free, bit 4 -> regwrite, bit 5 -> regread (i believe no regreads), bit 6 & 7 -> selectors for WB, src1, src2
+            mem_wb_control_signals_in : in std_logic_vector(6 downto 0);
+    
+            -- -- flags in
+            -- old_negative_flag : in std_logic;
+            -- old_zero_flag : in std_logic;
+            -- old_overflow_flag : in std_logic;
+            -- old_carry_flag : in std_logic;
+    
+        -- commented out for now
+        -- forwarded stuff
+            -- -- alu to alu forwarding
+            -- alu_result_forward : in std_logic_vector(31 downto 0);
+            -- -- memory to alu forwarding
+            -- memory_result_forward : in std_logic_vector(31 downto 0);
+    
+            -- -- control signals in that order, 2 for alu, 2 for mem and 2 for wb
+            -- alu_mem_wb_control_signals : in std_logic_vector(5 downto 0);
+    
+            -- -- forwarding unit signals
+            -- forwarding_unit_signals : in std_logic_vector(1 downto 0);
+    
+    -------------------------outputs-------------------------
+    
+            -- alu output
+            alu_out : out std_logic_vector(31 downto 0);
+            -- mem and wb control signals
+            mem_wb_control_signals_out : out std_logic_vector(6 downto 0);
+            -- addresses
+            address_read1_out : out std_logic_vector(2 downto 0);
+            address_read2_out : out std_logic_vector(2 downto 0);
+            -- data
+            data1_out : out std_logic_vector(31 downto 0);
+            data2_out : out std_logic_vector(31 downto 0);
+            -- destination address
+            destination_address_out : out std_logic_vector(2 downto 0);
+            -- pc + 1
+            pc_out : out std_logic_vector(15 downto 0)
+    
+        );
+    component execute;
+    
+    component memory_stage is
+        port (
 
-    signal d, q : std_logic_vector(15 downto 0);
-    signal instruction_address : std_logic_vector(9 downto 0);
-    signal instruction_in : std_logic_vector(15 downto 0);
-    signal instruction_out : std_logic_vector(15 downto 0);
+            -----------------------------------------inputs-----------------------------------------
+            clk : in std_logic;
+            -- reset : in std_logic;
+    
+            -- Propagated stuff innit
+            read_data1_in : in std_logic_vector(31 downto 0);
+            read_data2_in : in std_logic_vector(31 downto 0);
+            read_address1_in : in std_logic_vector(31 downto 0);
+            read_address2_in : in std_logic_vector(31 downto 0);
+            destination_address_in : in std_logic_vector(2 downto 0);
+    
+            -- propagated from decode stage 1 bit for memread, memwrite (1 bit each), protect & free 1 bit each, 1 regwrite, 1 regRead(i believe no regreads), 2 selectors for (WB, src1, src2), 1 of them is given to the 3rd MUX to know which mode it is in
+            -- bit 0 -> memread, bit 1 -> memwrite, bit 2 -> protect, bit 3 -> free, bit 4 -> regwrite, bit 5 -> regread (i believe no regreads), bit 6 & 7 -> selectors for WB, src1, src2
+            mem_wb_control_signals_in : in std_logic_vector(6 downto 0);
+    
+            -- PC + 1
+            pc_in : in std_logic_vector(15 downto 0);
+    
+            mem_write_data : in std_logic_vector(31 downto 0);
+            -- depends on the control signal same as ALU out
+            mem_read_or_write_addr : in std_logic_vector(12 downto 0);
+            
+    
+            -----------------------------------------outputs-----------------------------------------
+            mem_read_data : out std_logic_vector(31 downto 0);
+            read_data1_out : out std_logic_vector(31 downto 0);
+            read_data2_out : out std_logic_vector(31 downto 0);
+            read_address1_out : out std_logic_vector(31 downto 0);
+            read_address2_out : out std_logic_vector(31 downto 0);
+            destination_address_out : out std_logic_vector(2 downto 0);
+            pc_out : out std_logic_vector(15 downto 0);
+            wb_control_signals_out : out std_logic_vector(2 downto 0)
+    
+            -- for forwarding make another output for the write data
+        );
+    component memory_stage;
 
-    signal operation : std_logic_vector(2 downto 0);
-    signal write_enable : std_logic;
+    component write_back is
+        port (
+            clk : in std_logic;
+        
+        ------------input signals------------------
+        -- Propagated stuff
+        read_data1_in : in std_logic_vector(31 downto 0);
+        read_data2_in : in std_logic_vector(31 downto 0);
+        read_address1_in : in std_logic_vector(31 downto 0);
+        read_address2_in : in std_logic_vector(31 downto 0);
+        destination_address_in : in std_logic_vector(2 downto 0);
+        mem_read_data : in std_logic_vector(31 downto 0);
+        pc_in : in std_logic_vector(15 downto 0);
+        --bit 0 -> regwrite, bit 3 -> regread (i believe no regreads), bit 1 & 2 -> selectors for WB, src1, src2
+        wb_control_signals_in : in std_logic_vector(2 downto 0);
 
-    signal register_file_out1 : std_logic_vector(7 downto 0);
-    signal register_file_out2 : std_logic_vector(7 downto 0);
+        ------------output signals------------------
+        selected_data_out1 : out std_logic_vector(31 downto 0);
+        selected_data_out2 : out std_logic_vector(31 downto 0);
+        -- selects between read address 1 and destination address
+        selected_address_out : out std_logic_vector(31 downto 0);
+        read_address2_out : out std_logic_vector(31 downto 0);
+        -- from controller
+        regWrite_out_control_signal : out std_logic
+        );
+    component write_back;
 
-    signal decode_execute_in : std_logic_vector(22 downto 0);
-    signal decode_execute_out : std_logic_vector(22 downto 0);
+    --generic
+    signal clk : std_logic;
+    signal reset : std_logic;
 
-    signal write_back_in : std_logic_vector(11 downto 0);
-    signal write_back_out : std_logic_vector(11 downto 0);
+    --fetch
+    signal instruction : std_logic_vector(15 downto 0);
+    signal opcode : std_logic_vector(5 downto 0);
+    signal src1_address : std_logic_vector(2 downto 0);
+    signal src2_address : std_logic_vector(2 downto 0);
+    signal dest_address : std_logic_vector(2 downto 0);
+    signal imm_flag : std_logic;
 
-    signal alu_out : std_logic_vector(7 downto 0);
-    signal alu_cout : std_logic; -- not used
+    --decode
+
 
 begin
 
-    program_counter: pc PORT MAP (
-        reset,
-        clk,
-        instruction_address
+    ----------Fetch---------- 
+
+    fetch_inst : fetch port map(
+        clk => clk,
+        reset => reset,
+        selected_instruction_out => instruction
     );
 
-    inst_cache: instruction_cache PORT MAP (
-        -- clk, 
-        address_in => instruction_address, 
-        data_out => instruction_in
-    );
+    opcode <= instruction(15 downto 10);
+    src1_address <= instruction(9 downto 7);
+    src2_address <= instruction(6 downto 4);
+    dest_address <= instruction(3 downto 1);
+    imm_flag <= instruction(0);
 
-    -- 3 bits: opcode
-    -- 3 bits: register_src 1
-    -- 3 bits: register_src 2
-    -- 3 bits: register_dst
-    -- rest: not used
-    fetch_decode: my_nDFF 
-        GENERIC MAP (16)
-        PORT MAP (
-            clk,
-            reset,
-            d => instruction_in,
-            q => instruction_out
-        );
+    ----------Decode----------
 
-    -- decode
+    decode_inst : decode port map(
+    
 
-
-    alu0: ALU generic map (8) port map (
-        A => decode_execute_out(18 downto 11),
-        B => decode_execute_out(10 downto 3),
-        Sel => decode_execute_out(21 downto 19),
-        F => alu_out,
-        Cin => '0',
-        Cout => alu_cout -- not used
-    );
-
-    -- 1 bit: write enable
-    -- 8 bits: alu output
-    -- 3 bits: address write back (destination)
-    write_back_in <= decode_execute_out(22) & alu_out & decode_execute_out(2 downto 0);
-    write_back: my_nDFF 
-        GENERIC MAP (12)
-        PORT MAP (
-            clk,
-            reset,
-            d => write_back_in,
-            q => write_back_out
-        );
+  
 
 end architecture arch_processor;

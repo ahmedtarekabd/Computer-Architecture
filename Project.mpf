@@ -221,6 +221,7 @@ UserTimeUnit = default
 
 ; Default run length
 RunLength = 10 ns
+RunLength = 10 ns
 
 ; Maximum iterations that can be run without advancing simulation time
 IterationLimit = 5000
@@ -402,7 +403,7 @@ ConcurrentFileLimit = 40
 ;    wlf   {wlf file only}
 ; msgmode = both
 [Project]
-; Warning -- Do not edit the project properties directly.
+** Warning: ; Warning -- Do not edit the project properties directly.
 ;            Property names are dynamic in nature and property
 ;            values have special syntax.  Changing property data directly
 ;            can result in a corrupt MPF file.  All project properties
@@ -512,5 +513,5 @@ DEBUGDATABASE_DoubleClick = Edit
 DEBUGDATABASE_CustomDoubleClick = 
 DEBUGARCHIVE_DoubleClick = Edit
 DEBUGARCHIVE_CustomDoubleClick = 
-Project_Major_Version = 10
-Project_Minor_Version = 5
+Project_Major_Version = 2020
+Project_Minor_Version = 1

@@ -24,10 +24,10 @@ entity ALU is
     );
 end ALU;
 
--- 000 -> nop (changes nothing)
+-- 000 -> negate (changes zero and negative flags only)
 -- 001 -> add (changes all flags)
 -- 010 -> sub (changes all flags)
--- 011 -> mov (changes nothing)
+-- 011 -> mov (changes nothing) (returns B -> src2)
 -- 100 -> and (changes zero and negative flags only)
 -- 101 -> or (changes zero and negative flags only)
 -- 110 -> xor (changes zero and negative flags only)
@@ -50,15 +50,15 @@ begin
 
     sum <= A_extended + B_extended;
     difference <= A_extended - B_extended;
-
-    F_internal <= (others => '0') when opcode = "000" else
-        std_logic_vector(sum(n-1 downto 0)) when opcode = "001" else
-        std_logic_vector(difference(n-1 downto 0)) when opcode = "010" else
-        A when opcode = "011" else
-        std_logic_vector(A_integer and B_integer) when opcode = "100" else
-        std_logic_vector(A_integer or B_integer) when opcode = "101" else
-        std_logic_vector(A_integer xor B_integer) when opcode = "110" else
-        std_logic_vector(not A_integer) when opcode = "111" else
+ 
+    F_internal <= std_logic_vector((not A_integer)+1) when opcode = "000" else  --negate
+        std_logic_vector(sum(n-1 downto 0)) when opcode = "001" else            --add
+        std_logic_vector(difference(n-1 downto 0)) when opcode = "010" else     --sub
+        B when opcode = "011" else                                              --mov
+        std_logic_vector(A_integer and B_integer) when opcode = "100" else      --and
+        std_logic_vector(A_integer or B_integer) when opcode = "101" else       --or
+        std_logic_vector(A_integer xor B_integer) when opcode = "110" else      --xor
+        std_logic_vector(not A_integer) when opcode = "111" else                --not
         (others => '0');
 
     --carry flag
@@ -74,7 +74,7 @@ begin
         old_overflow_flag;
     
     --zero and negative flags -> check if its supposed to upadate these flags or no
-    zero_neg_flags <= '1' when opcode = "001" or opcode = "010" or opcode = "100" or opcode = "101" or opcode = "110" or opcode = "111" else
+    zero_neg_flags <= '1' when opcode = "000" or opcode = "001" or opcode = "010" or opcode = "100" or opcode = "101" or opcode = "110" or opcode = "111" else
         '0';
     
     --zero flag
@@ -86,7 +86,6 @@ begin
     negative_flag <= '1' when zero_neg_flags = '1' and F_internal(n-1) = '1' else
         '0' when zero_neg_flags = '1' else
         old_negative_flag;
-
 
     F <= F_internal; -- Assign the internal signal to the output
 
