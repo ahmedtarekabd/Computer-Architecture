@@ -6,10 +6,12 @@ ENTITY execute IS
     PORT (
         -------------------------inputs-------------------------
         clk : IN STD_LOGIC;
-        -- pc + 1 propagated
-        pc_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
+        -- -- pc + 1 propagated
+        -- pc_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
+        -- immediate value from decode stage
+        immediate_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
         -- opcode from controller
-        operation : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+        -- operation : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
 
         -- propagated from decode stage
         address_read1_in : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
@@ -20,10 +22,23 @@ ENTITY execute IS
         data1_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
         data2_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
 
+        
+        -- from controller -> to be extended to all of them
+        -- reg_read_control_signals : IN STD_LOGIC;
+        -- branch_control_signals : IN STD_LOGIC;
+        -- sign_extend_control_signals : IN STD_LOGIC;
+        -- decode_Excute_enable : IN STD_LOGIC;
+        -- alu_select_control_signals : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+        -- alu_src2_control_signals : IN STD_LOGIC_vector(1 DOWNTO 0);
+        -- reg_write_control_signals : IN STD_LOGIC;
+        -- --mem
+        -- mem_write_enable_control_signal : IN STD_LOGIC;
+        -- mem_read_enable_control_signal : IN STD_LOGIC;
+        -- sp_control_signal : IN STD_LOGIC;
+
+
         -- from controller
-        -- propagated from decode stage 1 bit for memread, memwrite (1 bit each), protect & free 1 bit each, 1 regwrite, 1 regRead(i believe no regreads), 2 selectors for (WB, src1, src2), 1 of them is given to the 3rd MUX to know which mode it is in
-        -- bit 0 -> memread, bit 1 -> memwrite, bit 2 -> protect, bit 3 -> free, bit 4 -> regwrite, bit 5 -> regread (i believe no regreads), bit 6 & 7 -> selectors for WB, src1, src2
-        mem_wb_control_signals_in : IN STD_LOGIC_VECTOR(6 DOWNTO 0);
+        control_signals_in : IN STD_LOGIC_VECTOR(22 DOWNTO 0);
 
         -- -- flags in
         -- old_negative_flag : in std_logic;
@@ -49,7 +64,8 @@ ENTITY execute IS
         -- alu output
         alu_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
         -- mem and wb control signals
-        mem_wb_control_signals_out : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
+        -- mem_wb_control_signals_out : OUT STD_LOGIC_VECTOR(22 DOWNTO 0);
+        outputed_control_signals : OUT STD_LOGIC_VECTOR(22 DOWNTO 0);
         -- addresses
         address_read1_out : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
         address_read2_out : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
@@ -57,14 +73,16 @@ ENTITY execute IS
         data1_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
         data2_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
         -- destination address
-        destination_address_out : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
-        -- pc + 1
-        pc_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
+        destination_address_out : OUT STD_LOGIC_VECTOR(2 DOWNTO 0)
+
+        -- -- pc + 1
+        -- pc_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
 
     );
 END execute;
 
 ARCHITECTURE arch_execute OF execute IS
+
     COMPONENT ALU IS
         GENERIC (n : INTEGER := 32);
         PORT (
@@ -107,24 +125,48 @@ ARCHITECTURE arch_execute OF execute IS
             d : IN STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
             q : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0)
         );
-    END COMPONENT
+    END COMPONENT my_nDFF;
 
     SIGNAL flags_temp_in : STD_LOGIC_VECTOR(3 DOWNTO 0);
     SIGNAL flags_temp_out : STD_LOGIC_VECTOR(3 DOWNTO 0);
 
     SIGNAL d_internal : STD_LOGIC_VECTOR(127 DOWNTO 0);
     SIGNAL q_output : STD_LOGIC_VECTOR(127 DOWNTO 0);
+
     SIGNAL alu_out_temp : STD_LOGIC_VECTOR(31 DOWNTO 0);
+
+    signal alu_select_control_signals : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    signal alu_src2_control_signals : STD_LOGIC_VECTOR(1 DOWNTO 0);
+    signal pipeline_enable : STD_LOGIC;
+
+    signal src2 : STD_LOGIC_VECTOR(31 DOWNTO 0); -- src2 can be immediate or register value or 1
 
 BEGIN
 
     -- flags_temp_out <= old_negative_flag_temp & old_zero_flag_temp & old_overflow_flag_temp & old_carry_flag_temp;
 
+    alu_select_control_signals <= control_signals_in (18 DOWNTO 16);
+    alu_src2_control_signals <= control_signals_in (15 DOWNTO 14);
+    pipeline_enable <= control_signals_in(22);
+
+    -- mux instantiation
+    mux_inst : mux4x1
+    GENERIC MAP(32)
+    PORT MAP(
+        inputA => data2_in,                             --00
+        inputB => immediate_in,                         --01
+        inputC => "000000000000000000000000000000001",  --10
+        inputD => immediate_in,                         --11 (can be cahnged later to anythin)
+        Sel_lower => alu_src2_control_signals(0),
+        Sel_higher => alu_src2_control_signals(1),
+        output => src2
+    );
+
     alu_component : ALU
     PORT MAP(
         A => data1_in,
-        B => data2_in,
-        opcode => operation,
+        B => src2, --choosen from the mux
+        opcode => alu_select_control_signals,
         F => alu_out_temp,
         -- NOTE: negative flag is rightmost in testbench waveform
         negative_flag => flags_temp_in(0),
@@ -144,24 +186,23 @@ BEGIN
     );
 
     -- -- output signals + alu out
-    -- pc_out <= pc_in;
-    -- mem_wb_control_signals_out <= mem_wb_control_signals_in;
+    -- pc_out <= pc_in; --removed
+    -- mem_wb_control_signals_out <= control_signals_in;
     -- address_read1_out <= address_read1_in;
     -- address_read2_out <= address_read2_in;
     -- data1_out <= data1_in;
     -- data2_out <= data2_in;
     -- destination_address_out <= destination_address;
 
-    d_internal <= alu_out_temp & pc_in & mem_wb_control_signals_in & address_read1_in & address_read2_in & data1_in & data2_in & destination_address;
+    d_internal <= alu_out_temp & control_signals_in & address_read1_in & address_read2_in & data1_in & data2_in & destination_address;
 
-    execute_mem_reg : my_nDFF GENERIC MAP(128)
+    execute_mem_reg : my_nDFF GENERIC MAP(127)
     PORT MAP(
-        clk, '0', '1', d_internal, q_output
+        clk, '0', pipeline_enable, d_internal, q_output
     );
 
-    alu_out <= q_output(127 DOWNTO 96);
-    pc_out <= q_output(95 DOWNTO 80);
-    mem_wb_control_signals_out <= q_output(79 DOWNTO 73);
+   alu_out <= q_output(127 DOWNTO 96);
+   outputed_control_signals <= q_output(95 DOWNTO 73);
     address_read1_out <= q_output(72 DOWNTO 70);
     address_read2_out <= q_output(69 DOWNTO 67);
     data1_out <= q_output(66 DOWNTO 35);
@@ -169,6 +210,52 @@ BEGIN
     destination_address_out <= q_output(2 DOWNTO 0);
 
 END arch_execute;
+
+
+    -- control_signals <= pipeline_enable 22
+    --     & fetch_pc_sel [21 19]
+    --     & alu_sel [18 16]
+    --     & alu_src2 [15 14]
+    --     & alu_register_write 13 -- no need for it
+    --     & memory_write 12
+    --     & memory_read 11
+    --     & memory_stack_pointer [10 9]
+    --     & memory_address [8 7]
+    --     & memory_write_data [6 5]
+    --     & write_back_register_write4
+    --     & write_back_register_write3
+    --     & write_back_register_write_data_[2 1]
+    --     & write_back_register_write_address_1; 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 -- forwarding_unit : forwarding_unit
 -- port map(
 --     forwarding_unit_signals => forwarding_unit_signals,
