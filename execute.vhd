@@ -9,7 +9,7 @@ ENTITY execute IS
         -- -- pc + 1 propagated
         -- pc_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
         -- immediate value from decode stage
-        immediate_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
+        immediate_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
         -- opcode from controller
         -- operation : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
 

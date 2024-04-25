@@ -9,21 +9,21 @@ ARCHITECTURE behavior OF execute_tb IS
 
     COMPONENT execute
     PORT(
-         clk : IN  std_logic;
-         immediate_in : IN  std_logic_vector (15 downto 0);
-         address_read1_in : IN  std_logic_vector (2 downto 0);
-         address_read2_in : IN  std_logic_vector (2 downto 0);
-         destination_address : IN  std_logic_vector (2 downto 0);
-         data1_in : IN  std_logic_vector (31 downto 0);
-         data2_in : IN  std_logic_vector (31 downto 0);
-         control_signals_in : IN  std_logic_vector (22 downto 0);
-         alu_out : OUT  std_logic_vector (31 downto 0);
-         outputed_control_signals : OUT  std_logic_vector (22 downto 0);
-         address_read1_out : OUT  std_logic_vector (2 downto 0);
-         address_read2_out : OUT  std_logic_vector (2 downto 0);
-         data1_out : OUT  std_logic_vector (31 downto 0);
-         data2_out : OUT  std_logic_vector (31 downto 0);
-         destination_address_out : OUT  std_logic_vector (2 downto 0)
+        clk : IN  std_logic;
+        immediate_in : IN  std_logic_vector (15 downto 0);
+        address_read1_in : IN  std_logic_vector (2 downto 0);
+        address_read2_in : IN  std_logic_vector (2 downto 0);
+        destination_address : IN  std_logic_vector (2 downto 0);
+        data1_in : IN  std_logic_vector (31 downto 0);
+        data2_in : IN  std_logic_vector (31 downto 0);
+        control_signals_in : IN  std_logic_vector (22 downto 0);
+        alu_out : OUT  std_logic_vector (31 downto 0);
+        outputed_control_signals : OUT  std_logic_vector (22 downto 0);
+        address_read1_out : OUT  std_logic_vector (2 downto 0);
+        address_read2_out : OUT  std_logic_vector (2 downto 0);
+        data1_out : OUT  std_logic_vector (31 downto 0);
+        data2_out : OUT  std_logic_vector (31 downto 0);
+        destination_address_out : OUT  std_logic_vector (2 downto 0)
         );
     END COMPONENT;
 
@@ -73,9 +73,9 @@ BEGIN
    -- Clock process definitions
    clk_process :process
    begin
-        clk <= '0';
-        wait for clk_period/2;
         clk <= '1';
+        wait for clk_period/2;
+        clk <= '0';
         wait for clk_period/2;
    end process;
 
@@ -84,6 +84,17 @@ BEGIN
    begin		
       -- hold reset state for 100 ns.
       wait for 100 ns;	
+
+      --set immediate in with 32'b00000000000000110000000000000011
+      --data1_in with 32'b00000000000000000000000000000001
+      --data2_in with 32'b00000000000000000000000000000010
+
+        immediate_in <= "00000000000000110000000000000011";
+        data1_in <= "00000000000000000000000000000001";
+        data2_in <= "00000000000000000000000000000010";
+
+    --control signals bit
+
 
       -- insert stimulus here 
 
