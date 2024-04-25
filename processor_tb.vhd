@@ -30,13 +30,10 @@ BEGIN
     -- Clock process
     clk_process : PROCESS
     BEGIN
-        WHILE now < 1000 ns LOOP
-            clk <= '1';
-            WAIT FOR 5 ns;
-            clk <= '0';
-            WAIT FOR 5 ns;
-        END LOOP;
-        WAIT;
+        clk <= '1';
+        WAIT FOR 5 ns;
+        clk <= '0';
+        WAIT FOR 5 ns;
     END PROCESS clk_process;
 
     -- Add stimulus processes here to drive inputs and monitor outputs
@@ -46,7 +43,14 @@ BEGIN
         reset <= '1';
         WAIT FOR 10 ns;
 
+        -- Cycle 1
         reset <= '0';
+        WAIT FOR 10 ns;
+
+
+        -- Cycle 2
+        WAIT FOR 10 ns;
+
         WAIT;
 
     END PROCESS stimulus_process;

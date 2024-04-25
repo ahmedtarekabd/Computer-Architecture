@@ -18,7 +18,7 @@ ENTITY decode IS
         -- Propagated signals
         pc_plus_1 : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
 
-        decode_execute_out : OUT STD_LOGIC_VECTOR(91 DOWNTO 0)
+        decode_execute_out : OUT STD_LOGIC_VECTOR(140 - 1 DOWNTO 0)
     );
 END ENTITY decode;
 
@@ -36,7 +36,7 @@ ARCHITECTURE rtl OF decode IS
             pipeline_enable : OUT STD_LOGIC;
 
             -- fetch signals
-            fetch_pc_sel : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);    
+            fetch_pc_sel : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
 
             -- decode signals
             decode_reg_read : OUT STD_LOGIC;
@@ -64,7 +64,7 @@ ARCHITECTURE rtl OF decode IS
     END COMPONENT;
 
     COMPONENT register_file IS
-        GENERIC (n : INTEGER := 16);
+        GENERIC (n : INTEGER := 32);
         PORT (
             clk : IN STD_LOGIC;
             write_enable1 : IN STD_LOGIC;
@@ -143,10 +143,10 @@ ARCHITECTURE rtl OF decode IS
     SIGNAL control_signals : STD_LOGIC_VECTOR(22 DOWNTO 0);
 
     --Outputs
-    SIGNAL read_data1 : STD_LOGIC_VECTOR(15 DOWNTO 0);
-    SIGNAL read_data2 : STD_LOGIC_VECTOR(15 DOWNTO 0);
-    SIGNAL immediate_out : STD_LOGIC_VECTOR(15 DOWNTO 0);
-    SIGNAL decode_execute_in : STD_LOGIC_VECTOR(91 DOWNTO 0);
+    SIGNAL read_data1 : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL read_data2 : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL immediate_out : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL decode_execute_in : STD_LOGIC_VECTOR(140 - 1 DOWNTO 0);
 
 BEGIN
 
@@ -182,7 +182,7 @@ BEGIN
     );
 
     register_file_instance : register_file GENERIC MAP(
-        16) PORT MAP(
+        32) PORT MAP(
         -- Inputs
         clk => clk,
         write_enable1 => write_enable1, -- WB
@@ -221,16 +221,16 @@ BEGIN
         & write_back_register_write_data_1
         & write_back_register_write_address_1;
 
-    -- 92 bits: 4 bits controller, 16 bits 2 registers values, 3 bits address write back (destination)
+    -- 140 bits: 23 control signals + 32 read_data1 + 32 read_data2 + 3 read_address1 + 3 read_address2 + 3 destination + 32 immediate_out + 12 pc_plus_1
     decode_execute_in <= control_signals & read_data1 & read_data2 & read_address1 & read_address2 & destination
         & immediate_out & pc_plus_1;
 
     decode_execute : my_nDFF
-    GENERIC MAP(92)
+    GENERIC MAP(140)
     PORT MAP(
         clk,
         '0', -- reset signal
-        '1', -- enable signal
+        enable => pipeline_enable,
         d => decode_execute_in,
         q => decode_execute_out
     );

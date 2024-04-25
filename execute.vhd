@@ -9,7 +9,7 @@ ENTITY execute IS
         -- -- pc + 1 propagated
         -- pc_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
         -- immediate value from decode stage
-        immediate_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
+        immediate_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
         -- opcode from controller
         -- operation : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
 
@@ -155,7 +155,7 @@ BEGIN
     PORT MAP(
         inputA => data2_in,                             --00
         inputB => immediate_in,                         --01
-        inputC => "000000000000000000000000000000001",  --10
+        inputC => "00000000000000000000000000000001",  --10
         inputD => immediate_in,                         --11 (can be cahnged later to anythin)
         Sel_lower => alu_src2_control_signals(0),
         Sel_higher => alu_src2_control_signals(1),
@@ -196,18 +196,19 @@ BEGIN
 
     d_internal <= alu_out_temp & control_signals_in & address_read1_in & address_read2_in & data1_in & data2_in & destination_address;
 
-    execute_mem_reg : my_nDFF GENERIC MAP(127)
+    execute_mem_reg : my_nDFF GENERIC MAP(128)
     PORT MAP(
         clk, '0', pipeline_enable, d_internal, q_output
     );
 
-   alu_out <= q_output(127 DOWNTO 96);
-   outputed_control_signals <= q_output(95 DOWNTO 73);
+    alu_out <= q_output(127 DOWNTO 96);
+    outputed_control_signals <= q_output(95 DOWNTO 73);
     address_read1_out <= q_output(72 DOWNTO 70);
     address_read2_out <= q_output(69 DOWNTO 67);
     data1_out <= q_output(66 DOWNTO 35);
     data2_out <= q_output(34 DOWNTO 3);
     destination_address_out <= q_output(2 DOWNTO 0);
+
 
 END arch_execute;
 

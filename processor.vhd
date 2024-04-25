@@ -33,13 +33,13 @@ ARCHITECTURE arch_processor OF processor IS
             write_enable2 : IN STD_LOGIC;
             write_address1 : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
             write_address2 : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
-            write_data1 : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-            write_data2 : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
+            write_data1 : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+            write_data2 : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
 
             -- Propagated signals
             pc_plus_1 : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
 
-            decode_execute_out : OUT STD_LOGIC_VECTOR(91 DOWNTO 0)
+            decode_execute_out : OUT STD_LOGIC_VECTOR(140 - 1 DOWNTO 0)
         );
     END COMPONENT;
 
@@ -47,10 +47,8 @@ ARCHITECTURE arch_processor OF processor IS
         PORT (
             -------------------------inputs-------------------------
             clk : IN STD_LOGIC;
-            -- pc + 1 propagated
-            pc_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-            -- opcode from controller
-            operation : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+            -- immediate value from decode stage
+            immediate_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
 
             -- propagated from decode stage
             address_read1_in : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
@@ -61,14 +59,13 @@ ARCHITECTURE arch_processor OF processor IS
             data1_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
             data2_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
 
-            mem_wb_control_signals_in : IN STD_LOGIC_VECTOR(6 DOWNTO 0);
+            control_signals_in : IN STD_LOGIC_VECTOR(22 DOWNTO 0);
 
             -------------------------outputs-------------------------
 
             -- alu output
             alu_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
-            -- mem and wb control signals
-            mem_wb_control_signals_out : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
+            outputed_control_signals : OUT STD_LOGIC_VECTOR(22 DOWNTO 0);
             -- addresses
             address_read1_out : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
             address_read2_out : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
@@ -76,10 +73,7 @@ ARCHITECTURE arch_processor OF processor IS
             data1_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
             data2_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
             -- destination address
-            destination_address_out : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
-            -- pc + 1
-            pc_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
-
+            destination_address_out : OUT STD_LOGIC_VECTOR(2 DOWNTO 0)
         );
     END COMPONENT execute;
 
@@ -155,11 +149,19 @@ ARCHITECTURE arch_processor OF processor IS
     SIGNAL write_enable2 : STD_LOGIC;
     SIGNAL write_address1 : STD_LOGIC_VECTOR(2 DOWNTO 0);
     SIGNAL write_address2 : STD_LOGIC_VECTOR(2 DOWNTO 0);
-    SIGNAL write_data1 : STD_LOGIC_VECTOR(15 DOWNTO 0);
-    SIGNAL write_data2 : STD_LOGIC_VECTOR(15 DOWNTO 0);
+    SIGNAL write_data1 : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL write_data2 : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL pc_plus_1 : STD_LOGIC_VECTOR(11 DOWNTO 0);
-    SIGNAL decode_execute_out : STD_LOGIC_VECTOR(91 DOWNTO 0);
+    SIGNAL decode_execute_out : STD_LOGIC_VECTOR(140 - 1 DOWNTO 0);
 
+    -- execute
+    SIGNAL alu_out : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL outputed_control_signals : STD_LOGIC_VECTOR(22 DOWNTO 0);
+    SIGNAL address_read1_out : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAL address_read2_out : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAL data1_out : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL data2_out : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL destination_address_out : STD_LOGIC_VECTOR(2 DOWNTO 0);
 BEGIN
 
     ----------Fetch---------- 
@@ -186,4 +188,26 @@ BEGIN
         pc_plus_1 => pc_plus_1,
         decode_execute_out => decode_execute_out
     );
+
+    ----------Execute----------
+
+    execute_inst : execute PORT MAP(
+        clk => clk,
+        -- immediate_in => decode_execute_out(140 - 1 - 23 - 32 - 32 - 3 - 3 - 3 DOWNTO 140 - 1 - 23 - 32 - 32 - 3 - 3 - 3 - 31),
+        immediate_in => decode_execute_out(43 DOWNTO 12),
+        address_read1_in => decode_execute_out(140 - 1 - 23 - 32 - 32 DOWNTO 140 - 1 - 23 - 32 - 32 - 2),
+        address_read2_in => decode_execute_out(140 - 1 - 23 - 32 - 32 - 3 DOWNTO 140 - 1 - 23 - 32 - 32 - 3 - 2),
+        destination_address => decode_execute_out(140 - 1 - 23 - 32 - 32 - 3 - 3 DOWNTO 140 - 1 - 23 - 32 - 32 - 3 - 3 - 2),
+        data1_in => decode_execute_out(140 - 1 - 23 DOWNTO 140 - 1 - 23 - 31),
+        data2_in => decode_execute_out(140 - 1 - 23 - 32 DOWNTO 140 - 1 - 23 - 32 - 31),
+        control_signals_in => decode_execute_out(140 - 1 DOWNTO 140 - 1 - 22),
+        alu_out => alu_out,
+        outputed_control_signals => outputed_control_signals,
+        address_read1_out => address_read1_out,
+        address_read2_out => address_read2_out,
+        data1_out => data1_out,
+        data2_out => data2_out,
+        destination_address_out => destination_address_out
+    );
+
 END ARCHITECTURE arch_processor;
