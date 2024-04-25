@@ -59,7 +59,7 @@ begin
         destination_address_in => destination_address_in,
         mem_read_data => mem_read_data,
         pc_in => pc_in,
-        wb_control_signals_in => wb_control_signals_in,
+        control_signals_in => control_signals_in,
         selected_data_out1 => selected_data_out1,
         selected_data_out2 => selected_data_out2,
         selected_address_out => selected_address_out,
