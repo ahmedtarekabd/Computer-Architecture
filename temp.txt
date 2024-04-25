@@ -1,7 +1,7 @@
 // memory data file (do not edit the following line - required for mem load use)
 // instance=/fetch_tb/uut/inst_cache/instruction
 // format=mti addressradix=h dataradix=s version=1.0 wordsperline=1
-  0: 1001000000000001
+  0: 0100000000000110
   1: 0000000000000001
   2: 1001000000000011
   3: 1010101010101010
@@ -17,7 +17,7 @@
   d: 0100000000001100
   e: 0101110101000000
   f: 0101111010000000
- 10: 0101011000111110
+ 10: 0101011000101110
  11: 0000011100001100
  12: 0001000000000000
  13: 0000000000000000
