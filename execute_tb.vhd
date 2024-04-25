@@ -67,6 +67,7 @@ BEGIN
     stim_proc : PROCESS
     BEGIN
         -- Test case 1: ADD operation
+        -- triggers negative flag (right)
         data1_in <= "10000000000000000000000000000001";
         data2_in <= "00000000000000000000000000000001";
         operation <= "001";
@@ -105,19 +106,19 @@ BEGIN
         operation <= "011";
         WAIT FOR 20 ns;
 
-        -- Test case 7: SUB operation that triggers carry
+        -- Test case 7: SUB operation that triggers carry and negative flags?
         data1_in <= "00000000000000000000000000000000";
         data2_in <= "00000000000000000000000000000001";
         operation <= "010";
         WAIT FOR 20 ns;
 
-        -- Test case 8: ADD operation that triggers overflow
+        -- Test case 8: ADD operation that triggers negative flag
         data1_in <= "10000000000000000000000000000000";
         data2_in <= "01111111111111111111111111111111";
         operation <= "001";
         WAIT FOR 20 ns;
 
-        -- Test case 9: NOT operation
+        -- Test case 9: NOT operation that triggers negative flag
         data1_in <= "00000000000000000000000000001111";
         operation <= "111";
         WAIT FOR 20 ns;

@@ -60,3 +60,22 @@ greybox_tmp
 *.jdi
 *.dpf
 *.sld
+work/_vmake
+work/_lib1_24.qtl
+work/_lib1_24.qpg
+work/_lib1_24.qdb
+work/_lib1_20.qtl
+work/_lib1_20.qpg
+work/_lib1_20.qdb
+work/_lib.qdb
+work/_info
+wlftjn06e8
+Project.mpf
+.$System Diagram.drawio.bkp
+.gitignore
+work/_info
+work/_lib.qdb
+work/_lib1_20.qdb
+work/_lib1_20.qpg
+work/_lib1_20.qtl
+work/_vmake

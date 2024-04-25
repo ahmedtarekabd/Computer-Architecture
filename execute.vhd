@@ -126,6 +126,7 @@ BEGIN
         B => data2_in,
         opcode => operation,
         F => alu_out_temp,
+        -- NOTE: negative flag is rightmost in testbench waveform
         negative_flag => flags_temp_in(0),
         zero_flag => flags_temp_in(1),
         overflow_flag => flags_temp_in(2),
