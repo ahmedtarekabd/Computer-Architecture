@@ -8,6 +8,10 @@ ENTITY controller IS
 
 		-- 6-bit opcode
 		opcode : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
+		isImmediate : IN STD_LOGIC;
+
+		-- pipeline signals
+		pipeline_enable : OUT STD_LOGIC;
 
 		-- fetch signals
 		fetch_pc_sel : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
@@ -39,10 +43,26 @@ END ENTITY controller;
 
 ARCHITECTURE arch_controller OF controller IS
 
+	TYPE state_type IS (instruction, immediate);
+	SIGNAL state : state_type := instruction;
 BEGIN
 	PROCESS (clk) IS
 	BEGIN
 		IF falling_edge(clk) THEN
+
+			-- FSM
+			CASE state IS
+				WHEN instruction =>
+					IF isImmediate = '1' THEN
+						state <= immediate;
+						pipeline_enable <= '0';
+					ELSE
+						pipeline_enable <= '1';
+					END IF;
+				WHEN immediate =>
+					state <= instruction;
+					pipeline_enable <= '0';
+			END CASE;
 
 			CASE opcode IS
 				WHEN "000000" =>

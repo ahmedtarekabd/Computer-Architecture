@@ -14,6 +14,10 @@ ARCHITECTURE behavior OF controller_tb IS
 
             -- 6-bit opcode
             opcode : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
+            isImmediate : IN STD_LOGIC;
+
+            -- pipeline signals
+            pipeline_enable : OUT STD_LOGIC;
 
             -- fetch signals
             fetch_pc_sel : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
@@ -65,6 +69,8 @@ ARCHITECTURE behavior OF controller_tb IS
     SIGNAL write_back_register_write2 : STD_LOGIC;
     SIGNAL write_back_register_write_data_1 : STD_LOGIC_VECTOR(1 DOWNTO 0);
     SIGNAL write_back_register_write_address_1 : STD_LOGIC;
+    SIGNAL isImmediate : STD_LOGIC := '0';
+    SIGNAL pipeline_enable : STD_LOGIC;
 
     -- Testbench
 BEGIN
@@ -72,6 +78,8 @@ BEGIN
     uut : controller PORT MAP(
         clk => clk,
         opcode => operation,
+        isImmediate => isImmediate,
+        pipeline_enable => pipeline_enable,
         fetch_pc_sel => fetch_pc_sel,
         decode_reg_read => decode_reg_read,
         decode_branch => decode_branch,
@@ -123,6 +131,7 @@ BEGIN
         ASSERT write_back_register_write1 = '1' REPORT "not: write_back_register_write1 is not the expected value" SEVERITY ERROR;
         ASSERT write_back_register_write2 = '0' REPORT "not: write_back_register_write2 is not the expected value" SEVERITY ERROR;
         ASSERT write_back_register_write_address_1 = '0' REPORT "not: write_back_register_write_address_1 is not the expected value" SEVERITY ERROR;
+        ASSERT pipeline_enable = '1' REPORT "not: pipeline_enable is not the expected value" SEVERITY ERROR;
 
         operation <= "000100"; -- dec
         WAIT FOR 100 ns;
@@ -142,6 +151,7 @@ BEGIN
         ASSERT write_back_register_write1 = '1' REPORT "dec: write_back_register_write1 is not the expected value" SEVERITY ERROR;
         ASSERT write_back_register_write2 = '0' REPORT "dec: write_back_register_write2 is not the expected value" SEVERITY ERROR;
         ASSERT write_back_register_write_address_1 = '0' REPORT "dec: write_back_register_write_address_1 is not the expected value" SEVERITY ERROR;
+        ASSERT pipeline_enable = '1' REPORT "dec: pipeline_enable is not the expected value" SEVERITY ERROR;
 
         operation <= "010000"; -- mov
         WAIT FOR 100 ns;
@@ -161,7 +171,9 @@ BEGIN
         ASSERT write_back_register_write1 = '1' REPORT "mov: write_back_register_write1 is not the expected value" SEVERITY ERROR;
         ASSERT write_back_register_write2 = '0' REPORT "mov: write_back_register_write2 is not the expected value" SEVERITY ERROR;
         ASSERT write_back_register_write_address_1 = '0' REPORT "mov: write_back_register_write_address_1 is not the expected value" SEVERITY ERROR;
+        ASSERT pipeline_enable = '1' REPORT "mov: pipeline_enable is not the expected value" SEVERITY ERROR;
 
+        isImmediate <= '1';
         operation <= "100100"; -- ldm
         WAIT FOR 100 ns;
         ASSERT fetch_pc_sel = "000" REPORT "ldm: fetch_pc_sel is not the expected value" SEVERITY ERROR;
@@ -180,7 +192,9 @@ BEGIN
         ASSERT write_back_register_write1 = '1' REPORT "ldm: write_back_register_write1 is not the expected value" SEVERITY ERROR;
         ASSERT write_back_register_write2 = '0' REPORT "ldm: write_back_register_write2 is not the expected value" SEVERITY ERROR;
         ASSERT write_back_register_write_address_1 = '0' REPORT "ldm: write_back_register_write_address_1 is not the expected value" SEVERITY ERROR;
+        ASSERT pipeline_enable = '0' REPORT "ldm: pipeline_enable is not the expected value" SEVERITY ERROR;
 
+        isImmediate <= '0';
         operation <= "010101"; -- or
         WAIT FOR 100 ns;
         ASSERT fetch_pc_sel = "000" REPORT "or: fetch_pc_sel is not the expected value" SEVERITY ERROR;
@@ -199,6 +213,7 @@ BEGIN
         ASSERT write_back_register_write1 = '1' REPORT "or: write_back_register_write1 is not the expected value" SEVERITY ERROR;
         ASSERT write_back_register_write2 = '0' REPORT "or: write_back_register_write2 is not the expected value" SEVERITY ERROR;
         ASSERT write_back_register_write_address_1 = '0' REPORT "or: write_back_register_write_address_1 is not the expected value" SEVERITY ERROR;
+        ASSERT pipeline_enable = '1' REPORT "or: pipeline_enable is not the expected value" SEVERITY ERROR;
 
         operation <= "010111"; -- cmp
         WAIT FOR 100 ns;
@@ -218,6 +233,7 @@ BEGIN
         ASSERT write_back_register_write1 = '0' REPORT "cmp: write_back_register_write1 is not the expected value" SEVERITY ERROR;
         ASSERT write_back_register_write2 = '0' REPORT "cmp: write_back_register_write2 is not the expected value" SEVERITY ERROR;
         ASSERT write_back_register_write_address_1 = '0' REPORT "cmp: write_back_register_write_address_1 is not the expected value" SEVERITY ERROR;
+        ASSERT pipeline_enable = '1' REPORT "cmp: pipeline_enable is not the expected value" SEVERITY ERROR;
 
         -- Add more operations and wait states as needed
 
