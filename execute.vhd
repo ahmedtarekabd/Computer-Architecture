@@ -103,11 +103,11 @@ ARCHITECTURE arch_execute OF execute IS
     COMPONENT my_nDFF IS
         GENERIC (n : INTEGER := 16);
         PORT (
-            Clk, reset : IN STD_LOGIC;
+            Clk, reset, enable : IN STD_LOGIC;
             d : IN STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
             q : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0)
         );
-    END COMPONENT;
+    END COMPONENT
 
     SIGNAL flags_temp_in : STD_LOGIC_VECTOR(3 DOWNTO 0);
     SIGNAL flags_temp_out : STD_LOGIC_VECTOR(3 DOWNTO 0);
@@ -140,7 +140,7 @@ BEGIN
     -- DFF for the flags
     flags_dff : my_nDFF GENERIC MAP(4)
     PORT MAP(
-        clk, '0', flags_temp_in, flags_temp_out
+        clk, '0', '1', flags_temp_in, flags_temp_out
     );
 
     -- -- output signals + alu out
@@ -156,7 +156,7 @@ BEGIN
 
     execute_mem_reg : my_nDFF GENERIC MAP(128)
     PORT MAP(
-        clk, '0', d_internal, q_output
+        clk, '0', '1', d_internal, q_output
     );
 
     alu_out <= q_output(127 DOWNTO 96);
