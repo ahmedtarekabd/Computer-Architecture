@@ -33,13 +33,13 @@ ARCHITECTURE arch_processor OF processor IS
             write_enable2 : IN STD_LOGIC;
             write_address1 : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
             write_address2 : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
-            write_data1 : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
-            write_data2 : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
+            write_data1 : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+            write_data2 : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
 
             -- Propagated signals
             pc_plus_1 : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
 
-            decode_execute_out : OUT STD_LOGIC_VECTOR(91 DOWNTO 0)
+            decode_execute_out : OUT STD_LOGIC_VECTOR(140 - 1 DOWNTO 0)
         );
     END COMPONENT;
 
@@ -48,7 +48,7 @@ ARCHITECTURE arch_processor OF processor IS
             -------------------------inputs-------------------------
             clk : IN STD_LOGIC;
             -- pc + 1 propagated
-            pc_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
+            pc_in : IN STD_LOGIC_VECTOR(12 DOWNTO 0);
             -- opcode from controller
             operation : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
 
@@ -155,10 +155,10 @@ ARCHITECTURE arch_processor OF processor IS
     SIGNAL write_enable2 : STD_LOGIC;
     SIGNAL write_address1 : STD_LOGIC_VECTOR(2 DOWNTO 0);
     SIGNAL write_address2 : STD_LOGIC_VECTOR(2 DOWNTO 0);
-    SIGNAL write_data1 : STD_LOGIC_VECTOR(15 DOWNTO 0);
-    SIGNAL write_data2 : STD_LOGIC_VECTOR(15 DOWNTO 0);
+    SIGNAL write_data1 : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL write_data2 : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL pc_plus_1 : STD_LOGIC_VECTOR(11 DOWNTO 0);
-    SIGNAL decode_execute_out : STD_LOGIC_VECTOR(91 DOWNTO 0);
+    SIGNAL decode_execute_out : STD_LOGIC_VECTOR(140 - 1 DOWNTO 0);
 
 BEGIN
 
