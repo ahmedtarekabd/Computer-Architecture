@@ -5,7 +5,7 @@ vcom processor_tb.vhd
 vsim -t ns processor_tb
 
 mem load -i {./instruction_cache.mem} /processor_tb/processor1/fetch_inst/inst_cache/instruction
-#mem load -i {./aregs.mem} /processor_tb/processor1/register_file/ram0/registers_array
+mem load -i {./register_file.mem} /processor_tb/processor1/decode_inst/register_file_instance/registers_array
 
 # radix signal sim:/processor_tb/processor1/program_counter/pc_out unsigned
 # radix signal sim:/processor_tb/processor1/fetch_decode/q binary
@@ -21,7 +21,11 @@ sim:/processor_tb/processor1/decode_inst/*
 
 # Execute
  add wave -position insertpoint  \
- sim:/processor_tb/processor1/decode_inst/*
+ sim:/processor_tb/processor1/execute_inst/*
+# sim:/processor_tb/processor1/execute_inst/destination_address_out
+# sim:/processor_tb/processor1/execute_inst/data_out1
+# sim:/processor_tb/processor1/execute_inst/data_out2
+# sim:/processor_tb/processor1/execute_inst/alu_out
 
 ## fetch_decode
 #add wave -position insertpoint \

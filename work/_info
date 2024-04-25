@@ -2602,9 +2602,9 @@ Z361 VWf0W7M8ROIiKN5d6YfEdV3
 Z362 !s100 d4JDRFeGmQQaBEMg24g7@0
 R43
 32
-Z363 !s110 1714031075
+Z363 !s110 1714033947
 !i10b 1
-Z364 !s108 1714031075.000000
+Z364 !s108 1714033947.000000
 R13
 R276
 !i113 1
@@ -2684,11 +2684,11 @@ V?b32<PKcL3dFzF7=Wncd60
 !s100 n>hbB`=Z7V]ULhfmL4blo3
 R43
 32
-Z369 !s110 1714031076
+R363
 !i10b 1
 R364
-Z370 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/alu_tb.vhd|
-Z371 !s107 E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/alu_tb.vhd|
+Z369 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/alu_tb.vhd|
+Z370 !s107 E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/alu_tb.vhd|
 !i113 1
 R32
 R33
@@ -2703,16 +2703,16 @@ VX6bOihmhG6S?DFGzR3;I^1
 !s100 _B]kM6PW@aCd;<inSzIV23
 R43
 32
-R369
+R363
 !i10b 1
 R364
+R369
 R370
-R371
 !i113 1
 R32
 R33
 Econtroller
-Z372 w1714029123
+Z371 w1714029123
 R53
 R34
 R41
@@ -2725,9 +2725,9 @@ R5
 R6
 R43
 32
-R369
+R363
 !i10b 1
-Z373 !s108 1714031076.000000
+R364
 R9
 R10
 !i113 1
@@ -2744,9 +2744,9 @@ R21
 R20
 R43
 32
-R369
+R363
 !i10b 1
-R373
+R364
 R9
 R10
 !i113 1
@@ -2780,7 +2780,7 @@ R10
 R32
 R33
 Econtroller
-R372
+R371
 R53
 R34
 R41
@@ -2836,8 +2836,8 @@ R43
 R365
 !i10b 1
 R366
-Z374 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/controller_tb.vhd|
-Z375 !s107 E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/controller_tb.vhd|
+Z372 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/controller_tb.vhd|
+Z373 !s107 E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/controller_tb.vhd|
 !i113 1
 R32
 R33
@@ -2854,8 +2854,8 @@ R43
 R365
 !i10b 1
 R366
-R374
-R375
+R372
+R373
 !i113 1
 R32
 R33
@@ -2872,11 +2872,11 @@ R317
 R318
 R43
 32
-R369
+R363
 !i10b 1
+R364
+R372
 R373
-R374
-R375
 !i113 1
 R32
 R33
@@ -2890,50 +2890,50 @@ R37
 R38
 R43
 32
-R369
+R363
 !i10b 1
+R364
+R372
 R373
-R374
-R375
 !i113 1
 R32
 R33
 Edecode
-Z376 w1714030174
+Z374 w1714030174
 R34
 R41
 R98
-Z377 8E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/decode.vhd
-Z378 FE:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/decode.vhd
+Z375 8E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/decode.vhd
+Z376 FE:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/decode.vhd
 l0
 L4
-Z379 VjfT<Xf[M03GeeaX[@7Ool0
-Z380 !s100 c0>GeE=mL`gc<m2I[hYJC2
+Z377 VjfT<Xf[M03GeeaX[@7Ool0
+Z378 !s100 c0>GeE=mL`gc<m2I[hYJC2
 R43
 32
-R369
+Z379 !s110 1714033948
 !i10b 1
-R373
-Z381 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/decode.vhd|
-Z382 !s107 E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/decode.vhd|
+R364
+Z380 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/decode.vhd|
+Z381 !s107 E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/decode.vhd|
 !i113 1
 R32
 R33
 Artl
 R34
 R41
-Z383 DEx4 work 6 decode 0 22 jfT<Xf[M03GeeaX[@7Ool0
+Z382 DEx4 work 6 decode 0 22 jfT<Xf[M03GeeaX[@7Ool0
 l151
 L25
-Z384 VBfhKE;l38fnJfIEF3ck@72
-Z385 !s100 6d_RiBnRV8HXlOS4X5Gm<0
+Z383 VBfhKE;l38fnJfIEF3ck@72
+Z384 !s100 6d_RiBnRV8HXlOS4X5Gm<0
 R43
 32
-R369
+R379
 !i10b 1
-R373
+R364
+R380
 R381
-R382
 !i113 1
 R32
 R33
@@ -2943,8 +2943,8 @@ R34
 R35
 !i122 392
 R64
-Z386 8D:/CUFE/4- Senior I/spring 24/Computer Architecture/project/Computer-Architecture/decode.vhd
-Z387 FD:/CUFE/4- Senior I/spring 24/Computer Architecture/project/Computer-Architecture/decode.vhd
+Z385 8D:/CUFE/4- Senior I/spring 24/Computer Architecture/project/Computer-Architecture/decode.vhd
+Z386 FD:/CUFE/4- Senior I/spring 24/Computer Architecture/project/Computer-Architecture/decode.vhd
 l0
 L4 1
 VEdk?=X3TBSA5HC`8:UC1S3
@@ -2960,8 +2960,8 @@ R1
 R2
 !i10b 1
 R8
-R374
-R375
+R372
+R373
 !i113 1
 R32
 R33
@@ -2978,52 +2978,52 @@ R24
 R2
 !i10b 1
 R8
-R374
-R375
+R372
+R373
 !i113 1
 R32
 R33
 Edecode
-R376
+R374
 R34
 R41
 R98
-R377
-R378
+R375
+R376
 l0
 L4
-R379
-R380
+R377
+R378
 R43
 32
 R365
 !i10b 1
 R366
+R380
 R381
-R382
 !i113 1
 R32
 R33
 Artl
 R34
 R41
-R383
+R382
 l151
 L25
+R383
 R384
-R385
 R43
 32
 R365
 !i10b 1
 R366
+R380
 R381
-R382
 !i113 1
 R32
 R33
 Eexecute
-Z388 w1714030068
+Z387 w1714030068
 R34
 R41
 R98
@@ -3031,11 +3031,11 @@ R39
 R40
 l0
 L5
-Z389 VR@IFNR<:I1]7oBWE5iWlX0
-Z390 !s100 iNYgnKRo:6d10i:]9Ma4T2
+VR@IFNR<:I1]7oBWE5iWlX0
+!s100 iNYgnKRo:6d10i:]9Ma4T2
 R43
 32
-Z391 !s110 1714031050
+Z388 !s110 1714031050
 !i10b 1
 R366
 R46
@@ -3046,23 +3046,23 @@ R33
 Aarch_execute
 R34
 R41
-Z392 DEx4 work 7 execute 0 22 R@IFNR<:I1]7oBWE5iWlX0
+DEx4 work 7 execute 0 22 R@IFNR<:I1]7oBWE5iWlX0
 l140
 L80
-Z393 VIRJXbA1U_ci^bPTkRS_^c0
-Z394 !s100 h37HiNiKLm:PQW1n_@Q[<2
+VIRJXbA1U_ci^bPTkRS_^c0
+!s100 h37HiNiKLm:PQW1n_@Q[<2
 R43
 32
-R391
-!i10b 1
-R366
-R46
-R47
-!i113 1
-R32
-R33
-Eexecute
 R388
+!i10b 1
+R366
+R46
+R47
+!i113 1
+R32
+R33
+Eexecute
+Z389 w1714031691
 R34
 R41
 R98
@@ -3070,13 +3070,13 @@ R39
 R40
 l0
 L5
-R389
-R390
+VlT3[>5ee@01BMm?mAe4k?2
+!s100 N7AhVB4R]:^a;D2DjzRoe1
 R43
 32
-R369
+R379
 !i10b 1
-R373
+Z390 !s108 1714033948.000000
 R46
 R47
 !i113 1
@@ -3085,25 +3085,25 @@ R33
 Aarch_execute
 R34
 R41
-R392
-l140
-L80
-R393
-R394
+DEx4 work 7 execute 0 22 lT3[>5ee@01BMm?mAe4k?2
+l144
+L84
+VJN?Q1B;Qof67>egX8Uo883
+!s100 <4k@lOAnb@Bf=z]Ez8]@43
 R43
 32
-R369
+R379
 !i10b 1
-R373
+R390
 R46
 R47
 !i113 1
 R32
 R33
 Eexecute_tb
-Z395 w1714029368
-Z396 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
-Z397 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
+Z391 w1714029368
+Z392 DPx4 ieee 15 std_logic_arith 0 22 [G314=:2zXJ`VORJe1J@Z1
+Z393 DPx4 ieee 18 std_logic_unsigned 0 22 ;eZjO2D4ZDz<]0>8AL<ne1
 R34
 R41
 R98
@@ -3111,13 +3111,13 @@ R50
 R51
 l0
 L5
-Z398 Va?]T]6lh>TSGIAH?hUAdL3
-Z399 !s100 W?1;K1FA9oPPD6?@=5>KV2
+Z394 Va?]T]6lh>TSGIAH?hUAdL3
+Z395 !s100 W?1;K1FA9oPPD6?@=5>KV2
 R43
 32
-R369
+R379
 !i10b 1
-R373
+R390
 R56
 R57
 !i113 1
@@ -3134,9 +3134,9 @@ R47
 R0
 w1714007446
 Eexecute_tb
-R395
-R396
-R397
+R391
+R392
+R393
 R34
 R41
 R98
@@ -3144,21 +3144,21 @@ R50
 R51
 l0
 L5
-R398
-R399
+R394
+R395
 R43
 32
-R391
+R388
 !i10b 1
-Z400 !s108 1714031050.000000
+Z396 !s108 1714031050.000000
 R56
 R57
 !i113 1
 R32
 R33
 Abehavior
-R396
-R397
+R392
+R393
 R34
 R35
 DEx4 work 10 execute_tb 0 22 a?]T]6lh>TSGIAH?hUAdL3
@@ -3193,9 +3193,9 @@ R60
 R61
 R43
 32
-R391
+R388
 !i10b 1
-R400
+R396
 R62
 R63
 !i113 1
@@ -3212,9 +3212,9 @@ R70
 R71
 R43
 32
-R391
+R388
 !i10b 1
-R400
+R396
 R62
 R63
 !i113 1
@@ -3234,9 +3234,9 @@ R60
 R61
 R43
 32
-R369
+R379
 !i10b 1
-R373
+R390
 R62
 R63
 !i113 1
@@ -3253,9 +3253,9 @@ R70
 R71
 R43
 32
-R369
+R379
 !i10b 1
-R373
+R390
 R62
 R63
 !i113 1
@@ -3274,9 +3274,9 @@ R74
 R75
 R43
 32
-Z401 !s110 1714031077
+R379
 !i10b 1
-Z402 !s108 1714031077.000000
+R390
 R76
 R77
 !i113 1
@@ -3292,9 +3292,9 @@ R81
 R82
 R43
 32
-R401
+R379
 !i10b 1
-R402
+R390
 R76
 R77
 !i113 1
@@ -3313,9 +3313,9 @@ R74
 R75
 R43
 32
-R391
+R388
 !i10b 1
-R400
+R396
 R76
 R77
 !i113 1
@@ -3331,31 +3331,31 @@ R81
 R82
 R43
 32
-R391
+R388
 !i10b 1
-R400
+R396
 R76
 R77
 !i113 1
 R32
 R33
 Einstruction_cache
-Z403 w1713353790
+Z397 w1713353790
 R53
 R34
 R41
 R98
-Z404 8E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/instruction_cache.vhd
-Z405 FE:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/instruction_cache.vhd
+Z398 8E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/instruction_cache.vhd
+Z399 FE:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/instruction_cache.vhd
 l0
 L5
 R288
 R289
 R43
 32
-R391
+R388
 !i10b 1
-R400
+R396
 R103
 R104
 !i113 1
@@ -3372,34 +3372,34 @@ R322
 R323
 R43
 32
-R391
+R388
 !i10b 1
-R400
+R396
 R103
 R104
 !i113 1
 R32
 R33
 Einstruction_cache
-Z406 w1713193980
+Z400 w1713193980
 R54
 R34
 R35
 !i122 484
 R243
-Z407 8E:/College/year4-2/comp arch/project/Computer-Architecture/instruction_cache.vhd
-Z408 FE:/College/year4-2/comp arch/project/Computer-Architecture/instruction_cache.vhd
+Z401 8E:/College/year4-2/comp arch/project/Computer-Architecture/instruction_cache.vhd
+Z402 FE:/College/year4-2/comp arch/project/Computer-Architecture/instruction_cache.vhd
 l0
 L5 1
 R288
 R289
 R24
 32
-Z409 !s110 1714028632
+Z403 !s110 1714028632
 !i10b 1
-Z410 !s108 1714028632.000000
-Z411 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/year4-2/comp arch/project/Computer-Architecture/instruction_cache.vhd|
-Z412 !s107 E:/College/year4-2/comp arch/project/Computer-Architecture/instruction_cache.vhd|
+Z404 !s108 1714028632.000000
+Z405 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/year4-2/comp arch/project/Computer-Architecture/instruction_cache.vhd|
+Z406 !s107 E:/College/year4-2/comp arch/project/Computer-Architecture/instruction_cache.vhd|
 !i113 1
 R32
 R33
@@ -3415,31 +3415,31 @@ R322
 R323
 R24
 32
-R409
+R403
 !i10b 1
-R410
-R411
-R412
+R404
+R405
+R406
 !i113 1
 R32
 R33
 Einstruction_cache
-R403
+R397
 R53
 R34
 R41
 R98
-R404
-R405
+R398
+R399
 l0
 L5
 R288
 R289
 R43
 32
-R401
+R379
 !i10b 1
-R402
+R390
 R103
 R104
 !i113 1
@@ -3456,9 +3456,9 @@ R322
 R323
 R43
 32
-R401
+R379
 !i10b 1
-R402
+R390
 R103
 R104
 !i113 1
@@ -3478,9 +3478,9 @@ R91
 R92
 R43
 32
-R401
+R379
 !i10b 1
-R402
+R390
 R93
 R94
 !i113 1
@@ -3497,9 +3497,9 @@ R96
 R97
 R43
 32
-R401
+R379
 !i10b 1
-R402
+R390
 R93
 R94
 !i113 1
@@ -3519,9 +3519,9 @@ R91
 R92
 R43
 32
-R391
+R388
 !i10b 1
-R400
+R396
 R93
 R94
 !i113 1
@@ -3538,16 +3538,16 @@ R96
 R97
 R43
 32
-R391
+R388
 !i10b 1
-R400
+R396
 R93
 R94
 !i113 1
 R32
 R33
 Ememory_stage
-Z413 w1714022665
+Z407 w1714022665
 R34
 R41
 R98
@@ -3559,16 +3559,16 @@ R279
 R280
 R43
 32
-Z414 !s110 1714031051
+Z408 !s110 1714031051
 !i10b 1
-R400
+R396
 R114
 R115
 !i113 1
 R32
 R33
 Ememory_stage
-R413
+R407
 R34
 R41
 R98
@@ -3580,9 +3580,9 @@ R279
 R280
 R43
 32
-R401
+R379
 !i10b 1
-R402
+R390
 R114
 R115
 !i113 1
@@ -3602,9 +3602,9 @@ R121
 R122
 R43
 32
-R401
+Z409 !s110 1714033949
 !i10b 1
-R402
+R390
 R123
 R124
 !i113 1
@@ -3621,9 +3621,9 @@ R126
 R127
 R43
 32
-R401
+R409
 !i10b 1
-R402
+R390
 R123
 R124
 !i113 1
@@ -3643,9 +3643,9 @@ R121
 R122
 R43
 32
-R414
+R408
 !i10b 1
-Z415 !s108 1714031051.000000
+Z410 !s108 1714031051.000000
 R123
 R124
 !i113 1
@@ -3662,9 +3662,9 @@ R126
 R127
 R43
 32
-R414
+R408
 !i10b 1
-R415
+R410
 R123
 R124
 !i113 1
@@ -3684,9 +3684,9 @@ R324
 R325
 R43
 32
-R414
+R408
 !i10b 1
-R415
+R410
 R138
 R139
 !i113 1
@@ -3703,9 +3703,9 @@ R327
 R328
 R43
 32
-R414
+R408
 !i10b 1
-R415
+R410
 R138
 R139
 !i113 1
@@ -3725,9 +3725,9 @@ R324
 R325
 R43
 32
-R401
+R409
 !i10b 1
-R402
+Z411 !s108 1714033949.000000
 R138
 R139
 !i113 1
@@ -3744,9 +3744,9 @@ R327
 R328
 R43
 32
-R401
+R409
 !i10b 1
-R402
+R411
 R138
 R139
 !i113 1
@@ -3765,9 +3765,9 @@ R329
 R330
 R43
 32
-Z416 !s110 1714031078
+R409
 !i10b 1
-Z417 !s108 1714031078.000000
+R411
 R146
 R147
 !i113 1
@@ -3783,9 +3783,9 @@ R332
 R333
 R43
 32
-R416
+R409
 !i10b 1
-R417
+R411
 R146
 R147
 !i113 1
@@ -3804,9 +3804,9 @@ R329
 R330
 R43
 32
-R414
+R408
 !i10b 1
-R415
+R410
 R146
 R147
 !i113 1
@@ -3822,9 +3822,9 @@ R332
 R333
 R43
 32
-R414
+R408
 !i10b 1
-R415
+R410
 R146
 R147
 !i113 1
@@ -3843,9 +3843,9 @@ R334
 R335
 R43
 32
-R414
+R408
 !i10b 1
-R415
+R410
 R154
 R155
 !i113 1
@@ -3861,9 +3861,9 @@ R337
 R338
 R43
 32
-R414
+R408
 !i10b 1
-R415
+R410
 R154
 R155
 !i113 1
@@ -3882,9 +3882,9 @@ R334
 R335
 R43
 32
-R416
+R409
 !i10b 1
-R417
+R411
 R154
 R155
 !i113 1
@@ -3900,9 +3900,9 @@ R337
 R338
 R43
 32
-R416
+R409
 !i10b 1
-R417
+R411
 R154
 R155
 !i113 1
@@ -3921,9 +3921,9 @@ R339
 R340
 R43
 32
-R416
+R409
 !i10b 1
-R417
+R411
 R162
 R163
 !i113 1
@@ -3939,9 +3939,9 @@ R342
 R343
 R43
 32
-R416
+R409
 !i10b 1
-R417
+R411
 R162
 R163
 !i113 1
@@ -3960,9 +3960,9 @@ R339
 R340
 R43
 32
-R414
+R408
 !i10b 1
-R415
+R410
 R162
 R163
 !i113 1
@@ -3978,16 +3978,16 @@ R342
 R343
 R43
 32
-R414
+R408
 !i10b 1
-R415
+R410
 R162
 R163
 !i113 1
 R32
 R33
 Epc
-R403
+R397
 R53
 R34
 R41
@@ -4000,9 +4000,9 @@ R166
 R167
 R43
 32
-R416
+R409
 !i10b 1
-R417
+R411
 R178
 R179
 !i113 1
@@ -4019,16 +4019,16 @@ R173
 R174
 R43
 32
-R416
+R409
 !i10b 1
-R417
+R411
 R178
 R179
 !i113 1
 R32
 R33
 Epc
-R403
+R397
 R53
 R34
 R41
@@ -4041,9 +4041,9 @@ R166
 R167
 R43
 32
-R414
+R408
 !i10b 1
-R415
+R410
 R178
 R179
 !i113 1
@@ -4060,16 +4060,16 @@ R173
 R174
 R43
 32
-R414
+R408
 !i10b 1
-R415
+R410
 R178
 R179
 !i113 1
 R32
 R33
 Eprocessor
-Z418 w1714031034
+Z412 w1714031034
 R53
 R34
 R41
@@ -4078,13 +4078,13 @@ R180
 R181
 l0
 L5
-Z419 Vf^I_6TKRVKMEzkoZ8V7n<2
-Z420 !s100 2^iRLU`^bGZ76_f33LkhR0
+Z413 Vf^I_6TKRVKMEzkoZ8V7n<2
+Z414 !s100 2^iRLU`^bGZ76_f33LkhR0
 R43
 32
-R414
+R408
 !i10b 1
-R415
+R410
 R183
 R184
 !i113 1
@@ -4106,7 +4106,7 @@ R1
 R105
 R0
 Eprocessor
-Z421 w1714031068
+Z415 w1714033937
 R53
 R34
 R41
@@ -4115,13 +4115,13 @@ R180
 R181
 l0
 L5
-R419
-R420
+R413
+R414
 R43
 32
-R416
+R409
 !i10b 1
-R417
+R411
 R183
 R184
 !i113 1
@@ -4134,35 +4134,35 @@ R41
 R281
 l165
 L14
-VZ8Ym1WAo;me59g4nY7SSi0
-!s100 h<lhbV0bOYPJgEEhV@DFz0
+VV41<J62SP`VBc^WO2kBVB1
+!s100 En>7;OKHXF:?GmDLZ0YE73
 R43
 32
-R416
+R409
 !i10b 1
-R417
+R411
 R183
 R184
 !i113 1
 R32
 R33
 Eprocessor2
-Z422 w1714023330
+Z416 w1714023330
 R53
 R34
 R41
 R98
-Z423 8E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/processor2.vhd
+Z417 8E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/processor2.vhd
 R187
 l0
 L5
-Z424 VSWhE:_VY?mZoQJT>6MiRn3
-Z425 !s100 [NmX;?bKzg;`PO69n4U]M3
+Z418 VSWhE:_VY?mZoQJT>6MiRn3
+Z419 !s100 [NmX;?bKzg;`PO69n4U]M3
 R43
 32
-Z426 !s110 1714031079
+Z420 !s110 1714033950
 !i10b 1
-Z427 !s108 1714031079.000000
+Z421 !s108 1714033950.000000
 R188
 R189
 !i113 1
@@ -4172,38 +4172,38 @@ Aarch_processor2
 R53
 R34
 R41
-Z428 DEx4 work 10 processor2 0 22 SWhE:_VY?mZoQJT>6MiRn3
+Z422 DEx4 work 10 processor2 0 22 SWhE:_VY?mZoQJT>6MiRn3
 l97
 L12
-Z429 VOlV>O1AbDdRknJS3WaCVk0
-Z430 !s100 :^;?G]bZYbha70Sg5YmV@0
+Z423 VOlV>O1AbDdRknJS3WaCVk0
+Z424 !s100 :^;?G]bZYbha70Sg5YmV@0
 R43
 32
-R426
+R420
 !i10b 1
-R427
+R421
 R188
 R189
 !i113 1
 R32
 R33
 Eprocessor2
-R422
+R416
 R53
 R34
 R41
 R98
-R423
+R417
 R187
 l0
 L5
-R424
-R425
+R418
+R419
 R43
 32
-Z431 !s110 1714031052
+Z425 !s110 1714031052
 !i10b 1
-Z432 !s108 1714031052.000000
+Z426 !s108 1714031052.000000
 R188
 R189
 !i113 1
@@ -4213,56 +4213,56 @@ Aarch_processor2
 R53
 R34
 R41
-R428
+R422
 l97
 L12
-R429
-R430
+R423
+R424
 R43
 32
-R431
+R425
 !i10b 1
-R432
+R426
 R188
 R189
 !i113 1
 R32
 R33
 Eprocessor_tb
-Z433 w1714027578
+Z427 w1714027578
 R34
 R41
 R98
-Z434 8processor_tb.vhd
-Z435 Fprocessor_tb.vhd
+Z428 8processor_tb.vhd
+Z429 Fprocessor_tb.vhd
 l0
 L6
-V2cHLXk9fQBiX9OmQ^Nd^=3
-Z436 !s100 A@j8z32GR3[1[bR]=7XGA2
+Z430 V2cHLXk9fQBiX9OmQ^Nd^=3
+Z431 !s100 A@j8z32GR3[1[bR]=7XGA2
 R43
 32
-Z437 !s110 1714031120
+Z432 !s110 1714033955
 !i10b 1
-Z438 !s108 1714031120.000000
+Z433 !s108 1714033955.000000
 R195
-Z439 !s107 processor_tb.vhd|
+Z434 !s107 processor_tb.vhd|
 !i113 1
 R33
 Atb_arch
 R34
 R41
-DEx4 work 12 processor_tb 0 22 2cHLXk9fQBiX9OmQ^Nd^=3
+Z435 DEx4 work 12 processor_tb 0 22 2cHLXk9fQBiX9OmQ^Nd^=3
 l23
 L9
-V[8aCXAcVc5c;44:X?M=5>2
-Z440 !s100 ]3i?0aQf6fm^PoM=HA1zE1
+Z436 V[8aCXAcVc5c;44:X?M=5>2
+Z437 !s100 ]3i?0aQf6fm^PoM=HA1zE1
 R43
 32
-R437
+R432
 !i10b 1
-R438
+R433
 R195
-R439
+R434
 !i113 1
 R33
 Eprocessor_tb
@@ -4275,8 +4275,8 @@ R64
 FD:/CUFE/4- Senior I/spring 24/Computer Architecture/project/Computer-Architecture/processor_tb2.vhd
 l0
 L6 1
-Z441 VT^eZim?NLgJ8BFSa@XG[B3
-R436
+VT^eZim?NLgJ8BFSa@XG[B3
+R431
 R24
 32
 R186
@@ -4286,609 +4286,607 @@ R186
 !s107 D:/CUFE/4- Senior I/spring 24/Computer Architecture/project/Computer-Architecture/processor_tb2.vhd|
 R1
 Eprocessor_tb
-R433
+R427
 R34
 R41
 R98
-Z442 8E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/processor_tb.vhd
-Z443 FE:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/processor_tb.vhd
+R428
+R429
 l0
 L6
-R441
+R430
+R431
+R43
+32
+Z438 !s110 1714033791
+!i10b 1
+Z439 !s108 1714033791.000000
+R195
+R434
+!i113 1
+R33
+Atb_arch
+R34
+R41
+R435
+l23
+L9
 R436
+R437
 R43
 32
-R431
+R438
 !i10b 1
-R432
-Z444 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/processor_tb.vhd|
-Z445 !s107 E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/processor_tb.vhd|
+R439
+R195
+R434
+!i113 1
+R33
+Eprocessor_tb2
+Z440 w1714021899
+R34
+R41
+R98
+Z441 8E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/processor_tb2.vhd
+Z442 FE:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/processor_tb2.vhd
+l0
+L6
+Z443 VgnmiKGSLW`gUL9Ndm3O?P3
+Z444 !s100 CNmU>lY5kl=JEgbM0V1:m1
+R43
+32
+R425
+!i10b 1
+R426
+R190
+R191
 !i113 1
 R32
 R33
 Atb_arch
 R34
 R41
-R185
+R282
 l23
 L9
-Z446 V?Mb`A?=49<iH3C3`<7<K:2
+R283
+R284
+R43
+32
+R425
+!i10b 1
+R426
+R190
+R191
+!i113 1
+R32
+R33
+Eprocessor_tb2
 R440
-R43
-32
-R431
-!i10b 1
-R432
+R34
+R41
+R98
+R441
+R442
+l0
+L6
+R443
 R444
+R43
+32
+R420
+!i10b 1
+R421
+R190
+R191
+!i113 1
+R32
+R33
+Atb_arch
+R34
+R41
+R282
+l23
+L9
+R283
+R284
+R43
+32
+R420
+!i10b 1
+R421
+R190
+R191
+!i113 1
+R32
+R33
+Eram
+R397
+R53
+R34
+R41
+R98
+R192
+R193
+l0
+L5
+R344
+R345
+R43
+32
+R425
+!i10b 1
+R426
+R198
+R199
+!i113 1
+R32
+R33
+Asyncrama
+R53
+R34
+R41
+R346
+l26
+L21
+R347
+R348
+R43
+32
+R425
+!i10b 1
+R426
+R198
+R199
+!i113 1
+R32
+R33
+Eram
+R397
+R53
+R34
+R41
+R98
+R192
+R193
+l0
+L5
+R344
+R345
+R43
+32
+R420
+!i10b 1
+R421
+R198
+R199
+!i113 1
+R32
+R33
+Asyncrama
+R53
+R34
+R41
+R346
+l26
+L21
+R347
+R348
+R43
+32
+R420
+!i10b 1
+R421
+R198
+R199
+!i113 1
+R32
+R33
+Eregister_file
+R200
+R53
+R34
+R41
+R98
+R204
+R205
+l0
+L5
+R285
+R286
+R43
+32
+R420
+!i10b 1
+R421
+R206
+R207
+!i113 1
+R32
+R33
+Aregister_file_arch
+R53
+R34
+R41
+R287
+l30
+L25
+R208
+R209
+R43
+32
+R420
+!i10b 1
+R421
+R206
+R207
+!i113 1
+R32
+R33
+Eregister_file
+R200
+R53
+R34
+R41
+R98
+R204
+R205
+l0
+L5
+R285
+R286
+R43
+32
+R425
+!i10b 1
+R426
+R206
+R207
+!i113 1
+R32
+R33
+Aregister_file_arch
+R53
+R34
+R41
+R287
+l30
+L25
+R208
+R209
+R43
+32
+R425
+!i10b 1
+R426
+R206
+R207
+!i113 1
+R32
+R33
+Eregister_file_tb
+Z445 w1714024635
+R53
+R34
+R41
+R98
+R210
+R211
+l0
+L5
+R349
+R350
+R43
+32
+R425
+!i10b 1
+R426
+R217
+R218
+!i113 1
+R32
+R33
+Abehavior
+R53
+R34
+R41
+R351
+l48
+L8
+Z446 VCTVS[G?X[c;?N9f9d09D32
+Z447 !s100 Xk2W3LUfNA[OIKD:`G@PC3
+R43
+32
+R425
+!i10b 1
+R426
+R217
+R218
+!i113 1
+R32
+R33
+Eregister_file_tb
 R445
-!i113 1
-R32
-R33
-Eprocessor_tb2
-Z447 w1714021899
+R53
 R34
 R41
 R98
-Z448 8E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/processor_tb2.vhd
-Z449 FE:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/processor_tb2.vhd
+R210
+R211
 l0
-L6
-Z450 VgnmiKGSLW`gUL9Ndm3O?P3
-Z451 !s100 CNmU>lY5kl=JEgbM0V1:m1
+L5
+R349
+R350
 R43
 32
-R431
+R420
 !i10b 1
-R432
-R190
-R191
+R421
+R217
+R218
 !i113 1
 R32
 R33
-Atb_arch
+Abehavior
+R53
 R34
 R41
-R282
-l23
-L9
-R283
-R284
-R43
-32
-R431
-!i10b 1
-R432
-R190
-R191
-!i113 1
-R32
-R33
-Eprocessor_tb2
+R351
+l48
+L8
+R446
 R447
+R43
+32
+R420
+!i10b 1
+R421
+R217
+R218
+!i113 1
+R32
+R33
+Eregisters_array
+R397
+R53
 R34
 R41
 R98
+R219
+R220
+l0
+L5
+R352
+R353
+R43
+32
+R420
+!i10b 1
+R421
+R225
+R226
+!i113 1
+R32
+R33
+Aarch_registers_array
+R53
+R34
+R41
+R290
+l34
+L17
+R291
+R292
+R43
+32
+R420
+!i10b 1
+R421
+R225
+R226
+!i113 1
+R32
+R33
+Eregisters_array
+R397
+R53
+R34
+R41
+R98
+R219
+R220
+l0
+L5
+R352
+R353
+R43
+32
+R425
+!i10b 1
+R426
+R225
+R226
+!i113 1
+R32
+R33
+Aarch_registers_array
+R53
+R34
+R41
+R290
+l34
+L17
+R291
+R292
+R43
+32
+R425
+!i10b 1
+R426
+R225
+R226
+!i113 1
+R32
+R33
+Esign_extend
+R227
+R53
+R34
+R41
+R98
+R228
+R229
+l0
+L5
+R293
+R294
+R43
+32
+R425
+!i10b 1
+R426
+R233
+R234
+!i113 1
+R32
+R33
+Abehavioral
+R53
+R34
+R41
+R295
+l18
+L17
+R296
+R297
+R43
+32
+R425
+!i10b 1
+R426
+R233
+R234
+!i113 1
+R32
+R33
+Esign_extend
+R227
+R53
+R34
+R41
+R98
+R228
+R229
+l0
+L5
+R293
+R294
+R43
+32
+R420
+!i10b 1
+R421
+R233
+R234
+!i113 1
+R32
+R33
+Abehavioral
+R53
+R34
+R41
+R295
+l18
+L17
+R296
+R297
+R43
+32
+R420
+!i10b 1
+R421
+R233
+R234
+!i113 1
+R32
+R33
+Esign_extend_tb
+R235
+R53
+R34
+R41
+R98
+R236
+R237
+l0
+L6
+R298
+R299
+R43
+32
+Z448 !s110 1714033951
+!i10b 1
+Z449 !s108 1714033951.000000
+R241
+R242
+!i113 1
+R32
+R33
+Abehavior
+R53
+R34
+R41
+R300
+l32
+L9
+R301
+R302
+R43
+32
 R448
+!i10b 1
 R449
+R241
+R242
+!i113 1
+R32
+R33
+Esign_extend_tb
+R235
+R53
+R34
+R41
+R98
+R236
+R237
 l0
 L6
+R298
+R299
+R43
+32
+Z450 !s110 1714031053
+!i10b 1
+R426
+R241
+R242
+!i113 1
+R32
+R33
+Abehavior
+R53
+R34
+R41
+R300
+l32
+L9
+R301
+R302
+R43
+32
 R450
-R451
-R43
-32
+!i10b 1
 R426
-!i10b 1
-R427
-R190
-R191
-!i113 1
-R32
-R33
-Atb_arch
-R34
-R41
-R282
-l23
-L9
-R283
-R284
-R43
-32
-R426
-!i10b 1
-R427
-R190
-R191
-!i113 1
-R32
-R33
-Eram
-R403
-R53
-R34
-R41
-R98
-R192
-R193
-l0
-L5
-R344
-R345
-R43
-32
-R431
-!i10b 1
-R432
-R198
-R199
-!i113 1
-R32
-R33
-Asyncrama
-R53
-R34
-R41
-R346
-l26
-L21
-R347
-R348
-R43
-32
-R431
-!i10b 1
-R432
-R198
-R199
-!i113 1
-R32
-R33
-Eram
-R403
-R53
-R34
-R41
-R98
-R192
-R193
-l0
-L5
-R344
-R345
-R43
-32
-R426
-!i10b 1
-R427
-R198
-R199
-!i113 1
-R32
-R33
-Asyncrama
-R53
-R34
-R41
-R346
-l26
-L21
-R347
-R348
-R43
-32
-R426
-!i10b 1
-R427
-R198
-R199
-!i113 1
-R32
-R33
-Eregister_file
-R200
-R53
-R34
-R41
-R98
-R204
-R205
-l0
-L5
-R285
-R286
-R43
-32
-Z452 !s110 1714031080
-!i10b 1
-R427
-R206
-R207
-!i113 1
-R32
-R33
-Aregister_file_arch
-R53
-R34
-R41
-R287
-l30
-L25
-R208
-R209
-R43
-32
-R452
-!i10b 1
-R427
-R206
-R207
-!i113 1
-R32
-R33
-Eregister_file
-R200
-R53
-R34
-R41
-R98
-R204
-R205
-l0
-L5
-R285
-R286
-R43
-32
-R431
-!i10b 1
-R432
-R206
-R207
-!i113 1
-R32
-R33
-Aregister_file_arch
-R53
-R34
-R41
-R287
-l30
-L25
-R208
-R209
-R43
-32
-R431
-!i10b 1
-R432
-R206
-R207
-!i113 1
-R32
-R33
-Eregister_file_tb
-Z453 w1714024635
-R53
-R34
-R41
-R98
-R210
-R211
-l0
-L5
-R349
-R350
-R43
-32
-R431
-!i10b 1
-R432
-R217
-R218
-!i113 1
-R32
-R33
-Abehavior
-R53
-R34
-R41
-R351
-l48
-L8
-Z454 VCTVS[G?X[c;?N9f9d09D32
-Z455 !s100 Xk2W3LUfNA[OIKD:`G@PC3
-R43
-32
-R431
-!i10b 1
-R432
-R217
-R218
-!i113 1
-R32
-R33
-Eregister_file_tb
-R453
-R53
-R34
-R41
-R98
-R210
-R211
-l0
-L5
-R349
-R350
-R43
-32
-R452
-!i10b 1
-Z456 !s108 1714031080.000000
-R217
-R218
-!i113 1
-R32
-R33
-Abehavior
-R53
-R34
-R41
-R351
-l48
-L8
-R454
-R455
-R43
-32
-R452
-!i10b 1
-R456
-R217
-R218
-!i113 1
-R32
-R33
-Eregisters_array
-R403
-R53
-R34
-R41
-R98
-R219
-R220
-l0
-L5
-R352
-R353
-R43
-32
-R452
-!i10b 1
-R456
-R225
-R226
-!i113 1
-R32
-R33
-Aarch_registers_array
-R53
-R34
-R41
-R290
-l34
-L17
-R291
-R292
-R43
-32
-R452
-!i10b 1
-R456
-R225
-R226
-!i113 1
-R32
-R33
-Eregisters_array
-R403
-R53
-R34
-R41
-R98
-R219
-R220
-l0
-L5
-R352
-R353
-R43
-32
-R431
-!i10b 1
-R432
-R225
-R226
-!i113 1
-R32
-R33
-Aarch_registers_array
-R53
-R34
-R41
-R290
-l34
-L17
-R291
-R292
-R43
-32
-R431
-!i10b 1
-R432
-R225
-R226
-!i113 1
-R32
-R33
-Esign_extend
-R227
-R53
-R34
-R41
-R98
-R228
-R229
-l0
-L5
-R293
-R294
-R43
-32
-R431
-!i10b 1
-R432
-R233
-R234
-!i113 1
-R32
-R33
-Abehavioral
-R53
-R34
-R41
-R295
-l18
-L17
-R296
-R297
-R43
-32
-R431
-!i10b 1
-R432
-R233
-R234
-!i113 1
-R32
-R33
-Esign_extend
-R227
-R53
-R34
-R41
-R98
-R228
-R229
-l0
-L5
-R293
-R294
-R43
-32
-R452
-!i10b 1
-R456
-R233
-R234
-!i113 1
-R32
-R33
-Abehavioral
-R53
-R34
-R41
-R295
-l18
-L17
-R296
-R297
-R43
-32
-R452
-!i10b 1
-R456
-R233
-R234
-!i113 1
-R32
-R33
-Esign_extend_tb
-R235
-R53
-R34
-R41
-R98
-R236
-R237
-l0
-L6
-R298
-R299
-R43
-32
-R452
-!i10b 1
-R456
-R241
-R242
-!i113 1
-R32
-R33
-Abehavior
-R53
-R34
-R41
-R300
-l32
-L9
-R301
-R302
-R43
-32
-R452
-!i10b 1
-R456
-R241
-R242
-!i113 1
-R32
-R33
-Esign_extend_tb
-R235
-R53
-R34
-R41
-R98
-R236
-R237
-l0
-L6
-R298
-R299
-R43
-32
-Z457 !s110 1714031053
-!i10b 1
-R432
-R241
-R242
-!i113 1
-R32
-R33
-Abehavior
-R53
-R34
-R41
-R300
-l32
-L9
-R301
-R302
-R43
-32
-R457
-!i10b 1
-R432
 R241
 R242
 !i113 1
@@ -4934,9 +4932,9 @@ R303
 R304
 R43
 32
-R414
+R408
 !i10b 1
-R415
+R410
 R260
 R261
 !i113 1
@@ -4952,9 +4950,9 @@ R354
 R355
 R43
 32
-R414
+R408
 !i10b 1
-R415
+R410
 R260
 R261
 !i113 1
@@ -4973,9 +4971,9 @@ R303
 R304
 R43
 32
-R416
+R409
 !i10b 1
-R417
+R411
 R260
 R261
 !i113 1
@@ -4991,9 +4989,9 @@ R354
 R355
 R43
 32
-R416
+R409
 !i10b 1
-R417
+R411
 R260
 R261
 !i113 1
@@ -5012,9 +5010,9 @@ R306
 R307
 R43
 32
-R457
+R450
 !i10b 1
-Z458 !s108 1714031053.000000
+Z451 !s108 1714031053.000000
 R267
 R268
 !i113 1
@@ -5030,9 +5028,9 @@ R309
 R310
 R43
 32
-R457
+R450
 !i10b 1
-R458
+R451
 R267
 R268
 !i113 1
@@ -5051,9 +5049,9 @@ R306
 R307
 R43
 32
-R452
+R448
 !i10b 1
-R456
+R449
 R267
 R268
 !i113 1
@@ -5069,9 +5067,9 @@ R309
 R310
 R43
 32
-R452
+R448
 !i10b 1
-R456
+R449
 R267
 R268
 !i113 1
