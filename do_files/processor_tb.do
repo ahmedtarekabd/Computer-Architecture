@@ -4,8 +4,8 @@ quit -sim
 vcom processor_tb.vhd
 vsim -t ns processor_tb
 
-mem load -i {./lab.mem} /processor_tb/processor1/inst_cache/instruction
-mem load -i {./aregs.mem} /processor_tb/processor1/register_file/ram0/registers_array
+mem load -i {./instruction_cache.mem} /processor_tb/processor1/fetch_inst/inst_cache/instruction
+#mem load -i {./aregs.mem} /processor_tb/processor1/register_file/ram0/registers_array
 
 # radix signal sim:/processor_tb/processor1/program_counter/pc_out unsigned
 # radix signal sim:/processor_tb/processor1/fetch_decode/q binary
@@ -14,10 +14,10 @@ mem load -i {./aregs.mem} /processor_tb/processor1/register_file/ram0/registers_
 add wave -position insertpoint  \
 sim:/processor_tb/*
 
-## PC
-#add wave -position insertpoint  \
-#sim:/processor_tb/processor1/program_counter/pc_out
-#sim:/processor_tb/processor1/program_counter/counter
+# Fetch & Decode
+add wave -position insertpoint  \
+sim:/processor_tb/processor1/* \
+sim:/processor_tb/processor1/decode_inst/*
 
 # Instruction Cache
 # add wave -position insertpoint  \

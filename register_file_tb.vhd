@@ -32,15 +32,15 @@ ARCHITECTURE behavior OF register_file_tb IS
     SIGNAL write_enable2 : STD_LOGIC := '0';
     SIGNAL write_address1 : STD_LOGIC_VECTOR(2 DOWNTO 0) := (OTHERS => '0');
     SIGNAL write_address2 : STD_LOGIC_VECTOR(2 DOWNTO 0) := (OTHERS => '0');
-    SIGNAL write_data1 : STD_LOGIC_VECTOR(7 DOWNTO 0) := (OTHERS => '0');
-    SIGNAL write_data2 : STD_LOGIC_VECTOR(7 DOWNTO 0) := (OTHERS => '0');
+    SIGNAL write_data1 : STD_LOGIC_VECTOR(31 DOWNTO 0) := (OTHERS => '0');
+    SIGNAL write_data2 : STD_LOGIC_VECTOR(31 DOWNTO 0) := (OTHERS => '0');
     SIGNAL read_enable : STD_LOGIC := '0';
     SIGNAL read_address1 : STD_LOGIC_VECTOR(2 DOWNTO 0) := (OTHERS => '0');
     SIGNAL read_address2 : STD_LOGIC_VECTOR(2 DOWNTO 0) := (OTHERS => '0');
 
     --Outputs
-    SIGNAL read_data1 : STD_LOGIC_VECTOR(7 DOWNTO 0);
-    SIGNAL read_data2 : STD_LOGIC_VECTOR(7 DOWNTO 0);
+    SIGNAL read_data1 : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL read_data2 : STD_LOGIC_VECTOR(31 DOWNTO 0);
 
     -- Clock period definitions
     CONSTANT clk_period : TIME := 10 ns;
@@ -80,13 +80,13 @@ BEGIN
 
         write_enable1 <= '1';
         write_address1 <= "001";
-        write_data1 <= "00000001";
+        write_data1 <= x"00000001";
         WAIT FOR clk_period;
 
         write_enable1 <= '0';
         write_enable2 <= '1';
         write_address2 <= "010";
-        write_data2 <= "00000010";
+        write_data2 <= x"00000002";
         WAIT FOR clk_period;
 
         write_enable1 <= '0';
@@ -99,12 +99,12 @@ BEGIN
         read_enable <= '0';
         write_enable1 <= '1';
         write_address1 <= "011";
-        write_data1 <= "00000011";
+        write_data1 <= x"00000003";
         write_enable2 <= '1';
         write_address2 <= "100";
-        write_data2 <= "00000100";
+        write_data2 <= x"00000004";
         WAIT FOR clk_period;
-        ASSERT (read_data1 = "00000001") AND (read_data2 = "00000010") REPORT "Read test 1 failed" SEVERITY error;
+        ASSERT (read_data1 = x"00000001") AND (read_data2 = x"00000001") REPORT "Read test 1 failed" SEVERITY error;
 
         write_enable1 <= '0';
         write_enable2 <= '0';
@@ -112,7 +112,7 @@ BEGIN
         read_address1 <= "011";
         read_address2 <= "100";
         WAIT FOR clk_period;
-        ASSERT (read_data1 = "00000011") AND (read_data2 = "00000100") REPORT "Read test 2 failed" SEVERITY error;
+        ASSERT (read_data1 = x"00000003") AND (read_data2 = x"00000004") REPORT "Read test 2 failed" SEVERITY error;
 
         -- Insert more test cases here
         -- Wait forever, so the simulation does not end.
