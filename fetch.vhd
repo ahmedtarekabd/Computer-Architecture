@@ -1,133 +1,121 @@
-library ieee;
-use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
+LIBRARY ieee;
+USE ieee.std_logic_1164.ALL;
+USE ieee.numeric_std.ALL;
 
-entity fetch is
-    port (
-        clk : in std_logic; 
-        reset : in std_logic;
-        selected_instruction_out : out std_logic_vector(15 downto 0);
-        selected_immediate_out : out std_logic_vector(15 downto 0)
+ENTITY fetch IS
+    PORT (
+        clk : IN STD_LOGIC;
+        reset : IN STD_LOGIC;
+        selected_instruction_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
+        selected_immediate_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
     );
-end entity fetch;
+END ENTITY fetch;
 
-architecture arch_fetch of fetch is
+ARCHITECTURE arch_fetch OF fetch IS
 
     -- PC
-    component pc is
-        port (
-            reset : in std_logic;
-            clk : in std_logic;
-            pc_out : out std_logic_vector(9 downto 0)
+    COMPONENT pc IS
+        PORT (
+            reset : IN STD_LOGIC;
+            clk : IN STD_LOGIC;
+            pc_out : OUT STD_LOGIC_VECTOR(9 DOWNTO 0)
         );
-    end component;
+    END COMPONENT;
 
     -- Instruction Cache
-    component instruction_cache is
-        port (
-            address_in : in std_logic_vector(9 downto 0);
-            data_out : out std_logic_vector(15 downto 0)
+    COMPONENT instruction_cache IS
+        PORT (
+            address_in : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
+            data_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
         );
-    end component;
-
-    -- Declare the mux4x1 component
-    component mux4x1 is
-        generic (n: integer := 8);
-        port (
-            inputA : in std_logic_vector(n downto 0);
-            inputB : in std_logic_vector(n downto 0);
-            inputC : in std_logic_vector(n downto 0);
-            inputD : in std_logic_vector(n downto 0);
-            Sel_lower : in std_logic; 
-            Sel_higher : in std_logic; 
-            output : out std_logic_vector(n downto 0)
-        );
-    end component mux4x1;
-
+    END COMPONENT;
     -- Declare the my_nDFF component
-    component my_nDFF is
-        generic (n : integer := 16);
-        port (
-            Clk : in std_logic;
-            reset : in std_logic;
-            d : in std_logic_vector(n-1 downto 0);
-            q : out std_logic_vector(n-1 downto 0)
+    COMPONENT my_nDFF IS
+        GENERIC (n : INTEGER := 16);
+        PORT (
+            Clk : IN STD_LOGIC;
+            reset : IN STD_LOGIC;
+            enable : IN STD_LOGIC;
+            d : IN STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
+            q : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0)
         );
-    end component my_nDFF;
-    
-
-    signal instruction_address : std_logic_vector(9 downto 0);
-    signal instruction_out_from_instr_cache : std_logic_vector(15 downto 0);
+    END COMPONENT my_nDFF;
+    signal instruction_address : std_logic_vector(9 downto 0) := (others => '0');
+    SIGNAL instruction_out_from_instr_cache : STD_LOGIC_VECTOR(15 DOWNTO 0);
     -- signal instruction_out_from_F_D_reg : std_logic_vector(15 downto 0);
-    signal instruction_out_from_mux : std_logic_vector(15 downto 0);
-    signal selected_instruction : std_logic_vector(15 downto 0); -- New signal
+    SIGNAL instruction_out_temp : STD_LOGIC_VECTOR(15 DOWNTO 0); -- New signal
+    SIGNAL instruction_out_temp_imm : STD_LOGIC_VECTOR(15 DOWNTO 0); -- New signal
 
-    signal check_signal : std_logic := '0'; -- Declare a new signal
+    SIGNAL check_signal : STD_LOGIC := '0'; -- Declare a new signal
+    TYPE state_type IS (instruction, waitOnce, immediate);
+    SIGNAL state : state_type := instruction;
+    SIGNAL pipeline_enable : STD_LOGIC := '1';
+    SIGNAL pipeline_enable_imm : STD_LOGIC := '0';
 
+BEGIN
 
-begin
-
-    program_counter: pc PORT MAP (
+    program_counter : pc PORT MAP(
         reset,
         clk,
         instruction_address
     );
 
-    inst_cache: instruction_cache PORT MAP (
-        address_in => instruction_address, 
+    inst_cache : instruction_cache PORT MAP(
+        address_in => instruction_address,
         --el selk el 3ryan (imm)
         data_out => instruction_out_from_instr_cache
     );
 
-    --to avoid infinty loop
-    -- this acts as a buffer -> 
-    --      thats why we are using (instruction_out_from_instr_cache) not the one out of the f/d reg
-    -- --TODO: make this process independent on the clk
-    return_Sel_lower_to_zero: process(instruction_out_from_instr_cache)
-    begin
-        -- if rising_edge(clk) then
-        if instruction_out_from_instr_cache(0) = '1' then
-            if check_signal = '1' then 
-                check_signal <= '0';
-            else
-                check_signal <= '1';
-            end if;
-        else
-            check_signal <= '0';
-        end if;
-        -- end if;
-    end process return_Sel_lower_to_zero;
+    fetch_decode : my_nDFF GENERIC MAP(16)
+    PORT MAP(
+        clk,
+        reset,
+        enable => pipeline_enable,
+        d => instruction_out_from_instr_cache,
+        q => instruction_out_temp
+    );
 
-    -- -- Update the check_signal based on instruction_out_from_instr_cache(0)
-    -- check_signal <= '1' when instruction_out_from_instr_cache(0) = '1' and check_signal = '0' else
-    -- '0' when instruction_out_from_instr_cache(0) = '1' and check_signal = '1' else
-    -- '0';
+    pipeline_enable_imm <= not pipeline_enable;
 
-    --currently used as mux 2x1
-    inst_mux: mux4x1 generic map (16) 
-        port map (
-            inputA => instruction_out_from_instr_cache(15 downto 0),
-            inputB => selected_instruction(15 downto 0),
+    fetch_decode_imm : my_nDFF GENERIC MAP(16)
+    PORT MAP(
+        clk,
+        reset,
+        enable => pipeline_enable_imm,
+        d => instruction_out_from_instr_cache,
+        q => instruction_out_temp_imm
+    );
 
-            --to be added later if needed
-            inputC =>  instruction_out_from_instr_cache(15 downto 0),
-            inputD =>  instruction_out_from_instr_cache(15 downto 0),
+    PROCESS (clk) IS
+    BEGIN
+        IF falling_edge(clk) THEN
 
-            Sel_lower => check_signal,
-            Sel_higher => '0',
-            -- Sel =>  '0' & instruction_out_from_instr_cache(15),
-            output => instruction_out_from_mux
-        );
+            -- FSM
+            CASE state IS
+                WHEN instruction =>
+                    IF instruction_out_temp(0) = '1' THEN
+                        state <= waitOnce;
+                        pipeline_enable <= '0';
+                    ELSE
+                        pipeline_enable <= '1';
+                    END IF;
+                WHEN waitOnce =>
+                    state <= immediate;
+                    pipeline_enable <= '1';
+                WHEN immediate =>
+                    IF instruction_out_temp(0) = '1' THEN
+                        state <= waitOnce;
+                        pipeline_enable <= '0';
+                    ELSE
+                        state <= instruction;
+                        pipeline_enable <= '1';
+                    END IF;
+            END CASE;
+        END IF;
+    END PROCESS;
 
-    fetch_decode: my_nDFF GENERIC MAP (16)
-        PORT MAP (
-            clk,
-            reset,
-            d => instruction_out_from_mux,
-            q => selected_instruction
-        );
 
-    selected_instruction_out <= selected_instruction; -- Assign new signal to output port
-    selected_immediate_out <= instruction_out_from_instr_cache; -- Assign new signal to output port
+    selected_instruction_out <= instruction_out_temp; -- Assign new signal to output port
+    selected_immediate_out <= instruction_out_temp_imm; -- Assign new signal to output port
 
-end architecture arch_fetch;
+END ARCHITECTURE arch_fetch;

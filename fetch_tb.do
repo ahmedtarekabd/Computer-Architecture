@@ -13,15 +13,12 @@ vsim -gui work.fetch_tb
 mem load -i {E:/College/year4-2/comp arch/project/Computer-Architecture/instruction_cache.mem} /fetch_tb/uut/inst_cache/instruction
 
 # Add waves
-add wave -position end  sim:/fetch_tb/clk
-add wave -position end  sim:/fetch_tb/reset
-add wave -position end  sim:/fetch_tb/selected_instruction_out
-add wave -position end  sim:/fetch_tb/selected_immediate_out
-add wave -position end  sim:/fetch_tb/clk_period
-add wave -position end sim:/fetch_tb/uut/inst_mux/*
+add wave -position 4  sim:/fetch_tb/*
+add wave -position end sim:/fetch_tb/uut/*
+add wave -position end sim:/fetch_tb/uut/program_counter/*
 add wave -position end sim:/fetch_tb/uut/inst_cache/*
-
+add wave -position end sim:/fetch_tb/uut/fetch_decode/*
 
 
 # RUN Testbench
-run             1000 ns
+run             300 ns
