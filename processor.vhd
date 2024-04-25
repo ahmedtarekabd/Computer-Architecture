@@ -195,6 +195,7 @@ BEGIN
         clk => clk,
         -- immediate_in => decode_execute_out(140 - 1 - 23 - 32 - 32 - 3 - 3 - 3 DOWNTO 140 - 1 - 23 - 32 - 32 - 3 - 3 - 3 - 31),
         immediate_in => decode_execute_out(43 DOWNTO 12),
+        -- immediate_in => x"0000000A",
         address_read1_in => decode_execute_out(140 - 1 - 23 - 32 - 32 DOWNTO 140 - 1 - 23 - 32 - 32 - 2),
         address_read2_in => decode_execute_out(140 - 1 - 23 - 32 - 32 - 3 DOWNTO 140 - 1 - 23 - 32 - 32 - 3 - 2),
         destination_address => decode_execute_out(140 - 1 - 23 - 32 - 32 - 3 - 3 DOWNTO 140 - 1 - 23 - 32 - 32 - 3 - 3 - 2),
