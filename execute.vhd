@@ -2,6 +2,9 @@ LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 -- no forwarding yet
 -- may need to add zero flags to the output ot send to the controller
+
+--TODO: add the flags to the output of the execute stage
+
 ENTITY execute IS
     PORT (
         -------------------------inputs-------------------------
@@ -21,8 +24,6 @@ ENTITY execute IS
         -- propagated from decode stage
         data1_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
         data2_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
-
-        
         -- from controller -> to be extended to all of them
         -- reg_read_control_signals : IN STD_LOGIC;
         -- branch_control_signals : IN STD_LOGIC;
@@ -35,8 +36,6 @@ ENTITY execute IS
         -- mem_write_enable_control_signal : IN STD_LOGIC;
         -- mem_read_enable_control_signal : IN STD_LOGIC;
         -- sp_control_signal : IN STD_LOGIC;
-
-
         -- from controller
         control_signals_in : IN STD_LOGIC_VECTOR(22 DOWNTO 0);
 
@@ -135,11 +134,11 @@ ARCHITECTURE arch_execute OF execute IS
 
     SIGNAL alu_out_temp : STD_LOGIC_VECTOR(31 DOWNTO 0);
 
-    signal alu_select_control_signals : STD_LOGIC_VECTOR(2 DOWNTO 0);
-    signal alu_src2_control_signals : STD_LOGIC_VECTOR(1 DOWNTO 0);
-    signal pipeline_enable : STD_LOGIC;
+    SIGNAL alu_select_control_signals : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAL alu_src2_control_signals : STD_LOGIC_VECTOR(1 DOWNTO 0);
+    SIGNAL pipeline_enable : STD_LOGIC;
 
-    signal src2 : STD_LOGIC_VECTOR(31 DOWNTO 0); -- src2 can be immediate or register value or 1
+    SIGNAL src2 : STD_LOGIC_VECTOR(31 DOWNTO 0); -- src2 can be immediate or register value or 1
 
 BEGIN
 
@@ -153,10 +152,10 @@ BEGIN
     mux_inst : mux4x1
     GENERIC MAP(32)
     PORT MAP(
-        inputA => data2_in,                             --00
-        inputB => immediate_in,                         --01
-        inputC => "00000000000000000000000000000001",  --10
-        inputD => immediate_in,                         --11 (can be cahnged later to anythin)
+        inputA => data2_in, --00
+        inputB => immediate_in, --01
+        inputC => "00000000000000000000000000000001", --10
+        inputD => immediate_in, --11 (can be cahnged later to anythin)
         Sel_lower => alu_src2_control_signals(0),
         Sel_higher => alu_src2_control_signals(1),
         output => src2
@@ -208,51 +207,21 @@ BEGIN
     data1_out <= q_output(66 DOWNTO 35);
     data2_out <= q_output(34 DOWNTO 3);
     destination_address_out <= q_output(2 DOWNTO 0);
-
-
 END arch_execute;
-
-
-    -- control_signals <= pipeline_enable 22
-    --     & fetch_pc_sel [21 19]
-    --     & alu_sel [18 16]
-    --     & alu_src2 [15 14]
-    --     & alu_register_write 13 -- no need for it
-    --     & memory_write 12
-    --     & memory_read 11
-    --     & memory_stack_pointer [10 9]
-    --     & memory_address [8 7]
-    --     & memory_write_data [6 5]
-    --     & write_back_register_write4
-    --     & write_back_register_write3
-    --     & write_back_register_write_data_[2 1]
-    --     & write_back_register_write_address_1; 0
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+-- control_signals <= pipeline_enable 22
+--     & fetch_pc_sel [21 19]
+--     & alu_sel [18 16]
+--     & alu_src2 [15 14]
+--     & alu_register_write 13 -- no need for it
+--     & memory_write 12
+--     & memory_read 11
+--     & memory_stack_pointer [10 9]
+--     & memory_address [8 7]
+--     & memory_write_data [6 5]
+--     & write_back_register_write4
+--     & write_back_register_write3
+--     & write_back_register_write_data_[2 1]
+--     & write_back_register_write_address_1; 0
 
 
 

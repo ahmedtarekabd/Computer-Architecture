@@ -43,9 +43,10 @@ END ENTITY controller;
 
 ARCHITECTURE arch_controller OF controller IS
 
-	TYPE state_type IS (instruction, immediate);
+	TYPE state_type IS (instruction, waitOnce, immediate);
 	SIGNAL state : state_type := instruction;
 BEGIN
+
 	PROCESS (clk) IS
 	BEGIN
 		IF falling_edge(clk) THEN
@@ -54,14 +55,23 @@ BEGIN
 			CASE state IS
 				WHEN instruction =>
 					IF isImmediate = '1' THEN
-						state <= immediate;
+						state <= waitOnce;
 						pipeline_enable <= '0';
 					ELSE
 						pipeline_enable <= '1';
 					END IF;
+				WHEN waitOnce =>
+					state <= immediate;
+					pipeline_enable <= '1';
 				WHEN immediate =>
-					state <= instruction;
-					pipeline_enable <= '0';
+					-- check neroh le waitOnce wala la2
+					IF isImmediate = '1' THEN
+						state <= waitOnce;
+						pipeline_enable <= '0';
+					ELSE
+						state <= instruction;
+						pipeline_enable <= '1';
+					END IF;
 			END CASE;
 		END IF;
 	END PROCESS;

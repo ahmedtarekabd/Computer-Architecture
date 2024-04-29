@@ -1,7 +1,7 @@
 // memory data file (do not edit the following line - required for mem load use)
 // instance=/processor_tb/processor1/decode_inst/register_file_instance/registers_array
 // format=mti addressradix=d dataradix=b version=1.0 wordsperline=1
-0: 00000000000000000000000000000001
+0: 00000000000000000000000000001001
 1: 00000000000000000000000000000001
 2: 00000000000000000000000000000010
 3: 00000000000000000000000000000011

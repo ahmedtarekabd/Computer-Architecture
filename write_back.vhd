@@ -6,7 +6,7 @@ entity write_back is
         clk : in std_logic;
         ------------input signals------------------
         -- Propagated stuff
-        read_data1_in : in std_logic_vector(31 downto 0);
+        read_data1_in : in std_logic_vector(31 downto 0); -- data1 -> R0 (00000000000000000000)
         read_data2_in : in std_logic_vector(31 downto 0);
         read_address1_in : in std_logic_vector(2 downto 0);
         read_address2_in : in std_logic_vector(2 downto 0);
