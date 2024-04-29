@@ -1,0 +1,236 @@
+import re
+
+# Function to convert assembly instruction to binary
+def assemble_instruction(instruction):
+    print (instruction)
+    full_instruction = ["opcode", "src1", "src2", "dest", "imm"]
+    parts = re.split(r'\s,\s|,\s|\s', instruction)  # Split using space, comma space, or space comma space
+    # print(parts)
+    instruction = parts[0]
+    immediateIs = "second"
+    # print (instruction)
+    if instruction.upper() == "NOP":
+        full_instruction[0] = "000000"
+        full_instruction[1] = "000" #xxx
+        full_instruction[2] = "000" #xxx
+        full_instruction[3] = "000" #xxx
+        full_instruction[4] = "0"
+    elif instruction.upper() == "NOT":
+        full_instruction[0] = "000001"
+        full_instruction[1] = format(int(parts[1][1]), '03b')
+        full_instruction[2] = "000" #xxx
+        full_instruction[3] = format(int(parts[1][1]), '03b')
+        full_instruction[4] = "0"
+    elif instruction.upper() == "NEG":
+        full_instruction[0] = "000010"
+        full_instruction[1] = format(int(parts[1][1]), '03b')
+        full_instruction[2] = "000" #xxx
+        full_instruction[3] = format(int(parts[1][1]), '03b')
+        full_instruction[4] = "0"
+    elif instruction.upper() == "INC":
+        full_instruction[0] = "000011"
+        full_instruction[1] = format(int(parts[1][1]), '03b')
+        full_instruction[2] = "000" #xxx
+        full_instruction[3] = format(int(parts[1][1]), '03b')
+        full_instruction[4] = "0"
+    elif instruction.upper() == "DEC":
+        full_instruction[0] = "000100"
+        full_instruction[1] = format(int(parts[1][1]), '03b')
+        full_instruction[2] = "000" #xxx
+        full_instruction[3] = format(int(parts[1][1]), '03b')
+        full_instruction[4] = "0"
+    elif instruction.upper() == "OUT":
+        full_instruction[0] = "000101"
+        full_instruction[1] = format(int(parts[1][1]), '03b')
+        full_instruction[2] = "000" #xxx
+        full_instruction[3] = "000" #xxx
+        full_instruction[4] = "0"
+    elif instruction.upper() == "IN":
+        full_instruction[0] = "000110"
+        full_instruction[1] = "000" #xxx
+        full_instruction[2] = "000" #xxx
+        full_instruction[3] = format(int(parts[1][1]), '03b')
+        full_instruction[4] = "0"
+    elif instruction.upper() == "MOV":
+        full_instruction[0] = "010000"
+        full_instruction[1] = "000" #xxx
+        full_instruction[2] = format(int(parts[2][1]), '03b')
+        full_instruction[3] = format(int(parts[1][1]), '03b')
+        full_instruction[4] = "0"
+    elif instruction.upper() == "SWAP":
+        full_instruction[0] = "010001"
+        full_instruction[1] = format(int(parts[2][1]), '03b')
+        full_instruction[2] = format(int(parts[1][1]), '03b')
+        full_instruction[3] = "000" #xxx
+        full_instruction[4] = "0"
+    elif instruction.upper() == "ADD":
+        full_instruction[0] = "010010"
+        full_instruction[1] = format(int(parts[2][1]), '03b')
+        full_instruction[2] = format(int(parts[3][1]), '03b')
+        full_instruction[3] = format(int(parts[1][1]), '03b')
+        full_instruction[4] = "0"
+    elif instruction.upper() == "SUB":
+        full_instruction[0] = "010011"
+        full_instruction[1] = format(int(parts[2][1]), '03b')
+        full_instruction[2] = format(int(parts[3][1]), '03b')
+        full_instruction[3] = format(int(parts[1][1]), '03b')
+        full_instruction[4] = "0"
+    elif instruction.upper() == "AND":
+        full_instruction[0] = "010100"
+        full_instruction[1] = format(int(parts[2][1]), '03b')
+        full_instruction[2] = format(int(parts[3][1]), '03b')
+        full_instruction[3] = format(int(parts[1][1]), '03b')
+        full_instruction[4] = "0"
+    elif instruction.upper() == "OR":
+        full_instruction[0] = "010101"
+        full_instruction[1] = format(int(parts[2][1]), '03b')
+        full_instruction[2] = format(int(parts[3][1]), '03b')
+        full_instruction[3] = format(int(parts[1][1]), '03b')
+        full_instruction[4] = "0"
+    elif instruction.upper() == "XOR":
+        full_instruction[0] = "010110"
+        full_instruction[1] = format(int(parts[2][1]), '03b')
+        full_instruction[2] = format(int(parts[3][1]), '03b')
+        full_instruction[3] = format(int(parts[1][1]), '03b')
+        full_instruction[4] = "0"
+    elif instruction.upper() == "CMP":
+        full_instruction[0] = "010111"
+        full_instruction[1] = format(int(parts[1][1]), '03b')
+        full_instruction[2] = format(int(parts[2][1]), '03b')
+        full_instruction[3] = "000" #xxx
+        full_instruction[4] = "0"
+    elif instruction.upper() == "ADDI":
+        full_instruction[0] = "011000"
+        full_instruction[1] = format(int(parts[2][1]), '03b')
+        full_instruction[2] = "000" #xxx
+        full_instruction[3] = format(int(parts[1][1]), '03b')
+        full_instruction[4] = "1"
+        immediateIs = "third"
+    elif instruction.upper() == "SUBI":
+        full_instruction[0] = "011001"
+        full_instruction[1] = format(int(parts[2][1]), '03b')
+        full_instruction[2] = "000" #xxx
+        full_instruction[3] = format(int(parts[1][1]), '03b')
+        full_instruction[4] = "1"
+        immediateIs = "third"
+    elif instruction.upper() == "PUSH":
+        full_instruction[0] = "100000"
+        full_instruction[1] = "000" #xxx
+        full_instruction[2] = format(int(parts[1][1]), '03b')
+        full_instruction[3] = "000" #xxx
+        full_instruction[4] = "0"
+    elif instruction.upper() == "POP":
+        full_instruction[0] = "100001"
+        full_instruction[1] = "000" #xxx
+        full_instruction[2] = "000" #xxx
+        full_instruction[3] = format(int(parts[1][1]), '03b')
+        full_instruction[4] = "0"
+    elif instruction.upper() == "PROTECT":
+        full_instruction[0] = "100010"
+        full_instruction[1] = format(int(parts[1][1]), '03b')
+        full_instruction[2] = "000" #xxx
+        full_instruction[3] = "000" #xxx
+        full_instruction[4] = "0"
+    elif instruction.upper() == "FREE":
+        full_instruction[0] = "100011"
+        full_instruction[1] = format(int(parts[1][1]), '03b')
+        full_instruction[2] = "000" #xxx
+        full_instruction[3] = "000" #xxx
+        full_instruction[4] = "0"
+    elif instruction.upper() == "LDM":
+        full_instruction[0] = "100100"
+        full_instruction[1] = "000" #xxx
+        full_instruction[2] = "000" #xxx
+        full_instruction[3] = format(int(parts[1][1]), '03b')
+        full_instruction[4] = "1"
+    elif instruction.upper() == "LDD":
+        full_instruction[0] = "100101"
+        full_instruction[1] = format(int(parts[3][1]), '03b')
+        full_instruction[2] = "000" #xxx
+        full_instruction[3] = format(int(parts[1][1]), '03b')
+        full_instruction[4] = "1"
+    elif instruction.upper() == "STD":
+        full_instruction[0] = "100110"
+        full_instruction[1] = format(int(parts[3][1]), '03b')
+        full_instruction[2] = format(int(parts[1][1]), '03b')
+        full_instruction[3] = "000" #xxx
+        full_instruction[4] = "1"
+    elif instruction.upper() == "JZ":
+        full_instruction[0] = "110000"
+        full_instruction[1] = format(int(parts[1][1]), '03b')
+        full_instruction[2] = "000" #xxx
+        full_instruction[3] = "000" #xxx
+        full_instruction[4] = "0"
+    elif instruction.upper() == "JMP":
+        full_instruction[0] = "110001"
+        full_instruction[1] = format(int(parts[1][1]), '03b')
+        full_instruction[2] = "000" #xxx
+        full_instruction[3] = "000" #xxx
+        full_instruction[4] = "0"
+    elif instruction.upper() == "CALL":
+        full_instruction[0] = "110010"
+        full_instruction[1] = format(int(parts[1][1]), '03b')
+        full_instruction[2] = "000" #xxx
+        full_instruction[3] = "000" #xxx
+        full_instruction[4] = "0"
+    elif instruction.upper() == "RET":
+        full_instruction[0] = "110011"
+        full_instruction[1] = "000" #xxx
+        full_instruction[2] = "000" #xxx
+        full_instruction[3] = "000" #xxx
+        full_instruction[4] = "0"
+    elif instruction.upper() == "RTI":
+        full_instruction[0] = "110100"
+        full_instruction[1] = "000" #xxx
+        full_instruction[2] = "000" #xxx
+        full_instruction[3] = "000" #xxx
+        full_instruction[4] = "0"
+    elif instruction.upper() == "RESET":
+        full_instruction[0] = "110101"
+        full_instruction[1] = "000" #xxx
+        full_instruction[2] = "000" #xxx
+        full_instruction[3] = "000" #xxx
+        full_instruction[4] = "0"
+    elif instruction.upper() == "INTERRUPT":
+        full_instruction[0] = "110110"
+        full_instruction[1] = "000" #xxx
+        full_instruction[2] = "000" #xxx
+        full_instruction[3] = "000" #xxx
+        full_instruction[4] = "0"
+    else:
+        return None
+
+    full_instruction = "".join(full_instruction)
+
+    # handle immediate value
+    if full_instruction[-1] == "1":
+        if immediateIs == "second":
+            full_instruction = full_instruction + "\n" + format(int(parts[2], 16), '016b')
+        elif immediateIs == "third":
+            full_instruction = full_instruction + "\n" + format(int(parts[3], 16), '016b')
+
+    print(full_instruction + "\n")
+    return full_instruction
+
+# Function to read assembly file, convert instructions, and write to output file
+def assemble_file(input_file="assembly_code.txt", output_file="binary_output.txt"):
+    with open(input_file, 'r') as f:
+        assembly_code = f.readlines()
+    with open(output_file, 'w') as f:
+        for i, line in enumerate(assembly_code):
+            # print (line)
+
+            # Replace '(' and ')' with spaces
+            line = line.replace('(', ' ').replace(')', ' ')
+
+            # Convert multiple spaces to single space
+            line = ' '.join(line.split())
+            
+            # Convert instruction to binary
+            binary_instr = assemble_instruction(line)
+            if binary_instr:
+                f.write(binary_instr + "\n")
+
+# Main function
+if __name__ == "__main__":
+    assemble_file()
