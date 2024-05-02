@@ -16,6 +16,8 @@ CMP R5, R0
 OR R7, R4, R3
 NOT R6
 DEC R0
+.org 100
+A0A0
 
 // All instructions
 

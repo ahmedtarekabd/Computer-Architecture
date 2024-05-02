@@ -1,15 +1,25 @@
 import re
 
+# Global variable to store output lines with indices
+instruction_array = ["0000000000000000"] * 4096
+index = 0
+
 # Function to convert assembly instruction to binary
 def assemble_instruction(instruction):
     print (instruction)
+    global index
     full_instruction = ["opcode", "src1", "src2", "dest", "imm"]
     parts = re.split(r'\s,\s|,\s|\s', instruction)  # Split using space, comma space, or space comma space
     # print(parts)
     instruction = parts[0]
     immediateIs = "second"
     # print (instruction)
-    if instruction.upper() == "NOP":
+    if instruction.startswith("//") or instruction == "":
+        return
+    elif instruction.upper() == ".ORG":
+        index = int(parts[1], 16)
+        return
+    elif instruction.upper() == "NOP":
         full_instruction[0] = "000000"
         full_instruction[1] = "000" #xxx
         full_instruction[2] = "000" #xxx
@@ -198,38 +208,49 @@ def assemble_instruction(instruction):
         full_instruction[3] = "000" #xxx
         full_instruction[4] = "0"
     else:
-        return None
+        full_instruction = (format(int(parts[0], 16), '016b'))
 
     full_instruction = "".join(full_instruction)
+    instruction_array[index] = (full_instruction)
+    index += 1
 
     # handle immediate value
     if full_instruction[-1] == "1":
         if immediateIs == "second":
-            full_instruction = full_instruction + "\n" + format(int(parts[2], 16), '016b')
+            instruction_array[index] = (format(int(parts[2], 16), '016b'))
+            index += 1
+
         elif immediateIs == "third":
-            full_instruction = full_instruction + "\n" + format(int(parts[3], 16), '016b')
+            instruction_array[index] = (format(int(parts[3], 16), '016b'))
+            index += 1
+    
 
     print(full_instruction + "\n")
     return full_instruction
 
 # Function to read assembly file, convert instructions, and write to output file
-def assemble_file(input_file="assembly_code.txt", output_file="binary_output.txt"):
+def assemble_file(input_file="assembly_code.txt", output_file="binary_output.mem"):
     with open(input_file, 'r') as f:
         assembly_code = f.readlines()
+    
+    for i, line in enumerate(assembly_code):
+        # print (line)
+        # Replace '(' and ')' with spaces
+        line = line.replace('(', ' ').replace(')', ' ')
+        # Convert multiple spaces to single space
+        line = ' '.join(line.split())
+        assemble_instruction(line)
+
+
     with open(output_file, 'w') as f:
-        for i, line in enumerate(assembly_code):
-            # print (line)
-
-            # Replace '(' and ')' with spaces
-            line = line.replace('(', ' ').replace(')', ' ')
-
-            # Convert multiple spaces to single space
-            line = ' '.join(line.split())
-            
-            # Convert instruction to binary
-            binary_instr = assemble_instruction(line)
-            if binary_instr:
-                f.write(binary_instr + "\n")
+        filePrefix = "// memory data file (do not edit the following line - required for mem load use)\n" \
+                     "// instance=/processor_tb/processor1/decode_inst/register_file_instance/registers_array\n" \
+                     "// format=mti addressradix=d dataradix=b version=1.0 wordsperline=1\n"
+        f.write(filePrefix)
+        for  i, instr in enumerate(instruction_array):
+            # Convert instruction to binary format and write to file
+            binary_instr = "".join(instr)
+            f.write(str(i) + ": " + binary_instr + "\n")
 
 # Main function
 if __name__ == "__main__":
