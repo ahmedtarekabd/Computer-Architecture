@@ -18,6 +18,8 @@ ENTITY decode IS
         -- Propagated signals
         pc_plus_1 : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
 
+        -- Outputs
+        -- TODO: add fetch in a separate signal (shilo men el register)
         decode_execute_out : OUT STD_LOGIC_VECTOR(140 - 1 DOWNTO 0)
     );
 END ENTITY decode;
