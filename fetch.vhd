@@ -6,6 +6,7 @@ ENTITY fetch IS
     PORT (
         clk : IN STD_LOGIC;
         reset : IN STD_LOGIC;
+        immediate_enable : IN STD_LOGIC;
         selected_instruction_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
         selected_immediate_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
     );
@@ -86,34 +87,6 @@ BEGIN
         q => instruction_out_temp_imm
     );
 
-    PROCESS (clk) IS
-    BEGIN
-        IF falling_edge(clk) THEN
-
-            -- FSM
-            CASE state IS
-                WHEN instruction =>
-                    IF instruction_out_temp(0) = '1' THEN
-                        state <= waitOnce;
-                        immediate_enable <= '0';
-                    ELSE
-                        immediate_enable <= '1';
-                    END IF;
-                WHEN waitOnce =>
-                    state <= immediate;
-                    immediate_enable <= '1';
-                WHEN immediate =>
-                    -- check neroh le waitOnce wala la2
-                    IF instruction_out_temp(0) = '1' THEN
-                        state <= waitOnce;
-                        immediate_enable <= '0';
-                    ELSE
-                        state <= instruction;
-                        immediate_enable <= '1';
-                    END IF;
-            END CASE;
-        END IF;
-    END PROCESS;
     selected_instruction_out <= instruction_out_temp; -- Assign new signal to output port
     selected_immediate_out <= instruction_out_temp_imm; -- Assign new signal to output port
 
