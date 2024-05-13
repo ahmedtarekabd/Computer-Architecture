@@ -136,7 +136,7 @@ ARCHITECTURE arch_execute OF execute IS
 
     SIGNAL alu_select_control_signals : STD_LOGIC_VECTOR(2 DOWNTO 0);
     SIGNAL alu_src2_control_signals : STD_LOGIC_VECTOR(1 DOWNTO 0);
-    SIGNAL pipeline_enable : STD_LOGIC;
+    SIGNAL immediate_enable : STD_LOGIC;
 
     SIGNAL src2 : STD_LOGIC_VECTOR(31 DOWNTO 0); -- src2 can be immediate or register value or 1
 
@@ -146,7 +146,7 @@ BEGIN
 
     alu_select_control_signals <= control_signals_in (18 DOWNTO 16);
     alu_src2_control_signals <= control_signals_in (15 DOWNTO 14);
-    pipeline_enable <= control_signals_in(22);
+    immediate_enable <= control_signals_in(22);
 
     -- mux instantiation
     mux_inst : mux4x1
@@ -197,7 +197,7 @@ BEGIN
 
     execute_mem_reg : my_nDFF GENERIC MAP(128)
     PORT MAP(
-        clk, '0', pipeline_enable, d_internal, q_output
+        clk, '0', immediate_enable, d_internal, q_output
     );
 
     alu_out <= q_output(127 DOWNTO 96);
@@ -208,7 +208,7 @@ BEGIN
     data2_out <= q_output(34 DOWNTO 3);
     destination_address_out <= q_output(2 DOWNTO 0);
 END arch_execute;
--- control_signals <= pipeline_enable 22
+-- control_signals <= immediate_enable 22
 --     & fetch_pc_sel [21 19]
 --     & alu_sel [18 16]
 --     & alu_src2 [15 14]
@@ -222,10 +222,6 @@ END arch_execute;
 --     & write_back_register_write3
 --     & write_back_register_write_data_[2 1]
 --     & write_back_register_write_address_1; 0
-
-
-
-
 -- forwarding_unit : forwarding_unit
 -- port map(
 --     forwarding_unit_signals => forwarding_unit_signals,

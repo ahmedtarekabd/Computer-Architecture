@@ -9,16 +9,18 @@ ENTITY controller IS
 		-- 6-bit opcode
 		opcode : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
 		isImmediate : IN STD_LOGIC;
+		interrupt_signal : IN STD_LOGIC;
+		zero_flag : IN STD_LOGIC;
 
 		-- pipeline signals
-		pipeline_enable : OUT STD_LOGIC;
+		immediate_enable : OUT STD_LOGIC;
 
 		-- fetch signals
 		fetch_pc_sel : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
 
 		-- decode signals
 		decode_reg_read : OUT STD_LOGIC;
-		decode_branch : OUT STD_LOGIC; -- later
+		decode_branch : OUT STD_LOGIC; -- jumps instruction
 		decode_sign_extend : OUT STD_LOGIC;
 
 		-- execute signals
@@ -47,6 +49,9 @@ ARCHITECTURE arch_controller OF controller IS
 	SIGNAL state : state_type := instruction;
 BEGIN
 
+	-- Reading Immediate value
+	-- Add bubble: by disabling fetch_decode and decode_execute
+	-- decode_execute propagates this enable signal
 	PROCESS (clk) IS
 	BEGIN
 		IF falling_edge(clk) THEN
@@ -56,21 +61,21 @@ BEGIN
 				WHEN instruction =>
 					IF isImmediate = '1' THEN
 						state <= waitOnce;
-						pipeline_enable <= '0';
+						immediate_enable <= '0';
 					ELSE
-						pipeline_enable <= '1';
+						immediate_enable <= '1';
 					END IF;
 				WHEN waitOnce =>
 					state <= immediate;
-					pipeline_enable <= '1';
+					immediate_enable <= '1';
 				WHEN immediate =>
 					-- check neroh le waitOnce wala la2
 					IF isImmediate = '1' THEN
 						state <= waitOnce;
-						pipeline_enable <= '0';
+						immediate_enable <= '0';
 					ELSE
 						state <= instruction;
-						pipeline_enable <= '1';
+						immediate_enable <= '1';
 					END IF;
 			END CASE;
 		END IF;

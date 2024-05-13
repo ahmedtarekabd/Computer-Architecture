@@ -49,8 +49,8 @@ ARCHITECTURE arch_fetch OF fetch IS
     SIGNAL check_signal : STD_LOGIC := '0'; -- Declare a new signal
     TYPE state_type IS (instruction, waitOnce, immediate);
     SIGNAL state : state_type := instruction;
-    SIGNAL pipeline_enable : STD_LOGIC := '1';
-    SIGNAL pipeline_enable_imm : STD_LOGIC := '0';
+    SIGNAL immediate_enable : STD_LOGIC := '1';
+    SIGNAL immediate_enable_imm : STD_LOGIC := '0';
 
 BEGIN
 
@@ -70,18 +70,18 @@ BEGIN
     PORT MAP(
         clk => clk,
         reset => reset,
-        enable => pipeline_enable,
+        enable => immediate_enable,
         d => instruction_out_from_instr_cache,
         q => instruction_out_temp
     );
 
-    pipeline_enable_imm <= NOT pipeline_enable;
+    immediate_enable_imm <= NOT immediate_enable;
 
     fetch_decode_imm : my_nDFF GENERIC MAP(16)
     PORT MAP(
         clk => clk,
         reset => reset,
-        enable => pipeline_enable_imm,
+        enable => immediate_enable_imm, 
         d => instruction_out_from_instr_cache,
         q => instruction_out_temp_imm
     );
@@ -95,21 +95,21 @@ BEGIN
                 WHEN instruction =>
                     IF instruction_out_temp(0) = '1' THEN
                         state <= waitOnce;
-                        pipeline_enable <= '0';
+                        immediate_enable <= '0';
                     ELSE
-                        pipeline_enable <= '1';
+                        immediate_enable <= '1';
                     END IF;
                 WHEN waitOnce =>
                     state <= immediate;
-                    pipeline_enable <= '1';
+                    immediate_enable <= '1';
                 WHEN immediate =>
                     -- check neroh le waitOnce wala la2
                     IF instruction_out_temp(0) = '1' THEN
                         state <= waitOnce;
-                        pipeline_enable <= '0';
+                        immediate_enable <= '0';
                     ELSE
                         state <= instruction;
-                        pipeline_enable <= '1';
+                        immediate_enable <= '1';
                     END IF;
             END CASE;
         END IF;

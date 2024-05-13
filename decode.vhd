@@ -18,6 +18,12 @@ ENTITY decode IS
         -- Propagated signals
         pc_plus_1 : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
 
+        -- Signals
+        interrupt_signal : IN STD_LOGIC; -- From Processor file
+
+        -- Falgs
+        zero_flag : IN STD_LOGIC; -- From Processor file
+
         -- Outputs
         -- TODO: add fetch in a separate signal (shilo men el register)
         decode_execute_out : OUT STD_LOGIC_VECTOR(140 - 1 DOWNTO 0)
@@ -35,7 +41,7 @@ ARCHITECTURE rtl OF decode IS
             isImmediate : IN STD_LOGIC;
 
             -- pipeline signals
-            pipeline_enable : OUT STD_LOGIC;
+            immediate_enable : OUT STD_LOGIC;
 
             -- fetch signals
             fetch_pc_sel : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
@@ -114,7 +120,7 @@ ARCHITECTURE rtl OF decode IS
 
     -- controller output
     -- pipeline signals
-    SIGNAL pipeline_enable : STD_LOGIC;
+    SIGNAL immediate_enable : STD_LOGIC;
 
     -- fetch signals
     SIGNAL fetch_pc_sel : STD_LOGIC_VECTOR(2 DOWNTO 0);
@@ -164,7 +170,7 @@ BEGIN
         opcode => opcode, -- 
         isImmediate => isImmediate, --
         -- Outputs
-        pipeline_enable => pipeline_enable,
+        immediate_enable => immediate_enable,
         fetch_pc_sel => fetch_pc_sel,
         decode_reg_read => decode_reg_read,
         decode_branch => decode_branch,
@@ -208,7 +214,7 @@ BEGIN
         output => immediate_out
     );
 
-    control_signals <= pipeline_enable
+    control_signals <= immediate_enable
         & fetch_pc_sel
         & alu_sel
         & alu_src2
@@ -232,7 +238,7 @@ BEGIN
     PORT MAP(
         clk,
         '0', -- reset signal
-        enable => pipeline_enable,
+        enable => immediate_enable,
         d => decode_execute_in,
         q => decode_execute_out
     );
