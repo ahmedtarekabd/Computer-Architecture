@@ -17,6 +17,7 @@ ARCHITECTURE arch_processor OF processor IS
         PORT (
             clk : IN STD_LOGIC;
             reset : IN STD_LOGIC;
+            immediate_enable : IN STD_LOGIC;
             selected_instruction_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
             selected_immediate_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
         );
@@ -28,6 +29,9 @@ ARCHITECTURE arch_processor OF processor IS
             instruction_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
             immediate_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
 
+            interrupt_signal : IN STD_LOGIC; -- From Processor file
+            zero_flag : IN STD_LOGIC; -- From Processor file    
+
             -- WB
             write_enable1 : IN STD_LOGIC;
             write_enable2 : IN STD_LOGIC;
@@ -38,6 +42,9 @@ ARCHITECTURE arch_processor OF processor IS
 
             -- Propagated signals
             pc_plus_1 : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
+
+            -- Immediate Enable
+            immediate_enable : OUT STD_LOGIC;
 
             decode_execute_out : OUT STD_LOGIC_VECTOR(140 - 1 DOWNTO 0)
         );
@@ -159,6 +166,9 @@ ARCHITECTURE arch_processor OF processor IS
     SIGNAL instruction : STD_LOGIC_VECTOR(15 DOWNTO 0);
     SIGNAL immediate : STD_LOGIC_VECTOR(15 DOWNTO 0);
     SIGNAL pc_plus_1 : STD_LOGIC_VECTOR(11 DOWNTO 0);
+    SIGNAL immediate_enable : STD_LOGIC;
+    SIGNAL interrupt_signal_internal : STD_LOGIC;
+    SIGNAL zero_flag_internal : STD_LOGIC;
     SIGNAL decode_execute_out : STD_LOGIC_VECTOR(140 - 1 DOWNTO 0);
 
     -- * execute
@@ -203,6 +213,8 @@ BEGIN
     fetch_inst : fetch PORT MAP(
         clk => clk,
         reset => reset,
+        immediate_enable => immediate_enable,
+
         selected_instruction_out => instruction,
         selected_immediate_out => immediate
     );
@@ -213,6 +225,8 @@ BEGIN
         clk => clk,
         instruction_in => instruction,
         immediate_in => immediate,
+        interrupt_signal => interrupt_signal_internal,
+        zero_flag => zero_flag_internal,
         write_enable1 => reg_write_enable1,
         write_enable2 => reg_write_enable2,
         write_address1 => selected_address_out1,
@@ -220,6 +234,7 @@ BEGIN
         write_data1 => selected_data_out1,
         write_data2 => selected_data_out2,
         pc_plus_1 => pc_plus_1,
+        immediate_enable => immediate_enable,
         decode_execute_out => decode_execute_out
     );
 

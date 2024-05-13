@@ -7,6 +7,12 @@ ENTITY decode IS
         instruction_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
         immediate_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
 
+        -- Signals
+        interrupt_signal : IN STD_LOGIC; -- From Processor file
+
+        -- Falgs
+        zero_flag : IN STD_LOGIC; -- From Processor file
+
         -- WB
         write_enable1 : IN STD_LOGIC;
         write_enable2 : IN STD_LOGIC;
@@ -18,13 +24,10 @@ ENTITY decode IS
         -- Propagated signals
         pc_plus_1 : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
 
-        -- Signals
-        interrupt_signal : IN STD_LOGIC; -- From Processor file
-
-        -- Falgs
-        zero_flag : IN STD_LOGIC; -- From Processor file
-
         -- Outputs
+        -- Immediate Enable
+        immediate_enable : OUT STD_LOGIC;
+
         -- TODO: add fetch in a separate signal (shilo men el register)
         decode_execute_out : OUT STD_LOGIC_VECTOR(140 - 1 DOWNTO 0)
     );
@@ -39,8 +42,10 @@ ARCHITECTURE rtl OF decode IS
             -- 6-bit opcode
             opcode : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
             isImmediate : IN STD_LOGIC;
+            interrupt_signal : IN STD_LOGIC;
+            zero_flag : IN STD_LOGIC;
 
-            -- pipeline signals
+            -- Immediate Enable
             immediate_enable : OUT STD_LOGIC;
 
             -- fetch signals
@@ -118,11 +123,8 @@ ARCHITECTURE rtl OF decode IS
     SIGNAL destination : STD_LOGIC_VECTOR(2 DOWNTO 0);
     SIGNAL isImmediate : STD_LOGIC;
 
-    -- controller output
-    -- pipeline signals
-    SIGNAL immediate_enable : STD_LOGIC;
-
     -- fetch signals
+    SIGNAL immediate_enable_internal : STD_LOGIC;
     SIGNAL fetch_pc_sel : STD_LOGIC_VECTOR(2 DOWNTO 0);
 
     -- execute signals
@@ -169,8 +171,10 @@ BEGIN
         clk => clk,
         opcode => opcode, -- 
         isImmediate => isImmediate, --
+        interrupt_signal => interrupt_signal,
+        zero_flag => zero_flag,
         -- Outputs
-        immediate_enable => immediate_enable,
+        immediate_enable => immediate_enable_internal,
         fetch_pc_sel => fetch_pc_sel,
         decode_reg_read => decode_reg_read,
         decode_branch => decode_branch,
@@ -214,7 +218,7 @@ BEGIN
         output => immediate_out
     );
 
-    control_signals <= immediate_enable
+    control_signals <= immediate_enable_internal
         & fetch_pc_sel
         & alu_sel
         & alu_src2
@@ -238,9 +242,11 @@ BEGIN
     PORT MAP(
         clk,
         '0', -- reset signal
-        enable => immediate_enable,
+        enable => immediate_enable_internal,
         d => decode_execute_in,
         q => decode_execute_out
     );
+
+    immediate_enable <= immediate_enable_internal;
 
 END ARCHITECTURE rtl;

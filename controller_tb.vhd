@@ -16,7 +16,7 @@ ARCHITECTURE behavior OF controller_tb IS
             opcode : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
             isImmediate : IN STD_LOGIC;
 
-            -- pipeline signals
+            -- Immediate Enable
             immediate_enable : OUT STD_LOGIC;
 
             -- fetch signals

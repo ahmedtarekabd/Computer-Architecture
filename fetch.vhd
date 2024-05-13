@@ -50,7 +50,6 @@ ARCHITECTURE arch_fetch OF fetch IS
     SIGNAL check_signal : STD_LOGIC := '0'; -- Declare a new signal
     TYPE state_type IS (instruction, waitOnce, immediate);
     SIGNAL state : state_type := instruction;
-    SIGNAL immediate_enable : STD_LOGIC := '1';
     SIGNAL immediate_enable_imm : STD_LOGIC := '0';
 
 BEGIN
@@ -82,7 +81,7 @@ BEGIN
     PORT MAP(
         clk => clk,
         reset => reset,
-        enable => immediate_enable_imm, 
+        enable => immediate_enable_imm,
         d => instruction_out_from_instr_cache,
         q => instruction_out_temp_imm
     );
