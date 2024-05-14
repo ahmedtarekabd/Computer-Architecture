@@ -12,7 +12,7 @@ ENTITY controller IS
 		interrupt_signal : IN STD_LOGIC;
 		zero_flag : IN STD_LOGIC;
 
-		-- pipeline signals
+		-- Immediate Enable
 		immediate_enable : OUT STD_LOGIC;
 
 		-- fetch signals
@@ -40,6 +40,7 @@ ENTITY controller IS
 		write_back_register_write2 : OUT STD_LOGIC;
 		write_back_register_write_data_1 : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
 		write_back_register_write_address_1 : OUT STD_LOGIC -- Rdst | Rsrc1
+
 	);
 END ENTITY controller;
 

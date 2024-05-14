@@ -9,7 +9,7 @@ z2
 cModel Technology
 dE:/Programs/Quartus/intelFPGA_lite/18.1
 Ealu
-Z0 w1714045878
+Z0 w1714048535
 Z1 DPx4 ieee 11 numeric_std 0 22 :ASDNFgHXf_ih3J@9F3Ze1
 Z2 DPx3 std 6 textio 0 22 zE1`LPoLg^DX3Oz^4Fj1K3
 Z3 DPx4 ieee 14 std_logic_1164 0 22 eNV`TJ_GofJTzYa?f<@Oe1
@@ -22,9 +22,9 @@ V00R`cgWl[IU1>l<Uj2fWO1
 !s100 ^X]DiYH5SeAIZWKhO]k]K1
 Z7 OV;C;10.5b;63
 32
-Z8 !s110 1714046054
+Z8 !s110 1715637115
 !i10b 1
-Z9 !s108 1714046054.000000
+Z9 !s108 1715637115.000000
 Z10 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/ALU.vhd|
 Z11 !s107 E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/ALU.vhd|
 !i113 1
@@ -91,7 +91,7 @@ R18
 R12
 R13
 Econtroller
-Z19 w1714035160
+Z19 w1715634934
 R1
 R2
 R3
@@ -100,8 +100,8 @@ Z20 8E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/contro
 Z21 FE:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/controller.vhd
 l0
 L5
-VfTiKm>QgEi5VjYW2ET^D51
-!s100 A@O3cI`k3^^6lON4fiZX]0
+V1ThJHej0zjM>R_03DM[V02
+!s100 E^>jA]gK__a5QBWXbVf=;1
 R7
 32
 R8
@@ -116,11 +116,11 @@ Aarch_controller
 R1
 R2
 R3
-DEx4 work 10 controller 0 22 fTiKm>QgEi5VjYW2ET^D51
-l48
-L44
-VklZfW^8XVGEJ;bUBX^MEm1
-!s100 1aS>2`iM1bb[cC9i_CGSC0
+DEx4 work 10 controller 0 22 1ThJHej0zjM>R_03DM[V02
+l51
+L47
+VWVnF3JgejQ>2=^8W>nfSI2
+!s100 VG4bLS3:=a]k;KeMT77ZK0
 R7
 32
 R8
@@ -132,7 +132,7 @@ R23
 R12
 R13
 Econtroller_tb
-Z24 w1714007340
+Z24 w1715634760
 R2
 R3
 R4
@@ -144,11 +144,11 @@ VYDk>?j2<0fN?148nHk1<z3
 !s100 cLFX`?:HOii4FU8oP8cJ82
 R7
 32
-R8
+Z27 !s110 1715637116
 !i10b 1
 R9
-Z27 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/controller_tb.vhd|
-Z28 !s107 E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/controller_tb.vhd|
+Z28 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/controller_tb.vhd|
+Z29 !s107 E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/controller_tb.vhd|
 !i113 1
 R12
 R13
@@ -158,34 +158,34 @@ R3
 DEx4 work 13 controller_tb 0 22 YDk>?j2<0fN?148nHk1<z3
 l76
 L8
-V[KKDh6]>[CclV3Wc30L[h1
-!s100 M<YWQL0<`WVMhNHakG9eS0
+Vo@knOfzVR3K0WjLRDhzG]0
+!s100 [ad25WXe:8NRkVF`[D[^X0
 R7
 32
-R8
+R27
 !i10b 1
 R9
-R27
 R28
+R29
 !i113 1
 R12
 R13
 Edecode
-Z29 w1714035220
+Z30 w1715637111
 R2
 R3
 R4
-Z30 8E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/decode.vhd
-Z31 FE:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/decode.vhd
+Z31 8E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/decode.vhd
+Z32 FE:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/decode.vhd
 l0
 L4
-VjfT<Xf[M03GeeaX[@7Ool0
-!s100 c0>GeE=mL`gc<m2I[hYJC2
+V<H6e>CBe46[8LBaDE371F0
+!s100 FgkW^oA[ZUZ1C9?T>_N1b3
 R7
 32
-Z32 !s110 1714046055
+R27
 !i10b 1
-Z33 !s108 1714046055.000000
+Z33 !s108 1715637116.000000
 Z34 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/decode.vhd|
 Z35 !s107 E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/decode.vhd|
 !i113 1
@@ -194,14 +194,14 @@ R13
 Artl
 R2
 R3
-DEx4 work 6 decode 0 22 jfT<Xf[M03GeeaX[@7Ool0
-l151
-L25
-VBfhKE;l38fnJfIEF3ck@72
-!s100 6d_RiBnRV8HXlOS4X5Gm<0
+DEx4 work 6 decode 0 22 <H6e>CBe46[8LBaDE371F0
+l161
+L36
+V?0fcL1:g>InKf8IUIe?0l1
+!s100 d<K5NM7`em1Fn?_k[KGH<2
 R7
 32
-R32
+R27
 !i10b 1
 R33
 R34
@@ -210,19 +210,19 @@ R35
 R12
 R13
 Eexecute
-Z36 w1714031691
+Z36 w1715633010
 R2
 R3
 R4
 Z37 8E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/execute.vhd
 Z38 FE:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/execute.vhd
 l0
-L5
-VlT3[>5ee@01BMm?mAe4k?2
-!s100 N7AhVB4R]:^a;D2DjzRoe1
+L8
+VQ6QQDEYULjmGKWIY:Yz@O3
+!s100 C9;`E]ini4=3HEHj=?oh11
 R7
 32
-R32
+R27
 !i10b 1
 R33
 Z39 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/execute.vhd|
@@ -233,14 +233,14 @@ R13
 Aarch_execute
 R2
 R3
-DEx4 work 7 execute 0 22 lT3[>5ee@01BMm?mAe4k?2
-l144
-L84
-VJN?Q1B;Qof67>egX8Uo883
-!s100 <4k@lOAnb@Bf=z]Ez8]@43
+DEx4 work 7 execute 0 22 Q6QQDEYULjmGKWIY:Yz@O3
+l143
+L83
+V7=I];mWDG<LRzS8KYfEBc1
+!s100 LGIjT3G>JlJnh=Vc7ROdO3
 R7
 32
-R32
+R27
 !i10b 1
 R33
 R39
@@ -272,7 +272,7 @@ Z42 !s108 1714037994.000000
 R12
 R13
 Efetch
-Z43 w1714023010
+Z43 w1715634298
 R1
 R2
 R3
@@ -281,11 +281,11 @@ Z44 8E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/fetch.
 Z45 FE:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/fetch.vhd
 l0
 L5
-VEb8]eAJZ<dTERShk:[Vij2
-!s100 4DbYh8Ez1hI2BcjaVg0OA2
+Vozje7C<Gf@@ZKViM56aU52
+!s100 l@3@nJWhmB8Z[[Z4U17c=0
 R7
 32
-R32
+R27
 !i10b 1
 R33
 Z46 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/fetch.vhd|
@@ -297,14 +297,14 @@ Aarch_fetch
 R1
 R2
 R3
-DEx4 work 5 fetch 0 22 Eb8]eAJZ<dTERShk:[Vij2
+DEx4 work 5 fetch 0 22 ozje7C<Gf@@ZKViM56aU52
 l55
-L14
-Vez4=6FYH5o_MYNEAVXM9j3
-!s100 QkCLWWaeoWH>3KRe0LOiQ1
+L15
+VWJ?n@nm233f^RIn_gKOBm1
+!s100 KQXNm12dWma<4d5WO;f3<3
 R7
 32
-R32
+R27
 !i10b 1
 R33
 R46
@@ -325,7 +325,7 @@ VjflaRW=hH_5K^hn2B_OQh1
 !s100 0CKK:Sha`KS0dM:FgZObk1
 R7
 32
-R32
+R27
 !i10b 1
 R33
 Z50 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/fetch_tb.vhd|
@@ -343,7 +343,7 @@ VN_C1=5?2[Qna[HLAJL10F1
 !s100 o<;5BnU1Qgb5I@o8T]:d61
 R7
 32
-R32
+R27
 !i10b 1
 R33
 R50
@@ -365,7 +365,7 @@ VODReAJ14aHLWL^0l;_EWQ1
 !s100 E[^iS=o:X8QD6UP:3=>lk2
 R7
 32
-R32
+R27
 !i10b 1
 R33
 Z55 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/instruction_cache.vhd|
@@ -384,7 +384,7 @@ VnTE=SldKSIifz614aIfVP3
 !s100 W:OOjE91TTd2f7gHb23JL0
 R7
 32
-R32
+R27
 !i10b 1
 R33
 R55
@@ -406,7 +406,7 @@ V1D?27A^]=eI2G_Z>FR@9m1
 !s100 0hK49l17hF2S3H287[LL]0
 R7
 32
-R32
+R27
 !i10b 1
 R33
 Z59 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/memory.vhd|
@@ -425,7 +425,7 @@ VVOSoTTzFXJ;4Yz]il7b:A2
 !s100 _;bXW:E[9Wg0K>n78fOTK3
 R7
 32
-R32
+R27
 !i10b 1
 R33
 R59
@@ -509,7 +509,7 @@ Vf[OV9CalemHl?bPPI=cSo3
 !s100 Q:X>fL[ThMMHS3gk0TX=83
 R7
 32
-R32
+R27
 !i10b 1
 R33
 Z69 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/memory_tb.vhd|
@@ -528,7 +528,7 @@ V<U:T?Y^89nbO9D[Ph;VVa3
 !s100 X]4>NR<ZWoVnLj8jN=]z33
 R7
 32
-R32
+R27
 !i10b 1
 R33
 R69
@@ -549,7 +549,7 @@ VZ3H9Pb??c`m>BcHCRzZYF0
 !s100 _2UDAUC3g7IildLSMjk8J0
 R7
 32
-R32
+R27
 !i10b 1
 R33
 Z74 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/mux4x1.vhd|
@@ -567,7 +567,7 @@ VkGX[eg[X8Gice]SEhO:TM1
 !s100 IkTfFeRT95;ZW;``HeeN50
 R7
 32
-R32
+R27
 !i10b 1
 R33
 R74
@@ -588,7 +588,7 @@ V`E9BT74I<c]booceR=oL]1
 !s100 >BSoY93FaSE8X_5IS<>^b1
 R7
 32
-R32
+R27
 !i10b 1
 R33
 Z79 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/my_DFF.vhd|
@@ -606,7 +606,7 @@ V:7g0N[COjaJ1GGcn?eoPV2
 !s100 RGo;T>4I=Qo0^S<Nb0fX72
 R7
 32
-R32
+R27
 !i10b 1
 R33
 R79
@@ -627,7 +627,7 @@ V=QN<Z7zAmk:Kd]2A=OI`_2
 !s100 YQm96HXYUP1@K6hkZc5<W0
 R7
 32
-R32
+R27
 !i10b 1
 R33
 Z84 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/my_nDFF.vhd|
@@ -645,7 +645,7 @@ V@h5zAbjY<Q50QY3PK6P=I0
 !s100 FR?BG[jGU6L5[bC1h=eWB1
 R7
 32
-R32
+R27
 !i10b 1
 R33
 R84
@@ -667,7 +667,7 @@ Vmogc=6@`Wjl50Vdl:M[=F2
 !s100 >0]m<5Z2M<c[C<0?IHn131
 R7
 32
-R32
+R27
 !i10b 1
 R33
 Z88 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/pc.vhd|
@@ -686,7 +686,7 @@ VZ]bYYVAaTKZ7lK=`Wke110
 !s100 <z:9V3J>ljHF`OSnOL2EO1
 R7
 32
-R32
+R27
 !i10b 1
 R33
 R88
@@ -695,7 +695,7 @@ R89
 R12
 R13
 Eprocessor
-Z90 w1714045177
+Z90 w1715636894
 R1
 R2
 R3
@@ -708,7 +708,7 @@ Vf^I_6TKRVKMEzkoZ8V7n<2
 !s100 2^iRLU`^bGZ76_f33LkhR0
 R7
 32
-R32
+R27
 !i10b 1
 R33
 Z93 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/processor.vhd|
@@ -721,13 +721,13 @@ R1
 R2
 R3
 DEx4 work 9 processor 0 22 f^I_6TKRVKMEzkoZ8V7n<2
-l199
+l209
 L14
-V_8<C<59g8zH<Tc<:0FaAz1
-!s100 3Ia^DdziD<A>cZeg2cP@W2
+VK>F<LSl`1SYfeCR<Eb7b91
+!s100 igT@IaQL<Am?VQ<8gDfV<3
 R7
 32
-R32
+R27
 !i10b 1
 R33
 R93
@@ -749,9 +749,9 @@ VSWhE:_VY?mZoQJT>6MiRn3
 !s100 [NmX;?bKzg;`PO69n4U]M3
 R7
 32
-Z98 !s110 1714046056
+Z98 !s110 1715637117
 !i10b 1
-Z99 !s108 1714046056.000000
+Z99 !s108 1715637117.000000
 Z100 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/processor2.vhd|
 Z101 !s107 E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/processor2.vhd|
 !i113 1
@@ -789,9 +789,9 @@ V2cHLXk9fQBiX9OmQ^Nd^=3
 !s100 A@j8z32GR3[1[bR]=7XGA2
 R7
 32
-Z105 !s110 1714049023
+Z105 !s110 1715639096
 !i10b 1
-Z106 !s108 1714049023.000000
+Z106 !s108 1715639096.000000
 Z107 !s90 -reportprogress|300|processor_tb.vhd|
 Z108 !s107 processor_tb.vhd|
 !i113 1
@@ -828,7 +828,7 @@ R7
 32
 R98
 !i10b 1
-R33
+R99
 Z115 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/processor_tb2.vhd|
 Z116 !s107 E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/processor_tb2.vhd|
 !i113 1
@@ -846,7 +846,7 @@ R7
 32
 R98
 !i10b 1
-R33
+R99
 R115
 R116
 !i113 1
@@ -1111,7 +1111,7 @@ Vl@]m3G0k2h1Zf^Hn`HeAB1
 !s100 3YLkX<8mbNgOQ>]DbIIkN1
 R7
 32
-R32
+R27
 !i10b 1
 R33
 Z147 !s90 -reportprogress|300|-work|work|-2002|-explicit|-stats=none|E:/College/3- Senior 1/Semester 2/Computer Architecture/Project/Code/my_ndff_tb.vhd|
@@ -1129,7 +1129,7 @@ Vb?0`:88=?@G]nfOA8g_Bn0
 !s100 T4ZCnO7gXZEAO?kcTMnG13
 R7
 32
-R32
+R27
 !i10b 1
 R33
 R147
