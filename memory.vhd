@@ -15,7 +15,9 @@ ENTITY memory IS
         read_data : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
 
         protect_signal : IN STD_LOGIC;
-        free_signal : IN STD_LOGIC
+        free_signal : IN STD_LOGIC;
+
+        protected_address_access : OUT STD_LOGIC
 
     );
 END ENTITY memory;
@@ -37,52 +39,52 @@ ARCHITECTURE memory_arch OF memory IS
 
 BEGIN
 
-PROCESS (clk) IS
+    PROCESS (clk) IS
 
-    --variable if it is ored with any address it will have the last bit on the left with 1
-    variable or_to_add_protected_bit : STD_LOGIC_VECTOR(16 DOWNTO 0);
-    --variable if the free signal is 1 then the address will be reset and have the last bit on the left with 0
-    variable reset_address_content : STD_LOGIC_VECTOR(16 DOWNTO 0);
+        --variable if it is ored with any address it will have the last bit on the left with 1
+        VARIABLE or_to_add_protected_bit : STD_LOGIC_VECTOR(16 DOWNTO 0);
+        --variable if the free signal is 1 then the address will be reset and have the last bit on the left with 0
+        VARIABLE reset_address_content : STD_LOGIC_VECTOR(16 DOWNTO 0);
 
     BEGIN
 
-    or_to_add_protected_bit := "10000000000000000";
-    reset_address_content := "00000000000000000";
+        or_to_add_protected_bit := "10000000000000000";
+        reset_address_content := "00000000000000000";
 
         IF rising_edge(clk) THEN
             --check on protect_signal and free_signal
             IF protect_signal = '1' THEN
-                memory_array(to_integer(unsigned(address))) <= (or_to_add_protected_bit or memory_array(to_integer(unsigned(address))));
-                memory_array(to_integer(unsigned(address)+1)) <= (or_to_add_protected_bit or memory_array(to_integer(unsigned(address)+1)));
+                memory_array(to_integer(unsigned(address))) <= (or_to_add_protected_bit OR memory_array(to_integer(unsigned(address))));
+                memory_array(to_integer(unsigned(address) + 1)) <= (or_to_add_protected_bit OR memory_array(to_integer(unsigned(address) + 1)));
 
             ELSIF free_signal = '1' THEN
                 memory_array(to_integer(unsigned(address))) <= reset_address_content;
-                memory_array(to_integer(unsigned(address)+1)) <= reset_address_content;
+                memory_array(to_integer(unsigned(address) + 1)) <= reset_address_content;
 
-            --both free_signal and protect_signal are '0'
-            --check on write_enable and read_enable
+                --both free_signal and protect_signal are '0'
+                --check on write_enable and read_enable
             ELSE
                 IF write_enable = '1' THEN
                     --check if the last bit is 1 (protected)
                     --if it is 1 then don't write on it
 
-                    if memory_array(to_integer(unsigned(address)))(16) = '0' THEN
-                    --default is that the last bit is 0 (free)
-                    memory_array(to_integer(unsigned(address))) <= '0' & write_data(31 DOWNTO 16);
-                    memory_array(to_integer(unsigned(address)+1)) <= '0' & write_data (15 DOWNTO 0);
-                    -- ELSE
-                    --what should i output if the protected bit is 1?
-                    end if;
+                    IF memory_array(to_integer(unsigned(address)))(16) = '0' THEN
+                        --default is that the last bit is 0 (free)
+                        memory_array(to_integer(unsigned(address))) <= '0' & write_data(31 DOWNTO 16);
+                        memory_array(to_integer(unsigned(address) + 1)) <= '0' & write_data (15 DOWNTO 0);
+                        -- ELSE
+                        --what should i output if the protected bit is 1?
+                    END IF;
 
                 END IF;
-                
+
                 --read the the 16 bits only don't read the last bit
                 IF read_enable = '1' THEN
-                    read_data <= memory_array(to_integer(unsigned(address)))(15 DOWNTO 0) & memory_array(to_integer(unsigned(address)+1))(15 DOWNTO 0);
+                    read_data <= memory_array(to_integer(unsigned(address)))(15 DOWNTO 0) & memory_array(to_integer(unsigned(address) + 1))(15 DOWNTO 0);
 
                 END IF;
-            end if; 
-            
+            END IF;
+
         END IF;
     END PROCESS;
 END memory_arch;
