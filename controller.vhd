@@ -13,7 +13,7 @@ ENTITY controller IS
 		zero_flag : IN STD_LOGIC;
 
 		-- Immediate Enable
-		immediate_enable : OUT STD_LOGIC;
+		immediate_stall : OUT STD_LOGIC;
 
 		-- fetch signals
 		fetch_pc_sel : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
@@ -46,8 +46,11 @@ END ENTITY controller;
 
 ARCHITECTURE arch_controller OF controller IS
 
-	TYPE state_type IS (instruction, waitOnce, immediate);
-	SIGNAL state : state_type := instruction;
+	TYPE immediate_state_type IS (instruction, waitOnce, immediate);
+	SIGNAL immediate_state : immediate_state_type := instruction;
+
+	TYPE interrupt_state_type IS (instruction, push_pc, push_ccr, update_pc);
+	SIGNAL interrupt_state : interrupt_state_type := instruction;
 BEGIN
 
 	-- Reading Immediate value
@@ -56,35 +59,57 @@ BEGIN
 	PROCESS (clk) IS
 	BEGIN
 		IF falling_edge(clk) THEN
-
 			-- FSM
-			CASE state IS
+			CASE immediate_state IS
 				WHEN instruction =>
 					IF isImmediate = '1' THEN
-						state <= waitOnce;
-						immediate_enable <= '0';
+						immediate_state <= waitOnce;
+						immediate_stall <= '0';
 					ELSE
-						immediate_enable <= '1';
+						immediate_stall <= '1';
 					END IF;
 				WHEN waitOnce =>
-					state <= immediate;
-					immediate_enable <= '1';
+					immediate_state <= immediate;
+					immediate_stall <= '1';
 				WHEN immediate =>
 					-- check neroh le waitOnce wala la2
 					IF isImmediate = '1' THEN
-						state <= waitOnce;
-						immediate_enable <= '0';
+						immediate_state <= waitOnce;
+						immediate_stall <= '0';
 					ELSE
-						state <= instruction;
-						immediate_enable <= '1';
+						immediate_state <= instruction;
+						immediate_stall <= '1';
 					END IF;
+			END CASE;
+		END IF;
+	END PROCESS;
+
+	-- TODO: interrupt
+	-- PUSH PC
+	-- PUSH CCR
+	-- Ret Data Memory[2]
+	PROCESS (clk) IS
+	BEGIN
+		IF falling_edge(clk) THEN
+			-- FSM
+			CASE interrupt_state IS
+				WHEN instruction =>
+					IF interrupt_signal = '1' THEN
+						interrupt_state <= push_pc;
+					ELSE
+					END IF;
+				WHEN push_pc =>
+					interrupt_state <= push_ccr;
+				WHEN push_ccr =>
+					interrupt_state <= update_pc;
+				WHEN update_pc =>
+					interrupt_state <= instruction;
 			END CASE;
 		END IF;
 	END PROCESS;
 
 	opcode_process : PROCESS (opcode) IS
 	BEGIN
-
 		CASE opcode IS
 			WHEN "000000" =>
 

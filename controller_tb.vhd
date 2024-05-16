@@ -17,7 +17,7 @@ ARCHITECTURE behavior OF controller_tb IS
             isImmediate : IN STD_LOGIC;
 
             -- Immediate Enable
-            immediate_enable : OUT STD_LOGIC;
+            immediate_stall : OUT STD_LOGIC;
 
             -- fetch signals
             fetch_pc_sel : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
@@ -70,7 +70,7 @@ ARCHITECTURE behavior OF controller_tb IS
     SIGNAL write_back_register_write_data_1 : STD_LOGIC_VECTOR(1 DOWNTO 0);
     SIGNAL write_back_register_write_address_1 : STD_LOGIC;
     SIGNAL isImmediate : STD_LOGIC := '0';
-    SIGNAL immediate_enable : STD_LOGIC;
+    SIGNAL immediate_stall : STD_LOGIC;
 
     -- Testbench
 BEGIN
@@ -79,7 +79,7 @@ BEGIN
         clk => clk,
         opcode => operation,
         isImmediate => isImmediate,
-        immediate_enable => immediate_enable,
+        immediate_stall => immediate_stall,
         fetch_pc_sel => fetch_pc_sel,
         decode_reg_read => decode_reg_read,
         decode_branch => decode_branch,
@@ -131,7 +131,7 @@ BEGIN
         ASSERT write_back_register_write1 = '1' REPORT "not: write_back_register_write1 is not the expected value" SEVERITY ERROR;
         ASSERT write_back_register_write2 = '0' REPORT "not: write_back_register_write2 is not the expected value" SEVERITY ERROR;
         ASSERT write_back_register_write_address_1 = '0' REPORT "not: write_back_register_write_address_1 is not the expected value" SEVERITY ERROR;
-        ASSERT immediate_enable = '1' REPORT "not: immediate_enable is not the expected value" SEVERITY ERROR;
+        ASSERT immediate_stall = '1' REPORT "not: immediate_stall is not the expected value" SEVERITY ERROR;
 
         operation <= "000100"; -- dec
         WAIT FOR 100 ns;
@@ -151,7 +151,7 @@ BEGIN
         ASSERT write_back_register_write1 = '1' REPORT "dec: write_back_register_write1 is not the expected value" SEVERITY ERROR;
         ASSERT write_back_register_write2 = '0' REPORT "dec: write_back_register_write2 is not the expected value" SEVERITY ERROR;
         ASSERT write_back_register_write_address_1 = '0' REPORT "dec: write_back_register_write_address_1 is not the expected value" SEVERITY ERROR;
-        ASSERT immediate_enable = '1' REPORT "dec: immediate_enable is not the expected value" SEVERITY ERROR;
+        ASSERT immediate_stall = '1' REPORT "dec: immediate_stall is not the expected value" SEVERITY ERROR;
 
         operation <= "010000"; -- mov
         WAIT FOR 100 ns;
@@ -171,7 +171,7 @@ BEGIN
         ASSERT write_back_register_write1 = '1' REPORT "mov: write_back_register_write1 is not the expected value" SEVERITY ERROR;
         ASSERT write_back_register_write2 = '0' REPORT "mov: write_back_register_write2 is not the expected value" SEVERITY ERROR;
         ASSERT write_back_register_write_address_1 = '0' REPORT "mov: write_back_register_write_address_1 is not the expected value" SEVERITY ERROR;
-        ASSERT immediate_enable = '1' REPORT "mov: immediate_enable is not the expected value" SEVERITY ERROR;
+        ASSERT immediate_stall = '1' REPORT "mov: immediate_stall is not the expected value" SEVERITY ERROR;
 
         isImmediate <= '1';
         operation <= "100100"; -- ldm
@@ -192,7 +192,7 @@ BEGIN
         ASSERT write_back_register_write1 = '1' REPORT "ldm: write_back_register_write1 is not the expected value" SEVERITY ERROR;
         ASSERT write_back_register_write2 = '0' REPORT "ldm: write_back_register_write2 is not the expected value" SEVERITY ERROR;
         ASSERT write_back_register_write_address_1 = '0' REPORT "ldm: write_back_register_write_address_1 is not the expected value" SEVERITY ERROR;
-        ASSERT immediate_enable = '0' REPORT "ldm: immediate_enable is not the expected value" SEVERITY ERROR;
+        ASSERT immediate_stall = '0' REPORT "ldm: immediate_stall is not the expected value" SEVERITY ERROR;
 
         isImmediate <= '0';
         operation <= "010101"; -- or
@@ -213,7 +213,7 @@ BEGIN
         ASSERT write_back_register_write1 = '1' REPORT "or: write_back_register_write1 is not the expected value" SEVERITY ERROR;
         ASSERT write_back_register_write2 = '0' REPORT "or: write_back_register_write2 is not the expected value" SEVERITY ERROR;
         ASSERT write_back_register_write_address_1 = '0' REPORT "or: write_back_register_write_address_1 is not the expected value" SEVERITY ERROR;
-        ASSERT immediate_enable = '1' REPORT "or: immediate_enable is not the expected value" SEVERITY ERROR;
+        ASSERT immediate_stall = '1' REPORT "or: immediate_stall is not the expected value" SEVERITY ERROR;
 
         operation <= "010111"; -- cmp
         WAIT FOR 100 ns;
@@ -233,7 +233,7 @@ BEGIN
         ASSERT write_back_register_write1 = '0' REPORT "cmp: write_back_register_write1 is not the expected value" SEVERITY ERROR;
         ASSERT write_back_register_write2 = '0' REPORT "cmp: write_back_register_write2 is not the expected value" SEVERITY ERROR;
         ASSERT write_back_register_write_address_1 = '0' REPORT "cmp: write_back_register_write_address_1 is not the expected value" SEVERITY ERROR;
-        ASSERT immediate_enable = '1' REPORT "cmp: immediate_enable is not the expected value" SEVERITY ERROR;
+        ASSERT immediate_stall = '1' REPORT "cmp: immediate_stall is not the expected value" SEVERITY ERROR;
 
         -- Add more operations and wait states as needed
 

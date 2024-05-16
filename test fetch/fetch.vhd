@@ -2,7 +2,7 @@ LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 USE ieee.numeric_std.ALL;
 
-ENTITY fetch IS
+ENTITY fetch1 IS
     PORT (
         clk : IN STD_LOGIC;
         reset : IN STD_LOGIC;
@@ -23,7 +23,7 @@ ENTITY fetch IS
 
         ----------F/D reg----------
         --enables
-        immediate_enable : IN STD_LOGIC;
+        immediate_stall : IN STD_LOGIC;
         FD_enable : IN STD_LOGIC;
         FD_enable_loaduse : IN STD_LOGIC;
         pc_enable_hazard_detection : IN STD_LOGIC;
@@ -46,9 +46,9 @@ ENTITY fetch IS
         propagated_pc_plus_one : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
 
     );
-END ENTITY fetch;
+END ENTITY fetch1;
 
-ARCHITECTURE arch_fetch OF fetch IS
+ARCHITECTURE arch_fetch OF fetch1 IS
 
     --Multiplexers
     COMPONENT mux4x1 IS
@@ -122,8 +122,8 @@ ARCHITECTURE arch_fetch OF fetch IS
     --signal to reset pc_counter for the first time only to start for pc = 0
     SIGNAL reset_pc : STD_LOGIC := '1';
     --internal signal for this
-    signal pc_reset_internal : STD_LOGIC;
-    
+    SIGNAL pc_reset_internal : STD_LOGIC;
+
 BEGIN
 
     pc_plus_one <= STD_LOGIC_VECTOR(unsigned(pc_instruction_address) + 1);
@@ -156,11 +156,12 @@ BEGIN
     );
 
     --enabled when the pc enable coming from hazard detection unit is 1 and no interrupt signal (0)
-    pc_enable <= pc_enable_hazard_detection and not interrupt_signal;
+    pc_enable <= pc_enable_hazard_detection AND NOT interrupt_signal;
 
-    pc_reset_internal <= reset or reset_pc;
+    pc_reset_internal <= reset OR reset_pc;
 
-    program_counter : my_nDFF GENERIC MAP(32) PORT MAP(
+    program_counter : my_nDFF GENERIC MAP(
+        32) PORT MAP(
         clk => clk,
         reset => pc_reset_internal,
         enable => pc_enable,
@@ -177,7 +178,7 @@ BEGIN
     );
 
     FD_flush_internal <= reset OR FD_flush OR FD_flush_exception_unit;
-    FD_enable_internal <= immediate_enable AND FD_enable AND FD_enable_loaduse;
+    FD_enable_internal <= immediate_stall AND FD_enable AND FD_enable_loaduse;
 
     fetch_decode : my_nDFF GENERIC MAP(16)
     PORT MAP(
@@ -195,7 +196,7 @@ BEGIN
     Rdest <= instruction_out_from_F_D_reg(3 DOWNTO 1);
     imm_flag <= instruction_out_from_F_D_reg(0);
 
-    FD_imm_enable <= NOT immediate_enable;
+    FD_imm_enable <= NOT immediate_stall;
 
     FD_enable_imm_internal <= FD_enable AND FD_imm_enable;
 
@@ -250,8 +251,6 @@ END ARCHITECTURE arch_fetch;
 --     SIGNAL fetch_decode_imm_d : STD_LOGIC_VECTOR(15 DOWNTO 0);
 --     --signal to hold the old instruction
 --     SIGNAL old_instruction : STD_LOGIC_VECTOR(15 DOWNTO 0);
-
-
 -- BEGIN
 
 --     pc_plus_one <= STD_LOGIC_VECTOR(unsigned(pc_instruction_address) + 1);
@@ -305,9 +304,7 @@ END ARCHITECTURE arch_fetch;
 --     );
 
 --     FD_flush_internal <= reset OR FD_flush OR FD_flush_exception_unit;
---     FD_enable_internal <= immediate_enable AND FD_enable AND FD_enable_loaduse;
-
-    
+--     FD_enable_internal <= immediate_stall AND FD_enable AND FD_enable_loaduse;
 --     -- Add this process to conditionally assign the inputs to the flip-flops
 --     process(clk)
 --     begin
@@ -340,7 +337,7 @@ END ARCHITECTURE arch_fetch;
 --     Rdest <= instruction_out_from_F_D_reg(3 DOWNTO 1);
 --     imm_flag <= instruction_out_from_F_D_reg(0);
 
---     FD_imm_enable <= NOT immediate_enable;
+--     FD_imm_enable <= NOT immediate_stall;
 
 --     FD_enable_imm_internal <= FD_enable AND FD_imm_enable;
 
@@ -355,5 +352,3 @@ END ARCHITECTURE arch_fetch;
 
 --     propagated_pc <= pc_instruction_address;
 --     propagated_pc_plus_one <= STD_LOGIC_VECTOR(unsigned(pc_instruction_address) + 1);
-
--- END ARCHITECTURE arch_fetch;
