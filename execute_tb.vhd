@@ -56,7 +56,10 @@ ARCHITECTURE behavior OF execute_tb IS
         overflow_flag_out_exception_handling : OUT std_logic;
         address1_out_forwarding_unit : OUT std_logic_vector (2 downto 0);
         address2_out_forwarding_unit : OUT std_logic_vector (2 downto 0);
-        pc_out_exception_handling : OUT std_logic_vector (31 downto 0)
+        pc_out_exception_handling : OUT std_logic_vector (31 downto 0);
+        
+        in_port_input : in std_logic_vector(31 downto 0);
+        in_port_output : out std_logic_vector(31 downto 0)
     );
     END COMPONENT;
 
@@ -87,6 +90,8 @@ ARCHITECTURE behavior OF execute_tb IS
    signal RST_signal_load_use_input : std_logic := '0';
    signal EM_flush_exception_handling_in : std_logic := '0';
    signal EM_enable_exception_handling_in : std_logic := '0';
+   signal in_port_input : std_logic_vector(31 downto 0) := (others => '0');
+   
   --  signal memory_control_signals : std_logic_vector (7 downto 0) := (others => '0');
   --  signal write_back_control_signals : std_logic_vector (4 downto 0) := (others => '0');
   --  signal flush_exception_handling : std_logic := '0';
@@ -109,7 +114,7 @@ ARCHITECTURE behavior OF execute_tb IS
    signal address1_out_forwarding_unit : std_logic_vector (2 downto 0);
    signal address2_out_forwarding_unit : std_logic_vector (2 downto 0);
    signal pc_out_exception_handling : std_logic_vector (31 downto 0);
-
+    signal in_port_output : std_logic_vector(31 downto 0);
    -- Clock period definitions
    constant clk_period : time := 10 ns;
 
@@ -162,7 +167,9 @@ BEGIN
         overflow_flag_out_exception_handling => overflow_flag_out_exception_handling,
         address1_out_forwarding_unit => address1_out_forwarding_unit,
         address2_out_forwarding_unit => address2_out_forwarding_unit,
-        pc_out_exception_handling => pc_out_exception_handling
+        pc_out_exception_handling => pc_out_exception_handling,
+        in_port_input => in_port_input,
+        in_port_output => in_port_output
    );
 
    -- Clock process definitions
@@ -210,6 +217,7 @@ BEGIN
         RST_signal_load_use_input <= '0';
         EM_flush_exception_handling_in <= '0';
         EM_enable_exception_handling_in <= '0';
+        in_port_input <= (others => '0');
         -- memory_control_signals <= (others => '0');
         -- write_back_control_signals <= (others => '0');
         -- flush_exception_handling <= '0';

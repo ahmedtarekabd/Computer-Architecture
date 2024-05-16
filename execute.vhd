@@ -108,7 +108,10 @@ ENTITY execute IS
     overflow_flag_out_exception_handling : OUT STD_LOGIC;
     address1_out_forwarding_unit : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
     address2_out_forwarding_unit : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
-    pc_out_exception_handling : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
+    pc_out_exception_handling : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+    ------------------- In Port -----------------
+    in_port_input : in std_logic_vector(31 downto 0);
+    in_port_output : out std_logic_vector(31 downto 0)
 
     );
 END execute;
@@ -168,8 +171,8 @@ ARCHITECTURE arch_execute OF execute IS
     SIGNAL flag_register_out_temp : STD_LOGIC_VECTOR(3 DOWNTO 0);
 
     -- for Execute/Mem register
-    SIGNAL d_output : STD_LOGIC_VECTOR(190 DOWNTO 0);
-    SIGNAL q_output : STD_LOGIC_VECTOR(190 DOWNTO 0);
+    SIGNAL d_output : STD_LOGIC_VECTOR(222 DOWNTO 0);
+    SIGNAL q_output : STD_LOGIC_VECTOR(222 DOWNTO 0);
 
     -- output signals
     SIGNAL alu_out_temp : STD_LOGIC_VECTOR(31 DOWNTO 0);
@@ -276,6 +279,7 @@ BEGIN
 
 
     d_output <= 
+        in_port_input &
         control_signals_memory_in & 
         control_signals_write_back_in & 
         destination_address & 
@@ -295,7 +299,7 @@ BEGIN
     execute_mem_reset <= RST_signal_input OR RST_signal_load_use_input OR EM_flush_exception_handling_in;
 
     -- Execute/Mem register
-    execute_mem_reg : my_nDFF GENERIC MAP(191)
+    execute_mem_reg : my_nDFF GENERIC MAP(223)
     PORT MAP(
         clk, execute_mem_reset, execute_mem_enable, d_output, q_output
     );
@@ -315,7 +319,7 @@ BEGIN
     -- 1 bit immediate flag
     -- 191 bits in total.
     -- from left to right most significant to least significant
-
+    in_port_output <= q_output(222 DOWNTO 191);
     control_signals_memory_out <= q_output(190 DOWNTO 180);
     control_signals_write_back_out <= q_output(179 DOWNTO 174);
     destination_address_out <= q_output(173 DOWNTO 171);
