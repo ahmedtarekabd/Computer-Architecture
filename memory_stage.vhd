@@ -9,10 +9,10 @@ ENTITY memory_stage IS
         clk : IN STD_LOGIC;
         --control signals
         --TODO: confirm this size with tarek (order of bits as the report)
-        mem_control_signals_in : IN STD_LOGIC_VECTOR(10 DOWNTO 0);
+        mem_control_signals_in : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
         wb_control_signals_in : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
         RST : IN STD_LOGIC;
-        MW_enable : IN STD_LOGIC;
+        MW_enable : IN STD_LOGIC; -- bat3et el register el kber msh el memory
         MW_flush_from_exception : IN STD_LOGIC;
         --PC
         PC_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
@@ -118,18 +118,18 @@ ARCHITECTURE memory_stage_arch OF memory_stage IS
 BEGIN
 
     -- Memory
-    read_enable <= mem_control_signals_in(9) OR RST;
+    read_enable <= mem_control_signals_in(8) OR RST;
     mem : memory
     PORT MAP(
         clk => clk,
         -- addressing the memory using the 12 bits only
         address => mem_address_mux_out(11 DOWNTO 0),
-        write_enable => mem_control_signals_in(10),
+        write_enable => mem_control_signals_in(9),
         write_data => MW_data_mux_out,
         read_enable => read_enable,
         read_data => mem_read_data_internal,
-        protect_signal => mem_control_signals_in(2),
-        free_signal => mem_control_signals_in(1)
+        protect_signal => mem_control_signals_in(1),
+        free_signal => mem_control_signals_in(0)
     );
 
     -- SP register
@@ -153,8 +153,8 @@ BEGIN
         inputB => SP_mux_inputB,
         inputC => SP_mux_inputC,
         inputD => SP_out_temp, -- don't care
-        Sel_lower => mem_control_signals_in(7),
-        Sel_higher => mem_control_signals_in(8),
+        Sel_lower => mem_control_signals_in(6),
+        Sel_higher => mem_control_signals_in(7),
         output => SP_mux_out
     );
 
@@ -162,7 +162,7 @@ BEGIN
     PROCESS (RST, mem_control_signals_in)
     BEGIN
         IF (RST = '0') THEN
-            mem_address_mux_selectors <= mem_control_signals_in(6 DOWNTO 5);
+            mem_address_mux_selectors <= mem_control_signals_in(5 DOWNTO 4);
         ELSE
             mem_address_mux_selectors <= "10";
         END IF;
@@ -187,8 +187,8 @@ BEGIN
         inputB => PC_plus_one_in,
         inputC => PC_in,
         inputD => CCR_in,
-        Sel_lower => mem_control_signals_in(3),
-        Sel_higher => mem_control_signals_in(4),
+        Sel_lower => mem_control_signals_in(2),
+        Sel_higher => mem_control_signals_in(3),
         output => MW_data_mux_out
     );
 
