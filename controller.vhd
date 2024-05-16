@@ -13,7 +13,7 @@ ENTITY controller IS
 		zero_flag : IN STD_LOGIC;
 
 		-- Immediate Enable
-		immediate_enable : OUT STD_LOGIC;
+		immediate_stall : OUT STD_LOGIC;
 
 		-- fetch signals
 		fetch_pc_sel : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
@@ -64,21 +64,21 @@ BEGIN
 				WHEN instruction =>
 					IF isImmediate = '1' THEN
 						immediate_state <= waitOnce;
-						immediate_enable <= '0';
+						immediate_stall <= '0';
 					ELSE
-						immediate_enable <= '1';
+						immediate_stall <= '1';
 					END IF;
 				WHEN waitOnce =>
 					immediate_state <= immediate;
-					immediate_enable <= '1';
+					immediate_stall <= '1';
 				WHEN immediate =>
 					-- check neroh le waitOnce wala la2
 					IF isImmediate = '1' THEN
 						immediate_state <= waitOnce;
-						immediate_enable <= '0';
+						immediate_stall <= '0';
 					ELSE
 						immediate_state <= instruction;
-						immediate_enable <= '1';
+						immediate_stall <= '1';
 					END IF;
 			END CASE;
 		END IF;
