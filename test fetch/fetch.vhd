@@ -2,7 +2,7 @@ LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 USE ieee.numeric_std.ALL;
 
-ENTITY fetch IS
+ENTITY fetch1 IS
     PORT (
         clk : IN STD_LOGIC;
         reset : IN STD_LOGIC;
@@ -46,9 +46,9 @@ ENTITY fetch IS
         propagated_pc_plus_one : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
 
     );
-END ENTITY fetch;
+END ENTITY fetch1;
 
-ARCHITECTURE arch_fetch OF fetch IS
+ARCHITECTURE arch_fetch OF fetch1 IS
 
     --Multiplexers
     COMPONENT mux4x1 IS
