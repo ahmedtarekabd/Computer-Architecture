@@ -8,7 +8,7 @@ END ENTITY fetch_tb;
 ARCHITECTURE behavior OF fetch_tb IS
 
     -- Component Declaration for the Unit Under Test (UUT)
-    COMPONENT fetch
+    COMPONENT fetch1
         PORT (
             clk : IN STD_LOGIC;
             reset : IN STD_LOGIC;
@@ -61,13 +61,14 @@ ARCHITECTURE behavior OF fetch_tb IS
     SIGNAL propagated_pc : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL propagated_pc_plus_one : STD_LOGIC_VECTOR(31 DOWNTO 0);
 
+
     -- Clock period definitions
     CONSTANT clk_period : TIME := 10 ns;
 
 BEGIN
 
     -- Instantiate the Unit Under Test (UUT)
-    uut : fetch PORT MAP(
+    uut : fetch1 PORT MAP(
         clk => clk,
         reset => reset,
         pc_mux1_selector => pc_mux1_selector,
@@ -148,8 +149,9 @@ BEGIN
         --  propagated_pc : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
         --  propagated_pc_plus_one : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
         RST_signal <= '0';
-        read_data_from_memory <= (OTHERS => '0');
-        branch_address <= (OTHERS => '0');
+        read_data_from_memory <= "00000000000000000000000000000100";
+        -- branch_address <="0000000000000000000000000000010";
+        branch_address <="00000000011111111110000000000010";
         interrupt_signal <= '0';
         FD_enable <= '1';
         FD_enable_loaduse <= '1';
@@ -158,86 +160,159 @@ BEGIN
 
         pc_enable_hazard_detection <= '1';
         immediate_stall <= '1';
-        --first testcase - > fetch first instruction
+        --first testcase - > fetch first instruction (00000000000000000000000000000000)
         pc_mux1_selector <= "00";
         pc_mux2_selector <= "00";
         WAIT FOR clk_period;
-        ASSERT (opcode = "000000") REPORT "First instruction opcode is wrong" SEVERITY error;
-        ASSERT (Rsrc1 = "000") REPORT "First instruction Rsrc1 is wrong" SEVERITY error;
-        ASSERT (Rsrc2 = "000") REPORT "First instruction Rsrc2 is wrong" SEVERITY error;
-        ASSERT (Rdest = "000") REPORT "First instruction Rdest is wrong" SEVERITY error;
-        ASSERT (imm_flag = '0') REPORT "First instruction imm_flag is wrong" SEVERITY error;
-        -- assert (selected_immediate_out = "0000000000000000") report "First instruction selected_immediate_out is wrong" severity error;
-        ASSERT (propagated_pc = "00000000000000000000000000000000") REPORT "First instruction propagated_pc is wrong" SEVERITY error;
-        ASSERT (propagated_pc_plus_one = "00000000000000000000000000000001") REPORT "First instruction propagated_pc_plus_one is wrong" SEVERITY error;
+        ASSERT (opcode = "000000") REPORT "Testcase 2 opcode is wrong" SEVERITY error;
+        ASSERT (Rsrc1 = "000") REPORT "Testcase 2 Rsrc1 is wrong" SEVERITY error;
+        ASSERT (Rsrc2 = "000") REPORT "Testcase 2 Rsrc2 is wrong" SEVERITY error;
+        ASSERT (Rdest = "000") REPORT "Testcase 2 Rdest is wrong" SEVERITY error;
+        ASSERT (imm_flag = '0') REPORT "Testcase 2 imm_flag is wrong" SEVERITY error;
+        ASSERT (propagated_pc = "00000000000000000000000000000000") REPORT "Testcase 2 propagated_pc is wrong" SEVERITY error;
+        ASSERT (propagated_pc_plus_one = "00000000000000000000000000000001") REPORT "Testcase 2 propagated_pc_plus_one is wrong" SEVERITY error;
 
-        --second testcase - > second instruction with immediate
-        pc_mux1_selector <= "00";
-        pc_mux2_selector <= "00";
-        WAIT FOR clk_period;
-        ASSERT (opcode = "000000") REPORT "First instruction opcode is wrong" SEVERITY error;
-        ASSERT (Rsrc1 = "000") REPORT "First instruction Rsrc1 is wrong" SEVERITY error;
-        ASSERT (Rsrc2 = "000") REPORT "First instruction Rsrc2 is wrong" SEVERITY error;
-        ASSERT (Rdest = "000") REPORT "First instruction Rdest is wrong" SEVERITY error;
-        ASSERT (imm_flag = '0') REPORT "First instruction imm_flag is wrong" SEVERITY error;
-        -- assert (selected_immediate_out = "0000000000000000") report "First instruction selected_immediate_out is wrong" severity error;
-        ASSERT (propagated_pc = "00000000000000000000000000000001") REPORT "First instruction propagated_pc is wrong" SEVERITY error;
-        ASSERT (propagated_pc_plus_one = "00000000000000000000000000000010") REPORT "First instruction propagated_pc_plus_one is wrong" SEVERITY error;
-
-        --third testcase - > 
+        --second testcase - > second instruction with immediate (00000000000000000000000000000001)
         immediate_stall <= '0'; --checkkkkk
         pc_mux1_selector <= "00";
         pc_mux2_selector <= "00";
         WAIT FOR clk_period;
-        ASSERT (opcode = "000000") REPORT "First instruction opcode is wrong" SEVERITY error;
-        ASSERT (Rsrc1 = "000") REPORT "First instruction Rsrc1 is wrong" SEVERITY error;
-        ASSERT (Rsrc2 = "000") REPORT "First instruction Rsrc2 is wrong" SEVERITY error;
-        ASSERT (Rdest = "000") REPORT "First instruction Rdest is wrong" SEVERITY error;
-        ASSERT (imm_flag = '1') REPORT "First instruction imm_flag is wrong" SEVERITY error;
-        -- ASSERT (selected_immediate_out = "0000000000000010") REPORT "First instruction selected_immediate_out is wrong" SEVERITY error;
-        ASSERT (propagated_pc = "00000000000000000000000000000010") REPORT "First instruction propagated_pc is wrong" SEVERITY error;
-        ASSERT (propagated_pc_plus_one = "00000000000000000000000000000011") REPORT "First instruction propagated_pc_plus_one is wrong" SEVERITY error;
-
-        --fourth testcase - >
+        ASSERT (opcode = "000000") REPORT "Testcase 3 opcode is wrong" SEVERITY error;
+        ASSERT (Rsrc1 = "000") REPORT "Testcase 3 Rsrc1 is wrong" SEVERITY error;
+        ASSERT (Rsrc2 = "000") REPORT "Testcase 3 Rsrc2 is wrong" SEVERITY error;
+        ASSERT (Rdest = "000") REPORT "Testcase 3 Rdest is wrong" SEVERITY error;
+        ASSERT (imm_flag = '1') REPORT "Testcase 3 imm_flag is wrong" SEVERITY error;
+        ASSERT (propagated_pc = "00000000000000000000000000000001") REPORT "Testcase 3 propagated_pc is wrong" SEVERITY error;
+        ASSERT (propagated_pc_plus_one = "00000000000000000000000000000010") REPORT "Testcase 3 propagated_pc_plus_one is wrong" SEVERITY error;        
+        --third testcase - > (00000000000000000000000000000010) (stalled cycle)
         immediate_stall <= '1'; --checkkkkk
         pc_mux1_selector <= "00";
         pc_mux2_selector <= "00";
         WAIT FOR clk_period;
-        ASSERT (opcode = "000000") REPORT "First instruction opcode is wrong" SEVERITY error;
-        ASSERT (Rsrc1 = "000") REPORT "First instruction Rsrc1 is wrong" SEVERITY error;
-        ASSERT (Rsrc2 = "000") REPORT "First instruction Rsrc2 is wrong" SEVERITY error;
-        ASSERT (Rdest = "000") REPORT "First instruction Rdest is wrong" SEVERITY error;
-        ASSERT (imm_flag = '1') REPORT "First instruction imm_flag is wrong" SEVERITY error;
-        ASSERT (selected_immediate_out = "0000000000000010") REPORT "First instruction selected_immediate_out is wrong" SEVERITY error;
-        ASSERT (propagated_pc = "00000000000000000000000000000011") REPORT "First instruction propagated_pc is wrong" SEVERITY error;
-        ASSERT (propagated_pc_plus_one = "00000000000000000000000000000100") REPORT "First instruction propagated_pc_plus_one is wrong" SEVERITY error;
-        --fifth testcase - >
+        ASSERT (opcode = "000000") REPORT "Testcase 4 opcode is wrong" SEVERITY error;
+        ASSERT (Rsrc1 = "000") REPORT "Testcase 4 Rsrc1 is wrong" SEVERITY error;
+        ASSERT (Rsrc2 = "000") REPORT "Testcase 4 Rsrc2 is wrong" SEVERITY error;
+        ASSERT (Rdest = "000") REPORT "Testcase 4 Rdest is wrong" SEVERITY error;
+        ASSERT (imm_flag = '1') REPORT "Testcase 4 imm_flag is wrong" SEVERITY error;
+        assert (selected_immediate_out = "0000000000000010") report "Testcase 4 selected_immediate_out is wrong" severity error;
+        ASSERT (propagated_pc = "00000000000000000000000000000010") REPORT "Testcase 4 propagated_pc is wrong" SEVERITY error;
+        ASSERT (propagated_pc_plus_one = "00000000000000000000000000000011") REPORT "Testcase 4 propagated_pc_plus_one is wrong" SEVERITY error;
+        --fourth testcase - > (00000000000000000000000000000011)
         immediate_stall <= '0'; --checkkkkk
         pc_mux1_selector <= "00";
         pc_mux2_selector <= "00";
         WAIT FOR clk_period;
-        ASSERT (opcode = "000000") REPORT "First instruction opcode is wrong" SEVERITY error;
-        ASSERT (Rsrc1 = "000") REPORT "First instruction Rsrc1 is wrong" SEVERITY error;
-        ASSERT (Rsrc2 = "000") REPORT "First instruction Rsrc2 is wrong" SEVERITY error;
-        ASSERT (Rdest = "001") REPORT "First instruction Rdest is wrong" SEVERITY error;
-        ASSERT (imm_flag = '1') REPORT "First instruction imm_flag is wrong" SEVERITY error;
-        -- ASSERT (selected_immediate_out = "0000000000000010") REPORT "First instruction selected_immediate_out is wrong" SEVERITY error;
-        ASSERT (propagated_pc = "00000000000000000000000000000100") REPORT "First instruction propagated_pc is wrong" SEVERITY error;
-        ASSERT (propagated_pc_plus_one = "00000000000000000000000000000101") REPORT "First instruction propagated_pc_plus_one is wrong" SEVERITY error;
-
-        --sixth testcase - >
+        ASSERT (opcode = "000000") REPORT "Testcase 5 opcode is wrong" SEVERITY error;
+        ASSERT (Rsrc1 = "000") REPORT "Testcase 5 Rsrc1 is wrong" SEVERITY error;
+        ASSERT (Rsrc2 = "000") REPORT "Testcase 5 Rsrc2 is wrong" SEVERITY error;
+        ASSERT (Rdest = "001") REPORT "Testcase 5 Rdest is wrong" SEVERITY error;
+        ASSERT (imm_flag = '1') REPORT "Testcase 5 imm_flag is wrong" SEVERITY error;
+        ASSERT (propagated_pc = "00000000000000000000000000000011") REPORT "Testcase 5 propagated_pc is wrong" SEVERITY error;
+        ASSERT (propagated_pc_plus_one = "00000000000000000000000000000100") REPORT "Testcase 5 propagated_pc_plus_one is wrong" SEVERITY error;
+        --fifth testcase - > (00000000000000000000000000000100) (stalled cycle)
         immediate_stall <= '1'; --checkkkkk
+        pc_mux1_selector <= "01";
+        pc_mux2_selector <= "00";
+        WAIT FOR clk_period;
+        ASSERT (opcode = "000000") REPORT "Testcase 6 opcode is wrong" SEVERITY error;
+        ASSERT (Rsrc1 = "000") REPORT "Testcase 6 Rsrc1 is wrong" SEVERITY error;
+        ASSERT (Rsrc2 = "000") REPORT "Testcase 6 Rsrc2 is wrong" SEVERITY error;
+        ASSERT (Rdest = "001") REPORT "Testcase 6 Rdest is wrong" SEVERITY error;
+        ASSERT (imm_flag = '1') REPORT "Testcase 6 imm_flag is wrong" SEVERITY error;
+        -- ASSERT (selected_immediate_out = "0000000000000100") REPORT "Testcase 6 selected_immediate_out is wrong" SEVERITY error;
+        ASSERT (propagated_pc = "00000000000000000000000000000100") REPORT "Testcase 6 propagated_pc is wrong" SEVERITY error;
+        ASSERT (propagated_pc_plus_one = "00000000000000000000000000000101") REPORT "Testcase 6 propagated_pc_plus_one is wrong" SEVERITY error;
+        -- --sixth testcase - > branch address (11111001111100111110000000000000)
+        -- pc_mux1_selector <= "01";
+        -- pc_mux2_selector <= "00";
+        -- WAIT FOR clk_period;
+        -- ASSERT (opcode = "000000") REPORT "Testcase 7 opcode is wrong" SEVERITY error;
+        -- ASSERT (Rsrc1 = "000") REPORT "Testcase 7 Rsrc1 is wrong" SEVERITY error;
+        -- ASSERT (Rsrc2 = "000") REPORT "Testcase 7 Rsrc2 is wrong" SEVERITY error;
+        -- ASSERT (Rdest = "010") REPORT "Testcase 7 Rdest is wrong" SEVERITY error;
+        -- ASSERT (imm_flag = '1') REPORT "Testcase 7 imm_flag is wrong" SEVERITY error;
+        -- ASSERT (selected_immediate_out = "0000000000000011") REPORT "Testcase 7 selected_immediate_out is wrong" SEVERITY error;
+        -- ASSERT (propagated_pc = "00000000000000000000000000000100") REPORT "Testcase 7 propagated_pc is wrong" SEVERITY error;
+        -- ASSERT (propagated_pc_plus_one = "00000000000000000000000000000101") REPORT "Testcase 7 propagated_pc_plus_one is wrong" SEVERITY error;
+        -- assert (propagated_imm_stall = '1') report "Testcase 7 propaged_imm_stall is wrong" severity error;
+
+        --seventh testcase - > branch address (00000000000000000000000000000010) -> 00000000000000000000000000000010
+        pc_mux1_selector <= "11";
+        pc_mux2_selector <= "00";
+        WAIT FOR clk_period;
+    --    ASSERT (opcode = "000000") REPORT "Testcase 8 opcode is wrong" SEVERITY error;
+    --     ASSERT (Rsrc1 = "000") REPORT "Testcase 8 Rsrc1 is wrong" SEVERITY error;
+    --     ASSERT (Rsrc2 = "000") REPORT "Testcase 8 Rsrc2 is wrong" SEVERITY error;
+    --     ASSERT (Rdest = "010") REPORT "Testcase 8 Rdest is wrong" SEVERITY error;
+    --     ASSERT (imm_flag = '1') REPORT "Testcase 8 imm_flag is wrong" SEVERITY error;
+    --     ASSERT (selected_immediate_out = "0000000000000100") REPORT "Testcase 8 selected_immediate_out is wrong" SEVERITY error;
+        ASSERT (propagated_pc = "00000000011111111110000000000010") REPORT "Testcase 8 propagated_pc is wrong" SEVERITY error;
+        ASSERT (propagated_pc_plus_one = "00000000011111111110000000000011") REPORT "Testcase 8 propagated_pc_plus_one is wrong" SEVERITY error;
+        --eight testcase - > read data from memory address (00000000000000000000000000000100) -> 00000000000000000000000000000100 
         pc_mux1_selector <= "00";
         pc_mux2_selector <= "00";
         WAIT FOR clk_period;
-        ASSERT (opcode = "000000") REPORT "First instruction opcode is wrong" SEVERITY error;
-        ASSERT (Rsrc1 = "000") REPORT "First instruction Rsrc1 is wrong" SEVERITY error;
-        ASSERT (Rsrc2 = "000") REPORT "First instruction Rsrc2 is wrong" SEVERITY error;
-        ASSERT (Rdest = "001") REPORT "First instruction Rdest is wrong" SEVERITY error;
-        ASSERT (imm_flag = '1') REPORT "First instruction imm_flag is wrong" SEVERITY error;
-        ASSERT (selected_immediate_out = "0000000000000100") REPORT "First instruction selected_immediate_out is wrong" SEVERITY error;
-        ASSERT (propagated_pc = "00000000000000000000000000000101") REPORT "First instruction propagated_pc is wrong" SEVERITY error;
-        ASSERT (propagated_pc_plus_one = "00000000000000000000000000000110") REPORT "First instruction propagated_pc_plus_one is wrong" SEVERITY error;
+        ASSERT (opcode = "000000") REPORT "Testcase 9 opcode is wrong" SEVERITY error;
+        ASSERT (Rsrc1 = "000") REPORT "Testcase 9 Rsrc1 is wrong" SEVERITY error;
+        ASSERT (Rsrc2 = "000") REPORT "Testcase 9 Rsrc2 is wrong" SEVERITY error;
+        ASSERT (Rdest = "010") REPORT "Testcase 9 Rdest is wrong" SEVERITY error;
+        ASSERT (imm_flag = '0') REPORT "Testcase 9 imm_flag is wrong" SEVERITY error;
+        ASSERT (propagated_pc = "00000000000000000000000000000100") REPORT "Testcase 9 propagated_pc is wrong" SEVERITY error;
+        ASSERT (propagated_pc_plus_one = "00000000000000000000000000000101") REPORT "Testcase 9 propagated_pc_plus_one is wrong" SEVERITY error;
+
+        --nine testcase -> immediate (stalled cycle)
+        immediate_stall <= '0'; --checkkkkk
+        pc_mux1_selector <= "00";
+        pc_mux2_selector <= "00";
+        WAIT FOR clk_period;
+        ASSERT (opcode = "000000") REPORT "Testcase 10 opcode is wrong" SEVERITY error;
+        ASSERT (Rsrc1 = "000") REPORT "Testcase 10 Rsrc1 is wrong" SEVERITY error;
+        ASSERT (Rsrc2 = "000") REPORT "Testcase 10 Rsrc2 is wrong" SEVERITY error;
+        ASSERT (Rdest = "010") REPORT "Testcase 10 Rdest is wrong" SEVERITY error;
+        ASSERT (imm_flag = '1') REPORT "Testcase 10 imm_flag is wrong" SEVERITY error;
+        ASSERT (propagated_pc = "00000000000000000000000000000101") REPORT "Testcase 10 propagated_pc is wrong" SEVERITY error;
+        ASSERT (propagated_pc_plus_one = "00000000000000000000000000000110") REPORT "Testcase 10 propagated_pc_plus_one is wrong" SEVERITY error;
+
+        immediate_stall <= '1'; --checkkkkk
+        pc_mux1_selector <= "00";
+        pc_mux2_selector <= "01";
+        wait for clk_period;
+        ASSERT (opcode = "000000") REPORT "Testcase 11 opcode is wrong" SEVERITY error;
+        ASSERT (Rsrc1 = "000") REPORT "Testcase 11 Rsrc1 is wrong" SEVERITY error;
+        ASSERT (Rsrc2 = "000") REPORT "Testcase 11 Rsrc2 is wrong" SEVERITY error;
+        ASSERT (Rdest = "010") REPORT "Testcase 11 Rdest is wrong" SEVERITY error;
+        ASSERT (imm_flag = '1') REPORT "Testcase 11 imm_flag is wrong" SEVERITY error;
+        ASSERT (selected_immediate_out = "0000000000000110") REPORT "Testcase 11 selected_immediate_out is wrong" SEVERITY error;
+        ASSERT (propagated_pc = "00000000000000000000000000000110") REPORT "Testcase 11 propagated_pc is wrong" SEVERITY error;
+        ASSERT (propagated_pc_plus_one = "00000000000000000000000000000111") REPORT "Testcase 11 propagated_pc_plus_one is wrong" SEVERITY error;
+
+        pc_mux1_selector <= "00";
+        pc_mux2_selector <= "10";
+        wait for clk_period;
+        ASSERT (propagated_pc = "00000000000000000011001100110011") REPORT "Testcase 12 propagated_pc is wrong" SEVERITY error;
+        ASSERT (propagated_pc_plus_one = "00000000000000000011001100110100") REPORT "Testcase 12 propagated_pc_plus_one is wrong" SEVERITY error;
+
+        wait for clk_period;
+        ASSERT (propagated_pc = "00000000000000001100110011001100") REPORT "Testcase 13 propagated_pc is wrong" SEVERITY error;
+        ASSERT (propagated_pc_plus_one = "00000000000000001100110011001101") REPORT "Testcase 13 propagated_pc_plus_one is wrong" SEVERITY error;
+        
+        RST_signal <= '1'; -- resets every thing in the pipeline so it doesn't need to wait one cycle to see its effect
+        pc_mux1_selector <= "00";
+        pc_mux2_selector <= "00";
+        wait for clk_period;
+        ASSERT (propagated_pc = "00000000000000000000000000000000") REPORT "Testcase 14 propagated_pc is wrong" SEVERITY error;
+        ASSERT (propagated_pc_plus_one = "00000000000000000000000000000001") REPORT "Testcase 14 propagated_pc_plus_one is wrong" SEVERITY error;
+
+        RST_signal <= '0';
+        wait for clk_period;
+        ASSERT (opcode = "000000") REPORT "Testcase 15 opcode is wrong" SEVERITY error;
+        ASSERT (Rsrc1 = "000") REPORT "Testcase 15 Rsrc1 is wrong" SEVERITY error;
+        ASSERT (Rsrc2 = "000") REPORT "Testcase 15 Rsrc2 is wrong" SEVERITY error;
+        ASSERT (Rdest = "000") REPORT "Testcase 15 Rdest is wrong" SEVERITY error;
+        ASSERT (imm_flag = '0') REPORT "Testcase 15 imm_flag is wrong" SEVERITY error;
+        ASSERT (propagated_pc = "00000000000000000000000000000000") REPORT "Testcase 15 propagated_pc is wrong" SEVERITY error;
+        ASSERT (propagated_pc_plus_one = "00000000000000000000000000000001") REPORT "Testcase 15 propagated_pc_plus_one is wrong" SEVERITY error;
+
 
         WAIT;
     END PROCESS;
