@@ -22,9 +22,9 @@ ARCHITECTURE behavior OF forwarding_unit_tb IS
         dst_address_fd : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
 
         -- Control Signals
-        write_back_em : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
-        write_back_mw : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
-        write_back_de : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
+        -- write_back_em : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
+        -- write_back_mw : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
+        -- write_back_de : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
         memory_read_em : IN STD_LOGIC;
         memory_read_de : IN STD_LOGIC;
 
@@ -33,7 +33,22 @@ ARCHITECTURE behavior OF forwarding_unit_tb IS
         opp2_ALU_MUX_SEL : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
         opp_branching_mux_selector : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
         opp_branch_or_normal_mux_selector: OUT STD_LOGIC;
-        load_use_hazard : OUT STD_LOGIC
+        load_use_hazard : OUT STD_LOGIC;
+
+        -- From Execute/Memory
+        -- write_back_em : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
+        write_back_em_enable1 : IN STD_LOGIC;
+        write_back_em_enable2 : IN STD_LOGIC;
+
+        -- From Memory/Writeback
+        -- write_back_mw : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
+        write_back_mw_enable1 : IN STD_LOGIC;
+        write_back_mw_enable2 : IN STD_LOGIC;
+
+        -- From Decode/Execute
+        -- write_back_de : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
+        write_back_de_enable1 : IN STD_LOGIC;
+        write_back_de_enable2 : IN STD_LOGIC;
     );
     END COMPONENT;
 

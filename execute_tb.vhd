@@ -143,8 +143,6 @@ BEGIN
         forwarding_mux_selector_op1 => forwarding_mux_selector_op1,
         control_signals_memory_in => control_signals_memory_in,
         control_signals_write_back_in => control_signals_write_back_in,
-        control_signals_memory_out => control_signals_memory_out,
-        control_signals_write_back_out => control_signals_write_back_out,
         alu_selectors => alu_selectors,
         alu_src2_selector => alu_src2_selector,
         execute_mem_register_enable => execute_mem_register_enable,
@@ -174,6 +172,8 @@ BEGIN
         pc_out_exception_handling => pc_out_exception_handling,
         in_port_input => in_port_input,
         in_port_output => in_port_output
+        control_signals_memory_out => control_signals_memory_out,
+        control_signals_write_back_out => control_signals_write_back_out,
    );
 
    -- Clock process definitions

@@ -66,6 +66,7 @@ ENTITY forwarding_unit IS
         opp_branch_or_normal_mux_selector: OUT STD_LOGIC;
 
         load_use_hazard : OUT STD_LOGIC
+
         -- From Execute/Memory
         -- write_back_em : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
         write_back_em_enable1 : IN STD_LOGIC;
@@ -84,7 +85,16 @@ ENTITY forwarding_unit IS
 END forwarding_unit;
 
 ARCHITECTURE forwarding_unit_arch OF forwarding_unit IS
+
+    SIGNAL write_back_de : STD_LOGIC_VECTOR(1 DOWNTO 0);
+    SIGNAL write_back_em : STD_LOGIC_VECTOR(1 DOWNTO 0);
+    SIGNAL write_back_mw : STD_LOGIC_VECTOR(1 DOWNTO 0);
+
 BEGIN
+
+    write_back_de <= write_back_de_enable2 & write_back_de_enable1;
+    write_back_em <= write_back_em_enable2 & write_back_em_enable1;
+    write_back_mw <= write_back_mw_enable2 & write_back_mw_enable1;
     -- sensitive on only src_address1_de and src_address2_de
     -- because whenever they change we must check if the previous instruction changed their values
     PROCESS (src_address1_de, src_address2_de, dst_address_em, src_address1_em, src_address2_em, address1_mw, address2_mw, write_back_em, write_back_mw, memory_read_em)
