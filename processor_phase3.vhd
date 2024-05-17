@@ -21,6 +21,35 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
 
     --**********************************************************COMPONENTS*************************************************--
 
+    COMPONENT forwarding_unit
+        PORT (
+            -- Addresses
+            src_address1_de : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+            src_address2_de : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+            dst_address_de : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+            dst_address_em : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+            src_address1_em : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+            src_address2_em : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+            address1_mw : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+            address2_mw : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+            dst_address_fd : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+
+            -- Control Signals
+            write_back_em : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
+            write_back_mw : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
+            write_back_de : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
+            memory_read_em : IN STD_LOGIC;
+            memory_read_de : IN STD_LOGIC;
+
+            -- Output signals
+            opp1_ALU_MUX_SEL : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
+            opp2_ALU_MUX_SEL : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
+            opp_branching_mux_selector : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
+            opp_branch_or_normal_mux_selector : OUT STD_LOGIC;
+            load_use_hazard : OUT STD_LOGIC
+        );
+    END COMPONENT;
+
     COMPONENT exception_handling_unit IS
         PORT (
             clk : IN STD_LOGIC;
@@ -542,17 +571,39 @@ BEGIN
     exception_handling_inst : exception_handling_unit PORT MAP(
         clk => clk,
         pc_from_EM => pc_out_to_exception_from_execute,
-        pc_from_DE => ,
+        pc_from_DE = >,
         overflow_flag_from_alu => overflow_flag_out_exception_handling_from_execute,
         protected_bit_exeception_from_memory => protected_address_access_to_exception_from_memory,
-        exception_out_port => open, --1 if an exception is detected, 0 otherwise --TODO:do we need it?
+        exception_out_port => OPEN, --1 if an exception is detected, 0 otherwise --TODO:do we need it?
         second_pc_mux_out => pc_mux2_selector_to_fetch,
         FD_flush => FD_flush_exception_unit_to_fetch,
-        DE_flush => ,
+        DE_flush = >,
         EM_flush => EM_flush_exception_handling_to_excute,
         MW_flush => MW_flush_from_exception_to_memory,
         EPC_output => EPC_out_to_processor
     );
+
+    forwarding_unit_inst: forwarding_unit PORT MAP (
+        src_address1_de => src_address1_de,
+        src_address2_de => src_address2_de,
+        dst_address_de => dst_address_de,
+        dst_address_em => dst_address_em,
+        src_address1_em => src_address1_em,
+        src_address2_em => src_address2_em,
+        address1_mw => address1_mw,
+        address2_mw => address2_mw,
+        dst_address_fd => dst_address_fd,
+        write_back_em => write_back_em,
+        write_back_mw => write_back_mw,
+        write_back_de => write_back_de,
+        memory_read_em => memory_read_em,
+        memory_read_de => memory_read_de,
+        opp1_ALU_MUX_SEL => opp1_ALU_MUX_SEL,
+        opp2_ALU_MUX_SEL => opp2_ALU_MUX_SEL,
+        opp_branching_mux_selector => opp_branching_mux_selector,
+        opp_branch_or_normal_mux_selector => opp_branch_or_normal_mux_selector,
+        load_use_hazard => load_use_hazard
+   );
 
     ----------Write Back----------
     write_back_inst : write_back PORT MAP(
