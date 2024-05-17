@@ -379,6 +379,10 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
     --from exception handling
     SIGNAL EM_flush_exception_handling_to_excute : STD_LOGIC;
 
+    --from forwarding unit
+    SIGNAL forwarding_mux_selector_op2 : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAL forwarding_mux_selector_op1 : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    
     --ouputs
     SIGNAL pc_out_from_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL pc_plus_1_out_from_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
@@ -402,6 +406,8 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
     --to forwarding unit
     SIGNAL address1_out_forwarding_unit_from_execute : STD_LOGIC_VECTOR(2 DOWNTO 0);
     SIGNAL address2_out_forwarding_unit_from_execute : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    Signal write_back_1_forwarding_from_excute : STD_LOGIC;
+    Signal write_back_2_forwarding_from_excute : STD_LOGIC;
 
     --*--------Memory----------
     --from controller
@@ -476,15 +482,15 @@ BEGIN
         data1_in => data1_in_to_execute,
         data2_in => data2_in_to_execute,
         immediate_in => immediate_in_to_execute,
-        forwarded_data1_em => forwarded_data1_em, --need forwarding unit to complete
+        forwarded_data1_em => forwarded_data1_em, --TODO: figure where to connect these signals
         forwarded_data2_em => forwarded_data2_em,
         forwarded_alu_out_em => forwarded_alu_out_em,
         forwarded_data1_mw => forwarded_data1_mw,
         forwarded_data2_mw => forwarded_data2_mw,
-        forwarding_mux_selector_op2 => forwarding_mux_selector_op2,
+        forwarding_mux_selector_op2 => forwarding_mux_selector_op2, --from forwarding unit
         forwarding_mux_selector_op1 => forwarding_mux_selector_op1,
-        control_signals_memory_in => control_signals_memory_out_from_execute,
-        control_signals_write_back_in => control_signals_write_back_out_from_execute,
+        control_signals_memory_in => , --from decode
+        control_signals_write_back_in => ,
         alu_selectors => alu_selectors_to_execute,
         alu_src2_selector => alu_src2_selector_to_execute,
         execute_mem_register_enable => EM_enable_in_to_execute,
@@ -510,6 +516,9 @@ BEGIN
         in_port_input => in_port_from_Decode, --should it be propagated or what?
         in_port_output => in_port_from_execute
     );
+
+    write_back_1_forwarding_from_excute <= write_back_out_from_excute(3);
+    write_back_2_forwarding_from_excute <= write_back_out_from_excute(2);
 
     ----------Memory----------
     mem_inst : memory_stage PORT MAP(
@@ -571,7 +580,7 @@ BEGIN
     exception_handling_inst : exception_handling_unit PORT MAP(
         clk => clk,
         pc_from_EM => pc_out_to_exception_from_execute,
-        pc_from_DE = >,
+        pc_from_DE => pc_out_from_execute, --can be cahnged to be taken from the memory
         overflow_flag_from_alu => overflow_flag_out_exception_handling_from_execute,
         protected_bit_exeception_from_memory => protected_address_access_to_exception_from_memory,
         exception_out_port => OPEN, --1 if an exception is detected, 0 otherwise --TODO:do we need it?
@@ -584,25 +593,25 @@ BEGIN
     );
 
     forwarding_unit_inst: forwarding_unit PORT MAP (
-        src_address1_de => src_address1_de,
+        src_address1_de => src_address1_de, --from decode
         src_address2_de => src_address2_de,
-        dst_address_de => dst_address_de,
-        dst_address_em => dst_address_em,
-        src_address1_em => src_address1_em,
-        src_address2_em => src_address2_em,
-        address1_mw => address1_mw,
-        address2_mw => address2_mw,
-        dst_address_fd => dst_address_fd,
-        write_back_em => write_back_em,
-        write_back_mw => write_back_mw,
-        write_back_de => write_back_de,
-        memory_read_em => memory_read_em,
-        memory_read_de => memory_read_de,
-        opp1_ALU_MUX_SEL => opp1_ALU_MUX_SEL,
-        opp2_ALU_MUX_SEL => opp2_ALU_MUX_SEL,
+        dst_address_de => dst_address_de, 
+        dst_address_em => destination_address_out_from_execute, --from execute
+        src_address1_em => address_read1_out_from_execute,
+        src_address2_em => address_read2_out_from_execute,
+        address1_mw => write_address1_out_from_memory,
+        address2_mw => write_address2_out_from_memory,
+        dst_address_fd => Rdest_from_fetch,
+        write_back_em => , --TODO : seperate writeback 1 and 2 from each other
+        write_back_mw => , --TODO : seperate writeback 1 and 2 from each other
+        write_back_de => , --TODO : seperate writeback 1 and 2 from each other
+        memory_read_em => memory_read_em,  --from execute stage
+        memory_read_de => memory_read_de, --from decode stage
+        opp1_ALU_MUX_SEL => forwarding_mux_selector_op1, --outputed to execute
+        opp2_ALU_MUX_SEL => forwarding_mux_selector_op2,
         opp_branching_mux_selector => opp_branching_mux_selector,
         opp_branch_or_normal_mux_selector => opp_branch_or_normal_mux_selector,
-        load_use_hazard => load_use_hazard
+        load_use_hazard => open --not used
    );
 
     ----------Write Back----------
