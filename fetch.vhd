@@ -23,7 +23,7 @@ ENTITY fetch IS
 
         ----------F/D reg----------
         --enables
-        immediate_reg_enable : IN STD_LOGIC; --1 in normal case, 0 when immediate flag is detected
+        immediate_stall : IN STD_LOGIC; --1 in normal case, 0 when immediate flag is detected
         FD_enable : IN STD_LOGIC;
         FD_enable_loaduse : IN STD_LOGIC;
         pc_enable_hazard_detection : IN STD_LOGIC;
@@ -33,10 +33,10 @@ ENTITY fetch IS
         FD_flush : IN STD_LOGIC;
         FD_flush_exception_unit : IN STD_LOGIC;
 
-        signal in_port_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0); --from outside
+        SIGNAL in_port_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0); --from outside
 
         ----------outputs----------
-        signal in_port_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0); --to decode
+        SIGNAL in_port_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0); --to decode
 
         selected_immediate_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
         -- instruction 
@@ -191,8 +191,7 @@ BEGIN
 
     --for the three regs
     FD_flush_internal <= reset OR FD_flush OR FD_flush_exception_unit OR RST_signal;
-
-    FD_enable_internal <= immediate_reg_enable AND FD_enable AND FD_enable_loaduse;
+    FD_enable_internal <= (NOT immediate_stall) AND FD_enable AND FD_enable_loaduse;
     FD_reg : my_nDFF GENERIC MAP(16)
     PORT MAP(
         clk => clk,
@@ -208,8 +207,8 @@ BEGIN
     imm_flag <= FD_output(0);
 
     --the difference between this and the fetch_decode_only_instruction is that the immediate enable doesn't enable this one
-    -- FD_enable_internal_except_instruction <= FD_enable AND FD_enable_loaduse;
-    -- FD_d_internal_except_instruction <= pc_instruction_address & STD_LOGIC_VECTOR(unsigned(pc_instruction_address) + 1) & immediate_reg_enable;
+    FD_enable_internal_except_instruction <= FD_enable AND FD_enable_loaduse;
+    -- FD_d_internal_except_instruction <= pc_instruction_address & STD_LOGIC_VECTOR(unsigned(pc_instruction_address) + 1) & immediate_stall;
     fetch_decode_except_instruction : my_nDFF GENERIC MAP(32)
     PORT MAP(
         clk => clk,
@@ -219,13 +218,12 @@ BEGIN
         q => in_port_out
     );
 
-    FD_imm_enable <= NOT immediate_reg_enable;
     FD_enable_imm_internal <= FD_enable AND FD_imm_enable AND FD_enable_loaduse;
     fetch_decode_imm : my_nDFF GENERIC MAP(16)
     PORT MAP(
         clk => clk,
         reset => FD_flush_internal,
-        enable => FD_enable_imm_internal,
+        enable => immediate_stall,
         d => instruction_out_from_instr_cache,
         q => selected_immediate_out
     );

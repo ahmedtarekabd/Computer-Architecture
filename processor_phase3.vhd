@@ -43,7 +43,7 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
 
             ----------F/D reg----------
             --enables
-            immediate_reg_enable : IN STD_LOGIC; --1 in normal case, 0 when immediate flag is detected
+            immediate_stall : IN STD_LOGIC; --1 in normal case, 0 when immediate flag is detected
             FD_enable : IN STD_LOGIC;
             FD_enable_loaduse : IN STD_LOGIC;
             pc_enable_hazard_detection : IN STD_LOGIC;
@@ -353,32 +353,30 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
 
     --*--------Memory----------
     --from controller
-    signal MW_enable_to_memory : STD_LOGIC;
-    signal MW_flush_to_memory : STD_LOGIC;
+    SIGNAL MW_enable_to_memory : STD_LOGIC;
+    SIGNAL MW_flush_to_memory : STD_LOGIC;
 
     --from exepction handling
-    signal MW_flush_from_exception_to_memory : STD_LOGIC;
+    SIGNAL MW_flush_from_exception_to_memory : STD_LOGIC;
 
     --outputs
-    signal wb_control_signals_out_from_memory : STD_LOGIC_VECTOR(5 DOWNTO 0); -- -> to wb
-    signal write_address1_out_from_memory : STD_LOGIC_VECTOR(2 DOWNTO 0);
-    signal write_address2_out_from_memory : STD_LOGIC_VECTOR(2 DOWNTO 0);
-    signal read_data1_out_from_memory : STD_LOGIC_VECTOR(31 DOWNTO 0);
-    signal read_data2_out_from_memory : STD_LOGIC_VECTOR(31 DOWNTO 0);
-    signal ALU_result_out_from_memory : STD_LOGIC_VECTOR(31 DOWNTO 0);
-    signal mem_read_data_from_memory : STD_LOGIC_VECTOR(31 DOWNTO 0);
-    signal PC_out_to_exception_from_memory : STD_LOGIC_VECTOR(31 DOWNTO 0);
-    signal protected_address_access_to_exception_from_memory : STD_LOGIC;
-    signal Rdst_from_memory : STD_LOGIC_VECTOR(2 DOWNTO 0);
-
-
+    SIGNAL wb_control_signals_out_from_memory : STD_LOGIC_VECTOR(5 DOWNTO 0); -- -> to wb
+    SIGNAL write_address1_out_from_memory : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAL write_address2_out_from_memory : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAL read_data1_out_from_memory : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL read_data2_out_from_memory : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL ALU_result_out_from_memory : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL mem_read_data_from_memory : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL PC_out_to_exception_from_memory : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL protected_address_access_to_exception_from_memory : STD_LOGIC;
+    SIGNAL Rdst_from_memory : STD_LOGIC_VECTOR(2 DOWNTO 0);
     --*--------Write Back----------
     --from controller
-    signal reg_write_enable1_in_to_wb : STD_LOGIC;
-    signal reg_write_enable2_in_to_wb : STD_LOGIC;
-    signal reg_write_address1_mux_to_wb : STD_LOGIC;
-    signal rscr1_data_to_wb : STD_LOGIC_VECTOR(1 DOWNTO 0);
-    signal read_data1_in_to_wb : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL reg_write_enable1_in_to_wb : STD_LOGIC;
+    SIGNAL reg_write_enable2_in_to_wb : STD_LOGIC;
+    SIGNAL reg_write_address1_mux_to_wb : STD_LOGIC;
+    SIGNAL rscr1_data_to_wb : STD_LOGIC_VECTOR(1 DOWNTO 0);
+    SIGNAL read_data1_in_to_wb : STD_LOGIC_VECTOR(31 DOWNTO 0);
 
     --**********************************************************INST*************************************************--
 
@@ -395,7 +393,7 @@ BEGIN
         branch_address => branch_address_to_fetch,
         pc_mux2_selector => pc_mux2_selector_to_fetch,
         interrupt_signal => interrupt_signal,
-        immediate_reg_enable => immediate_stall_to_fetch_and_decode,
+        immediate_stall => immediate_stall_to_fetch_and_decode,
         FD_enable => FD_enable_to_fetch,
         FD_enable_loaduse => FD_enable_loaduse_to_fetch,
         FD_flush => FD_flush_to_fetch,
@@ -519,7 +517,7 @@ BEGIN
         destination_address_in => Rdst_from_memory,
         mem_read_data => mem_read_data_from_memory,
         ALU_result => ALU_result_out_from_memory,
-        in_port => ,
+        in_port = >,
         Rsrc1_selector_in => rscr1_data_to_wb,
         reg_write_address1_in_select => reg_write_address1_mux_to_wb,
         WB_selected_data_out1 => WB_selected_data_out1, --TODO: add after decode is put
