@@ -89,31 +89,33 @@ ARCHITECTURE memory_stage_arch OF memory_stage IS
         );
     END COMPONENT mux4x1;
 
-    COMPONENT SP_reg IS
+    COMPONENT SP_ndff IS
         GENERIC (n : INTEGER := 16);
         PORT (
             Clk, reset, enable : IN STD_LOGIC;
             d : IN STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
             q : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0)
         );
-    END COMPONENT SP_reg;
+    END COMPONENT SP_ndff;
 
     SIGNAL mem_read_data_internal : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL d_internal : STD_LOGIC_VECTOR(142 DOWNTO 0);
     SIGNAL q_output : STD_LOGIC_VECTOR(142 DOWNTO 0);
 
-    SIGNAL SP_mux_out : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL SP_mux_out : STD_LOGIC_VECTOR(11 DOWNTO 0);
     SIGNAL MW_data_mux_out : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL mem_address_mux_out : STD_LOGIC_VECTOR(11 DOWNTO 0);
 
     SIGNAL read_enable : STD_LOGIC;
 
-    SIGNAL SP_in_temp : STD_LOGIC_VECTOR(31 DOWNTO 0);
-    SIGNAL SP_out_temp : STD_LOGIC_VECTOR(31 DOWNTO 0);
-    SIGNAL SP_mux_inputB : STD_LOGIC_VECTOR(31 DOWNTO 0);
-    SIGNAL SP_mux_inputC : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL SP_in_temp : STD_LOGIC_VECTOR(11 DOWNTO 0);
+    SIGNAL SP_out_temp : STD_LOGIC_VECTOR(11 DOWNTO 0);
+    SIGNAL SP_mux_inputB : STD_LOGIC_VECTOR(11 DOWNTO 0);
+    SIGNAL SP_mux_inputC : STD_LOGIC_VECTOR(11 DOWNTO 0);
 
     SIGNAL mem_address_mux_selectors : STD_LOGIC_VECTOR(1 DOWNTO 0);
+
+    SIGNAL CCR_as_32_bit : STD_LOGIC_VECTOR(31 DOWNTO 0);
 
 BEGIN
 
@@ -133,7 +135,8 @@ BEGIN
     );
 
     -- SP register
-    SP_register : SP_reg
+    SP_in_temp <= SP_mux_out(11 DOWNTO 0);
+    SP_ndffister : SP_ndff
     GENERIC MAP(n => 12)
     PORT MAP(
         Clk => clk,
@@ -180,13 +183,14 @@ BEGIN
     );
 
     -- MW data mux
+    CCR_as_32_bit <= "0000000000000000000000000000" & CCR_in;
     MW_data_mux : mux4x1
     GENERIC MAP(n => 32)
     PORT MAP(
         inputA => read_data2_in,
         inputB => PC_plus_one_in,
         inputC => PC_in,
-        inputD => CCR_in,
+        inputD => CCR_as_32_bit,
         Sel_lower => mem_control_signals_in(2),
         Sel_higher => mem_control_signals_in(3),
         output => MW_data_mux_out
@@ -212,4 +216,6 @@ BEGIN
     read_data2_out <= q_output(95 DOWNTO 64);
     ALU_result_out <= q_output(63 DOWNTO 32);
     mem_read_data <= q_output(31 DOWNTO 0);
+    PC_out_to_exception <= PC_in;
+
 END memory_stage_arch;

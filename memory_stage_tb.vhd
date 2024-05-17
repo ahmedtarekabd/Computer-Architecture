@@ -10,62 +10,62 @@ ARCHITECTURE behavior OF memory_stage_tb IS
     COMPONENT memory_stage
         PORT (
             clk : IN STD_LOGIC;
-            mem_control_signals_in : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
-            wb_control_signals_in : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
+            mem_control_signals_in : IN STD_LOGIC_VECTOR (9 DOWNTO 0);
+            wb_control_signals_in : IN STD_LOGIC_VECTOR (5 DOWNTO 0);
             RST : IN STD_LOGIC;
             MW_enable : IN STD_LOGIC;
             MW_flush_from_exception : IN STD_LOGIC;
-            PC_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
-            PC_plus_one_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+            PC_in : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+            PC_plus_one_in : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
             imm_enable_in : IN STD_LOGIC;
-            destination_address_in : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
-            write_address1_in : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
-            write_address2_in : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
-            read_data1_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
-            read_data2_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
-            ALU_result_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
-            CCR_in : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
-            wb_control_signals_out : OUT STD_LOGIC_VECTOR(5 DOWNTO 0);
-            destination_address_out : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
-            write_address1_out : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
-            write_address2_out : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
-            read_data1_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
-            read_data2_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
-            ALU_result_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
-            mem_read_data : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
-            PC_out_to_exception : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+            destination_address_in : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
+            write_address1_in : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
+            write_address2_in : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
+            read_data1_in : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+            read_data2_in : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+            ALU_result_in : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+            CCR_in : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
+            wb_control_signals_out : OUT STD_LOGIC_VECTOR (5 DOWNTO 0);
+            destination_address_out : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
+            write_address1_out : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
+            write_address2_out : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
+            read_data1_out : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
+            read_data2_out : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
+            ALU_result_out : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
+            mem_read_data : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
+            PC_out_to_exception : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
             protected_address_access_to_exception : OUT STD_LOGIC
         );
     END COMPONENT;
 
     --Inputs
     SIGNAL clk : STD_LOGIC := '0';
-    SIGNAL mem_control_signals_in : STD_LOGIC_VECTOR(9 DOWNTO 0) := (OTHERS => '0');
-    SIGNAL wb_control_signals_in : STD_LOGIC_VECTOR(5 DOWNTO 0) := (OTHERS => '0');
+    SIGNAL mem_control_signals_in : STD_LOGIC_VECTOR (9 DOWNTO 0) := (OTHERS => '0');
+    SIGNAL wb_control_signals_in : STD_LOGIC_VECTOR (5 DOWNTO 0) := (OTHERS => '0');
     SIGNAL RST : STD_LOGIC := '0';
     SIGNAL MW_enable : STD_LOGIC := '0';
     SIGNAL MW_flush_from_exception : STD_LOGIC := '0';
-    SIGNAL PC_in : STD_LOGIC_VECTOR(31 DOWNTO 0) := (OTHERS => '0');
-    SIGNAL PC_plus_one_in : STD_LOGIC_VECTOR(31 DOWNTO 0) := (OTHERS => '0');
+    SIGNAL PC_in : STD_LOGIC_VECTOR (31 DOWNTO 0) := (OTHERS => '0');
+    SIGNAL PC_plus_one_in : STD_LOGIC_VECTOR (31 DOWNTO 0) := (OTHERS => '0');
     SIGNAL imm_enable_in : STD_LOGIC := '0';
-    SIGNAL destination_address_in : STD_LOGIC_VECTOR(2 DOWNTO 0) := (OTHERS => '0');
-    SIGNAL write_address1_in : STD_LOGIC_VECTOR(2 DOWNTO 0) := (OTHERS => '0');
-    SIGNAL write_address2_in : STD_LOGIC_VECTOR(2 DOWNTO 0) := (OTHERS => '0');
-    SIGNAL read_data1_in : STD_LOGIC_VECTOR(31 DOWNTO 0) := (OTHERS => '0');
-    SIGNAL read_data2_in : STD_LOGIC_VECTOR(31 DOWNTO 0) := (OTHERS => '0');
-    SIGNAL ALU_result_in : STD_LOGIC_VECTOR(31 DOWNTO 0) := (OTHERS => '0');
-    SIGNAL CCR_in : STD_LOGIC_VECTOR(3 DOWNTO 0) := (OTHERS => '0');
+    SIGNAL destination_address_in : STD_LOGIC_VECTOR (2 DOWNTO 0) := (OTHERS => '0');
+    SIGNAL write_address1_in : STD_LOGIC_VECTOR (2 DOWNTO 0) := (OTHERS => '0');
+    SIGNAL write_address2_in : STD_LOGIC_VECTOR (2 DOWNTO 0) := (OTHERS => '0');
+    SIGNAL read_data1_in : STD_LOGIC_VECTOR (31 DOWNTO 0) := (OTHERS => '0');
+    SIGNAL read_data2_in : STD_LOGIC_VECTOR (31 DOWNTO 0) := (OTHERS => '0');
+    SIGNAL ALU_result_in : STD_LOGIC_VECTOR (31 DOWNTO 0) := (OTHERS => '0');
+    SIGNAL CCR_in : STD_LOGIC_VECTOR (3 DOWNTO 0) := (OTHERS => '0');
 
     --Outputs
-    SIGNAL wb_control_signals_out : STD_LOGIC_VECTOR(5 DOWNTO 0);
-    SIGNAL destination_address_out : STD_LOGIC_VECTOR(2 DOWNTO 0);
-    SIGNAL write_address1_out : STD_LOGIC_VECTOR(2 DOWNTO 0);
-    SIGNAL write_address2_out : STD_LOGIC_VECTOR(2 DOWNTO 0);
-    SIGNAL read_data1_out : STD_LOGIC_VECTOR(31 DOWNTO 0);
-    SIGNAL read_data2_out : STD_LOGIC_VECTOR(31 DOWNTO 0);
-    SIGNAL ALU_result_out : STD_LOGIC_VECTOR(31 DOWNTO 0);
-    SIGNAL mem_read_data : STD_LOGIC_VECTOR(31 DOWNTO 0);
-    SIGNAL PC_out_to_exception : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL wb_control_signals_out : STD_LOGIC_VECTOR (5 DOWNTO 0);
+    SIGNAL destination_address_out : STD_LOGIC_VECTOR (2 DOWNTO 0);
+    SIGNAL write_address1_out : STD_LOGIC_VECTOR (2 DOWNTO 0);
+    SIGNAL write_address2_out : STD_LOGIC_VECTOR (2 DOWNTO 0);
+    SIGNAL read_data1_out : STD_LOGIC_VECTOR (31 DOWNTO 0);
+    SIGNAL read_data2_out : STD_LOGIC_VECTOR (31 DOWNTO 0);
+    SIGNAL ALU_result_out : STD_LOGIC_VECTOR (31 DOWNTO 0);
+    SIGNAL mem_read_data : STD_LOGIC_VECTOR (31 DOWNTO 0);
+    SIGNAL PC_out_to_exception : STD_LOGIC_VECTOR (31 DOWNTO 0);
     SIGNAL protected_address_access_to_exception : STD_LOGIC;
 
     -- Clock period definitions
@@ -118,61 +118,45 @@ BEGIN
         -- hold reset state for 100 ns.
         WAIT FOR 100 ns;
 
-        -- Test case 0 (reset)
-        mem_control_signals_in <= "0000000001";
-        wb_control_signals_in <= "000001";
+        -- insert stimulus here 
+
+        -- test case 1
+        clk <= '0';
+        mem_control_signals_in <= "0000000000";
+        wb_control_signals_in <= "000000";
         RST <= '1';
-        MW_enable <= '1';
+        MW_enable <= '0';
         MW_flush_from_exception <= '0';
-        PC_in <= "00000000000000000000000000000001";
-        PC_plus_one_in <= "00000000000000000000000000000010";
-        imm_enable_in <= '1';
-        destination_address_in <= "001";
-        write_address1_in <= "010";
-        write_address2_in <= "011";
-        read_data1_in <= "00000000000000000000000000000011";
-        read_data2_in <= "00000000000000000000000000000100";
-        ALU_result_in <= "00000000000000000000000000000101";
-        CCR_in <= "1000";
+        PC_in <= "00000000000000000000000000000000";
+        PC_plus_one_in <= "00000000000000000000000000000000";
+        imm_enable_in <= '0';
+        destination_address_in <= "000";
+        write_address1_in <= "000";
+        write_address2_in <= "000";
+        read_data1_in <= "00000000000000000000000000000000";
+        read_data2_in <= "00000000000000000000000000000000";
+        ALU_result_in <= "00000000000000000000000000000000";
+        CCR_in <= "0000";
         WAIT FOR clk_period;
 
-        -- Test case 1
-        mem_control_signals_in <= "0000000001";
-        wb_control_signals_in <= "000001";
-        RST <= '0';
-        MW_enable <= '1';
-        MW_flush_from_exception <= '0';
-        PC_in <= "00000000000000000000000000000001";
-        PC_plus_one_in <= "00000000000000000000000000000010";
-        imm_enable_in <= '1';
-        destination_address_in <= "001";
-        write_address1_in <= "010";
-        write_address2_in <= "011";
-        read_data1_in <= "00000000000000000000000000000011";
-        read_data2_in <= "00000000000000000000000000000100";
-        ALU_result_in <= "00000000000000000000000000000101";
-        CCR_in <= "1000";
-        WAIT FOR clk_period;
-
-        -- Test case 2
-        mem_control_signals_in <= "0000000010";
-        wb_control_signals_in <= "000010";
+        -- test case 2
+        clk <= '0';
+        mem_control_signals_in <= "1000000000";
+        wb_control_signals_in <= "010010";
         RST <= '0';
         MW_enable <= '0';
-        MW_flush_from_exception <= '1';
-        PC_in <= "00000000000000000000000000000110";
-        PC_plus_one_in <= "00000000000000000000000000000111";
+        MW_flush_from_exception <= '0';
+        PC_in <= "00000000000000000000000000000000";
+        PC_plus_one_in <= "00000000000000000000000000000000";
         imm_enable_in <= '0';
-        destination_address_in <= "100";
-        write_address1_in <= "101";
-        write_address2_in <= "110";
-        read_data1_in <= "00000000000000000000000000001000";
-        read_data2_in <= "00000000000000000000000000001001";
-        ALU_result_in <= "00000000000000000000000000001010";
-        CCR_in <= "0100";
+        destination_address_in <= "000";
+        write_address1_in <= "000";
+        write_address2_in <= "000";
+        read_data1_in <= "00000000000000000000000000000000";
+        read_data2_in <= "00000000000000000000000000000000";
+        ALU_result_in <= "00000000000000000001001001001001";
+        CCR_in <= "0000";
         WAIT FOR clk_period;
-
-        -- Add more test cases as needed
 
         WAIT;
     END PROCESS;
