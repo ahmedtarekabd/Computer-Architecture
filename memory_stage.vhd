@@ -119,21 +119,6 @@ ARCHITECTURE memory_stage_arch OF memory_stage IS
 
 BEGIN
 
-    -- Memory
-    read_enable <= mem_control_signals_in(8) OR RST;
-    mem : memory
-    PORT MAP(
-        clk => clk,
-        -- addressing the memory using the 12 bits only
-        address => mem_address_mux_out(11 DOWNTO 0),
-        write_enable => mem_control_signals_in(9),
-        write_data => MW_data_mux_out,
-        read_enable => read_enable,
-        read_data => mem_read_data_internal,
-        protect_signal => mem_control_signals_in(1),
-        free_signal => mem_control_signals_in(0)
-    );
-
     -- SP register
     SP_in_temp <= SP_mux_out(11 DOWNTO 0);
     SP_ndffister : SP_ndff
@@ -170,6 +155,7 @@ BEGIN
             mem_address_mux_selectors <= "10";
         END IF;
     END PROCESS;
+    
     mem_address_mux : mux4x1
     GENERIC MAP(n => 12)
     PORT MAP(
@@ -206,6 +192,23 @@ BEGIN
         enable => '1',
         d => d_internal,
         q => q_output
+    );
+
+    -- Memory
+    read_enable <= mem_control_signals_in(8) OR RST;
+    mem : memory
+    PORT MAP(
+        clk => clk,
+        -- addressing the memory using the 12 bits only
+        address => "000000000000",
+        write_enable => '1',
+        write_data => MW_data_mux_out,
+        read_enable => read_enable,
+        read_data => mem_read_data_internal,
+        protect_signal => mem_control_signals_in(1),
+        free_signal => mem_control_signals_in(0),
+        protected_address_access => protected_address_access_to_exception
+
     );
 
     wb_control_signals_out <= q_output(142 DOWNTO 137);
