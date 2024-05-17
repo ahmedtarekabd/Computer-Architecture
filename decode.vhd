@@ -4,14 +4,25 @@ USE ieee.std_logic_1164.ALL;
 ENTITY decode IS
     PORT (
         clk : IN STD_LOGIC;
-        instruction_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
+        reset : IN STD_LOGIC;
+
+        --* Inputs
+        -- instruction 
+        opcode : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
+        Rsrc1 : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+        Rsrc2 : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+        Rdest : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+        imm_flag : IN STD_LOGIC;
         immediate_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
+        propagated_pc_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+        propagated_pc_plus_one_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+        in_port_in : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
 
         -- Signals
         interrupt_signal : IN STD_LOGIC; -- From Processor file
 
         -- Falgs
-        zero_flag : IN STD_LOGIC; -- From Processor file
+        zero_flag : IN STD_LOGIC; -- From ALU
 
         -- WB
         write_enable1 : IN STD_LOGIC;
@@ -21,15 +32,22 @@ ENTITY decode IS
         write_data1 : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
         write_data2 : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
 
-        -- Propagated signals
-        pc_plus_1 : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
-
-        -- Outputs
+        --* Outputs
+        fetch_control_signals : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
+        in_port : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
         -- Immediate Enable
         immediate_stall : OUT STD_LOGIC;
+        -- Propagated signals
+        propagated_control_signals : OUT STD_LOGIC_VECTOR(23 DOWNTO 0);
+        propagated_read_data1 : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+        propagated_read_data2 : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+        propagated_Rsrc1 : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
+        propagated_Rsrc2 : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
+        propagated_Rdest : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
+        immediate_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+        propagated_pc : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+        propagated_pc_plus_one : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
 
-        -- TODO: add fetch in a separate signal (shilo men el register)
-        decode_execute_out : OUT STD_LOGIC_VECTOR(140 - 1 DOWNTO 0)
     );
 END ENTITY decode;
 
@@ -45,35 +63,40 @@ ARCHITECTURE rtl OF decode IS
             interrupt_signal : IN STD_LOGIC;
             zero_flag : IN STD_LOGIC;
 
-            -- Immediate Enable
-            immediate_stall : OUT STD_LOGIC;
-
             -- fetch signals
-            fetch_pc_sel : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
+            fetch_pc_mux1 : OUT STD_LOGIC_VECTOR(1 DOWNTO 0) := "00";
+            immediate_stall : OUT STD_LOGIC := '1';
+            fetch_decode_flush : OUT STD_LOGIC := '0';
 
             -- decode signals
-            decode_reg_read : OUT STD_LOGIC;
-            decode_branch : OUT STD_LOGIC; -- later
-            decode_sign_extend : OUT STD_LOGIC;
+            decode_reg_read : OUT STD_LOGIC := '0';
+            decode_sign_extend : OUT STD_LOGIC := '0';
+            decode_execute_flush : OUT STD_LOGIC := '0';
 
             -- execute signals
-            alu_sel : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
-            alu_src2 : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
-            alu_register_write : OUT STD_LOGIC;
+            execute_alu_sel : OUT STD_LOGIC_VECTOR(2 DOWNTO 0) := "000";
+            execute_alu_src2 : OUT STD_LOGIC_VECTOR(1 DOWNTO 0) := "00";
+            decode_branch : OUT STD_LOGIC := '0';
+            conditional_jump : OUT STD_LOGIC := '0';
 
             -- memory signals
-            memory_write : OUT STD_LOGIC;
-            memory_read : OUT STD_LOGIC;
-            memory_stack_pointer : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
-            memory_address : OUT STD_LOGIC_VECTOR(1 DOWNTO 0); -- alu | sp | 0 (reset) | 2 (interrupt)
-            memory_write_data : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
+            memory_write : OUT STD_LOGIC := '0';
+            memory_read : OUT STD_LOGIC := '0';
+            memory_stack_pointer : OUT STD_LOGIC_VECTOR(1 DOWNTO 0) := "00";
+            memory_address : OUT STD_LOGIC_VECTOR(1 DOWNTO 0) := "00";
+            memory_write_data : OUT STD_LOGIC_VECTOR(1 DOWNTO 0) := "00";
+            memory_protected : OUT STD_LOGIC := '0';
+            memory_free : OUT STD_LOGIC := '0';
+            execute_memory_flush : OUT STD_LOGIC := '0';
 
             -- write back signals
-            write_back_register_write1 : OUT STD_LOGIC;
-            write_back_register_write2 : OUT STD_LOGIC;
-            write_back_register_write_data_1 : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
-            write_back_register_write_address_1 : OUT STD_LOGIC -- Rdst | Rsrc1
+            write_back_register_write1 : OUT STD_LOGIC := '0';
+            write_back_register_write2 : OUT STD_LOGIC := '0';
+            write_back_register_write_data_1 : OUT STD_LOGIC_VECTOR(1 DOWNTO 0) := "00";
+            write_back_register_write_address_1 : OUT STD_LOGIC := '0';
+            outport_enable : OUT STD_LOGIC := '0'
         );
+
     END COMPONENT;
 
     COMPONENT register_file IS
@@ -89,8 +112,8 @@ ARCHITECTURE rtl OF decode IS
             read_enable : IN STD_LOGIC;
             read_address1 : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
             read_address2 : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
-            read_data1 : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
-            read_data2 : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0)
+            read_data1_in : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
+            read_data2_in : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0)
         );
     END COMPONENT;
 
@@ -115,82 +138,92 @@ ARCHITECTURE rtl OF decode IS
         );
     END COMPONENT;
 
-    -- Instruction
-    SIGNAL opcode : STD_LOGIC_VECTOR(5 DOWNTO 0);
-    SIGNAL read_enable : STD_LOGIC;
-    SIGNAL read_address1 : STD_LOGIC_VECTOR(2 DOWNTO 0);
-    SIGNAL read_address2 : STD_LOGIC_VECTOR(2 DOWNTO 0);
-    SIGNAL destination : STD_LOGIC_VECTOR(2 DOWNTO 0);
     SIGNAL isImmediate : STD_LOGIC;
 
     -- fetch signals
-    SIGNAL immediate_enable_internal : STD_LOGIC;
-    SIGNAL fetch_pc_sel : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAL fetch_pc_mux1 : STD_LOGIC_VECTOR(1 DOWNTO 0) := "00";
+    SIGNAL fetch_decode_flush : STD_LOGIC := '0';
+
+    -- decode signals
+    SIGNAL decode_reg_read : STD_LOGIC := '0';
+    SIGNAL decode_sign_extend : STD_LOGIC := '0';
+    SIGNAL decode_execute_flush : STD_LOGIC := '0';
 
     -- execute signals
-    SIGNAL alu_sel : STD_LOGIC_VECTOR(2 DOWNTO 0);
-    SIGNAL alu_src2 : STD_LOGIC_VECTOR(1 DOWNTO 0);
-    SIGNAL alu_register_write : STD_LOGIC;
+    SIGNAL execute_alu_sel : STD_LOGIC_VECTOR(2 DOWNTO 0) := "000";
+    SIGNAL execute_alu_src2 : STD_LOGIC_VECTOR(1 DOWNTO 0) := "00";
+    SIGNAL decode_branch : STD_LOGIC := '0';
+    SIGNAL conditional_jump : STD_LOGIC := '0';
 
     -- memory signals
-    SIGNAL memory_write : STD_LOGIC;
-    SIGNAL memory_read : STD_LOGIC;
-    SIGNAL memory_stack_pointer : STD_LOGIC_VECTOR(1 DOWNTO 0);
-    SIGNAL memory_address : STD_LOGIC_VECTOR(1 DOWNTO 0); -- alu | sp | 0 (reset) | 2 (interrupt)
-    SIGNAL memory_write_data : STD_LOGIC_VECTOR(1 DOWNTO 0);
+    SIGNAL memory_write : STD_LOGIC := '0';
+    SIGNAL memory_read : STD_LOGIC := '0';
+    SIGNAL memory_stack_pointer : STD_LOGIC_VECTOR(1 DOWNTO 0) := "00";
+    SIGNAL memory_address : STD_LOGIC_VECTOR(1 DOWNTO 0) := "00"; -- alu | sp | 0 (reset) | 2 (interrupt)
+    SIGNAL memory_write_data : STD_LOGIC_VECTOR(1 DOWNTO 0) := "00";
+    SIGNAL memory_protected : STD_LOGIC := '0';
+    SIGNAL memory_free : STD_LOGIC := '0';
+    SIGNAL execute_memory_flush : STD_LOGIC := '0';
 
     -- write back signals
-    SIGNAL write_back_register_write1 : STD_LOGIC;
-    SIGNAL write_back_register_write2 : STD_LOGIC;
-    SIGNAL write_back_register_write_data_1 : STD_LOGIC_VECTOR(1 DOWNTO 0);
-    SIGNAL write_back_register_write_address_1 : STD_LOGIC; -- Rdst | Rsrc1
+    SIGNAL write_back_register_write1 : STD_LOGIC := '0';
+    SIGNAL write_back_register_write2 : STD_LOGIC := '0';
+    SIGNAL write_back_register_write_data_1 : STD_LOGIC_VECTOR(1 DOWNTO 0) := "00";
+    SIGNAL write_back_register_write_address_1 : STD_LOGIC := '0'; -- Rdst | Rsrc1
+    SIGNAL outport_enable : STD_LOGIC := '0';
 
-    -- decode: not propagated
-    SIGNAL decode_reg_read : STD_LOGIC;
-    SIGNAL decode_branch : STD_LOGIC; -- later
-    SIGNAL decode_sign_extend : STD_LOGIC;
-
-    SIGNAL control_signals : STD_LOGIC_VECTOR(22 DOWNTO 0);
-
-    --Outputs
-    SIGNAL read_data1 : STD_LOGIC_VECTOR(31 DOWNTO 0);
-    SIGNAL read_data2 : STD_LOGIC_VECTOR(31 DOWNTO 0);
-    SIGNAL immediate_out : STD_LOGIC_VECTOR(31 DOWNTO 0);
-    SIGNAL decode_execute_in : STD_LOGIC_VECTOR(140 - 1 DOWNTO 0);
+    -- Outputs holder
+    SIGNAL control_signals_in : STD_LOGIC_VECTOR(23 DOWNTO 0);
+    SIGNAL read_data1_in : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL read_data2_in : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL Rdest_out : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAL decode_execute_in : STD_LOGIC_VECTOR(193 - 1 DOWNTO 0);
+    SIGNAL decode_execute_out : STD_LOGIC_VECTOR(193 - 1 DOWNTO 0);
 
 BEGIN
 
-    opcode <= instruction_in(15 DOWNTO 10);
-    read_address1 <= instruction_in(9 DOWNTO 7);
-    read_address2 <= instruction_in(6 DOWNTO 4);
-    destination <= instruction_in(3 DOWNTO 1);
-    isImmediate <= instruction_in(0);
+    isImmediate <= imm_flag;
 
     ctrl : controller PORT MAP(
-        -- Inputs
-        clk => clk,
-        opcode => opcode, -- 
-        isImmediate => isImmediate, --
-        interrupt_signal => interrupt_signal,
-        zero_flag => zero_flag,
-        -- Outputs
-        immediate_stall => immediate_enable_internal,
-        fetch_pc_sel => fetch_pc_sel,
-        decode_reg_read => decode_reg_read,
-        decode_branch => decode_branch,
-        decode_sign_extend => decode_sign_extend,
-        alu_sel => alu_sel,
-        alu_src2 => alu_src2,
-        alu_register_write => alu_register_write,
-        memory_write => memory_write,
-        memory_read => memory_read,
-        memory_stack_pointer => memory_stack_pointer,
-        memory_address => memory_address,
-        memory_write_data => memory_write_data,
-        write_back_register_write1 => write_back_register_write1,
-        write_back_register_write2 => write_back_register_write2,
-        write_back_register_write_data_1 => write_back_register_write_data_1,
-        write_back_register_write_address_1 => write_back_register_write_address_1
+        clk,
+
+        opcode,
+        isImmediate,
+        interrupt_signal,
+        zero_flag,
+
+        -- fetch signals - 4 bits
+        fetch_pc_mux1,
+        immediate_stall,
+        fetch_decode_flush,
+
+        -- decode signals - 3 bits
+        decode_reg_read,
+        decode_sign_extend,
+        decode_execute_flush,
+
+        -- execute signals - 7 bits
+        execute_alu_sel,
+        execute_alu_src2,
+        decode_branch,
+        conditional_jump,
+
+        -- memory signals - 11 bits
+        memory_write,
+        memory_read,
+        memory_stack_pointer,
+        memory_address,
+        memory_write_data,
+        memory_protected,
+        memory_free,
+        execute_memory_flush,
+
+        -- write back signals - 6 bits
+        write_back_register_write1,
+        write_back_register_write2,
+        write_back_register_write_data_1,
+        write_back_register_write_address_1,
+        outport_enable
     );
 
     register_file_instance : register_file GENERIC MAP(
@@ -204,11 +237,11 @@ BEGIN
         write_data1 => write_data1, -- WB
         write_data2 => write_data2, -- WB
         read_enable => decode_reg_read, --
-        read_address1 => read_address1, --
-        read_address2 => read_address2, --
+        read_address1 => Rsrc1, --
+        read_address2 => Rsrc2, --
         -- Outputs
-        read_data1 => read_data1, --
-        read_data2 => read_data2 --
+        read_data1_in => read_data1_in, --
+        read_data2_in => read_data2_in --
     );
 
     -- sign extend
@@ -218,35 +251,56 @@ BEGIN
         output => immediate_out
     );
 
-    control_signals <= immediate_enable_internal
-        & fetch_pc_sel
-        & alu_sel
-        & alu_src2
-        & alu_register_write
+    control_signals_in <=
+        -- execute signals - 7 bits
+        execute_alu_sel
+        & execute_alu_src2
+        & decode_branch
+        & conditional_jump
+        -- memory signals - 11 bits
         & memory_write
         & memory_read
         & memory_stack_pointer
         & memory_address
         & memory_write_data
+        & memory_protected
+        & memory_free
+        & execute_memory_flush
+        -- write back signals - 6 bits
         & write_back_register_write1
         & write_back_register_write2
         & write_back_register_write_data_1
-        & write_back_register_write_address_1;
+        & write_back_register_write_address_1
+        & outport_enable;
 
-    -- 140 bits: 23 control signals + 32 read_data1 + 32 read_data2 + 3 read_address1 + 3 read_address2 + 3 destination + 32 immediate_out + 12 pc_plus_1
-    decode_execute_in <= control_signals & read_data1 & read_data2 & read_address1 & read_address2 & destination
-        & immediate_out & pc_plus_1;
+    -- 193 bits: 24 control signals(propagated) + 32 read_data1_in + 32 read_data2_in + 3 read_address1 + 3 read_address2 + 3 destination + 32 immediate_out + 32 pc_plus_1 + 32 pc
+    decode_execute_in <= control_signals_in & read_data1_in & read_data2_in & Rsrc1 & Rsrc2 & Rdest
+        & immediate_out & propagated_pc_plus_one_in & propagated_pc_in;
 
     decode_execute : my_nDFF
-    GENERIC MAP(140)
+    GENERIC MAP(193)
     PORT MAP(
-        clk,
-        '0', -- reset signal
-        enable => immediate_enable_internal,
+        clk => clk,
+        reset => decode_execute_flush,
+        enable => isImmediate,
         d => decode_execute_in,
         q => decode_execute_out
     );
 
-    immediate_stall <= immediate_enable_internal;
+    immediate_stall <= isImmediate;
+    in_port <= in_port_in;
+    fetch_control_signals <= fetch_pc_mux1;
+
+    -- length = start - end + 1
+    -- end = start - length + 1
+    propagated_control_signals <= decode_execute_out(193 - 1 DOWNTO 193 - 24);
+    propagated_read_data1 <= decode_execute_out(193 - 24 - 1 DOWNTO 193 - 24 - 32);
+    propagated_read_data2 <= decode_execute_out(193 - 24 - 32 - 1 DOWNTO 193 - 24 - 32 - 32);
+    propagated_Rsrc1 <= decode_execute_out(193 - 24 - 32 - 32 - 1 DOWNTO 193 - 24 - 32 - 32 - 3);
+    propagated_Rsrc2 <= decode_execute_out(193 - 24 - 32 - 32 - 3 - 1 DOWNTO 193 - 24 - 32 - 32 - 3 - 3);
+    propagated_Rdest <= decode_execute_out(193 - 24 - 32 - 32 - 3 - 3 - 1 DOWNTO 193 - 24 - 32 - 32 - 3 - 3 - 3);
+    immediate_out <= decode_execute_out(193 - 24 - 32 - 32 - 3 - 3 - 3 - 1 DOWNTO 193 - 24 - 32 - 32 - 3 - 3 - 3 - 32);
+    propagated_pc <= decode_execute_out(193 - 24 - 32 - 32 - 3 - 3 - 3 - 32 - 1 DOWNTO 193 - 24 - 32 - 32 - 3 - 3 - 3 - 32 - 32);
+    propagated_pc_plus_one <= decode_execute_out(193 - 24 - 32 - 32 - 3 - 3 - 3 - 32 - 32 - 1 DOWNTO 193 - 24 - 32 - 32 - 3 - 3 - 3 - 32 - 32 - 32);
 
 END ARCHITECTURE rtl;
