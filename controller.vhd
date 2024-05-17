@@ -13,7 +13,7 @@ ENTITY controller IS
 		zero_flag : IN STD_LOGIC;
 
 		-- fetch signals
-		fetch_pc_mux1 : OUT STD_LOGIC_VECTOR(2 DOWNTO 0) := "00";
+		fetch_pc_mux1 : OUT STD_LOGIC_VECTOR(1 DOWNTO 0) := "00";
 		immediate_reg_enable : OUT STD_LOGIC := '0';
 		fetch_decode_flush : OUT STD_LOGIC := '0';
 
@@ -123,9 +123,9 @@ BEGIN
 	-- PUSH PC
 	-- PUSH CCR
 	-- Ret Data Memory[2]
-	PROCESS (clk) IS
+	PROCESS (clk) IS -- opcode, interrupt_signal?
 	BEGIN
-		IF falling_edge(clk) THEN
+		IF falling_edge(clk) AND interrupt_signal = '1' THEN
 			-- FSM
 			CASE interrupt_state IS
 				WHEN instruction =>
@@ -135,317 +135,121 @@ BEGIN
 					END IF;
 				WHEN push_pc =>
 					interrupt_state <= push_ccr;
+
 				WHEN push_ccr =>
 					interrupt_state <= update_pc;
 				WHEN update_pc =>
 					interrupt_state <= instruction;
 					execute_branch <= '0';
 			END CASE;
-		END IF;
-	END PROCESS;
+		ELSIF interrupt_signal = '0' THEN
+			-- fetch
+			fetch_pc_mux1 <=
+				"01" WHEN opcode = JZ_INST OR opcode = JMP_INST OR opcode = CALL_INST ELSE
+				"11" WHEN opcode = RET_INST OR opcode = RTI_INST ELSE
+				"00";
 
-	opcode_process : PROCESS (opcode) IS
-	BEGIN
-		IF interrupt_signal = '0' THEN
-			CASE opcode IS
-				WHEN "000000" => -- NOP
-					-- fetch
-					fetch_pc_mux1 <= "00";
-					immediate_reg_enable <= '0';
-					fetch_decode_flush <= '0';
-					-- decode
-					decode_reg_read <= '0';
-					decode_sign_extend <= '0';
-					decode_execute_flush <= '0';
-					-- execute
-					execute_alu_sel <= "000";
-					execute_alu_src2 <= "00";
-					execute_branch <= '0';
-					conditional_jump <= '0';
-					-- memory
-					memory_write <= '0';
-					memory_read <= '0';
-					memory_stack_pointer <= "00";
-					memory_address <= "00";
-					memory_write_data <= "00";
-					memory_protected <= '0';
-					memory_free <= '0';
-					execute_memory_flush <= '0';
-					-- write back
-					write_back_register_write1 <= '0';
-					write_back_register_write2 <= '0';
-					write_back_register_write_data_1 <= "00";
-					write_back_register_write_address_1 <= '0';
-					outport_enable <= '0';
-				WHEN "000001" => -- not
-				WHEN "000010" => -- neg
-				WHEN "000011" => -- inc
-				WHEN "000100" => -- dec
-				WHEN "000101" => -- out
-				WHEN "000110" => -- in
-				WHEN "010000" => -- mov
-				WHEN "010001" => -- swap
-				WHEN "010010" => -- add
-				WHEN "010011" => -- sub
-				WHEN "010100" => -- and
-				WHEN "010101" => -- or
-				WHEN "010110" => -- xor
-				WHEN "010111" => -- cmp
-				WHEN "011000" => -- addi
-				WHEN "011001" => -- subi
-				WHEN "100000" => -- PUSH Rdst
-					-- fetch
-					fetch_pc_mux1 <= "00";
-					immediate_reg_enable <= '0';
-					fetch_decode_flush <= '0';
-					-- decode
-					decode_reg_read <= '1';
-					decode_sign_extend <= '0';
-					decode_execute_flush <= '0';
-					-- execute
-					execute_alu_sel <= "000";
-					execute_alu_src2 <= "00";
-					execute_branch <= '0';
-					conditional_jump <= '0';
-					-- memory
-					memory_write <= '1';
-					memory_read <= '0';
-					memory_stack_pointer <= "01";
-					memory_address <= "01";
-					memory_write_data <= "00";
-					memory_protected <= '0';
-					memory_free <= '0';
-					execute_memory_flush <= '0';
-					-- write back
-					write_back_register_write1 <= '0';
-					write_back_register_write2 <= '0';
-					write_back_register_write_data_1 <= "00";
-					write_back_register_write_address_1 <= '0';
-					outport_enable <= '0';
-				WHEN "100001" => -- pop
-					-- fetch
-					fetch_pc_mux1 <= "00";
-					immediate_reg_enable <= '0';
-					fetch_decode_flush <= '0';
-					-- decode
-					decode_reg_read <= '0';
-					decode_sign_extend <= '0';
-					decode_execute_flush <= '0';
-					-- execute
-					execute_alu_sel <= "000";
-					execute_alu_src2 <= "00";
-					execute_branch <= '0';
-					conditional_jump <= '0';
-					-- memory
-					memory_write <= '0';
-					memory_read <= '1';
-					memory_stack_pointer <= "10";
-					memory_address <= "01";
-					memory_write_data <= "00";
-					memory_protected <= '0';
-					memory_free <= '0';
-					execute_memory_flush <= '0';
-					-- write back
-					write_back_register_write1 <= '1';
-					write_back_register_write2 <= '0';
-					write_back_register_write_data_1 <= "01";
-					write_back_register_write_address_1 <= '0';
-				WHEN "100010" => -- protect
-					-- fetch
-					fetch_pc_mux1 <= "00";
-					immediate_reg_enable <= '0';
-					fetch_decode_flush <= '0';
-					-- decode
-					decode_reg_read <= '1';
-					decode_sign_extend <= '0';
-					decode_execute_flush <= '0';
-					-- execute
-					execute_alu_sel <= "000";
-					execute_alu_src2 <= "00";
-					execute_branch <= '0';
-					conditional_jump <= '0';
-					-- memory
-					memory_write <= '1';
-					memory_read <= '0';
-					memory_stack_pointer <= "00";
-					memory_address <= "00";
-					memory_write_data <= "00";
-					memory_protected <= '1';
-					memory_free <= '0';
-					execute_memory_flush <= '0';
-					-- write back
-					write_back_register_write1 <= '0';
-					write_back_register_write2 <= '0';
-					write_back_register_write_data_1 <= "00";
-					write_back_register_write_address_1 <= '0';
-				WHEN "100011" => -- free
-					-- fetch
-					fetch_pc_mux1 <= "00";
-					immediate_reg_enable <= '0';
-					fetch_decode_flush <= '0';
-					-- decode
-					decode_reg_read <= '1';
-					decode_sign_extend <= '0';
-					decode_execute_flush <= '0';
-					-- execute
-					execute_alu_sel <= "000";
-					execute_alu_src2 <= "00";
-					execute_branch <= '0';
-					conditional_jump <= '0';
-					-- memory
-					memory_write <= '1';
-					memory_read <= '0';
-					memory_stack_pointer <= "00";
-					memory_address <= "00";
-					memory_write_data <= "00";
-					memory_protected <= '0';
-					memory_free <= '1';
-					execute_memory_flush <= '0';
-					-- write back
-					write_back_register_write1 <= '0';
-					write_back_register_write2 <= '0';
-					write_back_register_write_data_1 <= "00";
-					write_back_register_write_address_1 <= '0';
-				WHEN "100100" => -- ldm
-				WHEN "100101" => -- ldd
-				WHEN "100110" => -- std
-					-- branching
-				WHEN "110000" => -- jz
-					-- fetch
-					fetch_pc_mux1 <= "01";
-					immediate_reg_enable <= '0';
-					fetch_decode_flush <= zero_flag;
-					-- decode
-					decode_reg_read <= '1';
-					decode_sign_extend <= '0';
-					decode_execute_flush <= zero_flag;
-					-- execute
-					execute_alu_sel <= "000";
-					execute_alu_src2 <= "00";
-					execute_branch <= zero_flag;
-					conditional_jump <= '0';
-					-- memory
-					memory_write <= '0';
-					memory_read <= '0';
-					memory_stack_pointer <= "00";
-					memory_address <= "00";
-					memory_write_data <= "00";
-					memory_protected <= '0';
-					memory_free <= '0';
-					execute_memory_flush <= '1';
-					-- write back
-					write_back_register_write1 <= '0';
-					write_back_register_write2 <= '0';
-					write_back_register_write_data_1 <= "00";
-					write_back_register_write_address_1 <= '0';
+			fetch_decode_flush <=
+				zero_flag WHEN opcode = JZ_INST ELSE
+				'1' WHEN opcode = JMP_INST OR opcode = CALL_INST OR opcode = RET_INST OR opcode = RTI_INST ELSE
+				'0';
 
-				WHEN "110001" => -- jmp
-				WHEN "110010" => -- call
-				WHEN "110011" => -- ret
-				WHEN "110100" => -- rti
+			-- decode
+			decode_reg_read <=
+				'0' WHEN opcode = NOP_INST OR opcode = POP_INST OR opcode = RET_INST OR opcode = RTI_INST OR opcode = IN_INST ELSE
+				'1';
 
-				WHEN OTHERS =>
-			END CASE;
+			decode_sign_extend <=
+				'1' WHEN opcode = LDM_INST ELSE
+				'0';
+
+			decode_execute_flush <=
+				zero_flag WHEN opcode = JZ_INST ELSE
+				'1' WHEN opcode = JMP_INST OR opcode = CALL_INST OR opcode = RET_INST OR opcode = RTI_INST ELSE
+				'0';
+
+			-- execute
+			execute_alu_sel <=
+				"011" WHEN opcode = MOV_INST OR opcode = LDM_INST ELSE
+				"001" WHEN opcode = INC_INST OR opcode = ADD_INST OR opcode = ADDI_INST OR opcode = LDD_INST OR opcode = STD_INST ELSE
+				"010" WHEN opcode = DEC_INST OR opcode = NEG_INST OR opcode = SUB_INST OR opcode = SUBI_INST OR opcode = CMP_INST ELSE
+				"111" WHEN opcode = NOT_INST ELSE
+				"100" WHEN opcode = AND_INST ELSE
+				"101" WHEN opcode = OR_INST ELSE
+				"110" WHEN opcode = XOR_INST ELSE
+				"000";
+
+			execute_alu_src2 <=
+				"01" WHEN opcode = LDM_INST OR opcode = ADDI_INST OR opcode = LDD_INST OR opcode = STD_INST OR opcode = SUBI_INST ELSE
+				"10" WHEN opcode = INC_INST OR opcode = DEC_INST ELSE
+				"00";
+
+			execute_branch <=
+				zero_flag WHEN opcode = JZ_INST ELSE
+				'1' WHEN opcode = JMP_INST OR opcode = CALL_INST OR opcode = RET_INST OR opcode = RTI_INST ELSE
+				'0';
+
+			conditional_jump <=
+				'1' WHEN opcode = JZ_INST ELSE
+				'0';
+
+			-- memory
+			memory_write <=
+				'1' WHEN opcode = PUSH_INST OR opcode = PROTECT_INST OR opcode = FREE_INST OR opcode = CALL_INST OR opcode = STD_INST ELSE
+				'0';
+
+			memory_read <=
+				'1' WHEN opcode = POP_INST OR opcode = RET_INST OR opcode = RTI_INST OR opcode = OUT_INST OR opcode = LDD_INST ELSE
+				'0';
+
+			memory_stack_pointer <=
+				"01" WHEN opcode = PUSH_INST OR opcode = CALL_INST ELSE
+				"10" WHEN opcode = POP_INST OR opcode = RET_INST OR opcode = RTI_INST ELSE
+				"00";
+
+			memory_address <=
+				"01" WHEN opcode = PUSH_INST OR opcode = POP_INST OR opcode = CALL_INST OR opcode = RET_INST ELSE
+				"00";
+
+			memory_write_data <=
+				"01" WHEN opcode = CALL_INST ELSE
+				"00"; -- el ba2y 3nd el interrupt FSM
+
+			memory_protected <=
+				'1' WHEN opcode = PROTECT_INST ELSE
+				'0';
+
+			memory_free <=
+				'1' WHEN opcode = FREE_INST ELSE
+				'0';
+
+			execute_memory_flush <=
+				'1' WHEN opcode = JZ_INST OR opcode = JMP_INST OR opcode = CALL_INST OR opcode = RET_INST OR opcode = RTI_INST ELSE
+				'0';
+
+			-- write back
+			write_back_register_write_data_1 <=
+				"01" WHEN opcode = POP_INST OR opcode = LDD_INST ELSE
+				"11" WHEN opcode = IN_INST ELSE
+				"10" WHEN opcode = SWAP_INST ELSE
+				"00";
+
+			write_back_register_write1 <=
+				'1' WHEN opcode = POP_INST OR opcode = SWAP_INST OR opcode = MOV_INST OR opcode = LDM_INST OR opcode = INC_INST OR opcode = ADD_INST OR opcode = ADDI_INST OR opcode = LDD_INST OR opcode = DEC_INST OR opcode = NEG_INST OR opcode = SUB_INST OR opcode = SUBI_INST OR opcode = NOT_INST OR opcode = AND_INST OR opcode = OR_INST OR opcode = XOR_INST ELSE
+				'0';
+
+			write_back_register_write2 <=
+				'1' WHEN opcode = SWAP_INST ELSE
+				'0';
+
+			write_back_register_write_address_1 <=
+				'1' WHEN opcode = SWAP_INST ELSE
+				'0';
+
+			outport_enable <=
+				'1' WHEN opcode = OUT_INST ELSE
+				'0';
 		END IF;
 	END PROCESS;
 
 END arch_controller;
-
--- MOV Rdst, Rsrc	000	1	0	X
--- IN Rdst	000	0	0	X
--- OUT Rdst	000	1	0	X
-
--- INC Rdst	000	1	0	X
--- ADD Rdst, Rsrc1, Rsrc2	000	1	0	X
--- ADDI Rdst, Rsrc1, Imm	000	1	0	0
--- LDM Rdst, Imm	000	1	0	1
--- LDD Rdst, EA(Rsrc1)	000	1	0	0
--- STD Rdst, EA(Rsrc1)	000	1	0	0
-
--- DEC Rdst	000	1	0	X
--- NEG Rdst	000	1	0	X
--- SUB Rdst, Rsrc1, Rsrc2	000	1	0	X
--- SUBI Rdst, Rsrc1, Imm	000	1	0	0
--- CMP Rsrc1, Rsrc2	000	1	0	X
-
--- NOT Rdst	000	1	0	X
--- AND Rdst, Rsrc1, Rsrc2	000	1	0	X
--- OR Rdst, Rsrc1, Rsrc2	000	1	0	X
--- XOR Rdst, Rsrc1, Rsrc2	000	1	0	X
---  
--- Execute & Memory
--- Instruction	ALU Selectors	ALU src2	Reg write	MW
--- enable	MR
--- enable	SP	MW address	MW data
--- NOP	XXX	XX	0	0	0	00	XX	XX
--- PUSH Rdst	XXX	00(src2)	0	1	0	01(-2)	01 (SP)	00 (Src2)
--- POP Rdst	XXX	XX	1	0	1	10(+2)	01 (SP)	XX
--- PROTECT Rsrc	XXX	XX	0	1	0	00	10 (ALU)	XX
--- FREE Rsrc	XXX	XX	0	0	0	00	10 (ALU)	XX
--- JZ Rdst	XXX	00	0	0	0	00	XX	XX
--- JMP Rdst	XXX	00	0	0	0	00	XX	X
--- CALL Rdst	XXX	00	0	1	0	01(-2)	01 (SP)	01 (PC+1)
--- RET	XXX	XX	0	0	1	10(+2)	XX	XX
--- RTI	XXX	XX	0	0	1	10(+2)	XX	XX
--- RESET	XXX	XX	X	X	X	XX	XX	X
--- INTERRUPT	XXX	XX	0	1	0	01(-2)	01 (SP)	X
-
--- MOV Rdst, Rsrc	011	00(src2)	1	0	0	00	XX	XX
--- IN Rdst	XXX	XX	1	0	0	00		X
--- OUT Rdst	XXX	00	1	0	0	00		X
-
--- INC Rdst	001	10(1)	1	0	0	00		X
--- ADD Rdst, Rsrc1, Rsrc2	001	00(src2)	1	0	0	00		X
--- ADDI Rdst, Rsrc1, Imm	001	01(Imm)	1	0	0	00		X
--- LDM Rdst, Imm	011	01(Imm)	1	0	0	00	XX	XX
--- LDD Rdst, EA(Rsrc1)	001	01(Imm)	1	0	0	00		X
--- STD Rdst, EA(Rsrc1)	001	01(Imm)	1	1	0	00		0
-
--- DEC Rdst	010	10(1)	1	0	0	00	XX	XX
--- NEG Rdst	010	XX	1	0	0	00		X
--- SUB Rdst, Rsrc1, Rsrc2	010	00(src2)	1	0	0	00		X
--- SUBI Rdst, Rsrc1, Imm	010	01(Imm)	1	0	0	00		X
--- CMP Rsrc1, Rsrc2	010	00(src2)	0	0	0	00	XX	XX
-
--- NOT Rdst	111	XX	1	0	0	00	XX	XX
--- AND Rdst, Rsrc1, Rsrc2	100	00(src2)	1	0	0	00		X
--- OR Rdst, Rsrc1, Rsrc2	101	00(src2)	1	0	0	00	XX	XX
--- XOR Rdst, Rsrc1, Rsrc2	110	00(src2)	1	0	0	00		X
-
---  
--- Write Back
--- Instruction	Rsrc1 Data	RegW1 Enable	RegW2 Enable	RegW1 Address mux
--- NOP	XXX	0	0	0(Rdst)
--- PUSH Rdst	XXX	1	0	0(Rdst)
--- POP Rdst	XXX	0	0	0(Rdst)
--- PROTECT Rsrc	XXX	1	0	0(Rdst)
--- FREE Rsrc	XXX	0	0	0(Rdst)
--- JZ Rdst	XXX	0	0	0(Rdst)
--- JMP Rdst	XXX	0	0	0(Rdst)
--- CALL Rdst	XXX	1	0	0(Rdst)
--- RET	XXX	0	0	0(Rdst)
--- RTI	XXX	0	0	0(Rdst)
--- RESET	XXX	X	0	0(Rdst)
--- INTERRUPT	XXX	1	0	0(Rdst)
-
--- MOV Rdst, Rsrc	00(ALU)	1	0	0(Rdst)
--- IN Rdst	011	0	0	0(Rdst)
--- OUT Rdst	011	0	0	0(Rdst)
-
--- INC Rdst	001	0	0	0(Rdst)
--- ADD Rdst, Rsrc1, Rsrc2	001	0	0	0(Rdst)
--- ADDI Rdst, Rsrc1, Imm	001	0	0	0(Rdst)
--- LDM Rdst, Imm	00(ALU)	1	0	0(Rdst)
--- LDD Rdst, EA(Rsrc1)	001	0	0	0(Rdst)
--- STD Rdst, EA(Rsrc1)	001	1	0	0(Rdst)
-
--- DEC Rdst	00(ALU)	1	0	0(Rdst)
--- NEG Rdst	010	0	0	0(Rdst)
--- SUB Rdst, Rsrc1, Rsrc2	010	0	0	0(Rdst)
--- SUBI Rdst, Rsrc1, Imm	010	0	0	0(Rdst)
--- CMP Rsrc1, Rsrc2	XX	0	0	0(Rdst)
-
--- NOT Rdst	00(ALU)	1	0	0(Rdst)
--- AND Rdst, Rsrc1, Rsrc2	100	0	0	0(Rdst)
--- OR Rdst, Rsrc1, Rsrc2	00(ALU)	1	0	0(Rdst)
--- XOR Rdst, Rsrc1, Rsrc2	110	0	0	0(Rdst)
