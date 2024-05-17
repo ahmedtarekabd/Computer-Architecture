@@ -12,15 +12,37 @@ ENTITY processor_phase3 IS
         in_port_from_processor : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
 
         --outputs
-        out_port_to_processor : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
-
-        -- add in port / out port
+        out_port_to_processor : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+        --first 32 bits are the pc, last bit is the exception type 0 -> mem protection, 1 -> overflow
+        EPC_out_to_processor : OUT STD_LOGIC_VECTOR(32 DOWNTO 0)
     );
 END ENTITY processor_phase3;
 ARCHITECTURE arch_processor OF processor_phase3 IS
 
     --**********************************************************COMPONENTS*************************************************--
-    --TODO:add in port / out port propagation in fetch?
+
+    COMPONENT exception_handling_unit IS
+        PORT (
+            clk : IN STD_LOGIC;
+            pc_from_EM : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+            pc_from_DE : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+            overflow_flag_from_alu : IN STD_LOGIC;
+            protected_bit_exeception_from_memory : IN STD_LOGIC;
+
+            --outputs
+            exception_out_port : OUT STD_LOGIC := '0';
+            second_pc_mux_out : OUT STD_LOGIC_VECTOR(1 DOWNTO 0) := "00";
+            FD_flush : OUT STD_LOGIC := '0';
+            DE_flush : OUT STD_LOGIC := '0';
+            EM_flush : OUT STD_LOGIC := '0';
+            MW_flush : OUT STD_LOGIC := '0';
+
+            --output to epc
+            --first 32 bits are the pc, last bit is the exception type 0 -> mem protection, 1 -> overflow
+            EPC_output : OUT STD_LOGIC_VECTOR(32 DOWNTO 0)
+
+        );
+    END COMPONENT exception_handling_unit;
 
     COMPONENT fetch
         PORT (
@@ -340,6 +362,7 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
     SIGNAL alu_out_from_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL immediate_enable_out_from_execute : STD_LOGIC;
     SIGNAL in_port_from_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL pc_out_to_exception_from_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
 
     SIGNAL zero_flag_out_controller_from_execute : STD_LOGIC;
     SIGNAL overflow_flag_out_exception_handling_from_execute : STD_LOGIC;
@@ -439,7 +462,7 @@ BEGIN
         RST_signal_input => RST_signal,
         RST_signal_load_use_input => '0', --what is this?
         EM_flush_exception_handling_in => EM_flush_exception_handling_to_excute,
-        EM_enable_exception_handling_in => '0', --not found in the digram
+        EM_enable_exception_handling_in => '0', --TODO: will be changed
         pc_out => pc_out_from_execute,
         pc_plus_1_out => pc_plus_1_out_from_execute,
         destination_address_out => destination_address_out_from_execute,
@@ -454,7 +477,7 @@ BEGIN
         overflow_flag_out_exception_handling => overflow_flag_out_exception_handling_from_execute,
         address1_out_forwarding_unit => address1_out_forwarding_unit_from_execute,
         address2_out_forwarding_unit => address2_out_forwarding_unit_from_execute,
-        pc_out_exception_handling => OPEN, --is it the same as the ouputed pc?
+        pc_out_exception_handling => pc_out_to_exception_from_execute,
         in_port_input => in_port_from_Decode, --should it be propagated or what?
         in_port_output => in_port_from_execute
     );
@@ -505,6 +528,32 @@ BEGIN
     reg_write_enable2_in_to_wb <= wb_control_signals_out_from_memory(2);
     reg_write_address1_mux_to_wb <= wb_control_signals_out_from_memory(1);
 
+    --* output port
+    --check the control signal and depending on it it will ouput data 1 or no
+    PROCESS (read_data1_out_from_memory, wb_control_signals_out_from_memory(0))
+    BEGIN
+        IF wb_control_signals_out_from_memory(0) = '1' THEN
+            out_port_to_processor <= read_data1_out_from_memory;
+        ELSE
+            out_port_to_processor <= (OTHERS => '-'); -- don't care
+        END IF;
+    END PROCESS;
+
+    exception_handling_inst : exception_handling_unit PORT MAP(
+        clk => clk,
+        pc_from_EM => pc_out_to_exception_from_execute,
+        pc_from_DE => ,
+        overflow_flag_from_alu => overflow_flag_out_exception_handling_from_execute,
+        protected_bit_exeception_from_memory => protected_address_access_to_exception_from_memory,
+        exception_out_port => open, --1 if an exception is detected, 0 otherwise --TODO:do we need it?
+        second_pc_mux_out => pc_mux2_selector_to_fetch,
+        FD_flush => FD_flush_exception_unit_to_fetch,
+        DE_flush => ,
+        EM_flush => EM_flush_exception_handling_to_excute,
+        MW_flush => MW_flush_from_exception_to_memory,
+        EPC_output => EPC_out_to_processor
+    );
+
     ----------Write Back----------
     write_back_inst : write_back PORT MAP(
         clk => clk,
@@ -531,6 +580,7 @@ BEGIN
 
 END ARCHITECTURE arch_processor;
 
+--TODO: add output port -> done
 --TODO: check overflow and carry flags in the alu
 --TODO: add decode
 --TODO: modify the memory
