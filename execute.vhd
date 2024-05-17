@@ -63,7 +63,7 @@ ENTITY execute IS
         execute_mem_flush_controller : IN STD_LOGIC;
         -- E/M flush from exception handling
         EM_flush_exception_handling_in : IN STD_LOGIC;
-        EM_enable_exception_handling_in : IN STD_LOGIC;
+        -- EM_enable_exception_handling_in : IN STD_LOGIC;
 
 ------------------------- Outputs -------------------------
     ------------------------- Propagated outputs -------------------------
