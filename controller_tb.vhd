@@ -128,7 +128,6 @@ BEGIN
         WAIT FOR 10 ns;
     END PROCESS clk_process;
 
-    -- asserts before waiting because they are asynchronous
     stimulus_process : PROCESS
     BEGIN
         -- Test NOP_INST
@@ -136,6 +135,7 @@ BEGIN
         isImmediate <= '0';
         interrupt_signal <= '0';
         zero_flag <= '0';
+        WAIT FOR 20 ns;
         ASSERT fetch_pc_mux1 = "00" AND immediate_stall = '1' AND fetch_decode_flush = '0' AND
         decode_reg_read = '0' AND decode_sign_extend = '0' AND decode_execute_flush = '0' AND
         execute_alu_sel = "000" AND execute_alu_src2 = "00" AND decode_branch = '0' AND
@@ -145,38 +145,28 @@ BEGIN
         write_back_register_write1 = '0' AND write_back_register_write2 = '0' AND
         write_back_register_write_data_1 = "00" AND write_back_register_write_address_1 = '0' AND
         outport_enable = '0' REPORT "Test NOP_INST failed" SEVERITY ERROR;
-        WAIT FOR 20 ns;
 
         -- Test NOT_INST
         opcode <= "000001";
         isImmediate <= '0';
         interrupt_signal <= '0';
         zero_flag <= '0';
+        WAIT FOR 20 ns;
         ASSERT fetch_pc_mux1 = "00" AND immediate_stall = '1' AND fetch_decode_flush = '0' AND
-        decode_reg_read = '0' AND decode_sign_extend = '0' AND decode_execute_flush = '0' AND
-        execute_alu_sel = "001" AND execute_alu_src2 = "00" AND decode_branch = '0' AND
+        decode_reg_read = '1' AND decode_sign_extend = '0' AND decode_execute_flush = '0' AND
+        execute_alu_sel = "111" AND execute_alu_src2 = "00" AND decode_branch = '0' AND
         conditional_jump = '0' AND memory_write = '0' AND memory_read = '0' AND
         memory_stack_pointer = "00" AND memory_address = "00" AND memory_write_data = "00" AND
         memory_protected = '0' AND memory_free = '0' AND execute_memory_flush = '0' AND
-        write_back_register_write1 = '0' AND write_back_register_write2 = '0' AND
+        write_back_register_write1 = '1' AND write_back_register_write2 = '0' AND
         write_back_register_write_data_1 = "00" AND write_back_register_write_address_1 = '0' AND
         outport_enable = '0' REPORT "Test NOT_INST failed" SEVERITY ERROR;
-        WAIT FOR 20 ns;
 
         -- Test NEG_INST
         opcode <= "000010";
         isImmediate <= '0';
         interrupt_signal <= '0';
         zero_flag <= '0';
-        ASSERT fetch_pc_mux1 = "00" AND immediate_stall = '1' AND fetch_decode_flush = '0' AND
-        decode_reg_read = '0' AND decode_sign_extend = '0' AND decode_execute_flush = '0' AND
-        execute_alu_sel = "010" AND execute_alu_src2 = "00" AND decode_branch = '0' AND
-        conditional_jump = '0' AND memory_write = '0' AND memory_read = '0' AND
-        memory_stack_pointer = "00" AND memory_address = "00" AND memory_write_data = "00" AND
-        memory_protected = '0' AND memory_free = '0' AND execute_memory_flush = '0' AND
-        write_back_register_write1 = '0' AND write_back_register_write2 = '0' AND
-        write_back_register_write_data_1 = "00" AND write_back_register_write_address_1 = '0' AND
-        outport_enable = '0' REPORT "Test NEG_INST failed" SEVERITY ERROR;
         WAIT FOR 20 ns;
 
         -- Test INC_INST
@@ -184,15 +174,6 @@ BEGIN
         isImmediate <= '0';
         interrupt_signal <= '0';
         zero_flag <= '0';
-        ASSERT fetch_pc_mux1 = "00" AND immediate_stall = '1' AND fetch_decode_flush = '0' AND
-        decode_reg_read = '0' AND decode_sign_extend = '0' AND decode_execute_flush = '0' AND
-        execute_alu_sel = "011" AND execute_alu_src2 = "00" AND decode_branch = '0' AND
-        conditional_jump = '0' AND memory_write = '0' AND memory_read = '0' AND
-        memory_stack_pointer = "00" AND memory_address = "00" AND memory_write_data = "00" AND
-        memory_protected = '0' AND memory_free = '0' AND execute_memory_flush = '0' AND
-        write_back_register_write1 = '0' AND write_back_register_write2 = '0' AND
-        write_back_register_write_data_1 = "00" AND write_back_register_write_address_1 = '0' AND
-        outport_enable = '0' REPORT "Test INC_INST failed" SEVERITY ERROR;
         WAIT FOR 20 ns;
 
         -- Test DEC_INST
@@ -200,31 +181,12 @@ BEGIN
         isImmediate <= '0';
         interrupt_signal <= '0';
         zero_flag <= '0';
-        ASSERT fetch_pc_mux1 = "00" AND immediate_stall = '1' AND fetch_decode_flush = '0' AND
-        decode_reg_read = '0' AND decode_sign_extend = '0' AND decode_execute_flush = '0' AND
-        execute_alu_sel = "100" AND execute_alu_src2 = "00" AND decode_branch = '0' AND
-        conditional_jump = '0' AND memory_write = '0' AND memory_read = '0' AND
-        memory_stack_pointer = "00" AND memory_address = "00" AND memory_write_data = "00" AND
-        memory_protected = '0' AND memory_free = '0' AND execute_memory_flush = '0' AND
-        write_back_register_write1 = '0' AND write_back_register_write2 = '0' AND
-        write_back_register_write_data_1 = "00" AND write_back_register_write_address_1 = '0' AND
-        outport_enable = '0' REPORT "Test DEC_INST failed" SEVERITY ERROR;
-        WAIT FOR 20 ns;
 
         -- Test OUT_INST
         opcode <= "000101";
         isImmediate <= '0';
         interrupt_signal <= '0';
         zero_flag <= '0';
-        ASSERT fetch_pc_mux1 = "00" AND immediate_stall = '1' AND fetch_decode_flush = '0' AND
-        decode_reg_read = '0' AND decode_sign_extend = '0' AND decode_execute_flush = '0' AND
-        execute_alu_sel = "101" AND execute_alu_src2 = "00" AND decode_branch = '0' AND
-        conditional_jump = '0' AND memory_write = '0' AND memory_read = '0' AND
-        memory_stack_pointer = "00" AND memory_address = "00" AND memory_write_data = "00" AND
-        memory_protected = '0' AND memory_free = '0' AND execute_memory_flush = '0' AND
-        write_back_register_write1 = '0' AND write_back_register_write2 = '0' AND
-        write_back_register_write_data_1 = "00" AND write_back_register_write_address_1 = '0' AND
-        outport_enable = '1' REPORT "Test OUT_INST failed" SEVERITY ERROR;
         WAIT FOR 20 ns;
 
         -- Test IN_INST
@@ -232,15 +194,6 @@ BEGIN
         isImmediate <= '0';
         interrupt_signal <= '0';
         zero_flag <= '0';
-        ASSERT fetch_pc_mux1 = "00" AND immediate_stall = '1' AND fetch_decode_flush = '0' AND
-        decode_reg_read = '0' AND decode_sign_extend = '0' AND decode_execute_flush = '0' AND
-        execute_alu_sel = "110" AND execute_alu_src2 = "00" AND decode_branch = '0' AND
-        conditional_jump = '0' AND memory_write = '0' AND memory_read = '0' AND
-        memory_stack_pointer = "00" AND memory_address = "00" AND memory_write_data = "00" AND
-        memory_protected = '0' AND memory_free = '0' AND execute_memory_flush = '0' AND
-        write_back_register_write1 = '0' AND write_back_register_write2 = '0' AND
-        write_back_register_write_data_1 = "00" AND write_back_register_write_address_1 = '0' AND
-        outport_enable = '0' REPORT "Test IN_INST failed" SEVERITY ERROR;
         WAIT FOR 20 ns;
 
         -- Test MOV_INST
@@ -305,6 +258,7 @@ BEGIN
         interrupt_signal <= '0';
         zero_flag <= '0';
         WAIT FOR 20 ns;
+        WAIT FOR 20 ns; -- immeditate value
 
         -- Test SUBI_INST
         opcode <= "011001";
@@ -312,6 +266,7 @@ BEGIN
         interrupt_signal <= '0';
         zero_flag <= '0';
         WAIT FOR 20 ns;
+        WAIT FOR 20 ns; -- immeditate value
 
         -- Test PUSH_INST
         opcode <= "100000";

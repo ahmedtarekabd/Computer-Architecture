@@ -14,7 +14,7 @@ ENTITY controller IS
 
 		-- fetch signals
 		fetch_pc_mux1 : OUT STD_LOGIC_VECTOR(1 DOWNTO 0) := "00";
-		immediate_stall : OUT STD_LOGIC := '0';
+		immediate_stall : OUT STD_LOGIC := '1';
 		fetch_decode_flush : OUT STD_LOGIC := '0';
 
 		-- decode signals
@@ -88,20 +88,13 @@ ARCHITECTURE arch_controller OF controller IS
 
 BEGIN
 
-	-- interrupt
-	-- PUSH PC
-	-- PUSH CCR
-	-- Ret Data Memory[2]
-	-- TODO: Stall Fetch (alshan el opcode mytghyarsh, hatfr2 lw el signal mwgoda le 1 cycle) 
-	PROCESS (clk) IS -- opcode, interrupt_signal?
-		-- VARIABLE interrupt_counter : INTEGER := 0;
+	-- Reading Immediate value
+	-- Add bubble by:
+	-- Disabling fetch_decode 
+	-- Flush decode_execute
+	-- decode_execute propagates this enable signal
+	PROCESS (clk)
 	BEGIN
-
-		-- Reading Immediate value
-		-- Add bubble by:
-		-- Disabling fetch_decode 
-		-- Flush:	   decode_execute
-		-- decode_execute propagates this enable signal
 		IF falling_edge(clk) THEN
 			-- FSM
 			CASE immediate_state IS
@@ -126,7 +119,15 @@ BEGIN
 					END IF;
 			END CASE;
 		END IF;
+	END PROCESS;
 
+	PROCESS (clk) IS -- opcode, interrupt_signal?
+	BEGIN
+		-- interrupt
+		-- PUSH PC
+		-- PUSH CCR
+		-- Ret Data Memory[2]
+		-- Stall Fetch (alshan el opcode mytghyarsh, hatfr2 lw el signal mwgoda le 1 cycle)
 		IF rising_edge(clk) AND (interrupt_signal = '1' OR interrupt_state /= instruction) THEN
 			-- FSM
 			CASE interrupt_state IS
@@ -232,7 +233,7 @@ BEGIN
 				WHEN update_pc =>
 					interrupt_state <= instruction;
 			END CASE;
-		ELSIF (interrupt_signal = '0' AND interrupt_state = instruction) THEN
+		ELSIF (interrupt_signal = '0' AND interrupt_state = instruction AND isImmediate = '1') THEN
 			-- fetch
 			fetch_pc_mux1 <=
 				"01" WHEN opcode = JZ_INST OR opcode = JMP_INST OR opcode = CALL_INST ELSE
