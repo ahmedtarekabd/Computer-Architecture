@@ -131,7 +131,9 @@ BEGIN
         read_enable => read_enable,
         read_data => mem_read_data_internal,
         protect_signal => mem_control_signals_in(1),
-        free_signal => mem_control_signals_in(0)
+        free_signal => mem_control_signals_in(0),
+        protected_address_access => protected_address_access_to_exception
+
     );
 
     -- SP register
