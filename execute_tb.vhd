@@ -32,7 +32,7 @@ ARCHITECTURE behavior OF execute_tb IS
         alu_src2_selector : IN std_logic_vector (1 downto 0);
         execute_mem_register_enable : IN std_logic;
         RST_signal_input : IN std_logic;
-        RST_signal_load_use_input : IN std_logic;
+        execute_mem_flush_controller : IN std_logic;
         EM_flush_exception_handling_in : IN std_logic;
         -- EM_enable_in_to_execute : IN std_logic;
         -- memory_control_signals : IN std_logic_vector (7 downto 0);
@@ -87,7 +87,7 @@ ARCHITECTURE behavior OF execute_tb IS
    signal alu_src2_selector : std_logic_vector (1 downto 0) := (others => '0');
    signal execute_mem_register_enable : std_logic := '0';
    signal RST_signal_input : std_logic := '0';
-   signal RST_signal_load_use_input : std_logic := '0';
+   signal execute_mem_flush_controller : std_logic := '0';
    signal EM_flush_exception_handling_in : std_logic := '0';
 --    signal EM_enable_exception_handling_in : std_logic := '0';
    signal in_port_input : std_logic_vector(31 downto 0) := (others => '0');
@@ -147,7 +147,7 @@ BEGIN
         alu_src2_selector => alu_src2_selector,
         execute_mem_register_enable => execute_mem_register_enable,
         RST_signal_input => RST_signal_input,
-        RST_signal_load_use_input => RST_signal_load_use_input,
+        execute_mem_flush_controller => execute_mem_flush_controller,
         EM_flush_exception_handling_in => EM_flush_exception_handling_in,
         -- -- EM_enable_exception_handling_in => EM_enable_exception_handling_in,
         -- -- memory_control_signals => memory_control_signals,
@@ -171,9 +171,9 @@ BEGIN
         address2_out_forwarding_unit => address2_out_forwarding_unit,
         pc_out_exception_handling => pc_out_exception_handling,
         in_port_input => in_port_input,
-        in_port_output => in_port_output
+        in_port_output => in_port_output,
         control_signals_memory_out => control_signals_memory_out,
-        control_signals_write_back_out => control_signals_write_back_out,
+        control_signals_write_back_out => control_signals_write_back_out
    );
 
    -- Clock process definitions
@@ -218,7 +218,7 @@ BEGIN
         alu_src2_selector <= (others => '0');
         execute_mem_register_enable <= '0';
         RST_signal_input <= '0';
-        RST_signal_load_use_input <= '0';
+        execute_mem_flush_controller <= '0';
         EM_flush_exception_handling_in <= '0';
         -- EM_enable_exception_handling_in <= '0';
         in_port_input <= (others => '0');
