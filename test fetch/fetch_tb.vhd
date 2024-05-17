@@ -165,7 +165,7 @@ BEGIN
         FD_flush_exception_unit <= '0';
 
         pc_enable_hazard_detection <= '1';
-        immediate_stall <= '1';
+        immediate_stall <= '0';
         --first testcase - > fetch first instruction (00000000000000000000000000000000)
         pc_mux1_selector <= "00";
         pc_mux2_selector <= "00";
@@ -180,7 +180,7 @@ BEGIN
         ASSERT (in_port_out = "00000000000000000000000000000000") REPORT "Testcase 2 in_port_out is wrong" SEVERITY error;
 
         --second testcase - > second instruction with immediate (00000000000000000000000000000001)
-        immediate_stall <= '0'; --checkkkkk
+        immediate_stall <= '1'; --checkkkkk
         pc_mux1_selector <= "00";
         pc_mux2_selector <= "00";
         WAIT FOR clk_period;
@@ -192,7 +192,7 @@ BEGIN
         ASSERT (propagated_pc = "00000000000000000000000000000001") REPORT "Testcase 3 propagated_pc is wrong" SEVERITY error;
         ASSERT (propagated_pc_plus_one = "00000000000000000000000000000010") REPORT "Testcase 3 propagated_pc_plus_one is wrong" SEVERITY error;
         --third testcase - > (00000000000000000000000000000010) (stalled cycle)
-        immediate_stall <= '1'; --checkkkkk
+        immediate_stall <= '0'; --checkkkkk
         pc_mux1_selector <= "00";
         pc_mux2_selector <= "00";
         WAIT FOR clk_period;
@@ -205,7 +205,7 @@ BEGIN
         ASSERT (propagated_pc = "00000000000000000000000000000010") REPORT "Testcase 4 propagated_pc is wrong" SEVERITY error;
         ASSERT (propagated_pc_plus_one = "00000000000000000000000000000011") REPORT "Testcase 4 propagated_pc_plus_one is wrong" SEVERITY error;
         --fourth testcase - > (00000000000000000000000000000011)
-        immediate_stall <= '0'; --checkkkkk
+        immediate_stall <= '1'; --checkkkkk
         pc_mux1_selector <= "00";
         pc_mux2_selector <= "00";
         WAIT FOR clk_period;
@@ -217,7 +217,7 @@ BEGIN
         ASSERT (propagated_pc = "00000000000000000000000000000011") REPORT "Testcase 5 propagated_pc is wrong" SEVERITY error;
         ASSERT (propagated_pc_plus_one = "00000000000000000000000000000100") REPORT "Testcase 5 propagated_pc_plus_one is wrong" SEVERITY error;
         --fifth testcase - > (00000000000000000000000000000100) (stalled cycle)
-        immediate_stall <= '1'; --checkkkkk
+        immediate_stall <= '0'; --checkkkkk
         pc_mux1_selector <= "01";
         pc_mux2_selector <= "00";
         WAIT FOR clk_period;
@@ -268,7 +268,7 @@ BEGIN
         ASSERT (propagated_pc_plus_one = "00000000000000000000000000000101") REPORT "Testcase 9 propagated_pc_plus_one is wrong" SEVERITY error;
 
         --nine testcase -> immediate (stalled cycle)
-        immediate_stall <= '0'; --checkkkkk
+        immediate_stall <= '1'; --checkkkkk
         pc_mux1_selector <= "00";
         pc_mux2_selector <= "00";
         WAIT FOR clk_period;
@@ -280,7 +280,7 @@ BEGIN
         ASSERT (propagated_pc = "00000000000000000000000000000101") REPORT "Testcase 10 propagated_pc is wrong" SEVERITY error;
         ASSERT (propagated_pc_plus_one = "00000000000000000000000000000110") REPORT "Testcase 10 propagated_pc_plus_one is wrong" SEVERITY error;
 
-        immediate_stall <= '1'; --checkkkkk
+        immediate_stall <= '0'; --checkkkkk
         pc_mux1_selector <= "00";
         pc_mux2_selector <= "01";
         WAIT FOR clk_period;
