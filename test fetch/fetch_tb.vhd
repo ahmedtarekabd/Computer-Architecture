@@ -19,7 +19,7 @@ ARCHITECTURE behavior OF fetch_tb IS
             branch_address : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
             pc_mux2_selector : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
             interrupt_signal : IN STD_LOGIC;
-            immediate_stall : IN STD_LOGIC;
+            immediate_reg_enable : IN STD_LOGIC;
             FD_enable : IN STD_LOGIC;
             FD_enable_loaduse : IN STD_LOGIC;
             FD_flush : IN STD_LOGIC;
@@ -45,7 +45,7 @@ ARCHITECTURE behavior OF fetch_tb IS
     SIGNAL pc_mux2_selector : STD_LOGIC_VECTOR(1 DOWNTO 0) := (OTHERS => '0');
     SIGNAL interrupt_signal : STD_LOGIC := '0';
     SIGNAL pc_enable_hazard_detection : STD_LOGIC := '0';
-    SIGNAL immediate_stall : STD_LOGIC := '0';
+    SIGNAL immediate_reg_enable : STD_LOGIC := '0';
     SIGNAL FD_enable : STD_LOGIC := '0';
     SIGNAL FD_enable_loaduse : STD_LOGIC := '0';
     SIGNAL FD_flush : STD_LOGIC := '0';
@@ -77,7 +77,7 @@ BEGIN
         branch_address => branch_address,
         pc_mux2_selector => pc_mux2_selector,
         interrupt_signal => interrupt_signal,
-        immediate_stall => immediate_stall,
+        immediate_reg_enable => immediate_reg_enable,
         FD_enable => FD_enable,
         FD_enable_loaduse => FD_enable_loaduse,
         FD_flush => FD_flush,
@@ -128,7 +128,7 @@ BEGIN
 
         -- ----------F/D reg----------
         -- --enables
-        -- immediate_stall : IN STD_LOGIC;
+        -- immediate_reg_enable : IN STD_LOGIC;
         -- FD_enable : IN STD_LOGIC;
         -- FD_enable_loaduse : IN STD_LOGIC;
 
@@ -157,7 +157,7 @@ BEGIN
         FD_flush_exception_unit <= '0';
 
         pc_enable_hazard_detection <= '1';
-        immediate_stall <= '1';
+        immediate_reg_enable <= '1';
         --first testcase - > fetch first instruction
         pc_mux1_selector <= "00";
         pc_mux2_selector <= "00";
@@ -185,7 +185,7 @@ BEGIN
         ASSERT (propagated_pc_plus_one = "00000000000000000000000000000010") REPORT "First instruction propagated_pc_plus_one is wrong" SEVERITY error;
 
         --third testcase - > 
-        immediate_stall <= '0'; --checkkkkk
+        immediate_reg_enable <= '0'; --checkkkkk
         pc_mux1_selector <= "00";
         pc_mux2_selector <= "00";
         WAIT FOR clk_period;
@@ -199,7 +199,7 @@ BEGIN
         ASSERT (propagated_pc_plus_one = "00000000000000000000000000000011") REPORT "First instruction propagated_pc_plus_one is wrong" SEVERITY error;
 
         --fourth testcase - >
-        immediate_stall <= '1'; --checkkkkk
+        immediate_reg_enable <= '1'; --checkkkkk
         pc_mux1_selector <= "00";
         pc_mux2_selector <= "00";
         WAIT FOR clk_period;
@@ -212,7 +212,7 @@ BEGIN
         ASSERT (propagated_pc = "00000000000000000000000000000011") REPORT "First instruction propagated_pc is wrong" SEVERITY error;
         ASSERT (propagated_pc_plus_one = "00000000000000000000000000000100") REPORT "First instruction propagated_pc_plus_one is wrong" SEVERITY error;
         --fifth testcase - >
-        immediate_stall <= '0'; --checkkkkk
+        immediate_reg_enable <= '0'; --checkkkkk
         pc_mux1_selector <= "00";
         pc_mux2_selector <= "00";
         WAIT FOR clk_period;
@@ -226,7 +226,7 @@ BEGIN
         ASSERT (propagated_pc_plus_one = "00000000000000000000000000000101") REPORT "First instruction propagated_pc_plus_one is wrong" SEVERITY error;
 
         --sixth testcase - >
-        immediate_stall <= '1'; --checkkkkk
+        immediate_reg_enable <= '1'; --checkkkkk
         pc_mux1_selector <= "00";
         pc_mux2_selector <= "00";
         WAIT FOR clk_period;

@@ -17,7 +17,7 @@ ARCHITECTURE arch_processor OF processor IS
         PORT (
             clk : IN STD_LOGIC;
             reset : IN STD_LOGIC;
-            immediate_stall : IN STD_LOGIC;
+            immediate_reg_enable : IN STD_LOGIC;
             selected_instruction_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
             selected_immediate_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
         );
@@ -44,7 +44,7 @@ ARCHITECTURE arch_processor OF processor IS
             pc_plus_1 : IN STD_LOGIC_VECTOR(11 DOWNTO 0);
 
             -- Immediate Enable
-            immediate_stall : OUT STD_LOGIC;
+            immediate_reg_enable : OUT STD_LOGIC;
 
             decode_execute_out : OUT STD_LOGIC_VECTOR(140 - 1 DOWNTO 0)
         );
@@ -166,7 +166,7 @@ ARCHITECTURE arch_processor OF processor IS
     SIGNAL instruction : STD_LOGIC_VECTOR(15 DOWNTO 0);
     SIGNAL immediate : STD_LOGIC_VECTOR(15 DOWNTO 0);
     SIGNAL pc_plus_1 : STD_LOGIC_VECTOR(11 DOWNTO 0);
-    SIGNAL immediate_stall : STD_LOGIC;
+    SIGNAL immediate_reg_enable : STD_LOGIC;
     SIGNAL interrupt_signal_internal : STD_LOGIC;
     SIGNAL zero_flag_internal : STD_LOGIC;
     SIGNAL decode_execute_out : STD_LOGIC_VECTOR(140 - 1 DOWNTO 0);
@@ -213,7 +213,7 @@ BEGIN
     fetch_inst : fetch PORT MAP(
         clk => clk,
         reset => reset,
-        immediate_stall => immediate_stall,
+        immediate_reg_enable => immediate_reg_enable,
 
         selected_instruction_out => instruction,
         selected_immediate_out => immediate
@@ -234,7 +234,7 @@ BEGIN
         write_data1 => selected_data_out1,
         write_data2 => selected_data_out2,
         pc_plus_1 => pc_plus_1,
-        immediate_stall => immediate_stall,
+        immediate_reg_enable => immediate_reg_enable,
         decode_execute_out => decode_execute_out
     );
 

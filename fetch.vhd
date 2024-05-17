@@ -23,7 +23,7 @@ ENTITY fetch IS
 
         ----------F/D reg----------
         --enables
-        immediate_stall : IN STD_LOGIC;
+        immediate_reg_enable : IN STD_LOGIC;
         FD_enable : IN STD_LOGIC;
         FD_enable_loaduse : IN STD_LOGIC;
         pc_enable_hazard_detection : IN STD_LOGIC;
@@ -178,7 +178,7 @@ BEGIN
     );
 
     FD_flush_internal <= reset OR FD_flush OR FD_flush_exception_unit;
-    FD_enable_internal <= immediate_stall AND FD_enable AND FD_enable_loaduse;
+    FD_enable_internal <= immediate_reg_enable AND FD_enable AND FD_enable_loaduse;
 
     fetch_decode : my_nDFF GENERIC MAP(16)
     PORT MAP(
@@ -196,7 +196,7 @@ BEGIN
     Rdest <= instruction_out_from_F_D_reg(3 DOWNTO 1);
     imm_flag <= instruction_out_from_F_D_reg(0);
 
-    FD_imm_enable <= NOT immediate_stall;
+    FD_imm_enable <= NOT immediate_reg_enable;
 
     FD_enable_imm_internal <= FD_enable AND FD_imm_enable;
 
@@ -304,7 +304,7 @@ END ARCHITECTURE arch_fetch;
 --     );
 
 --     FD_flush_internal <= reset OR FD_flush OR FD_flush_exception_unit;
---     FD_enable_internal <= immediate_stall AND FD_enable AND FD_enable_loaduse;
+--     FD_enable_internal <= immediate_reg_enable AND FD_enable AND FD_enable_loaduse;
 --     -- Add this process to conditionally assign the inputs to the flip-flops
 --     process(clk)
 --     begin
@@ -337,7 +337,7 @@ END ARCHITECTURE arch_fetch;
 --     Rdest <= instruction_out_from_F_D_reg(3 DOWNTO 1);
 --     imm_flag <= instruction_out_from_F_D_reg(0);
 
---     FD_imm_enable <= NOT immediate_stall;
+--     FD_imm_enable <= NOT immediate_reg_enable;
 
 --     FD_enable_imm_internal <= FD_enable AND FD_imm_enable;
 

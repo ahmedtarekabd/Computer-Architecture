@@ -26,7 +26,7 @@ ENTITY decode IS
 
         -- Outputs
         -- Immediate Enable
-        immediate_stall : OUT STD_LOGIC;
+        immediate_reg_enable : OUT STD_LOGIC;
 
         -- TODO: add fetch in a separate signal (shilo men el register)
         decode_execute_out : OUT STD_LOGIC_VECTOR(140 - 1 DOWNTO 0)
@@ -46,7 +46,7 @@ ARCHITECTURE rtl OF decode IS
             zero_flag : IN STD_LOGIC;
 
             -- Immediate Enable
-            immediate_stall : OUT STD_LOGIC;
+            immediate_reg_enable : OUT STD_LOGIC;
 
             -- fetch signals
             fetch_pc_sel : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
@@ -174,7 +174,7 @@ BEGIN
         interrupt_signal => interrupt_signal,
         zero_flag => zero_flag,
         -- Outputs
-        immediate_stall => immediate_enable_internal,
+        immediate_reg_enable => immediate_enable_internal,
         fetch_pc_sel => fetch_pc_sel,
         decode_reg_read => decode_reg_read,
         decode_branch => decode_branch,
@@ -247,6 +247,6 @@ BEGIN
         q => decode_execute_out
     );
 
-    immediate_stall <= immediate_enable_internal;
+    immediate_reg_enable <= immediate_enable_internal;
 
 END ARCHITECTURE rtl;
