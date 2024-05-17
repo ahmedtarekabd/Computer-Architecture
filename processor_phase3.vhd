@@ -187,7 +187,7 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
             RST_signal_load_use_input : IN STD_LOGIC;
             -- E/M flush from exception handling
             EM_flush_exception_handling_in : IN STD_LOGIC;
-            EM_enable_exception_handling_in : IN STD_LOGIC;
+            -- EM_enable_exception_handling_in : IN STD_LOGIC;
 
             ------------------------- Outputs -------------------------
             ------------------------- Propagated outputs -------------------------
@@ -495,9 +495,8 @@ BEGIN
         alu_src2_selector => alu_src2_selector_to_execute,
         execute_mem_register_enable => EM_enable_in_to_execute,
         RST_signal_input => RST_signal,
-        RST_signal_load_use_input => '0', --what is this?
+        RST_signal_load_use_input => '0', --TODO: will be changed
         EM_flush_exception_handling_in => EM_flush_exception_handling_to_excute,
-        EM_enable_exception_handling_in => '0', --TODO: will be changed
         pc_out => pc_out_from_execute,
         pc_plus_1_out => pc_plus_1_out_from_execute,
         destination_address_out => destination_address_out_from_execute,
@@ -514,11 +513,13 @@ BEGIN
         address2_out_forwarding_unit => address2_out_forwarding_unit_from_execute,
         pc_out_exception_handling => pc_out_to_exception_from_execute,
         in_port_input => in_port_from_Decode, --should it be propagated or what?
-        in_port_output => in_port_from_execute
+        in_port_output => in_port_from_execute,
+        control_signals_memory_out => control_signals_memory_out_from_execute,
+        control_signals_write_back_out =>control_signals_write_back_out_from_execute 
     );
 
-    write_back_1_forwarding_from_excute <= write_back_out_from_excute(3);
-    write_back_2_forwarding_from_excute <= write_back_out_from_excute(2);
+    write_back_1_forwarding_from_excute <= control_signals_write_back_out_from_execute(3);
+    write_back_2_forwarding_from_excute <= control_signals_write_back_out_from_execute(2);
 
     ----------Memory----------
     mem_inst : memory_stage PORT MAP(

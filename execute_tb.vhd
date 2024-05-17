@@ -173,7 +173,9 @@ BEGIN
         address2_out_forwarding_unit => address2_out_forwarding_unit,
         pc_out_exception_handling => pc_out_exception_handling,
         in_port_input => in_port_input,
-        in_port_output => in_port_output
+        in_port_output => in_port_output,
+        control_signals_memory_out => control_signals_memory_out,
+        control_signals_write_back_out => control_signals_write_back_out
    );
 
    -- Clock process definitions
