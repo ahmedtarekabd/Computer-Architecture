@@ -14,7 +14,7 @@ ENTITY controller IS
 
 		-- fetch signals
 		fetch_pc_mux1 : OUT STD_LOGIC_VECTOR(1 DOWNTO 0) := "00";
-		immediate_reg_enable : OUT STD_LOGIC := '0';
+		immediate_stall : OUT STD_LOGIC := '0';
 		fetch_decode_flush : OUT STD_LOGIC := '0';
 
 		-- decode signals
@@ -25,7 +25,7 @@ ENTITY controller IS
 		-- execute signals
 		execute_alu_sel : OUT STD_LOGIC_VECTOR(2 DOWNTO 0) := "000";
 		execute_alu_src2 : OUT STD_LOGIC_VECTOR(1 DOWNTO 0) := "00";
-		execute_branch : OUT STD_LOGIC := '0';
+		decode_branch : OUT STD_LOGIC := '0';
 		conditional_jump : OUT STD_LOGIC := '0';
 
 		-- memory signals
@@ -88,61 +88,151 @@ ARCHITECTURE arch_controller OF controller IS
 
 BEGIN
 
-	-- Reading Immediate value
-	-- Add bubble: by disabling fetch_decode and decode_execute
-	-- decode_execute propagates this enable signal
-	PROCESS (clk) IS
+	-- interrupt
+	-- PUSH PC
+	-- PUSH CCR
+	-- Ret Data Memory[2]
+	-- TODO: Stall Fetch (alshan el opcode mytghyarsh, hatfr2 lw el signal mwgoda le 1 cycle) 
+	PROCESS (clk) IS -- opcode, interrupt_signal?
+		-- VARIABLE interrupt_counter : INTEGER := 0;
 	BEGIN
+
+		-- Reading Immediate value
+		-- Add bubble by:
+		-- Disabling fetch_decode 
+		-- Flush:	   decode_execute
+		-- decode_execute propagates this enable signal
 		IF falling_edge(clk) THEN
 			-- FSM
 			CASE immediate_state IS
 				WHEN instruction =>
 					IF isImmediate = '1' THEN
 						immediate_state <= waitOnce;
-						immediate_reg_enable <= '0';
+						immediate_stall <= '0';
 					ELSE
-						immediate_reg_enable <= '1';
+						immediate_stall <= '1';
 					END IF;
 				WHEN waitOnce =>
 					immediate_state <= immediate;
-					immediate_reg_enable <= '1';
+					immediate_stall <= '1';
 				WHEN immediate =>
 					-- check neroh le waitOnce wala la2
 					IF isImmediate = '1' THEN
 						immediate_state <= waitOnce;
-						immediate_reg_enable <= '0';
+						immediate_stall <= '0';
 					ELSE
 						immediate_state <= instruction;
-						immediate_reg_enable <= '1';
+						immediate_stall <= '1';
 					END IF;
 			END CASE;
 		END IF;
-	END PROCESS;
 
-	-- TODO: interrupt
-	-- PUSH PC
-	-- PUSH CCR
-	-- Ret Data Memory[2]
-	PROCESS (clk) IS -- opcode, interrupt_signal?
-	BEGIN
-		IF falling_edge(clk) AND interrupt_signal = '1' THEN
+		IF rising_edge(clk) AND (interrupt_signal = '1' OR interrupt_state /= instruction) THEN
 			-- FSM
 			CASE interrupt_state IS
 				WHEN instruction =>
-					IF interrupt_signal = '1' THEN
-						interrupt_state <= push_pc;
-					ELSE
-					END IF;
+					interrupt_state <= push_pc;
+					-- fetch
+					fetch_pc_mux1 <= "00";
+					fetch_decode_flush <= '0';
+
+					-- decode
+					decode_reg_read <= '0';
+					decode_sign_extend <= '0';
+					decode_execute_flush <= '0';
+
+					-- execute
+					execute_alu_sel <= "000";
+					execute_alu_src2 <= "00";
+					decode_branch <= '0';
+					conditional_jump <= '0';
+
+					-- memory
+					memory_write <= '1';
+					memory_read <= '0';
+					memory_stack_pointer <= "01";
+					memory_address <= "01";
+					memory_write_data <= "10";
+					memory_protected <= '0';
+					memory_free <= '0';
+					execute_memory_flush <= '0';
+
+					-- write back
+					write_back_register_write_data_1 <= "00";
+					write_back_register_write1 <= '0';
+					write_back_register_write2 <= '0';
+					write_back_register_write_address_1 <= '0';
+					outport_enable <= '0';
 				WHEN push_pc =>
 					interrupt_state <= push_ccr;
+					-- fetch
+					fetch_pc_mux1 <= "00";
+					fetch_decode_flush <= '0';
 
+					-- decode
+					decode_reg_read <= '0';
+					decode_sign_extend <= '0';
+					decode_execute_flush <= '0';
+
+					-- execute
+					execute_alu_sel <= "000";
+					execute_alu_src2 <= "00";
+					decode_branch <= '0';
+					conditional_jump <= '0';
+
+					-- memory
+					memory_write <= '1';
+					memory_read <= '0';
+					memory_stack_pointer <= "01";
+					memory_address <= "01";
+					memory_write_data <= "11";
+					memory_protected <= '0';
+					memory_free <= '0';
+					execute_memory_flush <= '0';
+
+					-- write back
+					write_back_register_write_data_1 <= "00";
+					write_back_register_write1 <= '0';
+					write_back_register_write2 <= '0';
+					write_back_register_write_address_1 <= '0';
+					outport_enable <= '0';
 				WHEN push_ccr =>
 					interrupt_state <= update_pc;
+					-- fetch
+					fetch_pc_mux1 <= "11";
+					fetch_decode_flush <= '1';
+
+					-- decode
+					decode_reg_read <= '0';
+					decode_sign_extend <= '0';
+					decode_execute_flush <= '1';
+
+					-- execute
+					execute_alu_sel <= "000";
+					execute_alu_src2 <= "00";
+					decode_branch <= '0';
+					conditional_jump <= '0';
+
+					-- memory
+					memory_write <= '0';
+					memory_read <= '1';
+					memory_stack_pointer <= "00";
+					memory_address <= "11";
+					memory_write_data <= "00";
+					memory_protected <= '0';
+					memory_free <= '0';
+					execute_memory_flush <= '1';
+
+					-- write back
+					write_back_register_write_data_1 <= "00";
+					write_back_register_write1 <= '0';
+					write_back_register_write2 <= '0';
+					write_back_register_write_address_1 <= '0';
+					outport_enable <= '0';
 				WHEN update_pc =>
 					interrupt_state <= instruction;
-					execute_branch <= '0';
 			END CASE;
-		ELSIF interrupt_signal = '0' THEN
+		ELSIF (interrupt_signal = '0' AND interrupt_state = instruction) THEN
 			-- fetch
 			fetch_pc_mux1 <=
 				"01" WHEN opcode = JZ_INST OR opcode = JMP_INST OR opcode = CALL_INST ELSE
@@ -184,7 +274,7 @@ BEGIN
 				"10" WHEN opcode = INC_INST OR opcode = DEC_INST ELSE
 				"00";
 
-			execute_branch <=
+			decode_branch <=
 				zero_flag WHEN opcode = JZ_INST ELSE
 				'1' WHEN opcode = JMP_INST OR opcode = CALL_INST OR opcode = RET_INST OR opcode = RTI_INST ELSE
 				'0';

@@ -94,7 +94,7 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
 
             ----------F/D reg----------
             --enables
-            immediate_reg_enable : IN STD_LOGIC; --1 in normal case, 0 when immediate flag is detected
+            immediate_stall : IN STD_LOGIC; --1 in normal case, 0 when immediate flag is detected
             FD_enable : IN STD_LOGIC;
             FD_enable_loaduse : IN STD_LOGIC;
             pc_enable_hazard_detection : IN STD_LOGIC;
@@ -445,7 +445,7 @@ BEGIN
         branch_address => branch_address_to_fetch,
         pc_mux2_selector => pc_mux2_selector_to_fetch,
         interrupt_signal => interrupt_signal,
-        immediate_reg_enable => immediate_stall_to_fetch_and_decode,
+        immediate_stall => immediate_stall_to_fetch_and_decode,
         FD_enable => FD_enable_to_fetch,
         FD_enable_loaduse => FD_enable_loaduse_to_fetch,
         FD_flush => FD_flush_to_fetch,
