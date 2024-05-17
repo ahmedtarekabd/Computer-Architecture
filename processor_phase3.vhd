@@ -50,6 +50,20 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
         );
     END COMPONENT;
 
+    COMPONENT hazard_detection_unit
+        PORT (
+            src_address1_fd : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+            src_address2_fd : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+            dst_address_de : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+            write_back_1_de : IN STD_LOGIC;
+            memory_read_de : IN STD_LOGIC;
+            reg_read_controller : IN STD_LOGIC;
+            PC_enable : OUT STD_LOGIC;
+            enable_fd : OUT STD_LOGIC;
+            reset_de : OUT STD_LOGIC
+        );
+    END COMPONENT;
+
     COMPONENT exception_handling_unit IS
         PORT (
             clk : IN STD_LOGIC;
@@ -124,53 +138,53 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
 
     --TODO add decode component
     COMPONENT execute
-    PORT(
-        clk : IN  std_logic;
-        pc_in : IN std_logic_vector (31 downto 0);
-        pc_plus_1_in : IN std_logic_vector (31 downto 0);
-        destination_address : IN std_logic_vector (2 downto 0);
-        address_read1_in : IN std_logic_vector (2 downto 0);
-        address_read2_in : IN std_logic_vector (2 downto 0);
-        immediate_enable_in : IN std_logic;
-        data1_in : IN std_logic_vector (31 downto 0);
-        data2_in : IN std_logic_vector (31 downto 0);
-        immediate_in : IN std_logic_vector (31 downto 0);
-        forwarded_data1_em : IN std_logic_vector (31 downto 0);
-        forwarded_data2_em : IN std_logic_vector (31 downto 0);
-        forwarded_alu_out_em : IN std_logic_vector (31 downto 0);
-        forwarded_data1_mw : IN std_logic_vector (31 downto 0);
-        forwarded_data2_mw : IN std_logic_vector (31 downto 0);
-        forwarding_mux_selector_op2 : IN std_logic_vector (2 downto 0);
-        forwarding_mux_selector_op1 : IN std_logic_vector (2 downto 0);
-        control_signals_memory_in : IN std_logic_vector (10 downto 0);
-        control_signals_write_back_in : IN std_logic_vector (5 downto 0);
-        alu_selectors : IN std_logic_vector (2 downto 0);
-        alu_src2_selector : IN std_logic_vector (1 downto 0);
-        execute_mem_register_enable : IN std_logic;
-        RST_signal_input : IN std_logic;
-        execute_mem_flush_controller : IN std_logic;
-        EM_flush_exception_handling_in : IN std_logic;
-        pc_out : OUT std_logic_vector (31 downto 0);
-        pc_plus_1_out : OUT std_logic_vector (31 downto 0);
-        destination_address_out : OUT std_logic_vector (2 downto 0);
-        address_read1_out : OUT std_logic_vector (2 downto 0);
-        address_read2_out : OUT std_logic_vector (2 downto 0);
-        flag_register_out : OUT std_logic_vector (3 downto 0);
-        alu_out : OUT std_logic_vector (31 downto 0);
-        immediate_enable_out : OUT std_logic;
-        data1_swapping_out : OUT std_logic_vector (31 downto 0);
-        data2_swapping_out : OUT std_logic_vector (31 downto 0);
-        zero_flag_out_controller : OUT std_logic;
-        overflow_flag_out_exception_handling : OUT std_logic;
-        address1_out_forwarding_unit : OUT std_logic_vector (2 downto 0);
-        address2_out_forwarding_unit : OUT std_logic_vector (2 downto 0);
-        pc_out_exception_handling : OUT std_logic_vector (31 downto 0);
-        
-        in_port_input : in std_logic_vector(31 downto 0);
-        in_port_output : out std_logic_vector(31 downto 0);
-        control_signals_memory_out : OUT std_logic_vector (10 downto 0);
-        control_signals_write_back_out : OUT std_logic_vector (5 downto 0)
-    );
+        PORT (
+            clk : IN STD_LOGIC;
+            pc_in : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+            pc_plus_1_in : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+            destination_address : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
+            address_read1_in : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
+            address_read2_in : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
+            immediate_enable_in : IN STD_LOGIC;
+            data1_in : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+            data2_in : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+            immediate_in : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+            forwarded_data1_em : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+            forwarded_data2_em : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+            forwarded_alu_out_em : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+            forwarded_data1_mw : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+            forwarded_data2_mw : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
+            forwarding_mux_selector_op2 : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
+            forwarding_mux_selector_op1 : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
+            control_signals_memory_in : IN STD_LOGIC_VECTOR (10 DOWNTO 0);
+            control_signals_write_back_in : IN STD_LOGIC_VECTOR (5 DOWNTO 0);
+            alu_selectors : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
+            alu_src2_selector : IN STD_LOGIC_VECTOR (1 DOWNTO 0);
+            execute_mem_register_enable : IN STD_LOGIC;
+            RST_signal_input : IN STD_LOGIC;
+            execute_mem_flush_controller : IN STD_LOGIC;
+            EM_flush_exception_handling_in : IN STD_LOGIC;
+            pc_out : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
+            pc_plus_1_out : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
+            destination_address_out : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
+            address_read1_out : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
+            address_read2_out : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
+            flag_register_out : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
+            alu_out : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
+            immediate_enable_out : OUT STD_LOGIC;
+            data1_swapping_out : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
+            data2_swapping_out : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
+            zero_flag_out_controller : OUT STD_LOGIC;
+            overflow_flag_out_exception_handling : OUT STD_LOGIC;
+            address1_out_forwarding_unit : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
+            address2_out_forwarding_unit : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
+            pc_out_exception_handling : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
+
+            in_port_input : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+            in_port_output : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+            control_signals_memory_out : OUT STD_LOGIC_VECTOR (10 DOWNTO 0);
+            control_signals_write_back_out : OUT STD_LOGIC_VECTOR (5 DOWNTO 0)
+        );
     END COMPONENT;
 
     COMPONENT memory_stage IS
@@ -318,7 +332,7 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
     --from forwarding unit
     SIGNAL forwarding_mux_selector_op2 : STD_LOGIC_VECTOR(2 DOWNTO 0);
     SIGNAL forwarding_mux_selector_op1 : STD_LOGIC_VECTOR(2 DOWNTO 0);
-    
+
     --ouputs
     SIGNAL pc_out_from_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL pc_plus_1_out_from_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
@@ -342,8 +356,8 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
     --to forwarding unit
     SIGNAL address1_out_forwarding_unit_from_execute : STD_LOGIC_VECTOR(2 DOWNTO 0);
     SIGNAL address2_out_forwarding_unit_from_execute : STD_LOGIC_VECTOR(2 DOWNTO 0);
-    Signal write_back_1_forwarding_from_excute : STD_LOGIC;
-    Signal write_back_2_forwarding_from_excute : STD_LOGIC;
+    SIGNAL write_back_1_forwarding_from_excute : STD_LOGIC;
+    SIGNAL write_back_2_forwarding_from_excute : STD_LOGIC;
 
     --*--------Memory----------
     --from controller
@@ -420,13 +434,13 @@ BEGIN
         immediate_in => immediate_in_to_execute,
         forwarded_data1_em => data1_swapping_out_from_execute, --from myself (execute)
         forwarded_data2_em => data2_swapping_out_from_execute,
-        forwarded_alu_out_em => alu_out_from_execute, 
+        forwarded_alu_out_em => alu_out_from_execute,
         forwarded_data1_mw => read_data1_out_from_memory, --from memory --TODO:check
         forwarded_data2_mw => read_data2_out_from_memory,
         forwarding_mux_selector_op2 => forwarding_mux_selector_op2, --from forwarding unit
         forwarding_mux_selector_op1 => forwarding_mux_selector_op1,
-        control_signals_memory_in => , --from decode
-        control_signals_write_back_in => ,
+        control_signals_memory_in = >, --from decode
+        control_signals_write_back_in = >,
         alu_selectors => alu_selectors_to_execute,
         alu_src2_selector => alu_src2_selector_to_execute,
         execute_mem_register_enable => EM_enable_in_to_execute,
@@ -451,7 +465,7 @@ BEGIN
         in_port_input => in_port_from_Decode, --should it be propagated or what?
         in_port_output => in_port_from_execute,
         control_signals_memory_out => control_signals_memory_out_from_execute,
-        control_signals_write_back_out =>control_signals_write_back_out_from_execute 
+        control_signals_write_back_out => control_signals_write_back_out_from_execute
     );
 
     write_back_1_forwarding_from_excute <= control_signals_write_back_out_from_execute(3);
@@ -523,35 +537,48 @@ BEGIN
         exception_out_port => OPEN, --1 if an exception is detected, 0 otherwise --TODO:do we need it?
         second_pc_mux_out => pc_mux2_selector_to_fetch,
         FD_flush => FD_flush_exception_unit_to_fetch,
-        DE_flush => ,
+        DE_flush = >,
         EM_flush => EM_flush_exception_handling_to_excute,
         MW_flush => MW_flush_from_exception_to_memory,
         EPC_output => EPC_out_to_processor
     );
 
-    forwarding_unit_inst: forwarding_unit PORT MAP (
-        src_address1_de => src_address1_de, --from decode
-        src_address2_de => src_address2_de,
-        dst_address_de => dst_address_de, 
+    hazard_detection_inst : hazard_detection_unit PORT MAP(
+        src_address1_fd => Rsrc1_from_fetch, --from fetch
+        src_address2_fd => Rsrc2_from_fetch, 
+        dst_address_de => , --from decode
+        write_back_1_de => ,
+        memory_read_de => ,
+        reg_read_controller => ,
+        PC_enable => pc_enable_hazard_detection_to_fetch,
+        enable_fd => FD_enable_loaduse_to_fetch,
+        reset_de =>  --from decode
+     );
+
+    forwarding_unit_inst : forwarding_unit PORT MAP(
+        src_address1_de => , --from decode
+        src_address2_de => ,
+        dst_address_de => ,
         dst_address_em => destination_address_out_from_execute, --from execute
         src_address1_em => address_read1_out_from_execute,
         src_address2_em => address_read2_out_from_execute,
         address1_mw => write_address1_out_from_memory,
         address2_mw => write_address2_out_from_memory,
         dst_address_fd => Rdest_from_fetch,
-        write_back_em => , --TODO : seperate writeback 1 and 2 from each other
-        write_back_mw => , --TODO : seperate writeback 1 and 2 from each other
-        write_back_de => , --TODO : seperate writeback 1 and 2 from each other
-        memory_read_em => memory_read_em,  --from execute stage
+        write_back_em = >, --TODO : seperate writeback 1 and 2 from each other
+        write_back_mw = >, --TODO : seperate writeback 1 and 2 from each other
+        write_back_de = >, --TODO : seperate writeback 1 and 2 from each other
+        memory_read_em => memory_read_em, --from execute stage
         memory_read_de => memory_read_de, --from decode stage
         opp1_ALU_MUX_SEL => forwarding_mux_selector_op1, --outputed to execute
         opp2_ALU_MUX_SEL => forwarding_mux_selector_op2,
-        opp_branching_mux_selector => opp_branching_mux_selector,
+        opp_branching_mux_selector => opp_branching_mux_selector, --to decode
         opp_branch_or_normal_mux_selector => opp_branch_or_normal_mux_selector,
-        load_use_hazard => open --not used
-   );
+        load_use_hazard => OPEN --not used
+    );
 
     ----------Write Back----------
+    --TODO:add in port
     write_back_inst : write_back PORT MAP(
         clk => clk,
         reg_write_enable1_in => reg_write_enable1_in_to_wb,
@@ -578,9 +605,9 @@ BEGIN
 END ARCHITECTURE arch_processor;
 
 --TODO: add output port -> done
+--TODO: add exception handling unit -> done
+--TODO: add hazard detection unit -> done
+--TODO: add forwarding unit -> done
 --TODO: check overflow and carry flags in the alu
 --TODO: add decode
 --TODO: modify the memory
---TODO: add exception handling unit 
---TODO: add hazard detection unit
---TODO: add forwarding unit
