@@ -1,13 +1,13 @@
 LIBRARY IEEE;
 USE IEEE.std_logic_1164.ALL;
 
-ENTITY SP_reg IS
+ENTITY SP_dff IS
     PORT (
         d, clk, reset, enable : IN STD_LOGIC;
         q : OUT STD_LOGIC);
-END SP_reg;
+END SP_dff;
 
-ARCHITECTURE a_SP_reg OF SP_reg IS
+ARCHITECTURE a_SP_dff OF SP_dff IS
 BEGIN
     PROCESS (clk, reset)
     BEGIN
@@ -17,4 +17,4 @@ BEGIN
             q <= d;
         END IF;
     END PROCESS;
-END a_SP_reg;
+END a_SP_dff;
