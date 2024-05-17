@@ -272,7 +272,7 @@ BEGIN
     --   memory_read_mw <= '0';
       wait for 10 ns;
 
-      -- Test case 4: load use hazard
+      -- Test case 4.1: no load use hazard
       src_address1_de <= "010";
       src_address2_de <= "011";
       dst_address_em <= "010";
@@ -287,7 +287,7 @@ BEGIN
       wait for 10 ns;
 
       -- Test case 5.1: decode to decode forwarding
-      -- with sapping
+      -- with swapping
       src_address1_de <= "010";
       src_address2_de <= "011";
       dst_address_de <= "111";
@@ -313,6 +313,86 @@ BEGIN
       assert opp_branching_mux_selector = "111" report "Test case 5.1 failed" severity error;
       wait for 10 ns;
 
+      -- Test case 5.2: decode to decode no forwarding
+      src_address1_de <= "010";
+      src_address2_de <= "011";
+      dst_address_de <= "111";
+      write_back_de <= "01";
+      memory_read_de <= '0';
+
+      dst_address_em <= "011";
+      src_address1_em <= "100";
+      src_address2_em <= "101";
+      write_back_em <= "01";  -- Write back from Execute/Memory
+      memory_read_em <= '0';
+
+      address1_mw <= "110";
+      address2_mw <= "111";
+      write_back_mw <= "01";  -- Write enable set for Memory/Writeback, should ignore it
+
+      dst_address_fd <= "010";
+      
+      wait for 10 ns;
+
+      -- Test case 5.3: decode to decode normal forwarding takes alu value with priority
+      src_address1_de <= "111";
+      src_address2_de <= "011";
+      dst_address_de <= "010";
+      write_back_de <= "01";
+      memory_read_de <= '0';
+
+      dst_address_em <= "010";
+      src_address1_em <= "100";
+      src_address2_em <= "101";
+      write_back_em <= "01";  -- Write back from Execute/Memory
+      memory_read_em <= '0';
+
+      address1_mw <= "110";
+      address2_mw <= "111";
+      write_back_mw <= "01";  -- Write enable set for Memory/Writeback, should ignore it
+
+      dst_address_fd <= "010";
+      wait for 10 ns;   
+
+      -- Test case 5.4: execute to decode forwarding with priority
+      src_address1_de <= "111";
+      src_address2_de <= "011";
+      dst_address_de <= "011";
+      write_back_de <= "01";
+      memory_read_de <= '0';
+
+      dst_address_em <= "010";
+      src_address1_em <= "100";
+      src_address2_em <= "101";
+      write_back_em <= "01";  -- Write back from Execute/Memory
+      memory_read_em <= '0';
+
+      address1_mw <= "010";
+      address2_mw <= "111";
+      write_back_mw <= "01";  -- Write enable set for Memory/Writeback, should ignore it
+
+      dst_address_fd <= "010";
+      wait for 10 ns;      
+
+      -- Test case 5.5: swapping 
+      src_address1_de <= "111";
+      src_address2_de <= "011";
+      dst_address_de <= "011";
+      write_back_de <= "01";
+      memory_read_de <= '0';
+
+      dst_address_em <= "011";
+      src_address1_em <= "010";
+      src_address2_em <= "101";
+      write_back_em <= "11";  -- Write back from Execute/Memory
+      memory_read_em <= '0';
+
+      address1_mw <= "110";
+      address2_mw <= "111";
+      write_back_mw <= "01";  -- Write enable set for Memory/Writeback, should ignore it
+
+      dst_address_fd <= "010";
+      wait for 10 ns;   
 
       wait;
    end process;
