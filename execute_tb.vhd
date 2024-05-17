@@ -28,15 +28,13 @@ ARCHITECTURE behavior OF execute_tb IS
         forwarding_mux_selector_op1 : IN std_logic_vector (2 downto 0);
         control_signals_memory_in : IN std_logic_vector (10 downto 0);
         control_signals_write_back_in : IN std_logic_vector (5 downto 0);
-        control_signals_memory_out : OUT std_logic_vector (10 downto 0);
-        control_signals_write_back_out : OUT std_logic_vector (5 downto 0);
         alu_selectors : IN std_logic_vector (2 downto 0);
         alu_src2_selector : IN std_logic_vector (1 downto 0);
         execute_mem_register_enable : IN std_logic;
         RST_signal_input : IN std_logic;
         RST_signal_load_use_input : IN std_logic;
         EM_flush_exception_handling_in : IN std_logic;
-        EM_enable_in_to_execute : IN std_logic;
+        -- EM_enable_in_to_execute : IN std_logic;
         -- memory_control_signals : IN std_logic_vector (7 downto 0);
         -- write_back_control_signals : IN std_logic_vector (4 downto 0);
         -- flush_exception_handling : IN std_logic;
@@ -59,7 +57,9 @@ ARCHITECTURE behavior OF execute_tb IS
         pc_out_exception_handling : OUT std_logic_vector (31 downto 0);
         
         in_port_input : in std_logic_vector(31 downto 0);
-        in_port_output : out std_logic_vector(31 downto 0)
+        in_port_output : out std_logic_vector(31 downto 0);
+        control_signals_memory_out : OUT std_logic_vector (10 downto 0);
+        control_signals_write_back_out : OUT std_logic_vector (5 downto 0)
     );
     END COMPONENT;
 
@@ -89,7 +89,7 @@ ARCHITECTURE behavior OF execute_tb IS
    signal RST_signal_input : std_logic := '0';
    signal RST_signal_load_use_input : std_logic := '0';
    signal EM_flush_exception_handling_in : std_logic := '0';
-   signal EM_enable_exception_handling_in : std_logic := '0';
+--    signal EM_enable_exception_handling_in : std_logic := '0';
    signal in_port_input : std_logic_vector(31 downto 0) := (others => '0');
    
   --  signal memory_control_signals : std_logic_vector (7 downto 0) := (others => '0');
@@ -115,6 +115,8 @@ ARCHITECTURE behavior OF execute_tb IS
    signal address2_out_forwarding_unit : std_logic_vector (2 downto 0);
    signal pc_out_exception_handling : std_logic_vector (31 downto 0);
     signal in_port_output : std_logic_vector(31 downto 0);
+    signal control_signals_memory_out : std_logic_vector(10 downto 0);
+    signal control_signals_write_back_out : std_logic_vector(5 downto 0);
    -- Clock period definitions
    constant clk_period : time := 10 ns;
 
@@ -141,13 +143,15 @@ BEGIN
         forwarding_mux_selector_op1 => forwarding_mux_selector_op1,
         control_signals_memory_in => control_signals_memory_in,
         control_signals_write_back_in => control_signals_write_back_in,
+        control_signals_memory_out => control_signals_memory_out,
+        control_signals_write_back_out => control_signals_write_back_out,
         alu_selectors => alu_selectors,
         alu_src2_selector => alu_src2_selector,
         execute_mem_register_enable => execute_mem_register_enable,
         RST_signal_input => RST_signal_input,
         RST_signal_load_use_input => RST_signal_load_use_input,
         EM_flush_exception_handling_in => EM_flush_exception_handling_in,
-        EM_enable_exception_handling_in => EM_enable_exception_handling_in,
+        -- -- EM_enable_exception_handling_in => EM_enable_exception_handling_in,
         -- -- memory_control_signals => memory_control_signals,
         -- -- write_back_control_signals => write_back_control_signals,
         -- flush_exception_handling => flush_exception_handling,
@@ -216,7 +220,7 @@ BEGIN
         RST_signal_input <= '0';
         RST_signal_load_use_input <= '0';
         EM_flush_exception_handling_in <= '0';
-        EM_enable_exception_handling_in <= '0';
+        -- EM_enable_exception_handling_in <= '0';
         in_port_input <= (others => '0');
         -- memory_control_signals <= (others => '0');
         -- write_back_control_signals <= (others => '0');

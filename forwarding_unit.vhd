@@ -30,14 +30,8 @@ ENTITY forwarding_unit IS
         -- write_back(0) is enable 1
         -- these are the write enable signals for the register file
 
-        -- From Execute/Memory
-        write_back_em : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
 
-        -- From Memory/Writeback
-        write_back_mw : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
 
-        -- From Decode/Execute
-        write_back_de : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
 
         -- Memory read signals
         -- used to check for load use hazard
@@ -72,6 +66,20 @@ ENTITY forwarding_unit IS
         opp_branch_or_normal_mux_selector: OUT STD_LOGIC;
 
         load_use_hazard : OUT STD_LOGIC
+        -- From Execute/Memory
+        -- write_back_em : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
+        write_back_em_enable1 : IN STD_LOGIC;
+        write_back_em_enable2 : IN STD_LOGIC;
+
+        -- From Memory/Writeback
+        -- write_back_mw : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
+        write_back_mw_enable1 : IN STD_LOGIC;
+        write_back_mw_enable2 : IN STD_LOGIC;
+
+        -- From Decode/Execute
+        -- write_back_de : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
+        write_back_de_enable1 : IN STD_LOGIC;
+        write_back_de_enable2 : IN STD_LOGIC;
     );
 END forwarding_unit;
 

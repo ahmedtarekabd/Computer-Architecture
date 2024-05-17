@@ -48,8 +48,6 @@ ENTITY execute IS
         control_signals_memory_in : IN STD_LOGIC_VECTOR(10 DOWNTO 0);
         control_signals_write_back_in : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
             -- output them
-        control_signals_memory_out : out STD_LOGIC_VECTOR(10 DOWNTO 0);
-        control_signals_write_back_out : out STD_LOGIC_VECTOR(5 DOWNTO 0);
 
         -------------------------------- used in the execute stage ------------------------
         -- alu selectors 3 bits
@@ -111,7 +109,9 @@ ENTITY execute IS
     pc_out_exception_handling : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
     ------------------- In Port -----------------
     in_port_input : in std_logic_vector(31 downto 0);
-    in_port_output : out std_logic_vector(31 downto 0)
+    in_port_output : out std_logic_vector(31 downto 0);
+    control_signals_memory_out : out STD_LOGIC_VECTOR(10 DOWNTO 0);
+    control_signals_write_back_out : out STD_LOGIC_VECTOR(5 DOWNTO 0)
 
     );
 END execute;
