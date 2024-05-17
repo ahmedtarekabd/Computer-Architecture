@@ -123,120 +123,55 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
     END COMPONENT fetch;
 
     --TODO add decode component
-    COMPONENT execute IS
-        PORT (
-            -------------------------inputs-------------------------
-            clk : IN STD_LOGIC;
-            ---------------------------- Propagated from the previous stage------------------------
-            -- pc + 1 propagated (32 bits)
-            -- pc propagated
-            pc_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
-            pc_plus_1_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
-            -- destination address from decode stage
-            destination_address : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
-            -- write address 1 and 2
-            address_read1_in : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
-            address_read2_in : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
-            -- immediate flag 
-            immediate_enable_in : IN STD_LOGIC;
-
-            ---------------------------- Normal useful inputs ------------------------
-            -- data 1 and 2 from the register file
-            data1_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
-            data2_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
-
-            -- immediate value from decode stage
-            immediate_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
-
-            ---------------------------- Forwarded data ------------------------
-            -- forwarded data 1 and 2 from Mem stage
-            forwarded_data1_em : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
-            forwarded_data2_em : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
-            forwarded_alu_out_em : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
-            -- forwarded from the write back stage
-            forwarded_data1_mw : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
-            forwarded_data2_mw : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
-
-            ---------------------------- Forwarding control signals ------------------------
-            -- opp 2 mux selector 3 bits
-            forwarding_mux_selector_op2 : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
-            -- opp 1 mux selector 3 bits
-            forwarding_mux_selector_op1 : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
-
-            -------------------------------- Control signals ------------------------
-
-            -------------------------------- Propagated from the previous stage ------------------------
-            -- 11 bits for memory control signals and 5 bits for write back control signals
-            control_signals_memory_in : IN STD_LOGIC_VECTOR(10 DOWNTO 0);
-            control_signals_write_back_in : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
-            -- output them
-            control_signals_memory_out : OUT STD_LOGIC_VECTOR(10 DOWNTO 0);
-            control_signals_write_back_out : OUT STD_LOGIC_VECTOR(5 DOWNTO 0);
-
-            -------------------------------- used in the execute stage ------------------------
-            -- alu selectors 3 bits
-            alu_selectors : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
-            -- mux selector for src2 and immediate 2 bits
-            alu_src2_selector : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
-
-            -- register enable 1 bit
-            execute_mem_register_enable : IN STD_LOGIC;
-            -- reset signal input
-            RST_signal_input : IN STD_LOGIC;
-            -- Load use reset
-            RST_signal_load_use_input : IN STD_LOGIC;
-            -- E/M flush from exception handling
-            EM_flush_exception_handling_in : IN STD_LOGIC;
-            EM_enable_exception_handling_in : IN STD_LOGIC;
-
-            ------------------------- Outputs -------------------------
-            ------------------------- Propagated outputs -------------------------
-            -- pc + 1 propagated (32 bits)
-            -- pc propagated also used for exception handling
-            pc_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
-            pc_plus_1_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
-
-            -- destination address from decode stage
-            destination_address_out : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
-
-            -- write address 1 and 2 for forwarding and propagation
-            address_read1_out : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
-            address_read2_out : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
-
-            ---------------------- Stage outputs ----------------------
-
-            -- overflow exception output 1 bit
-            -- zero flag to controller 1 bit
-            -- flag register output 4 bits, 0 -> zero, 1 -> overflow, 2 -> carry, 3 -> negative
-            flag_register_out : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
-
-            -- ALU output 32 bits
-            alu_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
-
-            -- immediate flag output
-            immediate_enable_out : OUT STD_LOGIC;
-
-            ----------------------- For swapping -----------------------
-            -- data 1 and 2 for swapping 32 bits
-            data1_swapping_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
-            data2_swapping_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
-            ---------------------- Outputs not propagated ----------------------
-            -- 1 bit zero flag
-            -- 1 bit overflow flag
-            -- 3 bits address 1
-            -- 3 bits address 2
-            -- 32 bits PC
-            zero_flag_out_controller : OUT STD_LOGIC;
-            overflow_flag_out_exception_handling : OUT STD_LOGIC;
-            address1_out_forwarding_unit : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
-            address2_out_forwarding_unit : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
-            pc_out_exception_handling : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
-            ------------------- In Port -----------------
-            in_port_input : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
-            in_port_output : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
-
-        );
-    END COMPONENT execute;
+    COMPONENT execute
+    PORT(
+        clk : IN  std_logic;
+        pc_in : IN std_logic_vector (31 downto 0);
+        pc_plus_1_in : IN std_logic_vector (31 downto 0);
+        destination_address : IN std_logic_vector (2 downto 0);
+        address_read1_in : IN std_logic_vector (2 downto 0);
+        address_read2_in : IN std_logic_vector (2 downto 0);
+        immediate_enable_in : IN std_logic;
+        data1_in : IN std_logic_vector (31 downto 0);
+        data2_in : IN std_logic_vector (31 downto 0);
+        immediate_in : IN std_logic_vector (31 downto 0);
+        forwarded_data1_em : IN std_logic_vector (31 downto 0);
+        forwarded_data2_em : IN std_logic_vector (31 downto 0);
+        forwarded_alu_out_em : IN std_logic_vector (31 downto 0);
+        forwarded_data1_mw : IN std_logic_vector (31 downto 0);
+        forwarded_data2_mw : IN std_logic_vector (31 downto 0);
+        forwarding_mux_selector_op2 : IN std_logic_vector (2 downto 0);
+        forwarding_mux_selector_op1 : IN std_logic_vector (2 downto 0);
+        control_signals_memory_in : IN std_logic_vector (10 downto 0);
+        control_signals_write_back_in : IN std_logic_vector (5 downto 0);
+        alu_selectors : IN std_logic_vector (2 downto 0);
+        alu_src2_selector : IN std_logic_vector (1 downto 0);
+        execute_mem_register_enable : IN std_logic;
+        RST_signal_input : IN std_logic;
+        execute_mem_flush_controller : IN std_logic;
+        EM_flush_exception_handling_in : IN std_logic;
+        pc_out : OUT std_logic_vector (31 downto 0);
+        pc_plus_1_out : OUT std_logic_vector (31 downto 0);
+        destination_address_out : OUT std_logic_vector (2 downto 0);
+        address_read1_out : OUT std_logic_vector (2 downto 0);
+        address_read2_out : OUT std_logic_vector (2 downto 0);
+        flag_register_out : OUT std_logic_vector (3 downto 0);
+        alu_out : OUT std_logic_vector (31 downto 0);
+        immediate_enable_out : OUT std_logic;
+        data1_swapping_out : OUT std_logic_vector (31 downto 0);
+        data2_swapping_out : OUT std_logic_vector (31 downto 0);
+        zero_flag_out_controller : OUT std_logic;
+        overflow_flag_out_exception_handling : OUT std_logic;
+        address1_out_forwarding_unit : OUT std_logic_vector (2 downto 0);
+        address2_out_forwarding_unit : OUT std_logic_vector (2 downto 0);
+        pc_out_exception_handling : OUT std_logic_vector (31 downto 0);
+        
+        in_port_input : in std_logic_vector(31 downto 0);
+        in_port_output : out std_logic_vector(31 downto 0);
+        control_signals_memory_out : OUT std_logic_vector (10 downto 0);
+        control_signals_write_back_out : OUT std_logic_vector (5 downto 0)
+    );
+    END COMPONENT;
 
     COMPONENT memory_stage IS
         PORT (
@@ -375,6 +310,7 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
     SIGNAL EM_flush_in_to_execute : STD_LOGIC;
     SIGNAL alu_src2_selector_to_execute : STD_LOGIC_VECTOR(1 DOWNTO 0);
     SIGNAL alu_selectors_to_execute : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAL EM_flush_controller_to_execute : STD_LOGIC;
 
     --from exception handling
     SIGNAL EM_flush_exception_handling_to_excute : STD_LOGIC;
@@ -482,11 +418,11 @@ BEGIN
         data1_in => data1_in_to_execute,
         data2_in => data2_in_to_execute,
         immediate_in => immediate_in_to_execute,
-        forwarded_data1_em => forwarded_data1_em, --TODO: figure where to connect these signals
-        forwarded_data2_em => forwarded_data2_em,
-        forwarded_alu_out_em => forwarded_alu_out_em,
-        forwarded_data1_mw => forwarded_data1_mw,
-        forwarded_data2_mw => forwarded_data2_mw,
+        forwarded_data1_em => data1_swapping_out_from_execute, --from myself (execute)
+        forwarded_data2_em => data2_swapping_out_from_execute,
+        forwarded_alu_out_em => alu_out_from_execute, 
+        forwarded_data1_mw => read_data1_out_from_memory, --from memory --TODO:check
+        forwarded_data2_mw => read_data2_out_from_memory,
         forwarding_mux_selector_op2 => forwarding_mux_selector_op2, --from forwarding unit
         forwarding_mux_selector_op1 => forwarding_mux_selector_op1,
         control_signals_memory_in => , --from decode
@@ -495,9 +431,8 @@ BEGIN
         alu_src2_selector => alu_src2_selector_to_execute,
         execute_mem_register_enable => EM_enable_in_to_execute,
         RST_signal_input => RST_signal,
-        RST_signal_load_use_input => '0', --what is this?
+        execute_mem_flush_controller => EM_flush_controller_to_execute,
         EM_flush_exception_handling_in => EM_flush_exception_handling_to_excute,
-        EM_enable_exception_handling_in => '0', --TODO: will be changed
         pc_out => pc_out_from_execute,
         pc_plus_1_out => pc_plus_1_out_from_execute,
         destination_address_out => destination_address_out_from_execute,
@@ -514,11 +449,13 @@ BEGIN
         address2_out_forwarding_unit => address2_out_forwarding_unit_from_execute,
         pc_out_exception_handling => pc_out_to_exception_from_execute,
         in_port_input => in_port_from_Decode, --should it be propagated or what?
-        in_port_output => in_port_from_execute
+        in_port_output => in_port_from_execute,
+        control_signals_memory_out => control_signals_memory_out_from_execute,
+        control_signals_write_back_out =>control_signals_write_back_out_from_execute 
     );
 
-    write_back_1_forwarding_from_excute <= write_back_out_from_excute(3);
-    write_back_2_forwarding_from_excute <= write_back_out_from_excute(2);
+    write_back_1_forwarding_from_excute <= control_signals_write_back_out_from_execute(3);
+    write_back_2_forwarding_from_excute <= control_signals_write_back_out_from_execute(2);
 
     ----------Memory----------
     mem_inst : memory_stage PORT MAP(
@@ -586,7 +523,7 @@ BEGIN
         exception_out_port => OPEN, --1 if an exception is detected, 0 otherwise --TODO:do we need it?
         second_pc_mux_out => pc_mux2_selector_to_fetch,
         FD_flush => FD_flush_exception_unit_to_fetch,
-        DE_flush = >,
+        DE_flush => ,
         EM_flush => EM_flush_exception_handling_to_excute,
         MW_flush => MW_flush_from_exception_to_memory,
         EPC_output => EPC_out_to_processor
