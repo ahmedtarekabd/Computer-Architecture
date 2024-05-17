@@ -2,16 +2,16 @@
 -- USE IEEE.STD_LOGIC_1164.ALL;
 -- USE IEEE.numeric_std.all;
 
--- entity pc is
+-- entity pc1 is
 --     port (
 --         reset : in std_logic;
 --         enable : in std_logic;
 --         clk : in std_logic;
 --         pc_out : out std_logic_vector(31 downto 0)
 --     );
--- end entity pc;
+-- end entity pc1;
 
--- architecture pc_behavioral of pc is
+-- architecture pc_behavioral of pc1 is
 --     signal counter : unsigned(31 downto 0) := (others => '0');
 -- begin
 --     process(clk,reset)

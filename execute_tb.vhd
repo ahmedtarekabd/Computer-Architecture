@@ -36,7 +36,7 @@ ARCHITECTURE behavior OF execute_tb IS
         RST_signal_input : IN std_logic;
         RST_signal_load_use_input : IN std_logic;
         EM_flush_exception_handling_in : IN std_logic;
-        EM_enable_exception_handling_in : IN std_logic;
+        EM_enable_in_to_execute : IN std_logic;
         -- memory_control_signals : IN std_logic_vector (7 downto 0);
         -- write_back_control_signals : IN std_logic_vector (4 downto 0);
         -- flush_exception_handling : IN std_logic;

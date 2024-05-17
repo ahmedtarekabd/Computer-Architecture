@@ -33,7 +33,11 @@ ENTITY fetch IS
         FD_flush : IN STD_LOGIC;
         FD_flush_exception_unit : IN STD_LOGIC;
 
+        signal in_port_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0); --from outside
+
         ----------outputs----------
+        signal in_port_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0); --to decode
+
         selected_immediate_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
         -- instruction 
         opcode : OUT STD_LOGIC_VECTOR(5 DOWNTO 0);
@@ -63,15 +67,15 @@ ARCHITECTURE arch_fetch OF fetch IS
         );
     END COMPONENT mux4x1;
 
-    -- PC
-    COMPONENT pc IS
-        PORT (
-            reset : IN STD_LOGIC;
-            clk : IN STD_LOGIC;
-            enable : IN STD_LOGIC;
-            pc_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
-        );
-    END COMPONENT;
+    -- -- PC
+    -- COMPONENT pc IS
+    --     PORT (
+    --         reset : IN STD_LOGIC;
+    --         clk : IN STD_LOGIC;
+    --         enable : IN STD_LOGIC;
+    --         pc_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
+    --     );
+    -- END COMPONENT;
 
     -- Instruction Cache
     COMPONENT instruction_cache IS
@@ -166,7 +170,7 @@ BEGIN
 
     --enabled when the pc enable coming from hazard detection unit is 1 and no interrupt signal (0)
     pc_enable <= pc_enable_hazard_detection AND NOT interrupt_signal;
-    pc_reset <= reset OR FD_flush OR FD_flush_exception_unit or RST_signal;
+    pc_reset <= reset OR FD_flush OR FD_flush_exception_unit OR RST_signal;
 
     program_counter : my_nDFF GENERIC MAP(
         32) PORT MAP(
@@ -186,7 +190,7 @@ BEGIN
     );
 
     --for the three regs
-    FD_flush_internal <= reset OR FD_flush OR FD_flush_exception_unit or RST_signal;
+    FD_flush_internal <= reset OR FD_flush OR FD_flush_exception_unit OR RST_signal;
 
     FD_enable_internal <= immediate_reg_enable AND FD_enable AND FD_enable_loaduse;
     FD_reg : my_nDFF GENERIC MAP(16)
@@ -203,19 +207,17 @@ BEGIN
     Rdest <= FD_output(3 DOWNTO 1);
     imm_flag <= FD_output(0);
 
-    -- --the difference between this and the fetch_decode_only_instruction is that the immediate enable doesn't enable this one
+    --the difference between this and the fetch_decode_only_instruction is that the immediate enable doesn't enable this one
     -- FD_enable_internal_except_instruction <= FD_enable AND FD_enable_loaduse;
     -- FD_d_internal_except_instruction <= pc_instruction_address & STD_LOGIC_VECTOR(unsigned(pc_instruction_address) + 1) & immediate_reg_enable;
-    -- fetch_decode_except_instruction : my_nDFF GENERIC MAP(65)
-    -- PORT MAP(
-    --     clk => clk,
-    --     reset => FD_flush_internal,
-    --     enable => FD_enable_internal_except_instruction,
-    --     d => FD_d_internal_except_instruction,
-    --     q => FD_output_except_instruction
-    -- );
-
-    -- propagated_imm_stall <= FD_output_except_instruction(0);
+    fetch_decode_except_instruction : my_nDFF GENERIC MAP(32)
+    PORT MAP(
+        clk => clk,
+        reset => FD_flush_internal,
+        enable => FD_enable_internal_except_instruction,
+        d => in_port_in,
+        q => in_port_out
+    );
 
     FD_imm_enable <= NOT immediate_reg_enable;
     FD_enable_imm_internal <= FD_enable AND FD_imm_enable AND FD_enable_loaduse;
