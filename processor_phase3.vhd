@@ -532,3 +532,10 @@ BEGIN
     );
 
 END ARCHITECTURE arch_processor;
+
+--TODO: check overflow and carry flags in the alu
+--TODO: add decode
+--TODO: modify the memory
+--TODO: add exception handling unit 
+--TODO: add hazard detection unit
+--TODO: add forwarding unit
