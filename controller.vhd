@@ -127,7 +127,7 @@ BEGIN
 		-- PUSH PC
 		-- PUSH CCR
 		-- Ret Data Memory[2]
-		-- TODO: Stall Fetch (alshan el opcode mytghyarsh, hatfr2 lw el signal mwgoda le 1 cycle)
+		-- Stall Fetch (alshan el opcode mytghyarsh, hatfr2 lw el signal mwgoda le 1 cycle)
 		IF rising_edge(clk) AND (interrupt_signal = '1' OR interrupt_state /= instruction) THEN
 			-- FSM
 			CASE interrupt_state IS
