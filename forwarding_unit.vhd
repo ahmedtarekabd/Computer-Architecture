@@ -65,7 +65,7 @@ ENTITY forwarding_unit IS
         opp_branching_mux_selector : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
         opp_branch_or_normal_mux_selector: OUT STD_LOGIC;
 
-        load_use_hazard : OUT STD_LOGIC
+        load_use_hazard : OUT STD_LOGIC;
 
         -- From Execute/Memory
         -- write_back_em : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
@@ -80,7 +80,7 @@ ENTITY forwarding_unit IS
         -- From Decode/Execute
         -- write_back_de : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
         write_back_de_enable1 : IN STD_LOGIC;
-        write_back_de_enable2 : IN STD_LOGIC;
+        write_back_de_enable2 : IN STD_LOGIC
     );
 END forwarding_unit;
 

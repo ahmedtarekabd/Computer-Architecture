@@ -48,7 +48,7 @@ ARCHITECTURE behavior OF forwarding_unit_tb IS
         -- From Decode/Execute
         -- write_back_de : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
         write_back_de_enable1 : IN STD_LOGIC;
-        write_back_de_enable2 : IN STD_LOGIC;
+        write_back_de_enable2 : IN STD_LOGIC
     );
     END COMPONENT;
 
@@ -74,6 +74,15 @@ ARCHITECTURE behavior OF forwarding_unit_tb IS
    signal opp_branching_mux_selector : STD_LOGIC_VECTOR(2 DOWNTO 0);
    signal opp_branch_or_normal_mux_selector : STD_LOGIC;
    signal load_use_hazard : STD_LOGIC;
+  --  signal write_back_em_enable1 : STD_LOGIC := '0';
+  --   signal write_back_em_enable2 : STD_LOGIC := '0';
+  --   signal write_back_mw_enable1 : STD_LOGIC := '0';
+  --   signal write_back_mw_enable2 : STD_LOGIC := '0';
+  --   signal write_back_de_enable1 : STD_LOGIC := '0';
+  --   signal write_back_de_enable2 : STD_LOGIC := '0';
+    -- SIGNAL write_back_de : STD_LOGIC_VECTOR(1 DOWNTO 0) := "00";
+    -- SIGNAL write_back_em : STD_LOGIC_VECTOR(1 DOWNTO 0);
+    -- SIGNAL write_back_mw : STD_LOGIC_VECTOR(1 DOWNTO 0);
 
 BEGIN
 
@@ -88,21 +97,29 @@ BEGIN
         address1_mw => address1_mw,
         address2_mw => address2_mw,
         dst_address_fd => dst_address_fd,
-        write_back_em => write_back_em,
-        write_back_mw => write_back_mw,
-        write_back_de => write_back_de,
         memory_read_em => memory_read_em,
         memory_read_de => memory_read_de,
         opp1_ALU_MUX_SEL => opp1_ALU_MUX_SEL,
         opp2_ALU_MUX_SEL => opp2_ALU_MUX_SEL,
         opp_branching_mux_selector => opp_branching_mux_selector,
         opp_branch_or_normal_mux_selector => opp_branch_or_normal_mux_selector,
-        load_use_hazard => load_use_hazard
+        load_use_hazard => load_use_hazard,
+        write_back_em_enable1 => write_back_em(0),
+        write_back_em_enable2 => write_back_em(1),
+        write_back_mw_enable1 => write_back_mw(0),
+        write_back_mw_enable2 => write_back_mw(1),
+        write_back_de_enable1 => write_back_de(0),
+        write_back_de_enable2 => write_back_de(1)
    );
 
    -- Stimulus process
    stim_proc: process
    begin
+      -- connect the write back signals to thr inputs
+      -- write_back_de <= write_back_de_enable1 & write_back_de_enable2;
+      -- write_back_em <= write_back_em_enable1 & write_back_em_enable2;
+      -- write_back_mw <= write_back_mw_enable1 & write_back_mw_enable2;
+
       -- Test case 1: No forwarding needed because no register write enable
       src_address1_de <= "000";
       src_address2_de <= "001";
