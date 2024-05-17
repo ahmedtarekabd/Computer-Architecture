@@ -62,7 +62,7 @@ ENTITY execute IS
         -- reset signal input
         RST_signal_input : IN STD_LOGIC;
         -- Load use reset
-        RST_signal_load_use_input : IN STD_LOGIC;
+        execute_mem_flush_controller : IN STD_LOGIC;
         -- E/M flush from exception handling
         EM_flush_exception_handling_in : IN STD_LOGIC;
         EM_enable_exception_handling_in : IN STD_LOGIC;
@@ -296,7 +296,7 @@ BEGIN
     -- Execute/Mem register enable is the execute memory enable  OR propagated immediate flag
     execute_mem_enable <= execute_mem_register_enable OR immediate_enable_in;
     -- Execute/Mem register reset is the user input reset signal OR the load use stall signal OR the flush signal from exception handling
-    execute_mem_reset <= RST_signal_input OR RST_signal_load_use_input OR EM_flush_exception_handling_in;
+    execute_mem_reset <= RST_signal_input OR execute_mem_flush_controller OR EM_flush_exception_handling_in;
 
     -- Execute/Mem register
     execute_mem_reg : my_nDFF GENERIC MAP(223)
