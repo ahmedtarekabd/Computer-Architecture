@@ -23,7 +23,7 @@ ENTITY fetch IS
 
         ----------F/D reg----------
         --enables
-        immediate_reg_enable : IN STD_LOGIC;
+        immediate_reg_enable : IN STD_LOGIC; --1 in normal case, 0 when immediate flag is detected
         FD_enable : IN STD_LOGIC;
         FD_enable_loaduse : IN STD_LOGIC;
         pc_enable_hazard_detection : IN STD_LOGIC;
@@ -44,7 +44,6 @@ ENTITY fetch IS
 
         propagated_pc : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
         propagated_pc_plus_one : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
-
     );
 END ENTITY fetch;
 
@@ -95,17 +94,21 @@ ARCHITECTURE arch_fetch OF fetch IS
 
     --pc
     SIGNAL pc_instruction_address : STD_LOGIC_VECTOR(31 DOWNTO 0) := (OTHERS => '0'); --from pc to instruction cache
+    -- SIGNAL pc_instruction_plus_one_Address : STD_LOGIC_VECTOR(31 DOWNTO 0) := (OTHERS => '0'); --use the same one as the pc_mux1
     SIGNAL mux1_output : STD_LOGIC_VECTOR(31 DOWNTO 0);
-    SIGNAL mux2_output : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL mux2_output : STD_LOGIC_VECTOR(31 DOWNTO 0) := (OTHERS => '0');
 
     --instruction cache
     SIGNAL instruction_out_from_instr_cache : STD_LOGIC_VECTOR(15 DOWNTO 0);
-    SIGNAL instruction_out_from_F_D_reg : STD_LOGIC_VECTOR(15 DOWNTO 0);
+    -- SIGNAL FD_output : STD_LOGIC_VECTOR(80 DOWNTO 0); --the extra bit is the propagated immediate stall
 
     --internal signal for immediate register
     SIGNAL FD_imm_enable : STD_LOGIC;
+    --internal signal for pc_reset muc
+    SIGNAL pc_reset_output : STD_LOGIC_VECTOR(31 DOWNTO 0) := (OTHERS => '0');
     --internal signals for pc mux_1
-    SIGNAL pc_plus_one : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL pc_normal : STD_LOGIC_VECTOR(31 DOWNTO 0) := (OTHERS => '0');
+    SIGNAL pc_plus_one : STD_LOGIC_VECTOR(31 DOWNTO 0) := (OTHERS => '0');
     SIGNAL sel_lower_mux1 : STD_LOGIC;
     SIGNAL sel_higher_mux1 : STD_LOGIC;
     --internal signals for pc mux_2
@@ -113,16 +116,22 @@ ARCHITECTURE arch_fetch OF fetch IS
     SIGNAL sel_higher_mux2 : STD_LOGIC;
     --internal signals for pc
     SIGNAL pc_enable : STD_LOGIC;
-    --internal signals Fetch Decode reg
+    SIGNAL pc_reset : STD_LOGIC;
+
+    --for the three regs
     SIGNAL FD_flush_internal : STD_LOGIC;
+
+    --internal signals Fetch Decode reg only_instruction
     SIGNAL FD_enable_internal : STD_LOGIC;
+    SIGNAL FD_output : STD_LOGIC_VECTOR(15 DOWNTO 0);
+
+    --internal signals Fetch Decode reg except instruction
+    SIGNAL FD_enable_internal_except_instruction : STD_LOGIC;
+    SIGNAL FD_d_internal_except_instruction : STD_LOGIC_VECTOR(64 DOWNTO 0);
+    SIGNAL FD_output_except_instruction : STD_LOGIC_VECTOR(64 DOWNTO 0);
+
     --internal signals for immediate register
     SIGNAL FD_enable_imm_internal : STD_LOGIC;
-
-    --signal to reset pc_counter for the first time only to start for pc = 0
-    SIGNAL reset_pc : STD_LOGIC := '1';
-    --internal signal for this
-    SIGNAL pc_reset_internal : STD_LOGIC;
 
 BEGIN
 
@@ -147,8 +156,8 @@ BEGIN
     pc_mux2 : mux4x1 GENERIC MAP(32)
     PORT MAP(
         inputA => mux1_output, --mux1 ouptut (normal)
-        inputB => x"33333333", --exception handling for overflow 
-        inputC => x"cccccccc", --exception handling for memory 
+        inputB => x"00003333", --exception handling for overflow 
+        inputC => x"0000cccc", --exception handling for memory 
         inputD => (OTHERS => '0'), -- unused
         Sel_lower => sel_lower_mux2,
         Sel_higher => sel_higher_mux2,
@@ -157,49 +166,59 @@ BEGIN
 
     --enabled when the pc enable coming from hazard detection unit is 1 and no interrupt signal (0)
     pc_enable <= pc_enable_hazard_detection AND NOT interrupt_signal;
-
-    pc_reset_internal <= reset OR reset_pc;
+    pc_reset <= reset OR FD_flush OR FD_flush_exception_unit or RST_signal;
 
     program_counter : my_nDFF GENERIC MAP(
         32) PORT MAP(
         clk => clk,
-        reset => pc_reset_internal,
+        reset => pc_reset,
         enable => pc_enable,
         d => mux2_output,
         q => pc_instruction_address
     );
-    --return it to normal to enable the pc to work normally   
-    reset_pc <= '0';
+
+    propagated_pc <= pc_instruction_address;
+    propagated_pc_plus_one <= STD_LOGIC_VECTOR(unsigned(pc_instruction_address) + 1);
 
     inst_cache : instruction_cache PORT MAP(
-        address_in => pc_instruction_address,
-        --el selk el 3ryan (imm)
+        address_in => mux2_output,
         data_out => instruction_out_from_instr_cache
     );
 
-    FD_flush_internal <= reset OR FD_flush OR FD_flush_exception_unit;
-    FD_enable_internal <= immediate_reg_enable AND FD_enable AND FD_enable_loaduse;
+    --for the three regs
+    FD_flush_internal <= reset OR FD_flush OR FD_flush_exception_unit or RST_signal;
 
-    fetch_decode : my_nDFF GENERIC MAP(16)
+    FD_enable_internal <= immediate_reg_enable AND FD_enable AND FD_enable_loaduse;
+    FD_reg : my_nDFF GENERIC MAP(16)
     PORT MAP(
         clk => clk,
         reset => FD_flush_internal,
         enable => FD_enable_internal,
         d => instruction_out_from_instr_cache,
-        q => instruction_out_from_F_D_reg
+        q => FD_output
     );
+    opcode <= FD_output(15 DOWNTO 10);
+    Rsrc1 <= FD_output(9 DOWNTO 7);
+    Rsrc2 <= FD_output(6 DOWNTO 4);
+    Rdest <= FD_output(3 DOWNTO 1);
+    imm_flag <= FD_output(0);
 
-    --outputs
-    opcode <= instruction_out_from_F_D_reg(15 DOWNTO 10);
-    Rsrc1 <= instruction_out_from_F_D_reg(9 DOWNTO 7);
-    Rsrc2 <= instruction_out_from_F_D_reg(6 DOWNTO 4);
-    Rdest <= instruction_out_from_F_D_reg(3 DOWNTO 1);
-    imm_flag <= instruction_out_from_F_D_reg(0);
+    -- --the difference between this and the fetch_decode_only_instruction is that the immediate enable doesn't enable this one
+    -- FD_enable_internal_except_instruction <= FD_enable AND FD_enable_loaduse;
+    -- FD_d_internal_except_instruction <= pc_instruction_address & STD_LOGIC_VECTOR(unsigned(pc_instruction_address) + 1) & immediate_reg_enable;
+    -- fetch_decode_except_instruction : my_nDFF GENERIC MAP(65)
+    -- PORT MAP(
+    --     clk => clk,
+    --     reset => FD_flush_internal,
+    --     enable => FD_enable_internal_except_instruction,
+    --     d => FD_d_internal_except_instruction,
+    --     q => FD_output_except_instruction
+    -- );
+
+    -- propagated_imm_stall <= FD_output_except_instruction(0);
 
     FD_imm_enable <= NOT immediate_reg_enable;
-
-    FD_enable_imm_internal <= FD_enable AND FD_imm_enable;
-
+    FD_enable_imm_internal <= FD_enable AND FD_imm_enable AND FD_enable_loaduse;
     fetch_decode_imm : my_nDFF GENERIC MAP(16)
     PORT MAP(
         clk => clk,
@@ -208,147 +227,4 @@ BEGIN
         d => instruction_out_from_instr_cache,
         q => selected_immediate_out
     );
-
-    propagated_pc <= pc_instruction_address;
-    propagated_pc_plus_one <= STD_LOGIC_VECTOR(unsigned(pc_instruction_address) + 1);
-
 END ARCHITECTURE arch_fetch;
-
---TODO: should the enable for the immediate flag be sent as 1 when the immediate flag is detected -> ezbotha fe el tb
-
---     --pc
---     SIGNAL pc_instruction_address : STD_LOGIC_VECTOR(31 DOWNTO 0) := (OTHERS => '0'); --from pc to instruction cache
---     SIGNAL mux1_output : STD_LOGIC_VECTOR(31 DOWNTO 0);
---     SIGNAL mux2_output : STD_LOGIC_VECTOR(31 DOWNTO 0);
-
---     --instruction cache
---     SIGNAL instruction_out_from_instr_cache : STD_LOGIC_VECTOR(15 DOWNTO 0);
---     SIGNAL instruction_out_from_F_D_reg : STD_LOGIC_VECTOR(15 DOWNTO 0);
-
---     --internal signal for immediate register
---     SIGNAL FD_imm_enable : STD_LOGIC;
---     --internal signals for pc mux_1
---     SIGNAL pc_plus_one : STD_LOGIC_VECTOR(31 DOWNTO 0);
---     SIGNAL sel_lower_mux1 : STD_LOGIC;
---     SIGNAL sel_higher_mux1 : STD_LOGIC;
---     --internal signals for pc mux_2
---     SIGNAL sel_lower_mux2 : STD_LOGIC;
---     SIGNAL sel_higher_mux2 : STD_LOGIC;
---     --internal signals for pc
---     SIGNAL pc_enable : STD_LOGIC;
---     --internal signals Fetch Decode reg
---     SIGNAL FD_flush_internal : STD_LOGIC;
---     SIGNAL FD_enable_internal : STD_LOGIC;
---     --internal signals for immediate register
---     SIGNAL FD_enable_imm_internal : STD_LOGIC;
-
---     --signal to reset pc_counter for the first time only to start for pc = 0
---     SIGNAL reset_pc : STD_LOGIC := '1';
---     --internal signal for this
---     signal pc_reset_internal : STD_LOGIC;
---     -- Add these signals to hold the inputs to the flip-flops
---     SIGNAL fetch_decode_d : STD_LOGIC_VECTOR(15 DOWNTO 0);
---     SIGNAL fetch_decode_imm_d : STD_LOGIC_VECTOR(15 DOWNTO 0);
---     --signal to hold the old instruction
---     SIGNAL old_instruction : STD_LOGIC_VECTOR(15 DOWNTO 0);
--- BEGIN
-
---     pc_plus_one <= STD_LOGIC_VECTOR(unsigned(pc_instruction_address) + 1);
---     sel_lower_mux1 <= pc_mux1_selector(0) OR RST_signal;
---     sel_higher_mux1 <= pc_mux1_selector(1) OR RST_signal;
-
---     pc_mux1 : mux4x1 GENERIC MAP(32)
---     PORT MAP(
---         inputA => pc_plus_one,
---         inputB => branch_address,
---         inputC => (OTHERS => '0'), -- unused
---         inputD => read_data_from_memory,
---         Sel_lower => sel_lower_mux1,
---         Sel_higher => sel_higher_mux1,
---         output => mux1_output
---     );
-
---     sel_lower_mux2 <= pc_mux2_selector(0) OR interrupt_signal;
---     sel_higher_mux2 <= pc_mux2_selector(1) OR interrupt_signal;
-
---     pc_mux2 : mux4x1 GENERIC MAP(32)
---     PORT MAP(
---         inputA => mux1_output, --mux1 ouptut (normal)
---         inputB => x"33333333", --exception handling for overflow 
---         inputC => x"cccccccc", --exception handling for memory 
---         inputD => (OTHERS => '0'), -- unused
---         Sel_lower => sel_lower_mux2,
---         Sel_higher => sel_higher_mux2,
---         output => mux2_output
---     );
-
---     --enabled when the pc enable coming from hazard detection unit is 1 and no interrupt signal (0)
---     pc_enable <= pc_enable_hazard_detection and not interrupt_signal;
-
---     pc_reset_internal <= reset or reset_pc;
-
---     program_counter : my_nDFF GENERIC MAP(32) PORT MAP(
---         clk => clk,
---         reset => pc_reset_internal,
---         enable => pc_enable,
---         d => mux2_output,
---         q => pc_instruction_address
---     );
---     --return it to normal to enable the pc to work normally   
---     reset_pc <= '0';
-
---     inst_cache : instruction_cache PORT MAP(
---         address_in => pc_instruction_address,
---         --el selk el 3ryan (imm)
---         data_out => instruction_out_from_instr_cache
---     );
-
---     FD_flush_internal <= reset OR FD_flush OR FD_flush_exception_unit;
---     FD_enable_internal <= immediate_reg_enable AND FD_enable AND FD_enable_loaduse;
---     -- Add this process to conditionally assign the inputs to the flip-flops
---     process(clk)
---     begin
---         if rising_edge(clk) then
---             if instruction_out_from_instr_cache(0) = '1' then --immediate flag is 1
---                 fetch_decode_d <= old_instruction;
---                 fetch_decode_imm_d <= instruction_out_from_instr_cache; 
---             else
---                 fetch_decode_d <= instruction_out_from_instr_cache;
---                 fetch_decode_imm_d <= instruction_out_from_instr_cache; --don't care
---             end if;
---         end if;
---     end process;
-
---     old_instruction <= instruction_out_from_instr_cache;
-
---     fetch_decode : my_nDFF GENERIC MAP(16)
---     PORT MAP(
---         clk => clk,
---         reset => FD_flush_internal,
---         enable => FD_enable_internal,
---         d => fetch_decode_d,
---         q => instruction_out_from_F_D_reg
---     );
-
---     --outputs
---     opcode <= instruction_out_from_F_D_reg(15 DOWNTO 10);
---     Rsrc1 <= instruction_out_from_F_D_reg(9 DOWNTO 7);
---     Rsrc2 <= instruction_out_from_F_D_reg(6 DOWNTO 4);
---     Rdest <= instruction_out_from_F_D_reg(3 DOWNTO 1);
---     imm_flag <= instruction_out_from_F_D_reg(0);
-
---     FD_imm_enable <= NOT immediate_reg_enable;
-
---     FD_enable_imm_internal <= FD_enable AND FD_imm_enable;
-
---     fetch_decode_imm : my_nDFF GENERIC MAP(16)
---     PORT MAP(
---         clk => clk,
---         reset => FD_flush_internal,
---         enable => FD_enable_imm_internal,
---         d => fetch_decode_imm_d,
---         q => selected_immediate_out
---     );
-
---     propagated_pc <= pc_instruction_address;
---     propagated_pc_plus_one <= STD_LOGIC_VECTOR(unsigned(pc_instruction_address) + 1);
