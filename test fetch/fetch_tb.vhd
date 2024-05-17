@@ -29,6 +29,8 @@ ARCHITECTURE behavior OF fetch_tb IS
             Rsrc1 : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
             Rsrc2 : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
             Rdest : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
+            in_port_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+            in_port_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
             imm_flag : OUT STD_LOGIC;
             propagated_pc : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
             propagated_pc_plus_one : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
@@ -50,6 +52,9 @@ ARCHITECTURE behavior OF fetch_tb IS
     SIGNAL FD_enable_loaduse : STD_LOGIC := '0';
     SIGNAL FD_flush : STD_LOGIC := '0';
     SIGNAL FD_flush_exception_unit : STD_LOGIC := '0';
+    signal in_port_in : STD_LOGIC_VECTOR(31 DOWNTO 0) := (OTHERS => '0');
+
+    signal in_port_out : STD_LOGIC_VECTOR(31 DOWNTO 0) := (OTHERS => '0');
 
     --Outputs
     SIGNAL selected_immediate_out : STD_LOGIC_VECTOR(15 DOWNTO 0);
@@ -83,12 +88,14 @@ BEGIN
         FD_enable_loaduse => FD_enable_loaduse,
         FD_flush => FD_flush,
         FD_flush_exception_unit => FD_flush_exception_unit,
+        in_port_in => in_port_in,
         selected_immediate_out => selected_immediate_out,
         opcode => opcode,
         Rsrc1 => Rsrc1,
         Rsrc2 => Rsrc2,
         Rdest => Rdest,
         imm_flag => imm_flag,
+        in_port_out => in_port_out,
         propagated_pc => propagated_pc,
         propagated_pc_plus_one => propagated_pc_plus_one
     );
@@ -148,6 +155,7 @@ BEGIN
 
         --  propagated_pc : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
         --  propagated_pc_plus_one : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
+        in_port_in <= "00000000000000000000000000000000";
         RST_signal <= '0';
         read_data_from_memory <= "00000000000000000000000000000100";
         -- branch_address <="0000000000000000000000000000010";
@@ -171,7 +179,8 @@ BEGIN
         ASSERT (imm_flag = '0') REPORT "Testcase 2 imm_flag is wrong" SEVERITY error;
         ASSERT (propagated_pc = "00000000000000000000000000000000") REPORT "Testcase 2 propagated_pc is wrong" SEVERITY error;
         ASSERT (propagated_pc_plus_one = "00000000000000000000000000000001") REPORT "Testcase 2 propagated_pc_plus_one is wrong" SEVERITY error;
-
+        assert (in_port_out = "00000000000000000000000000000000") report "Testcase 2 in_port_out is wrong" severity error;
+        
         --second testcase - > second instruction with immediate (00000000000000000000000000000001)
         immediate_reg_enable <= '0'; --checkkkkk
         pc_mux1_selector <= "00";

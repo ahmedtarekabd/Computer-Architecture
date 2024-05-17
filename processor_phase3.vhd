@@ -2,12 +2,17 @@ LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 USE ieee.numeric_std.ALL;
 
+--TODO: figure out how to add the output port
 ENTITY processor_phase3 IS
     PORT (
         clk : IN STD_LOGIC;
         reset : IN STD_LOGIC;
         RST_signal : IN STD_LOGIC;
-        interrupt_signal : IN STD_LOGIC
+        interrupt_signal : IN STD_LOGIC;
+        in_port_from_processor : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+
+        --outputs
+        out_port_to_processor : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
 
         -- add in port / out port
     );
@@ -48,7 +53,11 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
             FD_flush : IN STD_LOGIC;
             FD_flush_exception_unit : IN STD_LOGIC;
 
+            --in port
+            in_port_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+
             ----------outputs----------
+            in_port_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
             selected_immediate_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
             -- instruction 
             opcode : OUT STD_LOGIC_VECTOR(5 DOWNTO 0);
@@ -63,8 +72,6 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
     END COMPONENT fetch;
 
     --TODO add decode component
-
-
     COMPONENT execute IS
         PORT (
             -------------------------inputs-------------------------
@@ -262,133 +269,160 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
     END COMPONENT write_back;
 
     --**********************************************************SIGNALS*************************************************--
-        --*--------Fetch---------- 
-        --from controller
-        signal pc_mux1_selector_to_fetch : STD_LOGIC_VECTOR(1 DOWNTO 0);
-        signal FD_enable_to_fetch : STD_LOGIC;
-        signal FD_flush_to_fetch : STD_LOGIC;
-        -- signal immediate_stall_to_fetch : STD_LOGIC;
-        
-        --from hazard detection unit
-        signal pc_enable_hazard_detection_to_fetch : STD_LOGIC;
-        signal FD_enable_loaduse_to_fetch : STD_LOGIC;
-        
-        --from exception handling unit
-        signal pc_mux2_selector_to_fetch : STD_LOGIC_VECTOR(1 DOWNTO 0);
-        signal FD_flush_exception_unit_to_fetch : STD_LOGIC;
-        
-        --from memory
-        signal read_data_from_memory_to_fetch : STD_LOGIC_VECTOR(31 DOWNTO 0);
-        
-        --from decode
-        signal branch_address_to_fetch : STD_LOGIC_VECTOR(31 DOWNTO 0);
-        
-        --outputs
-        signal propagated_pc_from_fetch : STD_LOGIC_VECTOR(31 DOWNTO 0);
-        signal propagated_pc_plus_one_from_fetch : STD_LOGIC_VECTOR(31 DOWNTO 0);
-        signal opcode_from_fetch : STD_LOGIC_VECTOR(5 DOWNTO 0);
-        signal Rsrc1_from_fetch : STD_LOGIC_VECTOR(2 DOWNTO 0);
-        signal Rsrc2_from_fetch : STD_LOGIC_VECTOR(2 DOWNTO 0);
-        signal Rdest_from_fetch : STD_LOGIC_VECTOR(2 DOWNTO 0);
-        signal imm_flag_from_fetch : STD_LOGIC;
-        signal selected_immediate_out_from_fetch : STD_LOGIC_VECTOR(15 DOWNTO 0);
-        
-        --*--------Decode----------
+    --*--------Fetch---------- 
+    --from controller
+    SIGNAL pc_mux1_selector_to_fetch : STD_LOGIC_VECTOR(1 DOWNTO 0);
+    SIGNAL FD_enable_to_fetch : STD_LOGIC;
+    SIGNAL FD_flush_to_fetch : STD_LOGIC;
+    -- signal immediate_stall_to_fetch : STD_LOGIC;
 
-        --output to all reg
-        signal immediate_stall_to_all : STD_LOGIC;
-        
-        --*--------Execute----------
-        --from decode
-        signal pc_in_to_excute : STD_LOGIC_VECTOR(31 DOWNTO 0);
-        signal pc_plus_1_in_to_excute : STD_LOGIC_VECTOR(31 DOWNTO 0);
-        signal destination_address_to_execute : STD_LOGIC_VECTOR(2 DOWNTO 0);
-        signal address_read1_in_to_execute : STD_LOGIC_VECTOR(2 DOWNTO 0);
-        signal address_read2_in_to_execute : STD_LOGIC_VECTOR(2 DOWNTO 0);
-        signal data1_in_to_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
-        signal data2_in_to_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
-        signal immediate_in_to_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
-        
-        --from controller
-        -- signal immediate_stall_in_to_execute : STD_LOGIC;
-        signal EM_enable_in_to_execute : STD_LOGIC;
-        signal EM_flush_in_to_execute : STD_LOGIC;
-        signal alu_src2_selector_to_execute : STD_LOGIC_VECTOR(1 DOWNTO 0);
-        signal alu_selectors_to_execute : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    --from hazard detection unit
+    SIGNAL pc_enable_hazard_detection_to_fetch : STD_LOGIC;
+    SIGNAL FD_enable_loaduse_to_fetch : STD_LOGIC;
 
-        --from exception handling
-        signal EM_flush_exception_handling_to_excute : STD_LOGIC;
+    --from exception handling unit
+    SIGNAL pc_mux2_selector_to_fetch : STD_LOGIC_VECTOR(1 DOWNTO 0);
+    SIGNAL FD_flush_exception_unit_to_fetch : STD_LOGIC;
 
-        --ouputs
-        signal pc_out_from_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
-        signal pc_plus_1_out_from_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
-        signal destination_address_out_from_execute : STD_LOGIC_VECTOR(2 DOWNTO 0);
-        signal address_read1_out_from_execute : STD_LOGIC_VECTOR(2 DOWNTO 0);
-        signal address_read2_out_from_execute : STD_LOGIC_VECTOR(2 DOWNTO 0);
-        signal data1_swapping_out_from_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
-        signal data2_swapping_out_from_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
-        signal flag_register_out_from_execute : STD_LOGIC_VECTOR(3 DOWNTO 0);
-        signal alu_out_from_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    --from memory
+    SIGNAL read_data_from_memory_to_fetch : STD_LOGIC_VECTOR(31 DOWNTO 0);
 
-        signal zero_flag_out_controller_from_execute : STD_LOGIC;
-        signal overflow_flag_out_exception_handling_from_execute : STD_LOGIC;
-        --propagation of control signals
-        signal control_signals_memory_out_from_execute : STD_LOGIC_VECTOR(10 DOWNTO 0);
-        signal control_signals_write_back_out_from_execute : STD_LOGIC_VECTOR(5 DOWNTO 0);
+    --from decode
+    SIGNAL branch_address_to_fetch : STD_LOGIC_VECTOR(31 DOWNTO 0);
 
-        --to forwarding unit
-        signal address1_out_forwarding_unit_from_execute : STD_LOGIC_VECTOR(2 DOWNTO 0);
-        signal address2_out_forwarding_unit_from_execute : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    --outputs
+    SIGNAL in_port_from_fetch : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL propagated_pc_from_fetch : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL propagated_pc_plus_one_from_fetch : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL opcode_from_fetch : STD_LOGIC_VECTOR(5 DOWNTO 0);
+    SIGNAL Rsrc1_from_fetch : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAL Rsrc2_from_fetch : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAL Rdest_from_fetch : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAL imm_flag_from_fetch : STD_LOGIC;
+    SIGNAL selected_immediate_out_from_fetch : STD_LOGIC_VECTOR(15 DOWNTO 0);
 
-        --*--------Memory----------
+    --*--------Decode----------
+
+    --output to fetch and decode reg
+    SIGNAL in_port_from_Decode : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL immediate_stall_to_fetch_and_decode : STD_LOGIC;
+
+    --*--------Execute----------
+    --from decode
+    SIGNAL pc_in_to_excute : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL pc_plus_1_in_to_excute : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL destination_address_to_execute : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAL address_read1_in_to_execute : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAL address_read2_in_to_execute : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAL data1_in_to_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL data2_in_to_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL immediate_in_to_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
+
+    --from controller
+    SIGNAL immediate_stall_in_to_execute : STD_LOGIC;
+    SIGNAL EM_enable_in_to_execute : STD_LOGIC;
+    SIGNAL EM_flush_in_to_execute : STD_LOGIC;
+    SIGNAL alu_src2_selector_to_execute : STD_LOGIC_VECTOR(1 DOWNTO 0);
+    SIGNAL alu_selectors_to_execute : STD_LOGIC_VECTOR(2 DOWNTO 0);
+
+    --from exception handling
+    SIGNAL EM_flush_exception_handling_to_excute : STD_LOGIC;
+
+    --ouputs
+    SIGNAL pc_out_from_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL pc_plus_1_out_from_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL destination_address_out_from_execute : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAL address_read1_out_from_execute : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAL address_read2_out_from_execute : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAL data1_swapping_out_from_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL data2_swapping_out_from_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL flag_register_out_from_execute : STD_LOGIC_VECTOR(3 DOWNTO 0);
+    SIGNAL alu_out_from_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL immediate_enable_out_from_execute : STD_LOGIC;
+    SIGNAL in_port_from_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
+
+    SIGNAL zero_flag_out_controller_from_execute : STD_LOGIC;
+    SIGNAL overflow_flag_out_exception_handling_from_execute : STD_LOGIC;
+    --propagation of control signals
+    SIGNAL control_signals_memory_out_from_execute : STD_LOGIC_VECTOR(10 DOWNTO 0);
+    SIGNAL control_signals_write_back_out_from_execute : STD_LOGIC_VECTOR(5 DOWNTO 0);
+
+    --to forwarding unit
+    SIGNAL address1_out_forwarding_unit_from_execute : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAL address2_out_forwarding_unit_from_execute : STD_LOGIC_VECTOR(2 DOWNTO 0);
+
+    --*--------Memory----------
+    --from controller
+    signal MW_enable_to_memory : STD_LOGIC;
+    signal MW_flush_to_memory : STD_LOGIC;
+
+    --from exepction handling
+    signal MW_flush_from_exception_to_memory : STD_LOGIC;
+
+    --outputs
+    signal wb_control_signals_out_from_memory : STD_LOGIC_VECTOR(5 DOWNTO 0); -- -> to wb
+    signal write_address1_out_from_memory : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    signal write_address2_out_from_memory : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    signal read_data1_out_from_memory : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    signal read_data2_out_from_memory : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    signal ALU_result_out_from_memory : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    signal mem_read_data_from_memory : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    signal PC_out_to_exception_from_memory : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    signal protected_address_access_to_exception_from_memory : STD_LOGIC;
+    signal Rdst_from_memory : STD_LOGIC_VECTOR(2 DOWNTO 0);
 
 
-        --*--------Write Back----------
-
+    --*--------Write Back----------
+    --from controller
+    signal reg_write_enable1_in_to_wb : STD_LOGIC;
+    signal reg_write_enable2_in_to_wb : STD_LOGIC;
+    signal reg_write_address1_mux_to_wb : STD_LOGIC;
+    signal rscr1_data_to_wb : STD_LOGIC_VECTOR(1 DOWNTO 0);
+    signal read_data1_in_to_wb : STD_LOGIC_VECTOR(31 DOWNTO 0);
 
     --**********************************************************INST*************************************************--
 
-    begin
+BEGIN
 
-        ----------Fetch---------- 
-        fetch_inst: fetch PORT MAP(
-            clk => clk,
-            reset => reset,
-            pc_mux1_selector => pc_mux1_selector_to_fetch,
-            RST_signal => RST_signal,
-            pc_enable_hazard_detection => pc_enable_hazard_detection_to_fetch,
-            read_data_from_memory => read_data_from_memory_to_fetch,
-            branch_address => branch_address_to_fetch,
-            pc_mux2_selector => pc_mux2_selector_to_fetch,
-            interrupt_signal => interrupt_signal,
-            immediate_reg_enable => immediate_stall_to_all,
-            FD_enable => FD_enable_to_fetch,
-            FD_enable_loaduse => FD_enable_loaduse_to_fetch,
-            FD_flush => FD_flush_to_fetch,
-            FD_flush_exception_unit => FD_flush_exception_unit_to_fetch,
-            selected_immediate_out => selected_immediate_out_from_fetch,
-            opcode => opcode_from_fetch,
-            Rsrc1 => Rsrc1_from_fetch,
-            Rsrc2 => Rsrc2_from_fetch,
-            Rdest => Rdest_from_fetch,
-            imm_flag => imm_flag_from_fetch,
-            propagated_pc => propagated_pc_from_fetch,
-            propagated_pc_plus_one => propagated_pc_plus_one_from_fetch
-        );
+    ----------Fetch---------- 
+    fetch_inst : fetch PORT MAP(
+        clk => clk,
+        reset => reset,
+        pc_mux1_selector => pc_mux1_selector_to_fetch,
+        RST_signal => RST_signal,
+        pc_enable_hazard_detection => pc_enable_hazard_detection_to_fetch,
+        read_data_from_memory => read_data_from_memory_to_fetch,
+        branch_address => branch_address_to_fetch,
+        pc_mux2_selector => pc_mux2_selector_to_fetch,
+        interrupt_signal => interrupt_signal,
+        immediate_reg_enable => immediate_stall_to_fetch_and_decode,
+        FD_enable => FD_enable_to_fetch,
+        FD_enable_loaduse => FD_enable_loaduse_to_fetch,
+        FD_flush => FD_flush_to_fetch,
+        FD_flush_exception_unit => FD_flush_exception_unit_to_fetch,
+        selected_immediate_out => selected_immediate_out_from_fetch,
+        in_port_in => in_port_from_processor,
+        in_port_out => in_port_from_fetch,
+        opcode => opcode_from_fetch,
+        Rsrc1 => Rsrc1_from_fetch,
+        Rsrc2 => Rsrc2_from_fetch,
+        Rdest => Rdest_from_fetch,
+        imm_flag => imm_flag_from_fetch,
+        propagated_pc => propagated_pc_from_fetch,
+        propagated_pc_plus_one => propagated_pc_plus_one_from_fetch
+    );
 
-        ----------Decode---------- 
+    ----------Decode---------- 
 
-
-
-        ----------Execute----------
-        excute_inst: execute PORT MAP (
+    ----------Execute----------
+    excute_inst : execute PORT MAP(
         clk => clk,
         pc_in => pc_in_to_excute,
         pc_plus_1_in => pc_plus_1_in_to_excute,
         destination_address => destination_address_to_execute,
         address_read1_in => address_read1_in_to_execute,
         address_read2_in => address_read2_in_to_execute,
-        immediate_enable_in => immediate_stall_to_all,
+        immediate_enable_in => immediate_stall_in_to_execute,
         data1_in => data1_in_to_execute,
         data2_in => data2_in_to_execute,
         immediate_in => immediate_in_to_execute,
@@ -405,9 +439,9 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
         alu_src2_selector => alu_src2_selector_to_execute,
         execute_mem_register_enable => EM_enable_in_to_execute,
         RST_signal_input => RST_signal,
-        RST_signal_load_use_input => RST_signal_load_use_input, --what is this?
+        RST_signal_load_use_input => '0', --what is this?
         EM_flush_exception_handling_in => EM_flush_exception_handling_to_excute,
-        EM_enable_exception_handling_in => EM_enable_exception_handling_in, --not found in the digram
+        EM_enable_exception_handling_in => '0', --not found in the digram
         pc_out => pc_out_from_execute,
         pc_plus_1_out => pc_plus_1_out_from_execute,
         destination_address_out => destination_address_out_from_execute,
@@ -422,17 +456,79 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
         overflow_flag_out_exception_handling => overflow_flag_out_exception_handling_from_execute,
         address1_out_forwarding_unit => address1_out_forwarding_unit_from_execute,
         address2_out_forwarding_unit => address2_out_forwarding_unit_from_execute,
-        pc_out_exception_handling => pc_out_exception_handling_from_execute, --is it the same as the ouputed pc?
-        in_port_input => , --should it be propagated or what?
-        in_port_output => in_port_output
-   );
+        pc_out_exception_handling => OPEN, --is it the same as the ouputed pc?
+        in_port_input => in_port_from_Decode, --should it be propagated or what?
+        in_port_output => in_port_from_execute
+    );
 
+    ----------Memory----------
+    mem_inst : memory_stage PORT MAP(
+        clk => clk,
+        mem_control_signals_in => control_signals_memory_out_from_execute,
+        wb_control_signals_in => control_signals_write_back_out_from_execute,
+        RST => RST_signal,
+        MW_enable => MW_enable_to_memory,
+        MW_flush_from_exception => MW_flush_from_exception_to_memory,
+        PC_in => pc_out_from_execute,
+        PC_plus_one_in => pc_plus_1_out_from_execute,
+        imm_enable_in => immediate_enable_out_from_execute,
+        destination_address_in => destination_address_out_from_execute,
+        write_address1_in => address_read1_out_from_execute,
+        write_address2_in => address_read2_out_from_execute,
+        read_data1_in => data1_swapping_out_from_execute,
+        read_data2_in => data2_swapping_out_from_execute,
+        ALU_result_in => alu_out_from_execute,
+        CCR_in => flag_register_out_from_execute,
+        wb_control_signals_out => wb_control_signals_out_from_memory,
+        destination_address_out => Rdst_from_memory,
+        write_address1_out => write_address1_out_from_memory,
+        write_address2_out => write_address2_out_from_memory,
+        read_data1_out => read_data1_out_from_memory,
+        read_data2_out => read_data2_out_from_memory,
+        ALU_result_out => ALU_result_out_from_memory,
+        mem_read_data => mem_read_data_from_memory,
+        PC_out_to_exception => PC_out_to_exception_from_memory,
+        protected_address_access_to_exception => protected_address_access_to_exception_from_memory
+    );
+    --* wb control signals
+    --TODO: check if the control signals are correct from tarek
+    -- rscr1_data -> bit(5->4)
+    --reg_write_enable1 -> bit (3)
+    --reg_write_enable2 -> bit(2)
+    --regw1_address_mux -> bit(1)
+    --out_port_enable -> bit(0)
+    -- signal reg_write_enable1_in_to_wb : STD_LOGIC;
+    -- signal reg_write_enable2_in_to_wb : STD_LOGIC;
+    -- signal reg_write_address1_mux_to_wb : STD_LOGIC;
+    -- signal rscr1_data_to_wb : STD_LOGIC_VECTOR(1 DOWNTO 0);
 
-        ----------Memory----------
+    rscr1_data_to_wb <= wb_control_signals_out_from_memory(5 DOWNTO 4);
+    reg_write_enable1_in_to_wb <= wb_control_signals_out_from_memory(3);
+    reg_write_enable2_in_to_wb <= wb_control_signals_out_from_memory(2);
+    reg_write_address1_mux_to_wb <= wb_control_signals_out_from_memory(1);
 
+    ----------Write Back----------
+    write_back_inst : write_back PORT MAP(
+        clk => clk,
+        reg_write_enable1_in => reg_write_enable1_in_to_wb,
+        reg_write_enable2_in => reg_write_enable2_in_to_wb,
+        read_data1_in => read_data1_out_from_memory,
+        read_data2_in => read_data2_out_from_memory,
+        read_address1_in => write_address1_out_from_memory,
+        read_address2_in => write_address2_out_from_memory,
+        destination_address_in => Rdst_from_memory,
+        mem_read_data => mem_read_data_from_memory,
+        ALU_result => ALU_result_out_from_memory,
+        in_port => ,
+        Rsrc1_selector_in => rscr1_data_to_wb,
+        reg_write_address1_in_select => reg_write_address1_mux_to_wb,
+        WB_selected_data_out1 => WB_selected_data_out1, --TODO: add after decode is put
+        WB_selected_data_out2 => WB_selected_data_out2,
+        WB_selected_address_out1 => WB_selected_address_out1,
+        WB_selected_address_out2 => WB_selected_address_out2,
+        mem_read_data_out => mem_read_data_out,
+        reg_write_enable1_out => reg_write_enable1_out,
+        reg_write_enable2_out => reg_write_enable2_out
+    );
 
-        ----------Write Back----------
-
-
-
-    END ARCHITECTURE arch_processor;
+END ARCHITECTURE arch_processor;
