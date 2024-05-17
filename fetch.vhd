@@ -33,10 +33,10 @@ ENTITY fetch IS
         FD_flush : IN STD_LOGIC;
         FD_flush_exception_unit : IN STD_LOGIC;
 
-        SIGNAL in_port_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0); --from outside
+        in_port_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0); --from outside
 
         ----------outputs----------
-        SIGNAL in_port_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0); --to decode
+        in_port_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0); --to decode
 
         selected_immediate_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0);
         -- instruction 
@@ -67,18 +67,18 @@ ARCHITECTURE arch_fetch OF fetch IS
         );
     END COMPONENT mux4x1;
 
-    -- -- PC
-    -- COMPONENT pc IS
-    --     PORT (
-    --         reset : IN STD_LOGIC;
-    --         clk : IN STD_LOGIC;
-    --         enable : IN STD_LOGIC;
-    --         pc_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
-    --     );
-    -- END COMPONENT;
+    -- PC
+    COMPONENT pc1 IS
+        PORT (
+            reset : IN STD_LOGIC;
+            clk : IN STD_LOGIC;
+            enable : IN STD_LOGIC;
+            pc_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
+        );
+    END COMPONENT;
 
     -- Instruction Cache
-    COMPONENT instruction_cache IS
+    COMPONENT instruction_cache1 IS
         PORT (
             address_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
             data_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
@@ -107,7 +107,7 @@ ARCHITECTURE arch_fetch OF fetch IS
     -- SIGNAL FD_output : STD_LOGIC_VECTOR(80 DOWNTO 0); --the extra bit is the propagated immediate stall
 
     --internal signal for immediate register
-    SIGNAL FD_imm_enable : STD_LOGIC;
+    -- SIGNAL FD_imm_enable : STD_LOGIC;
     --internal signal for pc_reset muc
     SIGNAL pc_reset_output : STD_LOGIC_VECTOR(31 DOWNTO 0) := (OTHERS => '0');
     --internal signals for pc mux_1
@@ -138,7 +138,6 @@ ARCHITECTURE arch_fetch OF fetch IS
     SIGNAL FD_enable_imm_internal : STD_LOGIC;
 
 BEGIN
-
     pc_plus_one <= STD_LOGIC_VECTOR(unsigned(pc_instruction_address) + 1);
     sel_lower_mux1 <= pc_mux1_selector(0) OR RST_signal;
     sel_higher_mux1 <= pc_mux1_selector(1) OR RST_signal;
@@ -218,12 +217,12 @@ BEGIN
         q => in_port_out
     );
 
-    FD_enable_imm_internal <= FD_enable AND FD_imm_enable AND FD_enable_loaduse;
+    FD_enable_imm_internal <= FD_enable AND immediate_stall AND FD_enable_loaduse;
     fetch_decode_imm : my_nDFF GENERIC MAP(16)
     PORT MAP(
         clk => clk,
         reset => FD_flush_internal,
-        enable => immediate_stall,
+        enable => FD_enable_imm_internal,
         d => instruction_out_from_instr_cache,
         q => selected_immediate_out
     );
