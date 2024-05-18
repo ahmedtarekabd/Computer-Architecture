@@ -210,7 +210,7 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
             out_port : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
             -- Propagated signals
             execute_control_signals : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
-            memory_control_signals : OUT STD_LOGIC_VECTOR(9 DOWNTO 0);
+            memory_control_signals : OUT STD_LOGIC_VECTOR(10 DOWNTO 0);
             wb_control_signals : OUT STD_LOGIC_VECTOR(5 DOWNTO 0);
             propagated_read_data1 : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
             propagated_read_data2 : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
@@ -244,7 +244,7 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
             forwarded_data2_mw : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
             forwarding_mux_selector_op2 : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
             forwarding_mux_selector_op1 : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
-            control_signals_memory_in : IN STD_LOGIC_VECTOR (9 DOWNTO 0);
+            control_signals_memory_in : IN STD_LOGIC_VECTOR (10 DOWNTO 0);
             control_signals_write_back_in : IN STD_LOGIC_VECTOR (5 DOWNTO 0);
             alu_selectors : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
             alu_src2_selector : IN STD_LOGIC_VECTOR (1 DOWNTO 0);
@@ -409,13 +409,11 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
     SIGNAL in_port_from_Decode : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL immediate_stall_to_fetch_and_decode : STD_LOGIC;
     SIGNAL execute_control_signals_from_decode : STD_LOGIC_VECTOR(6 DOWNTO 0);
-    SIGNAL memory_control_signals_from_decode : STD_LOGIC_VECTOR(9 DOWNTO 0);
+    SIGNAL memory_control_signals_from_decode : STD_LOGIC_VECTOR(10 DOWNTO 0);
     SIGNAL wb_control_signals_from_decode : STD_LOGIC_VECTOR(5 DOWNTO 0);
     SIGNAL write_back_1_forwarding_from_decode : STD_LOGIC;
     SIGNAL write_back_2_forwarding_from_decode : STD_LOGIC;
     SIGNAL memory_read_from_decode : STD_LOGIC;
-
-
     --*--------Execute----------
     --from decode
     SIGNAL pc_in_to_excute : STD_LOGIC_VECTOR(31 DOWNTO 0);
@@ -724,8 +722,8 @@ BEGIN
         EPC_output => EPC_out_to_processor
     );
 
-    write_back_1_forwarding_from_decode <=  wb_control_signals_from_decode(3);
-    write_back_2_forwarding_from_decode <=  wb_control_signals_from_decode(2);
+    write_back_1_forwarding_from_decode <= wb_control_signals_from_decode(3);
+    write_back_2_forwarding_from_decode <= wb_control_signals_from_decode(2);
 
     hazard_detection_inst : hazard_detection_unit PORT MAP(
         src_address1_fd => Rsrc1_from_fetch, --from fetch
