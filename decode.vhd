@@ -127,8 +127,8 @@ ARCHITECTURE rtl OF decode IS
             read_enable : IN STD_LOGIC;
             read_address1 : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
             read_address2 : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
-            read_data1_in : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
-            read_data2_in : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0)
+            read_data1 : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
+            read_data2 : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0)
         );
     END COMPONENT;
 
@@ -270,8 +270,8 @@ BEGIN
         read_address1 => Rsrc1, --
         read_address2 => Rsrc2, --
         -- Outputs
-        read_data1_in => read_data1_in, --
-        read_data2_in => read_data2_in --
+        read_data1 => read_data1_in, --
+        read_data2 => read_data2_in --
     );
 
     -- sign extend
