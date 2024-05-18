@@ -15,6 +15,7 @@ ARCHITECTURE behavior OF memory_stage_tb IS
             RST : IN STD_LOGIC;
             MW_enable : IN STD_LOGIC;
             MW_flush_from_exception : IN STD_LOGIC;
+            MW_flush_from_controller : IN STD_LOGIC;
             PC_in : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
             PC_plus_one_in : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
             imm_enable_in : IN STD_LOGIC;
@@ -47,6 +48,7 @@ ARCHITECTURE behavior OF memory_stage_tb IS
     SIGNAL RST : STD_LOGIC := '0';
     SIGNAL MW_enable : STD_LOGIC := '0';
     SIGNAL MW_flush_from_exception : STD_LOGIC := '0';
+    SIGNAL MW_flush_from_controller : STD_LOGIC := '0';
     SIGNAL PC_in : STD_LOGIC_VECTOR (31 DOWNTO 0) := (OTHERS => '0');
     SIGNAL PC_plus_one_in : STD_LOGIC_VECTOR (31 DOWNTO 0) := (OTHERS => '0');
     SIGNAL imm_enable_in : STD_LOGIC := '0';
@@ -85,6 +87,7 @@ BEGIN
         RST => RST,
         MW_enable => MW_enable,
         MW_flush_from_exception => MW_flush_from_exception,
+        MW_flush_from_controller => MW_flush_from_controller,
         PC_in => PC_in,
         PC_plus_one_in => PC_plus_one_in,
         imm_enable_in => imm_enable_in,
@@ -128,6 +131,7 @@ BEGIN
         wb_control_signals_in <= "000000";
         MW_enable <= '1';
         MW_flush_from_exception <= '0';
+        MW_flush_from_controller <= '0';
         PC_in <= (OTHERS => '0');
         PC_plus_one_in <= (OTHERS => '0');
         imm_enable_in <= '0';
@@ -147,6 +151,7 @@ BEGIN
         wb_control_signals_in <= "000000";
         MW_enable <= '0';
         MW_flush_from_exception <= '0';
+        MW_flush_from_controller <= '1';
         PC_in <= (OTHERS => '0');
         PC_plus_one_in <= (OTHERS => '0');
         imm_enable_in <= '0';
@@ -166,6 +171,7 @@ BEGIN
         wb_control_signals_in <= "111111";
         MW_enable <= '0';
         MW_flush_from_exception <= '0';
+        MW_flush_from_controller <= '0';
         PC_in <= "00000000000000000000000000000001";
         PC_plus_one_in <= "00000000000000000000000000000010";
         imm_enable_in <= '0';
@@ -185,6 +191,7 @@ BEGIN
         wb_control_signals_in <= "000001";
         MW_enable <= '1';
         MW_flush_from_exception <= '1';
+        MW_flush_from_controller <= '0';
         PC_in <= "00000000000000000000000000000010";
         PC_plus_one_in <= "00000000000000000000000000000011";
         imm_enable_in <= '1';
@@ -204,6 +211,7 @@ BEGIN
         wb_control_signals_in <= "000111";
         MW_enable <= '0';
         MW_flush_from_exception <= '1';
+        MW_flush_from_controller <= '0';
         PC_in <= "00000000000000000000000000000011";
         PC_plus_one_in <= "00000000000000000000000000000100";
         imm_enable_in <= '1';
@@ -223,6 +231,7 @@ BEGIN
         wb_control_signals_in <= "111000";
         MW_enable <= '1';
         MW_flush_from_exception <= '0';
+        MW_flush_from_controller <= '0';
         PC_in <= "00000000000000000000000000000001";
         PC_plus_one_in <= "00000000000000000000000000000010";
         imm_enable_in <= '0';
@@ -242,6 +251,7 @@ BEGIN
         wb_control_signals_in <= "000011";
         MW_enable <= '0';
         MW_flush_from_exception <= '1';
+        MW_flush_from_controller <= '0';
         PC_in <= "00000000000000000000000000000010";
         PC_plus_one_in <= "00000000000000000000000000000011";
         imm_enable_in <= '1';
@@ -261,6 +271,7 @@ BEGIN
         wb_control_signals_in <= "000000";
         MW_enable <= '1';
         MW_flush_from_exception <= '0';
+        MW_flush_from_controller <= '0';
         PC_in <= "00000000000000000000000000000011";
         PC_plus_one_in <= "00000000000000000000000000000100";
         imm_enable_in <= '0';
@@ -280,6 +291,7 @@ BEGIN
         wb_control_signals_in <= "000001";
         MW_enable <= '0';
         MW_flush_from_exception <= '1';
+        MW_flush_from_controller <= '0';
         PC_in <= "00000000000000000000000000000001";
         PC_plus_one_in <= "00000000000000000000000000000010";
         imm_enable_in <= '1';
@@ -299,6 +311,7 @@ BEGIN
         wb_control_signals_in <= "000010";
         MW_enable <= '1';
         MW_flush_from_exception <= '0';
+        MW_flush_from_controller <= '0';
         PC_in <= "00000000000000000000000000000010";
         PC_plus_one_in <= "00000000000000000000000000000011";
         imm_enable_in <= '0';
@@ -318,6 +331,7 @@ BEGIN
         wb_control_signals_in <= "000011";
         MW_enable <= '0';
         MW_flush_from_exception <= '1';
+        MW_flush_from_controller <= '0';
         PC_in <= "00000000000000000000000000000011";
         PC_plus_one_in <= "00000000000000000000000000000100";
         imm_enable_in <= '1';
@@ -337,6 +351,7 @@ BEGIN
         wb_control_signals_in <= "000100";
         MW_enable <= '1';
         MW_flush_from_exception <= '0';
+        MW_flush_from_controller <= '0';
         PC_in <= "00000000000000000000000000000001";
         PC_plus_one_in <= "00000000000000000000000000000010";
         imm_enable_in <= '0';
