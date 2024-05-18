@@ -25,6 +25,7 @@ ENTITY memory_stage IS
         read_data1_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
         read_data2_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
         ALU_result_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+        in_port_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
         --flags
         CCR_in : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
 
@@ -38,6 +39,7 @@ ENTITY memory_stage IS
         read_data1_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
         read_data2_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
         ALU_result_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+        in_port_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
         --Memory
         mem_read_data : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
         --Exception
@@ -99,8 +101,8 @@ ARCHITECTURE memory_stage_arch OF memory_stage IS
     END COMPONENT SP_ndff;
 
     SIGNAL mem_read_data_internal : STD_LOGIC_VECTOR(31 DOWNTO 0);
-    SIGNAL d_internal : STD_LOGIC_VECTOR(142 DOWNTO 0);
-    SIGNAL q_output : STD_LOGIC_VECTOR(142 DOWNTO 0);
+    SIGNAL d_internal : STD_LOGIC_VECTOR(174 DOWNTO 0);
+    SIGNAL q_output : STD_LOGIC_VECTOR(174 DOWNTO 0);
 
     SIGNAL SP_mux_out : STD_LOGIC_VECTOR(11 DOWNTO 0);
     SIGNAL MW_data_mux_out : STD_LOGIC_VECTOR(31 DOWNTO 0);
@@ -155,7 +157,7 @@ BEGIN
             mem_address_mux_selectors <= "10";
         END IF;
     END PROCESS;
-    
+
     mem_address_mux : mux4x1
     GENERIC MAP(n => 12)
     PORT MAP(
@@ -183,9 +185,9 @@ BEGIN
     );
 
     -- Output 
-    d_internal <= wb_control_signals_in & destination_address_in & write_address1_in & write_address2_in & read_data1_in & read_data2_in & ALU_result_in & mem_read_data_internal;
+    d_internal <= wb_control_signals_in & destination_address_in & write_address1_in & write_address2_in & read_data1_in & read_data2_in & ALU_result_in & mem_read_data_internal & in_port_in;
     mem_wb_reg : my_nDFF
-    GENERIC MAP(n => 143)
+    GENERIC MAP(n => 175)
     PORT MAP(
         Clk => clk,
         reset => '0',
@@ -200,25 +202,34 @@ BEGIN
     PORT MAP(
         clk => clk,
         -- addressing the memory using the 12 bits only
-        address => "000000000000",
-        write_enable => '1',
+        address => mem_address_mux_out(11 DOWNTO 0),
+        write_enable => mem_control_signals_in(9),
         write_data => MW_data_mux_out,
         read_enable => read_enable,
         read_data => mem_read_data_internal,
         protect_signal => mem_control_signals_in(1),
         free_signal => mem_control_signals_in(0),
         protected_address_access => protected_address_access_to_exception
-
     );
 
-    wb_control_signals_out <= q_output(142 DOWNTO 137);
-    destination_address_out <= q_output(136 DOWNTO 134);
-    write_address1_out <= q_output(133 DOWNTO 131);
-    write_address2_out <= q_output(130 DOWNTO 128);
-    read_data1_out <= q_output(127 DOWNTO 96);
-    read_data2_out <= q_output(95 DOWNTO 64);
-    ALU_result_out <= q_output(63 DOWNTO 32);
-    mem_read_data <= q_output(31 DOWNTO 0);
+    -- wb_control_signals_out <= q_output(142 DOWNTO 137);
+    -- destination_address_out <= q_output(136 DOWNTO 134);
+    -- write_address1_out <= q_output(133 DOWNTO 131);
+    -- write_address2_out <= q_output(130 DOWNTO 128);
+    -- read_data1_out <= q_output(127 DOWNTO 96);
+    -- read_data2_out <= q_output(95 DOWNTO 64);
+    -- ALU_result_out <= q_output(63 DOWNTO 32);
+    -- mem_read_data <= q_output(31 DOWNTO 0);
     PC_out_to_exception <= PC_in;
+
+    wb_control_signals_out <= q_output(174 DOWNTO 169);
+    destination_address_out <= q_output(168 DOWNTO 166);
+    write_address1_out <= q_output(165 DOWNTO 163);
+    write_address2_out <= q_output(162 DOWNTO 160);
+    read_data1_out <= q_output(159 DOWNTO 128);
+    read_data2_out <= q_output(127 DOWNTO 96);
+    ALU_result_out <= q_output(95 DOWNTO 64);
+    mem_read_data <= q_output(63 DOWNTO 32);
+    in_port_out <= q_output(31 DOWNTO 0);
 
 END memory_stage_arch;

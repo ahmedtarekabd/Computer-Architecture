@@ -78,7 +78,7 @@ ARCHITECTURE arch_fetch OF fetch IS
     END COMPONENT;
 
     -- Instruction Cache
-    COMPONENT instruction_cache1 IS
+    COMPONENT instruction_cache IS
         PORT (
             address_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
             data_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
