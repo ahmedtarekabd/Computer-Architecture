@@ -800,11 +800,3 @@ BEGIN
     );
 
 END ARCHITECTURE arch_processor;
-
---TODO: add output port -> done
---TODO: add exception handling unit -> done
---TODO: add hazard detection unit -> done
---TODO: add forwarding unit -> done
---TODO: check overflow and carry flags in the alu -> done
---TODO: add decode -> done
---TODO: modify the memory
