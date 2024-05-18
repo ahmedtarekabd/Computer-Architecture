@@ -52,7 +52,7 @@ ENTITY decode IS
         out_port : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
         -- Propagated signals
         execute_control_signals : OUT STD_LOGIC_VECTOR(5 DOWNTO 0);
-        memory_control_signals : OUT STD_LOGIC_VECTOR(11 DOWNTO 0);
+        memory_control_signals : OUT STD_LOGIC_VECTOR(10 DOWNTO 0);
         wb_control_signals : OUT STD_LOGIC_VECTOR(5 DOWNTO 0);
         propagated_read_data1 : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
         propagated_read_data2 : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
@@ -197,9 +197,9 @@ ARCHITECTURE rtl OF decode IS
     SIGNAL outport_enable : STD_LOGIC := '0';
 
     -- Outputs holder
-    SIGNAL control_signals_in : STD_LOGIC_VECTOR(23 DOWNTO 0);
+    SIGNAL control_signals_in : STD_LOGIC_VECTOR(22 DOWNTO 0);
     SIGNAL execute_control_signals_in : STD_LOGIC_VECTOR(5 DOWNTO 0); --*Changed thiss
-    SIGNAL memory_control_signals_in : STD_LOGIC_VECTOR(11 DOWNTO 0);
+    SIGNAL memory_control_signals_in : STD_LOGIC_VECTOR(10 DOWNTO 0);
     SIGNAL wb_control_signals_in : STD_LOGIC_VECTOR(5 DOWNTO 0); --because it have the out port with it
     SIGNAL read_data1_in : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL read_data2_in : STD_LOGIC_VECTOR(31 DOWNTO 0);
@@ -232,7 +232,7 @@ BEGIN
         decode_sign_extend,
         decode_execute_flush,
 
-        -- execute signals - 7 bits
+        -- execute signals - 6 bits
         execute_alu_sel,
         execute_alu_src2,
         decode_branch,
@@ -296,7 +296,7 @@ BEGIN
     branch_pc_address <= (OTHERS => '0') WHEN branching_or_normal_mux_selector = '0' ELSE
         forward_mux;
 
-    -- execute signals - 7 bits
+    -- execute signals - 6 bits
     execute_control_signals_in <= execute_alu_sel
         & execute_alu_src2
         -- & decode_branch
@@ -326,7 +326,7 @@ BEGIN
         -- write back signals - 6 bits
         & wb_control_signals_in;
 
-    -- 192 bits: 24 control signals(propagated) + 32 read_data1_in + 32 read_data2_in + 3 read_address1 + 3 read_address2 + 3 destination + 32 immediate_out + 32 pc_plus_1 + 32 pc
+    -- 192 bits: 23 control signals(propagated) + 32 read_data1_in + 32 read_data2_in + 3 read_address1 + 3 read_address2 + 3 destination + 32 immediate_out + 32 pc_plus_1 + 32 pc
     decode_execute_in <= control_signals_in & read_data1_in & read_data2_in & Rsrc1 & Rsrc2 & Rdest
         & immediate_out & propagated_pc_plus_one_in & propagated_pc_in;
 
@@ -350,14 +350,14 @@ BEGIN
     -- end = start - length + 1
     execute_control_signals <= decode_execute_out(192 - 1 DOWNTO 192 - 6);
     memory_control_signals <= decode_execute_out(192 - 6 - 1 DOWNTO 192 - 6 - 11);
-    wb_control_signals <= decode_execute_out(192 - 6 - 11 - 1 DOWNTO 192 - 24);
-    propagated_read_data1 <= decode_execute_out(192 - 24 - 1 DOWNTO 192 - 24 - 32);
-    propagated_read_data2 <= decode_execute_out(192 - 24 - 32 - 1 DOWNTO 192 - 24 - 32 - 32);
-    propagated_Rsrc1 <= decode_execute_out(192 - 24 - 32 - 32 - 1 DOWNTO 192 - 24 - 32 - 32 - 3);
-    propagated_Rsrc2 <= decode_execute_out(192 - 24 - 32 - 32 - 3 - 1 DOWNTO 192 - 24 - 32 - 32 - 3 - 3);
-    propagated_Rdest <= decode_execute_out(192 - 24 - 32 - 32 - 3 - 3 - 1 DOWNTO 192 - 24 - 32 - 32 - 3 - 3 - 3);
-    immediate_out <= decode_execute_out(192 - 24 - 32 - 32 - 3 - 3 - 3 - 1 DOWNTO 192 - 24 - 32 - 32 - 3 - 3 - 3 - 32);
-    propagated_pc <= decode_execute_out(192 - 24 - 32 - 32 - 3 - 3 - 3 - 32 - 1 DOWNTO 192 - 24 - 32 - 32 - 3 - 3 - 3 - 32 - 32);
-    propagated_pc_plus_one <= decode_execute_out(192 - 24 - 32 - 32 - 3 - 3 - 3 - 32 - 32 - 1 DOWNTO 192 - 24 - 32 - 32 - 3 - 3 - 3 - 32 - 32 - 32);
+    wb_control_signals <= decode_execute_out(192 - 6 - 11 - 1 DOWNTO 192 - 23);
+    propagated_read_data1 <= decode_execute_out(192 - 23 - 1 DOWNTO 192 - 23 - 32);
+    propagated_read_data2 <= decode_execute_out(192 - 23 - 32 - 1 DOWNTO 192 - 23 - 32 - 32);
+    propagated_Rsrc1 <= decode_execute_out(192 - 23 - 32 - 32 - 1 DOWNTO 192 - 23 - 32 - 32 - 3);
+    propagated_Rsrc2 <= decode_execute_out(192 - 23 - 32 - 32 - 3 - 1 DOWNTO 192 - 23 - 32 - 32 - 3 - 3);
+    propagated_Rdest <= decode_execute_out(192 - 23 - 32 - 32 - 3 - 3 - 1 DOWNTO 192 - 23 - 32 - 32 - 3 - 3 - 3);
+    immediate_out <= decode_execute_out(192 - 23 - 32 - 32 - 3 - 3 - 3 - 1 DOWNTO 192 - 23 - 32 - 32 - 3 - 3 - 3 - 32);
+    propagated_pc <= decode_execute_out(192 - 23 - 32 - 32 - 3 - 3 - 3 - 32 - 1 DOWNTO 192 - 23 - 32 - 32 - 3 - 3 - 3 - 32 - 32);
+    propagated_pc_plus_one <= decode_execute_out(192 - 23 - 32 - 32 - 3 - 3 - 3 - 32 - 32 - 1 DOWNTO 192 - 23 - 32 - 32 - 3 - 3 - 3 - 32 - 32 - 32);
 
 END ARCHITECTURE rtl;
