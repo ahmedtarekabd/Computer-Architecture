@@ -50,6 +50,20 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
         );
     END COMPONENT;
 
+    COMPONENT hazard_detection_unit
+        PORT (
+            src_address1_fd : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+            src_address2_fd : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+            dst_address_de : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+            write_back_1_de : IN STD_LOGIC;
+            memory_read_de : IN STD_LOGIC;
+            reg_read_controller : IN STD_LOGIC;
+            PC_enable : OUT STD_LOGIC;
+            enable_fd : OUT STD_LOGIC;
+            reset_de : OUT STD_LOGIC
+        );
+    END COMPONENT;
+
     COMPONENT exception_handling_unit IS
         PORT (
             clk : IN STD_LOGIC;
@@ -634,10 +648,22 @@ BEGIN
         EPC_output => EPC_out_to_processor
     );
 
+    hazard_detection_inst : hazard_detection_unit PORT MAP(
+        src_address1_fd => Rsrc1_from_fetch, --from fetch
+        src_address2_fd => Rsrc2_from_fetch, 
+        dst_address_de => , --from decode
+        write_back_1_de => ,
+        memory_read_de => ,
+        reg_read_controller => ,
+        PC_enable => pc_enable_hazard_detection_to_fetch,
+        enable_fd => FD_enable_loaduse_to_fetch,
+        reset_de =>  --from decode
+     );
+
     forwarding_unit_inst : forwarding_unit PORT MAP(
-        src_address1_de => src_address1_de, --from decode
-        src_address2_de => src_address2_de,
-        dst_address_de => dst_address_de,
+        src_address1_de => , --from decode
+        src_address2_de => ,
+        dst_address_de => ,
         dst_address_em => destination_address_out_from_execute, --from execute
         src_address1_em => address_read1_out_from_execute,
         src_address2_em => address_read2_out_from_execute,
@@ -651,12 +677,13 @@ BEGIN
         memory_read_de => memory_read_de, --from decode stage
         opp1_ALU_MUX_SEL => forwarding_mux_selector_op1, --outputed to execute
         opp2_ALU_MUX_SEL => forwarding_mux_selector_op2,
-        opp_branching_mux_selector => opp_branching_mux_selector,
+        opp_branching_mux_selector => opp_branching_mux_selector, --to decode
         opp_branch_or_normal_mux_selector => opp_branch_or_normal_mux_selector,
         load_use_hazard => OPEN --not used
     );
 
     ----------Write Back----------
+    --TODO:add in port
     write_back_inst : write_back PORT MAP(
         clk => clk,
         reg_write_enable1_in => reg_write_enable1_in_to_wb,
@@ -683,9 +710,9 @@ BEGIN
 END ARCHITECTURE arch_processor;
 
 --TODO: add output port -> done
+--TODO: add exception handling unit -> done
+--TODO: add hazard detection unit -> done
+--TODO: add forwarding unit -> done
 --TODO: check overflow and carry flags in the alu
 --TODO: add decode
 --TODO: modify the memory
---TODO: add exception handling unit 
---TODO: add hazard detection unit
---TODO: add forwarding unit
