@@ -243,7 +243,7 @@ def assemble_file(args):
     for i, line in enumerate(assembly_code):
         # print (line)
         # Replace '(' and ')' with spaces
-        line = line.replace('(', ' ').replace(')', ' ')
+        line = line.replace('(', ' ').replace(')', ' ').replace(',', ' ')
         # Convert multiple spaces to single space
         line = ' '.join(line.split())
         assemble_instruction(line)
