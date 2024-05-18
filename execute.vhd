@@ -111,7 +111,8 @@ ENTITY execute IS
     in_port_input : in std_logic_vector(31 downto 0);
     in_port_output : out std_logic_vector(31 downto 0);
     control_signals_memory_out : out STD_LOGIC_VECTOR(10 DOWNTO 0);
-    control_signals_write_back_out : out STD_LOGIC_VECTOR(5 DOWNTO 0)
+    control_signals_write_back_out : out STD_LOGIC_VECTOR(5 DOWNTO 0);
+    ALU_result_output : out STD_LOGIC_VECTOR(31 DOWNTO 0)
 
     );
 END execute;
@@ -250,6 +251,8 @@ BEGIN
         old_overflow_flag => flag_register_out_temp(1),
         old_carry_flag => flag_register_out_temp(2)
     );
+
+    ALU_result_output <= alu_out_temp;
 
     -- flag register
     FLAG_REGISTER: my_nDFF
