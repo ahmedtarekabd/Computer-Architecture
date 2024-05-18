@@ -2,7 +2,6 @@ LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 USE ieee.numeric_std.ALL;
 
---TODO: figure out how to add the output port
 ENTITY processor_phase3 IS
     PORT (
         clk : IN STD_LOGIC;
