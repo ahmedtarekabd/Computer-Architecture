@@ -106,7 +106,7 @@ BEGIN
     write_back_mw <= write_back_mw_enable2 & write_back_mw_enable1;
     -- sensitive on only src_address1_de and src_address2_de
     -- because whenever they change we must check if the previous instruction changed their values
-    PROCESS (src_address1_de, src_address2_de, dst_address_em, src_address1_em, src_address2_em, address1_mw, address2_mw, write_back_em, write_back_mw, memory_read_em, out_port_enable)
+    PROCESS (src_address1_de, src_address2_de, dst_address_em, src_address1_em, src_address2_em, address1_mw, address2_mw, write_back_em, write_back_mw, memory_read_em, out_port_enable, reg_write_address1_in_select_em, reg_write_address1_in_select_mw)
     BEGIN
         -- Default values
         opp1_ALU_MUX_SEL <= "000";
@@ -114,13 +114,27 @@ BEGIN
         load_use_hazard <= '0';
         -- IF the write back enables from Execute/Memory and Memory/Writeback are 0 
         -- then no forwarding is needed
-        IF (write_back_em(1 DOWNTO 0) = "00" AND write_back_mw(1 DOWNTO 0) = "00" AND out_port_enable = '0') THEN
+        IF (write_back_em(1 DOWNTO 0) = "00" AND write_back_mw(1 DOWNTO 0) = "00" AND out_port_enable = '0' AND reg_write_address1_in_select_em /= "11" AND reg_write_address1_in_select_mw /= "11") THEN
             opp1_ALU_MUX_SEL <= "000";
             opp2_ALU_MUX_SEL <= "000";
             -- load_use_hazard <= '0';
         -- END IF;
 
     -- Execute/Memory stage
+        -- IN instruction in Execute/Memory stage output 110 for takin the destination data from the execute/memory stage
+        ELSIF ((reg_write_address1_in_select_em = "11" OR (reg_write_address1_in_select_em = "11" AND out_port_enable = '1'))  AND ((src_address1_de = dst_address_em) OR (src_address2_de = dst_address_em))) THEN
+            IF (src_address1_de = dst_address_em) THEN
+                opp1_ALU_MUX_SEL <= "110";
+            ELSE
+                opp1_ALU_MUX_SEL <= "000";
+            END IF;
+
+            IF (src_address2_de = dst_address_em) THEN
+                opp2_ALU_MUX_SEL <= "110";
+            ELSE
+                opp2_ALU_MUX_SEL <= "000";
+            END IF;
+
         -- For execute/memory stage, if the write_back_em(0) is 1 and write_back_em(1) is 0
         -- this means there is write back but no swapping
         -- write back can be either alu result or memory read
@@ -173,21 +187,22 @@ BEGIN
                 opp2_ALU_MUX_SEL <= "000";
             END IF;
 
-        -- IN instruction in Execute/Memory stage output 110 for takin the destination data from the execute/memory stage
-        ELSIF ((reg_write_address1_in_select_em = "11" OR (reg_write_address1_in_select_em = "11" AND out_port_enable = '1'))  AND ((src_address1_de = dst_address_em) OR (src_address2_de = dst_address_em))) THEN
-            IF (src_address1_de = dst_address_em) THEN
-                opp1_ALU_MUX_SEL <= "110";
+            
+    -- Memory/Write back
+        -- IN instruction in Memory/Writeback stage output 111 for takin the destination data from the memory/writeback stage
+        ELSIF ((reg_write_address1_in_select_mw = "11" OR (reg_write_address1_in_select_mw = "11" AND out_port_enable = '1')) AND ((src_address1_de = address1_mw) OR (src_address2_de = address1_mw))) THEN
+            IF (src_address1_de = address1_mw) THEN
+                opp1_ALU_MUX_SEL <= "111";
             ELSE
                 opp1_ALU_MUX_SEL <= "000";
             END IF;
 
-            IF (src_address2_de = dst_address_em) THEN
-                opp2_ALU_MUX_SEL <= "110";
+            IF (src_address2_de = address1_mw) THEN
+                opp2_ALU_MUX_SEL <= "111";
             ELSE
                 opp2_ALU_MUX_SEL <= "000";
             END IF;
-            
-    -- Memory/Write back
+
         -- For memory/writeback stage, if the write_back_mw(0) is 1 and write_back_mw(1) is 0
         -- this means there is write back but no swapping
         -- write back can be either alu result or memory read
@@ -242,19 +257,6 @@ BEGIN
             END IF;
         -- END IF;
 
-        -- IN instruction in Memory/Writeback stage output 111 for takin the destination data from the memory/writeback stage
-        ELSIF ((reg_write_address1_in_select_mw = "11" OR (reg_write_address1_in_select_mw = "11" AND out_port_enable = '1')) AND ((src_address1_de = address1_mw) OR (src_address2_de = address1_mw))) THEN
-            IF (src_address1_de = address1_mw) THEN
-                opp1_ALU_MUX_SEL <= "111";
-            ELSE
-                opp1_ALU_MUX_SEL <= "000";
-            END IF;
-
-            IF (src_address2_de = address1_mw) THEN
-                opp2_ALU_MUX_SEL <= "111";
-            ELSE
-                opp2_ALU_MUX_SEL <= "000";
-            END IF;
         ELSE
             -- load_use_hazard <= '0';
             opp1_ALU_MUX_SEL <= "000";
