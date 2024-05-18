@@ -51,7 +51,7 @@ ENTITY decode IS
         in_port : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
         out_port : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
         -- Propagated signals
-        execute_control_signals : OUT STD_LOGIC_VECTOR(23 DOWNTO 0);
+        execute_control_signals : OUT STD_LOGIC_VECTOR(5 DOWNTO 0);
         memory_control_signals : OUT STD_LOGIC_VECTOR(10 DOWNTO 0);
         wb_control_signals : OUT STD_LOGIC_VECTOR(10 DOWNTO 0);
         propagated_read_data1 : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
@@ -198,7 +198,7 @@ ARCHITECTURE rtl OF decode IS
 
     -- Outputs holder
     SIGNAL control_signals_in : STD_LOGIC_VECTOR(23 DOWNTO 0);
-    SIGNAL execute_control_signals_in : STD_LOGIC_VECTOR(23 DOWNTO 0);
+    SIGNAL execute_control_signals_in : STD_LOGIC_VECTOR(5 DOWNTO 0); --*Changed thiss
     SIGNAL memory_control_signals_in : STD_LOGIC_VECTOR(23 DOWNTO 0);
     SIGNAL wb_control_signals_in : STD_LOGIC_VECTOR(23 DOWNTO 0);
     SIGNAL read_data1_in : STD_LOGIC_VECTOR(31 DOWNTO 0);

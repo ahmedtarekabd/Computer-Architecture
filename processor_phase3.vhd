@@ -13,7 +13,7 @@ ENTITY processor_phase3 IS
 
         --outputs
         out_port_to_processor : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
-        --first 32 bits are the pc, last bit is the exception type 0 -> mem protection, 1 -> overflow
+        --first 32 bits are the pc that caused the exception, last bit is the exception type 0 -> mem protection, 1 -> overflow
         EPC_out_to_processor : OUT STD_LOGIC_VECTOR(32 DOWNTO 0)
     );
 END ENTITY processor_phase3;
@@ -163,6 +163,9 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
         PORT (
             clk : IN STD_LOGIC;
             reset : IN STD_LOGIC;
+            branch_prediction_flush : IN STD_LOGIC;
+            exception_handling_flush : IN STD_LOGIC;
+            hazard_detection_flush : IN STD_LOGIC;
 
             --* Inputs
             -- instruction 
@@ -397,11 +400,16 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
     SIGNAL branching_opp_mux_sel_forwarding_to_decode : STD_LOGIC_VECTOR(2 DOWNTO 0);
     SIGNAL branching_or_normal_sel_forwarding_to_decode: STD_LOGIC;
 
+    --from
+    SIGNAL branch_prediction_flush_to_Decode : STD_LOGIC;
+    SIGNAL exception_handling_flush_to_Decode : STD_LOGIC;
+    SIGNAL hazard_detection_flush_to_Decode : STD_LOGIC;
+
     --output
     SIGNAL in_port_from_Decode : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL immediate_stall_to_fetch_and_decode : STD_LOGIC;
-    SIGNAL execute_control_signals_from_decode : STD_LOGIC_VECTOR(23 DOWNTO 0);
-    SIGNAL memory_control_signals_from_decode : STD_LOGIC_VECTOR(23 DOWNTO 0);
+    SIGNAL execute_control_signals_from_decode : STD_LOGIC_VECTOR(5 DOWNTO 0);
+    SIGNAL memory_control_signals_from_decode : STD_LOGIC_VECTOR(11 DOWNTO 0);
     SIGNAL wb_control_signals_from_decode : STD_LOGIC_VECTOR(23 DOWNTO 0);
     SIGNAL write_back_1_forwarding_from_decode : STD_LOGIC;
 
@@ -527,13 +535,17 @@ BEGIN
     );
 
     ----------Decode---------- 
-    --TODO:add MW_flush_from_controller : IN STD_LOGIC; -> MW_flush_to_memory
-    --TODO: add tarek new signals
-
     decode_inst : decode
     PORT MAP(
         clk => clk,
-        reset => reset,
+        reset => RST_signal,
+                -- reset : IN STD_LOGIC;
+        -- branch_prediction_flush : IN STD_LOGIC;
+        -- exception_handling_flush : IN STD_LOGIC;
+        -- hazard_detection_flush : IN STD_LOGIC;
+        branch_prediction_flush => zero_flag_out_controller_from_execute,
+        exception_handling_flush => exception_handling_flush_to_Decode,
+        hazard_detection_flush => hazard_detection_flush_to_Decode,
         opcode => opcode_from_fetch,
         Rsrc1 => Rsrc1_from_fetch,
         Rsrc2 => Rsrc2_from_fetch,
@@ -556,7 +568,7 @@ BEGIN
         fetch_decode_flush => FD_flush_to_fetch,
         in_port => in_port_from_Decode,
         immediate_stall => immediate_stall_to_fetch_and_decode,
-        execute_control_signals => execute_control_signals_from_decode,
+        execute_control_signals => execute_control_signals_from_decode, --TODO: how is this 23 bits its only around 6
         memory_control_signals => memory_control_signals_from_decode,
         wb_control_signals => wb_control_signals_from_decode,
         propagated_read_data1 => data1_in_to_execute,
@@ -569,7 +581,7 @@ BEGIN
         propagated_pc => pc_in_to_excute,
         propagated_pc_plus_one => pc_plus_1_in_to_excute,
         --
-        forwarded_alu_execute =>alu_result_from_Execution_before_EM, --TODO: check from tarek enha abl el reg msh b3d
+        forwarded_alu_execute =>alu_result_from_Execution_before_EM,
         forwarded_data1_mw => read_data1_out_from_memory,
         forwarded_data2_mw => read_data2_out_from_memory,
         forwarded_data1_em => data1_swapping_out_from_execute,
@@ -591,10 +603,10 @@ BEGIN
         data1_in => data1_in_to_execute,
         data2_in => data2_in_to_execute,
         immediate_in => immediate_in_to_execute,
-        forwarded_data1_em => data1_swapping_out_from_execute, --from myself (execute)
+        forwarded_data1_em => data1_swapping_out_from_execute, --from myself (execute) --TODO:check
         forwarded_data2_em => data2_swapping_out_from_execute,
         forwarded_alu_out_em => alu_out_from_execute,
-        forwarded_data1_mw => read_data1_out_from_memory, --from memory --TODO:check
+        forwarded_data1_mw => read_data1_out_from_memory, --from memory 
         forwarded_data2_mw => read_data2_out_from_memory,
         forwarding_mux_selector_op2 => forwarding_mux_selector_op2, --from forwarding unit
         forwarding_mux_selector_op1 => forwarding_mux_selector_op1,
@@ -633,7 +645,7 @@ BEGIN
     ----------Memory----------
     mem_inst : memory_stage PORT MAP(
         clk => clk,
-        MW_flush_from_controller => MW_flush_to_memory,
+        MW_flush_from_controller => '0',
         mem_control_signals_in => control_signals_memory_out_from_execute,
         wb_control_signals_in => control_signals_write_back_out_from_execute,
         RST => RST_signal,
@@ -698,7 +710,7 @@ BEGIN
         exception_out_port => OPEN, --1 if an exception is detected, 0 otherwise --TODO:do we need it?
         second_pc_mux_out => pc_mux2_selector_to_fetch,
         FD_flush => FD_flush_exception_unit_to_fetch,
-        DE_flush =>,
+        DE_flush => exception_handling_flush_to_Decode,
         EM_flush => EM_flush_exception_handling_to_excute,
         MW_flush => MW_flush_from_exception_to_memory,
         EPC_output => EPC_out_to_processor
@@ -713,7 +725,7 @@ BEGIN
         reg_read_controller => '0',
         PC_enable => pc_enable_hazard_detection_to_fetch,
         enable_fd => FD_enable_loaduse_to_fetch,
-        reset_de =>  --from decode
+        reset_de => hazard_detection_flush_to_Decode --from decode
     );
 
     forwarding_unit_inst : forwarding_unit PORT MAP(
