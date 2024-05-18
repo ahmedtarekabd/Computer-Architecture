@@ -424,14 +424,15 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
     SIGNAL data2_in_to_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL immediate_in_to_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
 
+    
     --from execute
     SIGNAL alu_result_from_Execution_before_EM : STD_LOGIC_VECTOR(31 DOWNTO 0);
 
     --from controller
     SIGNAL EM_enable_in_to_execute : STD_LOGIC;
     SIGNAL EM_flush_in_to_execute : STD_LOGIC;
-    SIGNAL alu_src2_selector_to_execute : STD_LOGIC_VECTOR(1 DOWNTO 0);
-    SIGNAL alu_selectors_to_execute : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAl Alu_src2_selector_to_execute : STD_LOGIC_VECTOR(1 DOWNTO 0);
+    SIGNAL Alu_selectors_to_execute : STD_LOGIC_VECTOR(2 DOWNTO 0);
     SIGNAL EM_flush_controller_to_execute : STD_LOGIC;
 
     --from exception handling
@@ -590,6 +591,10 @@ BEGIN
         branching_or_normal_mux_selector => branching_or_normal_sel_forwarding_to_decode
     );
 
+    Alu_selectors_to_execute <= execute_control_signals_from_decode(5 downto 3);
+    Alu_src2_selector_to_execute <= execute_control_signals_from_decode(2 downto 1);
+    EM_flush_controller_to_execute <= execute_control_signals_from_decode(0);
+
     ----------Execute----------
     excute_inst : execute PORT MAP(
         clk => clk,
@@ -599,7 +604,7 @@ BEGIN
         address_read1_in => address_read1_in_to_execute,
         address_read2_in => address_read2_in_to_execute,
         alu_result_before_EM => alu_result_from_Execution_before_EM,
-        immediate_enable_in => '0',
+        immediate_enable_in => EM_flush_controller_to_execute,
         data1_in => data1_in_to_execute,
         data2_in => data2_in_to_execute,
         immediate_in => immediate_in_to_execute,
@@ -612,11 +617,11 @@ BEGIN
         forwarding_mux_selector_op1 => forwarding_mux_selector_op1,
         control_signals_memory_in => memory_control_signals_from_decode, --from decode
         control_signals_write_back_in => wb_control_signals_from_decode,
-        alu_selectors => alu_selectors_to_execute,
-        alu_src2_selector => alu_src2_selector_to_execute,
+        alu_selectors => Alu_selectors_to_execute,
+        alu_src2_selector => Alu_src2_selector_to_execute,
         execute_mem_register_enable => EM_enable_in_to_execute,
         RST_signal_input => RST_signal,
-        execute_mem_flush_controller => EM_flush_controller_to_execute,
+        execute_mem_flush_controller => '0',
         EM_flush_exception_handling_in => EM_flush_exception_handling_to_excute,
         pc_out => pc_out_from_execute,
         pc_plus_1_out => pc_plus_1_out_from_execute,
