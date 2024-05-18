@@ -541,7 +541,7 @@ BEGIN
         propagated_pc_plus_one => propagated_pc_plus_one_from_fetch
     );
 
-    ----------Decode---------- 
+    ----------Decode----------
     decode_inst : decode
     PORT MAP(
         clk => clk,
@@ -741,7 +741,6 @@ BEGIN
         enable_fd => FD_enable_loaduse_to_fetch,
         reset_de => hazard_detection_flush_to_Decode --from decode
     );
-
 
     memory_read_from_decode <= memory_control_signals_from_decode(9);
     memory_read_from_execute <= control_signals_memory_out_from_execute(9);
