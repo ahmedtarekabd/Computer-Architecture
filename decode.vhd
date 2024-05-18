@@ -32,9 +32,20 @@ ENTITY decode IS
         write_data1 : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
         write_data2 : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
 
+        -- Forwarding
+        forwarded_alu_execute : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+        forwarded_data1_mw : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+        forwarded_data2_mw : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+        forwarded_data1_em : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+        forwarded_data2_em : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+        forwarded_data1_de : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+        forwarded_data2_de : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+        branching_op_mux_selector : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+        branching_or_normal_mux_selector : IN STD_LOGIC;
         --* Outputs
         fetch_control_signals : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
         in_port : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+        out_port : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
         -- Immediate Enable
         immediate_stall : OUT STD_LOGIC;
         -- Propagated signals
@@ -45,6 +56,7 @@ ENTITY decode IS
         propagated_Rsrc2 : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
         propagated_Rdest : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
         immediate_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+        branch_pc_address : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
         propagated_pc : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
         propagated_pc_plus_one : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
 
@@ -138,6 +150,19 @@ ARCHITECTURE rtl OF decode IS
         );
     END COMPONENT;
 
+    COMPONENT mux4x1 IS
+        GENERIC (n : INTEGER := 16);
+        PORT (
+            inputA : IN STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
+            inputB : IN STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
+            inputC : IN STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
+            inputD : IN STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
+            Sel_lower : IN STD_LOGIC;
+            Sel_higher : IN STD_LOGIC;
+            output : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0)
+        );
+    END COMPONENT mux4x1;
+
     SIGNAL isImmediate : STD_LOGIC;
 
     -- fetch signals
@@ -179,6 +204,7 @@ ARCHITECTURE rtl OF decode IS
     SIGNAL Rdest_out : STD_LOGIC_VECTOR(2 DOWNTO 0);
     SIGNAL decode_execute_in : STD_LOGIC_VECTOR(193 - 1 DOWNTO 0);
     SIGNAL decode_execute_out : STD_LOGIC_VECTOR(193 - 1 DOWNTO 0);
+    SIGNAL forward_mux : STD_LOGIC_VECTOR(31 DOWNTO 0);
 
 BEGIN
 
@@ -251,6 +277,22 @@ BEGIN
         output => immediate_out
     );
 
+    -- Forwarding
+    WITH branching_op_mux_selector SELECT
+        forward_mux <= read_data1_in WHEN "000",
+        forwarded_alu_execute WHEN "001",
+        forwarded_data1_mw WHEN "010",
+        forwarded_data2_mw WHEN "011",
+        forwarded_data1_em WHEN "100",
+        forwarded_data2_em WHEN "101",
+        forwarded_data1_de WHEN "110",
+        forwarded_data2_de WHEN "111",
+        (OTHERS => '0') WHEN OTHERS;
+
+    branch_pc_address <= (OTHERS => '0') WHEN branching_or_normal_mux_selector = '0' ELSE
+        forward_mux;
+
+    -- output
     control_signals_in <=
         -- execute signals - 7 bits
         execute_alu_sel
@@ -289,6 +331,7 @@ BEGIN
 
     immediate_stall <= isImmediate;
     in_port <= in_port_in;
+    out_port <= read_data1_in;
     fetch_control_signals <= fetch_pc_mux1;
 
     -- length = start - end + 1
