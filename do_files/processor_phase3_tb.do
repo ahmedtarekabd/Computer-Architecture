@@ -34,6 +34,7 @@ sim:/processor_phase3_tb/dut/fetch_inst/pc_instruction_address
 
 # Decode
 add wave -position insertpoint  \
+sim:/processor_phase3_tb/dut/decode_inst/read_data1_in \
 sim:/processor_phase3_tb/dut/decode_inst/interrupt_signal \
 sim:/processor_phase3_tb/dut/decode_inst/forwarded_alu_execute \
 sim:/processor_phase3_tb/dut/decode_inst/forwarded_data1_mw \
@@ -46,6 +47,11 @@ sim:/processor_phase3_tb/dut/decode_inst/execute_control_signals \
 sim:/processor_phase3_tb/dut/decode_inst/memory_control_signals \
 sim:/processor_phase3_tb/dut/decode_inst/wb_control_signals \
 sim:/processor_phase3_tb/dut/decode_inst/immediate_out 
+#sim:/processor_phase3_tb/dut/decode_inst/decode_execute_flush \
+#sim:/processor_phase3_tb/dut/decode_inst/branch_prediction_flush \
+#sim:/processor_phase3_tb/dut/decode_inst/exception_handling_flush \
+#sim:/processor_phase3_tb/dut/decode_inst/hazard_detection_flush \
+#sim:/processor_phase3_tb/dut/decode_inst/immediate_stall \
 
 # Execute
 add wave -position insertpoint  \
