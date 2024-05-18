@@ -25,6 +25,7 @@ ARCHITECTURE behavior OF memory_stage_tb IS
             read_data2_in : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
             ALU_result_in : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
             CCR_in : IN STD_LOGIC_VECTOR (3 DOWNTO 0);
+            in_port_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
             wb_control_signals_out : OUT STD_LOGIC_VECTOR (5 DOWNTO 0);
             destination_address_out : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
             write_address1_out : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
@@ -34,7 +35,8 @@ ARCHITECTURE behavior OF memory_stage_tb IS
             ALU_result_out : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
             mem_read_data : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
             PC_out_to_exception : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
-            protected_address_access_to_exception : OUT STD_LOGIC
+            protected_address_access_to_exception : OUT STD_LOGIC;
+            in_port_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
         );
     END COMPONENT;
 
@@ -55,6 +57,7 @@ ARCHITECTURE behavior OF memory_stage_tb IS
     SIGNAL read_data2_in : STD_LOGIC_VECTOR (31 DOWNTO 0) := (OTHERS => '0');
     SIGNAL ALU_result_in : STD_LOGIC_VECTOR (31 DOWNTO 0) := (OTHERS => '0');
     SIGNAL CCR_in : STD_LOGIC_VECTOR (3 DOWNTO 0) := (OTHERS => '0');
+    SIGNAL in_port_in : STD_LOGIC_VECTOR(31 DOWNTO 0) := (OTHERS => '0');
 
     --Outputs
     SIGNAL wb_control_signals_out : STD_LOGIC_VECTOR (5 DOWNTO 0);
@@ -67,6 +70,7 @@ ARCHITECTURE behavior OF memory_stage_tb IS
     SIGNAL mem_read_data : STD_LOGIC_VECTOR (31 DOWNTO 0);
     SIGNAL PC_out_to_exception : STD_LOGIC_VECTOR (31 DOWNTO 0);
     SIGNAL protected_address_access_to_exception : STD_LOGIC;
+    SIGNAL in_port_out : STD_LOGIC_VECTOR(31 DOWNTO 0);
 
     -- Clock period definitions
     CONSTANT clk_period : TIME := 10 ns;
@@ -91,6 +95,7 @@ BEGIN
         read_data2_in => read_data2_in,
         ALU_result_in => ALU_result_in,
         CCR_in => CCR_in,
+        in_port_in => in_port_in,
         wb_control_signals_out => wb_control_signals_out,
         destination_address_out => destination_address_out,
         write_address1_out => write_address1_out,
@@ -100,7 +105,8 @@ BEGIN
         ALU_result_out => ALU_result_out,
         mem_read_data => mem_read_data,
         PC_out_to_exception => PC_out_to_exception,
-        protected_address_access_to_exception => protected_address_access_to_exception
+        protected_address_access_to_exception => protected_address_access_to_exception,
+        in_port_out => in_port_out
     );
 
     -- Clock process definitions
@@ -132,6 +138,7 @@ BEGIN
         read_data2_in <= "11111111111111000011111111111111";
         ALU_result_in <= (OTHERS => '0');
         CCR_in <= (OTHERS => '0');
+        in_port_in <= (OTHERS => '0');
         WAIT FOR clk_period;
 
         -- test case 2
@@ -150,6 +157,7 @@ BEGIN
         read_data2_in <= "11111111111111100001111111111111";
         ALU_result_in <= (OTHERS => '0');
         CCR_in <= (OTHERS => '0');
+        in_port_in <= (OTHERS => '0');
         WAIT FOR clk_period;
 
         -- test case 3
@@ -168,6 +176,7 @@ BEGIN
         read_data2_in <= "01010101010101010101010101010101";
         ALU_result_in <= (OTHERS => '0');
         CCR_in <= "0010";
+        in_port_in <= (OTHERS => '0');
         WAIT FOR clk_period;
 
         -- test case 4
@@ -186,6 +195,7 @@ BEGIN
         read_data2_in <= "11110000111100001111000011110000";
         ALU_result_in <= (OTHERS => '0');
         CCR_in <= "0100";
+        in_port_in <= (OTHERS => '0');
         WAIT FOR clk_period;
 
         -- test case 5
@@ -204,6 +214,7 @@ BEGIN
         read_data2_in <= "00001111000011110000111100001111";
         ALU_result_in <= (OTHERS => '0');
         CCR_in <= "0110";
+        in_port_in <= (OTHERS => '0');
         WAIT FOR clk_period;
 
         -- test case 6
@@ -222,6 +233,7 @@ BEGIN
         read_data2_in <= "00110011001100110011001100110011";
         ALU_result_in <= (OTHERS => '0');
         CCR_in <= "1000";
+        in_port_in <= (OTHERS => '0');
         WAIT FOR clk_period;
 
         -- test case 7
@@ -240,6 +252,7 @@ BEGIN
         read_data2_in <= "11001100110011001100110011001100";
         ALU_result_in <= "11001100110011001100110011001100";
         CCR_in <= "1010";
+        in_port_in <= (OTHERS => '0');
         WAIT FOR clk_period;
 
         -- test case 8
@@ -258,6 +271,7 @@ BEGIN
         read_data2_in <= "11111111000000001111111100000000";
         ALU_result_in <= "11111111000000001111111100000000";
         CCR_in <= "1100";
+        in_port_in <= (OTHERS => '0');
         WAIT FOR clk_period;
 
         -- test case 9
@@ -276,6 +290,7 @@ BEGIN
         read_data2_in <= "00000000111111110000000011111111";
         ALU_result_in <= "00000000111111110000000011111111";
         CCR_in <= "1110";
+        in_port_in <= (OTHERS => '0');
         WAIT FOR clk_period;
 
         -- test case 10
@@ -294,6 +309,7 @@ BEGIN
         read_data2_in <= "11111111000000001111111100000000";
         ALU_result_in <= "11111111000000001111111100000000";
         CCR_in <= "0001";
+        in_port_in <= (OTHERS => '0');
         WAIT FOR clk_period;
 
         -- test case 11
@@ -312,6 +328,7 @@ BEGIN
         read_data2_in <= "00000000111111110000000011111111";
         ALU_result_in <= "00000000111111110000000011111111";
         CCR_in <= "0011";
+        in_port_in <= (OTHERS => '0');
         WAIT FOR clk_period;
 
         -- test case 12
@@ -330,6 +347,7 @@ BEGIN
         read_data2_in <= "11111111000000001111111100000000";
         ALU_result_in <= "11111111000000001111111100000000";
         CCR_in <= "0101";
+        in_port_in <= (OTHERS => '0');
         WAIT FOR clk_period;
         WAIT;
     END PROCESS;
