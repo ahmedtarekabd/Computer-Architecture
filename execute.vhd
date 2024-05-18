@@ -112,7 +112,12 @@ ENTITY execute IS
         in_port_output : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
         control_signals_memory_out : OUT STD_LOGIC_VECTOR(10 DOWNTO 0);
         control_signals_write_back_out : OUT STD_LOGIC_VECTOR(5 DOWNTO 0);
-        ALU_result_before_EM : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
+        ALU_result_before_EM : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+
+        in_port_forwarded_output : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+
+        in_port_forwarded_from_EM : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+        in_port_forwarded_from_MW : IN STD_LOGIC_VECTOR(31 DOWNTO 0)
 
     );
 END execute;
@@ -183,6 +188,7 @@ ARCHITECTURE arch_execute OF execute IS
     SIGNAL execute_mem_enable : STD_LOGIC;
 
 BEGIN
+    in_port_forwarded_output <= in_port_input;
     -- data 2 and immediate mux
     -- MUX2: mux4x1 PORT MAP (
     --     inputA => data2_in,
@@ -214,6 +220,8 @@ BEGIN
         forwarded_data2_mw WHEN "011",
         forwarded_data1_em WHEN "100",
         forwarded_data2_em WHEN "101",
+        in_port_forwarded_from_EM WHEN "110",
+        in_port_forwarded_from_MW WHEN "111",
         (OTHERS => '0') WHEN OTHERS;
 
     -- forwarding mux 2 8x1
@@ -231,7 +239,10 @@ BEGIN
         forwarded_data2_mw WHEN "011",
         forwarded_data1_em WHEN "100",
         forwarded_data2_em WHEN "101",
+        in_port_forwarded_from_EM WHEN "110",
+        in_port_forwarded_from_MW WHEN "111",
         (OTHERS => '0') WHEN OTHERS;
+
     -- ALU
     ALU1 : ALU PORT MAP(
         A => op1_mux_out,

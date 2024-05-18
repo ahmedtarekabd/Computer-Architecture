@@ -2,6 +2,8 @@ LIBRARY IEEE;
 USE IEEE.STD_LOGIC_1164.ALL;
 USE IEEE.numeric_std.ALL;
 
+-- IN R1 write enable 1
+
 ENTITY forwarding_unit IS
     PORT(
     -- Addresses
@@ -80,7 +82,14 @@ ENTITY forwarding_unit IS
         -- From Decode/Execute
         -- write_back_de : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
         write_back_de_enable1 : IN STD_LOGIC;
-        write_back_de_enable2 : IN STD_LOGIC
+        write_back_de_enable2 : IN STD_LOGIC;
+
+        -- FOR IN instruction I need reg_write_address1_in_select if it is 11 and src1 in execute is same as address 1 from WB then forwarding happens
+        reg_write_address1_in_select_em : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
+        reg_write_address1_in_select_mw : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
+        -- add additional check for presence of out port opcode
+        -- if true and adresses match then we need to forward
+        out_port_enable : IN STD_LOGIC
     );
 END forwarding_unit;
 
@@ -97,7 +106,7 @@ BEGIN
     write_back_mw <= write_back_mw_enable2 & write_back_mw_enable1;
     -- sensitive on only src_address1_de and src_address2_de
     -- because whenever they change we must check if the previous instruction changed their values
-    PROCESS (src_address1_de, src_address2_de, dst_address_em, src_address1_em, src_address2_em, address1_mw, address2_mw, write_back_em, write_back_mw, memory_read_em)
+    PROCESS (src_address1_de, src_address2_de, dst_address_em, src_address1_em, src_address2_em, address1_mw, address2_mw, write_back_em, write_back_mw, memory_read_em, out_port_enable, reg_write_address1_in_select_em, reg_write_address1_in_select_mw)
     BEGIN
         -- Default values
         opp1_ALU_MUX_SEL <= "000";
@@ -105,13 +114,27 @@ BEGIN
         load_use_hazard <= '0';
         -- IF the write back enables from Execute/Memory and Memory/Writeback are 0 
         -- then no forwarding is needed
-        IF (write_back_em(1 DOWNTO 0) = "00" AND write_back_mw(1 DOWNTO 0) = "00") THEN
+        IF (write_back_em(1 DOWNTO 0) = "00" AND write_back_mw(1 DOWNTO 0) = "00" AND out_port_enable = '0' AND reg_write_address1_in_select_em /= "11" AND reg_write_address1_in_select_mw /= "11") THEN
             opp1_ALU_MUX_SEL <= "000";
             opp2_ALU_MUX_SEL <= "000";
             -- load_use_hazard <= '0';
         -- END IF;
 
     -- Execute/Memory stage
+        -- IN instruction in Execute/Memory stage output 110 for takin the destination data from the execute/memory stage
+        ELSIF ((reg_write_address1_in_select_em = "11" OR (reg_write_address1_in_select_em = "11" AND out_port_enable = '1'))  AND ((src_address1_de = dst_address_em) OR (src_address2_de = dst_address_em))) THEN
+            IF (src_address1_de = dst_address_em) THEN
+                opp1_ALU_MUX_SEL <= "110";
+            ELSE
+                opp1_ALU_MUX_SEL <= "000";
+            END IF;
+
+            IF (src_address2_de = dst_address_em) THEN
+                opp2_ALU_MUX_SEL <= "110";
+            ELSE
+                opp2_ALU_MUX_SEL <= "000";
+            END IF;
+
         -- For execute/memory stage, if the write_back_em(0) is 1 and write_back_em(1) is 0
         -- this means there is write back but no swapping
         -- write back can be either alu result or memory read
@@ -119,7 +142,7 @@ BEGIN
         -- if memory read is 0 then the data is from alu result
         -- else if write_back_em(1) is 1 and write_back_em(0) is 1 then there is swapping
         -- no other options like 0, 1 or 0, 0 are possible
-        ELSIF (write_back_em(0) = '1' AND write_back_em(1) = '0' AND memory_read_em = '0' AND ((src_address1_de = dst_address_em) OR (src_address2_de = dst_address_em))) THEN
+        ELSIF (((write_back_em(0) = '1' AND write_back_em(1) = '0' AND memory_read_em = '0') OR (out_port_enable = '1'AND write_back_em(0) = '1' AND write_back_em(1) = '0' AND memory_read_em = '0')) AND ((src_address1_de = dst_address_em) OR (src_address2_de = dst_address_em))) THEN
             -- load_use_hazard <= '0';
         -- compare src_address1_de and src_address2_de with dst_address_em
             IF (src_address1_de = dst_address_em) THEN
@@ -142,7 +165,7 @@ BEGIN
 
         -- If write_back_em(1) is 1 and write_back_em(0) is 1 then there is swapping
         -- compare src_address1_de and src_address2_de with src_address1_em and src_address2_em
-        ELSIF (write_back_em(1) = '1' AND write_back_em(0) = '1' AND ((src_address1_de = src_address1_em) OR (src_address1_de = src_address2_em) OR (src_address2_de = src_address1_em) OR (src_address2_de = src_address2_em))) THEN
+        ELSIF (((write_back_em(1) = '1' AND write_back_em(0) = '1') OR (out_port_enable = '1' AND write_back_em(1) = '1' AND write_back_em(0) = '1')) AND ((src_address1_de = src_address1_em) OR (src_address1_de = src_address2_em) OR (src_address2_de = src_address1_em) OR (src_address2_de = src_address2_em))) THEN
             -- load_use_hazard <= '0';
             IF (src_address1_de = src_address1_em) THEN
             -- swapping did not happen yet, but we deduced that there was swapping because enable 1 and 2 are enabled
@@ -163,7 +186,23 @@ BEGIN
             ELSE
                 opp2_ALU_MUX_SEL <= "000";
             END IF;
+
+            
     -- Memory/Write back
+        -- IN instruction in Memory/Writeback stage output 111 for takin the destination data from the memory/writeback stage
+        ELSIF ((reg_write_address1_in_select_mw = "11" OR (reg_write_address1_in_select_mw = "11" AND out_port_enable = '1')) AND ((src_address1_de = address1_mw) OR (src_address2_de = address1_mw))) THEN
+            IF (src_address1_de = address1_mw) THEN
+                opp1_ALU_MUX_SEL <= "111";
+            ELSE
+                opp1_ALU_MUX_SEL <= "000";
+            END IF;
+
+            IF (src_address2_de = address1_mw) THEN
+                opp2_ALU_MUX_SEL <= "111";
+            ELSE
+                opp2_ALU_MUX_SEL <= "000";
+            END IF;
+
         -- For memory/writeback stage, if the write_back_mw(0) is 1 and write_back_mw(1) is 0
         -- this means there is write back but no swapping
         -- write back can be either alu result or memory read
@@ -175,7 +214,7 @@ BEGIN
         -- and data 2 is multiplexed with alu result and memory read
         -- no other options like 0, 1 or 0, 0 are possible
 
-        ELSIF (write_back_mw(0) = '1' AND write_back_mw(1) = '0' AND ((src_address1_de = address1_mw) OR (src_address2_de = address1_mw))) THEN
+        ELSIF (((write_back_mw(0) = '1' AND write_back_mw(1) = '0') OR (out_port_enable = '1' AND write_back_mw(0) = '1' AND write_back_mw(1) = '0')) AND ((src_address1_de = address1_mw) OR (src_address2_de = address1_mw))) THEN
             -- load_use_hazard <= '0';
             -- we only compare src_address1_de with address1_mw (address1 in register file is destination here)
             -- as no swapping is possible
@@ -197,7 +236,7 @@ BEGIN
         -- If write_back_mw(1) is 1 and write_back_mw(0) is 1 then there is swapping
         -- compare src_address1_de with address1_mw and address2_mw
         -- no need to check on memory read as forwarding is possible
-        ELSIF (write_back_mw(1) = '1' AND write_back_mw(0) = '1' AND ((src_address1_de = address2_mw) OR (src_address1_de = address1_mw) OR (src_address2_de = address2_mw) OR (src_address2_de = address1_mw))) THEN
+        ELSIF (((write_back_mw(1) = '1' AND write_back_mw(0) = '1') OR (out_port_enable = '1' AND write_back_mw(1) = '1' AND write_back_mw(0) = '1')) AND ((src_address1_de = address2_mw) OR (src_address1_de = address1_mw) OR (src_address2_de = address2_mw) OR (src_address2_de = address1_mw))) THEN
             -- load_use_hazard <= '0';
             IF (src_address1_de = address2_mw) THEN
             -- swapping happened and we take data 1
@@ -217,6 +256,7 @@ BEGIN
                 opp2_ALU_MUX_SEL <= "000";
             END IF;
         -- END IF;
+
         ELSE
             -- load_use_hazard <= '0';
             opp1_ALU_MUX_SEL <= "000";
