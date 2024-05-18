@@ -249,7 +249,7 @@ BEGIN
 
 			-- decode
 			decode_reg_read <=
-				'0' WHEN opcode = NOP_INST OR opcode = POP_INST OR opcode = RET_INST OR opcode = RTI_INST OR opcode = OUT_INST ELSE
+				'0' WHEN opcode = NOP_INST OR opcode = POP_INST OR opcode = RET_INST OR opcode = RTI_INST ELSE
 				'1';
 
 			decode_sign_extend <=
@@ -265,7 +265,7 @@ BEGIN
 			execute_alu_sel <=
 				"011" WHEN opcode = MOV_INST OR opcode = LDM_INST ELSE
 				"001" WHEN opcode = INC_INST OR opcode = ADD_INST OR opcode = ADDI_INST OR opcode = LDD_INST OR opcode = STD_INST ELSE
-				"010" WHEN opcode = DEC_INST OR opcode = NEG_INST OR opcode = SUB_INST OR opcode = SUBI_INST OR opcode = CMP_INST ELSE
+				"010" WHEN opcode = DEC_INST OR opcode = SUB_INST OR opcode = SUBI_INST OR opcode = CMP_INST ELSE
 				"111" WHEN opcode = NOT_INST ELSE
 				"100" WHEN opcode = AND_INST ELSE
 				"101" WHEN opcode = OR_INST ELSE
