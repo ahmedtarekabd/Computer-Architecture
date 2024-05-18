@@ -102,9 +102,19 @@ sim:/processor_phase3_tb/dut/mem_inst/protected_address_access_to_exception
 #WB
 add wave -position insertpoint \
 sim:/processor_phase3_tb/dut/write_back_inst/destination_address_in \
+sim:/processor_phase3_tb/dut/write_back_inst/read_data1_in \
+sim:/processor_phase3_tb/dut/write_back_inst/read_data2_in \
+sim:/processor_phase3_tb/dut/write_back_inst/read_address1_in \
+sim:/processor_phase3_tb/dut/write_back_inst/read_address2_in \
 sim:/processor_phase3_tb/dut/write_back_inst/ALU_result 
 
-
-
 # RUN Testbench
+run             10 ns
+force -freeze sim:/processor_phase3_tb/in_port_from_processor 00000000000000000000000000000101 0
+run             10 ns
+force -freeze sim:/processor_phase3_tb/in_port_from_processor 00000000000000000000000000001101 0
+run             10 ns
+force -freeze sim:/processor_phase3_tb/in_port_from_processor 11111111111111111111111111111111 0
+run             10 ns
+force -freeze sim:/processor_phase3_tb/in_port_from_processor 11111111111111111111001100100000 0
 run             10 ns
