@@ -210,6 +210,7 @@ def assemble_instruction(instruction):
         full_instruction[4] = "0"
     else:
         full_instruction = (format(int(parts[0], 16), '016b'))
+        immediateIs = "first"
 
     full_instruction = "".join(full_instruction)
     instruction_array[index] = (full_instruction)
