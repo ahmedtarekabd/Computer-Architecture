@@ -1,4 +1,5 @@
 import re
+import sys
 
 # Global variable to store output lines with indices
 instruction_array = ["0000000000000000"] * 4096
@@ -6,7 +7,7 @@ index = 0
 
 # Function to convert assembly instruction to binary
 def assemble_instruction(instruction):
-    print (instruction)
+    print("instruction", instruction)
     global index
     full_instruction = ["opcode", "src1", "src2", "dest", "imm"]
     parts = re.split(r'\s,\s|,\s|\s', instruction)  # Split using space, comma space, or space comma space
@@ -14,7 +15,7 @@ def assemble_instruction(instruction):
     instruction = parts[0]
     immediateIs = "second"
     # print (instruction)
-    if instruction.startswith("//") or instruction == "":
+    if instruction.startswith("//") or instruction.startswith("#") or instruction == "":
         return
     elif instruction.upper() == ".ORG":
         index = int(parts[1], 16)
@@ -229,7 +230,11 @@ def assemble_instruction(instruction):
     return full_instruction
 
 # Function to read assembly file, convert instructions, and write to output file
-def assemble_file(input_file="assembly_code.txt", output_file="binary_output.mem"):
+def assemble_file(args):
+    input_file = args[1]
+    output_file = args[2]
+    print("Input file: " + input_file)
+    print("Output file: " + output_file)
     with open(input_file, 'r') as f:
         assembly_code = f.readlines()
     
@@ -254,4 +259,4 @@ def assemble_file(input_file="assembly_code.txt", output_file="binary_output.mem
 
 # Main function
 if __name__ == "__main__":
-    assemble_file()
+    assemble_file(sys.argv)
