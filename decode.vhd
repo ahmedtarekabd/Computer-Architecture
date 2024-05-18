@@ -5,6 +5,9 @@ ENTITY decode IS
     PORT (
         clk : IN STD_LOGIC;
         reset : IN STD_LOGIC;
+        branch_prediction_flush : IN STD_LOGIC;
+        exception_handling_flush : IN STD_LOGIC;
+        hazard_detection_flush : IN STD_LOGIC;
 
         --* Inputs
         -- instruction 
@@ -32,22 +35,34 @@ ENTITY decode IS
         write_data1 : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
         write_data2 : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
 
+        -- Forwarding
+        forwarded_alu_execute : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+        forwarded_data1_mw : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+        forwarded_data2_mw : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+        forwarded_data1_em : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+        forwarded_data2_em : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+        branching_op_mux_selector : IN STD_LOGIC_VECTOR(2 DOWNTO 0);
+        branching_or_normal_mux_selector : IN STD_LOGIC;
         --* Outputs
-        fetch_control_signals : OUT STD_LOGIC_VECTOR(3 DOWNTO 0);
-        in_port : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
-        -- Immediate Enable
+        -- fetch signals
+        fetch_pc_mux1 : OUT STD_LOGIC_VECTOR(1 DOWNTO 0);
         immediate_stall : OUT STD_LOGIC;
+        fetch_decode_flush : OUT STD_LOGIC;
+        in_port : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+        out_port : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
         -- Propagated signals
-        propagated_control_signals : OUT STD_LOGIC_VECTOR(23 DOWNTO 0);
+        execute_control_signals : OUT STD_LOGIC_VECTOR(23 DOWNTO 0);
+        memory_control_signals : OUT STD_LOGIC_VECTOR(10 DOWNTO 0);
+        wb_control_signals : OUT STD_LOGIC_VECTOR(10 DOWNTO 0);
         propagated_read_data1 : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
         propagated_read_data2 : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
         propagated_Rsrc1 : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
         propagated_Rsrc2 : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
         propagated_Rdest : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
         immediate_out : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+        branch_pc_address : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
         propagated_pc : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
         propagated_pc_plus_one : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
-
     );
 END ENTITY decode;
 
@@ -138,11 +153,20 @@ ARCHITECTURE rtl OF decode IS
         );
     END COMPONENT;
 
-    SIGNAL isImmediate : STD_LOGIC;
+    COMPONENT mux4x1 IS
+        GENERIC (n : INTEGER := 16);
+        PORT (
+            inputA : IN STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
+            inputB : IN STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
+            inputC : IN STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
+            inputD : IN STD_LOGIC_VECTOR(n - 1 DOWNTO 0);
+            Sel_lower : IN STD_LOGIC;
+            Sel_higher : IN STD_LOGIC;
+            output : OUT STD_LOGIC_VECTOR(n - 1 DOWNTO 0)
+        );
+    END COMPONENT mux4x1;
 
-    -- fetch signals
-    SIGNAL fetch_pc_mux1 : STD_LOGIC_VECTOR(1 DOWNTO 0) := "00";
-    SIGNAL fetch_decode_flush : STD_LOGIC := '0';
+    SIGNAL isImmediate : STD_LOGIC;
 
     -- decode signals
     SIGNAL decode_reg_read : STD_LOGIC := '0';
@@ -174,12 +198,18 @@ ARCHITECTURE rtl OF decode IS
 
     -- Outputs holder
     SIGNAL control_signals_in : STD_LOGIC_VECTOR(23 DOWNTO 0);
+    SIGNAL execute_control_signals_in : STD_LOGIC_VECTOR(23 DOWNTO 0);
+    SIGNAL memory_control_signals_in : STD_LOGIC_VECTOR(23 DOWNTO 0);
+    SIGNAL wb_control_signals_in : STD_LOGIC_VECTOR(23 DOWNTO 0);
     SIGNAL read_data1_in : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL read_data2_in : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL Rdest_out : STD_LOGIC_VECTOR(2 DOWNTO 0);
     SIGNAL decode_execute_in : STD_LOGIC_VECTOR(193 - 1 DOWNTO 0);
     SIGNAL decode_execute_out : STD_LOGIC_VECTOR(193 - 1 DOWNTO 0);
+    SIGNAL forward_mux : STD_LOGIC_VECTOR(31 DOWNTO 0);
 
+    --
+    SIGNAL reg_reset : STD_LOGIC := '0';
 BEGIN
 
     isImmediate <= imm_flag;
@@ -251,37 +281,62 @@ BEGIN
         output => immediate_out
     );
 
-    control_signals_in <=
-        -- execute signals - 7 bits
-        execute_alu_sel
+    -- Forwarding
+    WITH branching_op_mux_selector SELECT
+        forward_mux <= read_data1_in WHEN "000",
+        forwarded_alu_execute WHEN "001",
+        forwarded_data1_mw WHEN "010",
+        forwarded_data2_mw WHEN "011",
+        forwarded_data1_em WHEN "100",
+        forwarded_data2_em WHEN "101",
+        propagated_read_data1 WHEN "110",
+        propagated_read_data2 WHEN "111",
+        (OTHERS => '0') WHEN OTHERS;
+
+    branch_pc_address <= (OTHERS => '0') WHEN branching_or_normal_mux_selector = '0' ELSE
+        forward_mux;
+
+    -- execute signals - 7 bits
+    execute_control_signals_in <= execute_alu_sel
         & execute_alu_src2
         & decode_branch
-        & conditional_jump
-        -- memory signals - 11 bits
-        & memory_write
+        & conditional_jump;
+    -- memory signals - 11 bits
+    memory_control_signals_in <= memory_write
         & memory_read
         & memory_stack_pointer
         & memory_address
         & memory_write_data
         & memory_protected
         & memory_free
-        & execute_memory_flush
-        -- write back signals - 6 bits
+        & execute_memory_flush;
+    -- write back signals - 6 bits
+    wb_control_signals_in <= write_back_register_write_data_1
         & write_back_register_write1
         & write_back_register_write2
-        & write_back_register_write_data_1
         & write_back_register_write_address_1
         & outport_enable;
+
+    -- output
+    control_signals_in <=
+        -- execute signals - 7 bits
+        execute_control_signals_in
+        -- memory signals - 11 bits
+        & memory_control_signals_in
+        -- write back signals - 6 bits
+        & wb_control_signals_in;
 
     -- 193 bits: 24 control signals(propagated) + 32 read_data1_in + 32 read_data2_in + 3 read_address1 + 3 read_address2 + 3 destination + 32 immediate_out + 32 pc_plus_1 + 32 pc
     decode_execute_in <= control_signals_in & read_data1_in & read_data2_in & Rsrc1 & Rsrc2 & Rdest
         & immediate_out & propagated_pc_plus_one_in & propagated_pc_in;
 
+    reg_reset <= reset OR decode_execute_flush OR branch_prediction_flush OR exception_handling_flush OR hazard_detection_flush OR (NOT immediate_stall);
+
     decode_execute : my_nDFF
     GENERIC MAP(193)
     PORT MAP(
         clk => clk,
-        reset => decode_execute_flush,
+        reset => reg_reset,
         enable => isImmediate,
         d => decode_execute_in,
         q => decode_execute_out
@@ -289,11 +344,13 @@ BEGIN
 
     immediate_stall <= isImmediate;
     in_port <= in_port_in;
-    fetch_control_signals <= fetch_pc_mux1;
+    out_port <= read_data1_in;
 
     -- length = start - end + 1
     -- end = start - length + 1
-    propagated_control_signals <= decode_execute_out(193 - 1 DOWNTO 193 - 24);
+    execute_control_signals <= decode_execute_out(193 - 1 DOWNTO 193 - 7);
+    memory_control_signals <= decode_execute_out(193 - 7 - 1 DOWNTO 193 - 7 - 11);
+    wb_control_signals <= decode_execute_out(193 - 7 - 11 - 1 DOWNTO 193 - 24);
     propagated_read_data1 <= decode_execute_out(193 - 24 - 1 DOWNTO 193 - 24 - 32);
     propagated_read_data2 <= decode_execute_out(193 - 24 - 32 - 1 DOWNTO 193 - 24 - 32 - 32);
     propagated_Rsrc1 <= decode_execute_out(193 - 24 - 32 - 32 - 1 DOWNTO 193 - 24 - 32 - 32 - 3);
