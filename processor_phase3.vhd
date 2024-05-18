@@ -209,9 +209,9 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
             in_port : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
             out_port : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
             -- Propagated signals
-            execute_control_signals : OUT STD_LOGIC_VECTOR(23 DOWNTO 0);
-            memory_control_signals : OUT STD_LOGIC_VECTOR(10 DOWNTO 0);
-            wb_control_signals : OUT STD_LOGIC_VECTOR(10 DOWNTO 0);
+            execute_control_signals : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
+            memory_control_signals : OUT STD_LOGIC_VECTOR(9 DOWNTO 0);
+            wb_control_signals : OUT STD_LOGIC_VECTOR(5 DOWNTO 0);
             propagated_read_data1 : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
             propagated_read_data2 : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
             propagated_Rsrc1 : OUT STD_LOGIC_VECTOR(2 DOWNTO 0);
@@ -244,7 +244,7 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
             forwarded_data2_mw : IN STD_LOGIC_VECTOR (31 DOWNTO 0);
             forwarding_mux_selector_op2 : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
             forwarding_mux_selector_op1 : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
-            control_signals_memory_in : IN STD_LOGIC_VECTOR (10 DOWNTO 0);
+            control_signals_memory_in : IN STD_LOGIC_VECTOR (9 DOWNTO 0);
             control_signals_write_back_in : IN STD_LOGIC_VECTOR (5 DOWNTO 0);
             alu_selectors : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
             alu_src2_selector : IN STD_LOGIC_VECTOR (1 DOWNTO 0);
@@ -272,7 +272,7 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
             in_port_output : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
             control_signals_memory_out : OUT STD_LOGIC_VECTOR (10 DOWNTO 0);
             control_signals_write_back_out : OUT STD_LOGIC_VECTOR (5 DOWNTO 0);
-            ALU_result_before_EM : out STD_LOGIC_VECTOR(31 DOWNTO 0)
+            ALU_result_before_EM : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
 
         );
     END COMPONENT;
@@ -398,7 +398,7 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
 
     --from forwarding
     SIGNAL branching_opp_mux_sel_forwarding_to_decode : STD_LOGIC_VECTOR(2 DOWNTO 0);
-    SIGNAL branching_or_normal_sel_forwarding_to_decode: STD_LOGIC;
+    SIGNAL branching_or_normal_sel_forwarding_to_decode : STD_LOGIC;
 
     --from
     SIGNAL branch_prediction_flush_to_Decode : STD_LOGIC;
@@ -408,10 +408,9 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
     --output
     SIGNAL in_port_from_Decode : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL immediate_stall_to_fetch_and_decode : STD_LOGIC;
-    SIGNAL execute_control_signals_from_decode : STD_LOGIC_VECTOR( DOWNTO 0);
-    SIGNAL memory_control_signals_from_decode : STD_LOGIC_VECTOR( DOWNTO 0);
-    SIGNAL wb_control_signals_from_decode : STD_LOGIC_VECTOR( DOWNTO 0);
-
+    SIGNAL execute_control_signals_from_decode : STD_LOGIC_VECTOR(6 DOWNTO 0);
+    SIGNAL memory_control_signals_from_decode : STD_LOGIC_VECTOR(9 DOWNTO 0);
+    SIGNAL wb_control_signals_from_decode : STD_LOGIC_VECTOR(5 DOWNTO 0);
     SIGNAL write_back_1_forwarding_from_decode : STD_LOGIC;
     SIGNAL write_back_2_forwarding_from_decode : STD_LOGIC;
     SIGNAL memory_read_from_decode : STD_LOGIC;
@@ -427,15 +426,13 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
     SIGNAL data1_in_to_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL data2_in_to_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL immediate_in_to_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
-
-    
     --from execute
     SIGNAL alu_result_from_Execution_before_EM : STD_LOGIC_VECTOR(31 DOWNTO 0);
 
     --from controller
     SIGNAL EM_enable_in_to_execute : STD_LOGIC;
     SIGNAL EM_flush_in_to_execute : STD_LOGIC;
-    SIGNAl Alu_src2_selector_to_execute : STD_LOGIC_VECTOR(1 DOWNTO 0);
+    SIGNAL Alu_src2_selector_to_execute : STD_LOGIC_VECTOR(1 DOWNTO 0);
     SIGNAL Alu_selectors_to_execute : STD_LOGIC_VECTOR(2 DOWNTO 0);
     SIGNAL EM_flush_controller_to_execute : STD_LOGIC;
 
@@ -546,7 +543,7 @@ BEGIN
     PORT MAP(
         clk => clk,
         reset => RST_signal,
-                -- reset : IN STD_LOGIC;
+        -- reset : IN STD_LOGIC;
         -- branch_prediction_flush : IN STD_LOGIC;
         -- exception_handling_flush : IN STD_LOGIC;
         -- hazard_detection_flush : IN STD_LOGIC;
@@ -588,7 +585,7 @@ BEGIN
         propagated_pc => pc_in_to_excute,
         propagated_pc_plus_one => pc_plus_1_in_to_excute,
         --
-        forwarded_alu_execute =>alu_result_from_Execution_before_EM,
+        forwarded_alu_execute => alu_result_from_Execution_before_EM,
         forwarded_data1_mw => read_data1_out_from_memory,
         forwarded_data2_mw => read_data2_out_from_memory,
         forwarded_data1_em => data1_swapping_out_from_execute,
@@ -597,9 +594,9 @@ BEGIN
         branching_or_normal_mux_selector => branching_or_normal_sel_forwarding_to_decode
     );
 
-    Alu_selectors_to_execute <= execute_control_signals_from_decode(5 downto 3);
-    Alu_src2_selector_to_execute <= execute_control_signals_from_decode(2 downto 1);
-    EM_flush_controller_to_execute <= execute_control_signals_from_decode(0);
+    Alu_selectors_to_execute <= execute_control_signals_from_decode(6 DOWNTO 4);
+    Alu_src2_selector_to_execute <= execute_control_signals_from_decode(3 DOWNTO 2);
+    EM_flush_controller_to_execute <= execute_control_signals_from_decode(1);
 
     ----------Execute----------
     excute_inst : execute PORT MAP(
@@ -636,7 +633,7 @@ BEGIN
         address_read2_out => address_read2_out_from_execute,
         flag_register_out => flag_register_out_from_execute,
         alu_out => alu_out_from_execute,
-        immediate_enable_out => open,
+        immediate_enable_out => OPEN,
         data1_swapping_out => data1_swapping_out_from_execute,
         data2_swapping_out => data2_swapping_out_from_execute,
         zero_flag_out_controller => zero_flag_out_controller_from_execute,
@@ -657,7 +654,7 @@ BEGIN
     mem_inst : memory_stage PORT MAP(
         clk => clk,
         MW_flush_from_controller => '0',
-        mem_control_signals_in => control_signals_memory_out_from_execute,
+        mem_control_signals_in => control_signals_memory_out_from_execute(10 DOWNTO 1),
         wb_control_signals_in => control_signals_write_back_out_from_execute,
         RST => RST_signal,
         MW_enable => MW_enable_to_memory,
@@ -771,7 +768,7 @@ BEGIN
         opp2_ALU_MUX_SEL => forwarding_mux_selector_op2,
         opp_branching_mux_selector => branching_opp_mux_sel_forwarding_to_decode, --to decode
         opp_branch_or_normal_mux_selector => branching_or_normal_sel_forwarding_to_decode,
-        
+
         load_use_hazard => OPEN --not used
     );
 
