@@ -412,6 +412,9 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
     SIGNAL memory_control_signals_from_decode : STD_LOGIC_VECTOR(9 DOWNTO 0);
     SIGNAL wb_control_signals_from_decode : STD_LOGIC_VECTOR(5 DOWNTO 0);
     SIGNAL write_back_1_forwarding_from_decode : STD_LOGIC;
+    SIGNAL write_back_2_forwarding_from_decode : STD_LOGIC;
+    SIGNAL memory_read_from_decode : STD_LOGIC;
+
 
     --*--------Execute----------
     --from decode
@@ -452,6 +455,8 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
     SIGNAL alu_out_from_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL in_port_from_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL pc_out_to_exception_from_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
+
+    SIGNAL memory_read_from_execute : STD_LOGIC;
 
     SIGNAL zero_flag_out_controller_from_execute : STD_LOGIC;
     SIGNAL overflow_flag_out_exception_handling_from_execute : STD_LOGIC;
@@ -533,7 +538,7 @@ BEGIN
         propagated_pc_plus_one => propagated_pc_plus_one_from_fetch
     );
 
-    ----------Decode---------- 
+    ----------Decode----------
     decode_inst : decode
     PORT MAP(
         clk => clk,
@@ -719,17 +724,23 @@ BEGIN
         EPC_output => EPC_out_to_processor
     );
 
+    write_back_1_forwarding_from_decode <=  wb_control_signals_from_decode(3);
+    write_back_2_forwarding_from_decode <=  wb_control_signals_from_decode(2);
+
     hazard_detection_inst : hazard_detection_unit PORT MAP(
         src_address1_fd => Rsrc1_from_fetch, --from fetch
         src_address2_fd => Rsrc2_from_fetch,
         dst_address_de => destination_address_to_execute, --from decode
-        write_back_1_de => wb_control_signals_from_decode(3),
-        memory_read_de => memory_control_signals_from_decode(9),
+        write_back_1_de => write_back_1_forwarding_from_decode,
+        memory_read_de => write_back_2_forwarding_from_decode,
         reg_read_controller => '0',
         PC_enable => pc_enable_hazard_detection_to_fetch,
         enable_fd => FD_enable_loaduse_to_fetch,
         reset_de => hazard_detection_flush_to_Decode --from decode
     );
+
+    memory_read_from_decode <= memory_control_signals_from_decode(9);
+    memory_read_from_execute <= control_signals_memory_out_from_execute(9);
 
     forwarding_unit_inst : forwarding_unit PORT MAP(
         src_address1_de => address_read1_in_to_execute, --from decode
@@ -742,8 +753,8 @@ BEGIN
         address2_mw => write_address2_out_from_memory,
         dst_address_fd => Rdest_from_fetch,
 
-        write_back_de_enable1 => wb_control_signals_from_decode(3), --from execute
-        write_back_de_enable2 => wb_control_signals_from_decode(2),
+        write_back_de_enable1 => write_back_1_forwarding_from_decode, --from execute
+        write_back_de_enable2 => write_back_2_forwarding_from_decode,
         --
         write_back_em_enable1 => write_back_1_forwarding_from_excute,
         write_back_em_enable2 => write_back_2_forwarding_from_excute,
@@ -751,8 +762,8 @@ BEGIN
         write_back_mw_enable1 => reg_write_enable1_in_to_wb,
         write_back_mw_enable2 => reg_write_enable2_in_to_wb,
 
-        memory_read_em => control_signals_memory_out_from_execute(9), --from execute stage
-        memory_read_de => memory_control_signals_from_decode(9), --from decode stage
+        memory_read_em => memory_read_from_execute, --from execute stage
+        memory_read_de => memory_read_from_decode, --from decode stage
         opp1_ALU_MUX_SEL => forwarding_mux_selector_op1, --outputed to execute
         opp2_ALU_MUX_SEL => forwarding_mux_selector_op2,
         opp_branching_mux_selector => branching_opp_mux_sel_forwarding_to_decode, --to decode
