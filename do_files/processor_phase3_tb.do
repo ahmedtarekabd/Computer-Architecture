@@ -34,7 +34,7 @@ sim:/processor_phase3_tb/dut/fetch_inst/pc_instruction_address
 
 # Decode
 add wave -position insertpoint  \
-sim:/processor_phase3_tb/dut/decode_inst/*
+sim:/processor_phase3_tb/dut/decode_inst/ctrl/*
 
 # RUN Testbench
 run             10 ns
