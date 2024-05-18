@@ -12,7 +12,7 @@ sim:/fetch_tb/clk \
 sim:/fetch_tb/reset
 
 # PC
-add wave -position insertpoint  \
+add wave -position insertpoint \
 sim:/fetch_tb/uut/program_counter/pc_out \
 sim:/fetch_tb/uut/program_counter/counter
 

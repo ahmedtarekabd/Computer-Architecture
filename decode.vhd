@@ -351,13 +351,13 @@ BEGIN
     execute_control_signals <= decode_execute_out(193 - 1 DOWNTO 193 - 7);
     memory_control_signals <= decode_execute_out(193 - 7 - 1 DOWNTO 193 - 7 - 11);
     wb_control_signals <= decode_execute_out(193 - 7 - 11 - 1 DOWNTO 193 - 24);
-    propagated_read_data1 <= decode_execute_out(193 - 23 - 1 DOWNTO 193 - 23 - 32);
-    propagated_read_data2 <= decode_execute_out(193 - 23 - 32 - 1 DOWNTO 193 - 23 - 32 - 32);
-    propagated_Rsrc1 <= decode_execute_out(193 - 23 - 32 - 32 - 1 DOWNTO 193 - 23 - 32 - 32 - 3);
-    propagated_Rsrc2 <= decode_execute_out(193 - 23 - 32 - 32 - 3 - 1 DOWNTO 193 - 23 - 32 - 32 - 3 - 3);
-    propagated_Rdest <= decode_execute_out(193 - 23 - 32 - 32 - 3 - 3 - 1 DOWNTO 193 - 23 - 32 - 32 - 3 - 3 - 3);
-    immediate_out <= decode_execute_out(193 - 23 - 32 - 32 - 3 - 3 - 3 - 1 DOWNTO 193 - 23 - 32 - 32 - 3 - 3 - 3 - 32);
-    propagated_pc <= decode_execute_out(193 - 23 - 32 - 32 - 3 - 3 - 3 - 32 - 1 DOWNTO 193 - 23 - 32 - 32 - 3 - 3 - 3 - 32 - 32);
-    propagated_pc_plus_one <= decode_execute_out(193 - 23 - 32 - 32 - 3 - 3 - 3 - 32 - 32 - 1 DOWNTO 193 - 23 - 32 - 32 - 3 - 3 - 3 - 32 - 32 - 32);
+    propagated_read_data1 <= decode_execute_out(193 - 24 - 1 DOWNTO 193 - 24 - 32);
+    propagated_read_data2 <= decode_execute_out(193 - 24 - 32 - 1 DOWNTO 193 - 24 - 32 - 32);
+    propagated_Rsrc1 <= decode_execute_out(193 - 24 - 32 - 32 - 1 DOWNTO 193 - 24 - 32 - 32 - 3);
+    propagated_Rsrc2 <= decode_execute_out(193 - 24 - 32 - 32 - 3 - 1 DOWNTO 193 - 24 - 32 - 32 - 3 - 3);
+    propagated_Rdest <= decode_execute_out(193 - 24 - 32 - 32 - 3 - 3 - 1 DOWNTO 193 - 24 - 32 - 32 - 3 - 3 - 3);
+    immediate_out <= decode_execute_out(193 - 24 - 32 - 32 - 3 - 3 - 3 - 1 DOWNTO 193 - 24 - 32 - 32 - 3 - 3 - 3 - 32);
+    propagated_pc <= decode_execute_out(193 - 24 - 32 - 32 - 3 - 3 - 3 - 32 - 1 DOWNTO 193 - 24 - 32 - 32 - 3 - 3 - 3 - 32 - 32);
+    propagated_pc_plus_one <= decode_execute_out(193 - 24 - 32 - 32 - 3 - 3 - 3 - 32 - 32 - 1 DOWNTO 193 - 24 - 32 - 32 - 3 - 3 - 3 - 32 - 32 - 32);
 
 END ARCHITECTURE rtl;

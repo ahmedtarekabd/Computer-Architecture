@@ -110,11 +110,12 @@ BEGIN
     -- Stimulus process
     stim_proc : PROCESS
     BEGIN
-        reset <= '1';
+        -- reset <= '1';
+        RST_signal <= '1';
         -- hold reset state for 100 ns.
         WAIT FOR 100 ns;
 
-        reset <= '0';
+        -- reset <= '0';
         -- insert stimulus here 
 
         -- ----------pc----------

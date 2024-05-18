@@ -234,7 +234,7 @@ def assemble_file(args):
     input_file : str = args[1]
     output_path : str  = args[2]
     # output_file = output_path + input_file.split('.')[0] + '.mem'
-    output_file = output_path + "data_memory.mem"
+    output_file = output_path + "/data_memory.mem"
     print("Input file: " + input_file)
     print("Output directory: " + output_path)
     with open(input_file, 'r') as f:

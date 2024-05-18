@@ -558,8 +558,8 @@ BEGIN
         interrupt_signal => interrupt_signal,
         zero_flag => zero_flag_out_controller_from_execute,
         -- WB
-        write_enable1 => reg_write_enable1_in_to_wb,
-        write_enable2 => reg_write_enable2_in_to_wb,
+        write_enable1 => reg_write_enable1_from_wb,
+        write_enable2 => reg_write_enable2_from_wb,
         write_address1 => write_address1_out_from_wb,
         write_address2 => write_address2_out_from_wb,
         write_data1 => read_data1_out_from_wb,

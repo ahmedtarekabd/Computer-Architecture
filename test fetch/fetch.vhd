@@ -78,7 +78,7 @@ ARCHITECTURE arch_fetch OF fetch1 IS
     END COMPONENT;
 
     -- Instruction Cache
-    COMPONENT instruction_cache1 IS
+    COMPONENT instruction_cache IS
         PORT (
             address_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
             data_out : OUT STD_LOGIC_VECTOR(15 DOWNTO 0)
@@ -104,6 +104,7 @@ ARCHITECTURE arch_fetch OF fetch1 IS
 
     --instruction cache
     SIGNAL instruction_out_from_instr_cache : STD_LOGIC_VECTOR(15 DOWNTO 0);
+    SIGNAL instruction_out_from_instr_cache_to_pc : STD_LOGIC_VECTOR(31 DOWNTO 0);
     -- SIGNAL FD_output : STD_LOGIC_VECTOR(80 DOWNTO 0); --the extra bit is the propagated immediate stall
 
     --internal signal for immediate register
@@ -139,14 +140,18 @@ ARCHITECTURE arch_fetch OF fetch1 IS
 
 BEGIN
     pc_plus_one <= STD_LOGIC_VECTOR(unsigned(pc_instruction_address) + 1);
-    sel_lower_mux1 <= pc_mux1_selector(0) OR RST_signal;
+    -- sel_lower_mux1 <= pc_mux1_selector(0) OR RST_signal;
+    -- sel_higher_mux1 <= pc_mux1_selector(1) OR RST_signal;
+    sel_lower_mux1 <= pc_mux1_selector(0) AND (NOT RST_signal);
     sel_higher_mux1 <= pc_mux1_selector(1) OR RST_signal;
+
+    instruction_out_from_instr_cache_to_pc <= (31 DOWNTO 16 => '0') & instruction_out_from_instr_cache;
 
     pc_mux1 : mux4x1 GENERIC MAP(32)
     PORT MAP(
         inputA => pc_plus_one,
         inputB => branch_address,
-        inputC => (OTHERS => '0'), -- unused
+        inputC => (others => '0') , -- unused
         inputD => read_data_from_memory,
         Sel_lower => sel_lower_mux1,
         Sel_higher => sel_higher_mux1,
@@ -168,8 +173,9 @@ BEGIN
     );
 
     --enabled when the pc enable coming from hazard detection unit is 1 and no interrupt signal (0)
-    pc_enable <= pc_enable_hazard_detection AND NOT interrupt_signal;
-    pc_reset <= reset OR FD_flush OR FD_flush_exception_unit OR RST_signal;
+    pc_enable <= pc_enable_hazard_detection AND (NOT interrupt_signal);
+    -- pc_reset <= reset OR FD_flush OR FD_flush_exception_unit OR RST_signal;
+    pc_reset <= reset OR FD_flush OR FD_flush_exception_unit;
 
     program_counter : my_nDFF GENERIC MAP(
         32) PORT MAP(
@@ -183,14 +189,14 @@ BEGIN
     propagated_pc <= pc_instruction_address;
     propagated_pc_plus_one <= STD_LOGIC_VECTOR(unsigned(pc_instruction_address) + 1);
 
-    inst_cache : instruction_cache1 PORT MAP(
+    inst_cache : instruction_cache PORT MAP(
         address_in => mux2_output,
         data_out => instruction_out_from_instr_cache
     );
 
     --for the three regs
     FD_flush_internal <= reset OR FD_flush OR FD_flush_exception_unit OR RST_signal;
-    FD_enable_internal <= (NOT immediate_stall) AND FD_enable AND FD_enable_loaduse;
+    FD_enable_internal <= NOT immediate_stall AND FD_enable AND FD_enable_loaduse; -- ay haga not alshan el default enaha be zero
     FD_reg : my_nDFF GENERIC MAP(16)
     PORT MAP(
         clk => clk,

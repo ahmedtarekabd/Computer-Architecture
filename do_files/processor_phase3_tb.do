@@ -46,7 +46,16 @@ sim:/processor_phase3_tb/dut/decode_inst/branching_or_normal_mux_selector \
 sim:/processor_phase3_tb/dut/decode_inst/execute_control_signals \
 sim:/processor_phase3_tb/dut/decode_inst/memory_control_signals \
 sim:/processor_phase3_tb/dut/decode_inst/wb_control_signals \
-sim:/processor_phase3_tb/dut/decode_inst/immediate_out 
+sim:/processor_phase3_tb/dut/decode_inst/immediate_out \
+sim:/processor_phase3_tb/dut/decode_inst/propagated_Rsrc1 \
+sim:/processor_phase3_tb/dut/decode_inst/propagated_Rsrc2 \
+sim:/processor_phase3_tb/dut/decode_inst/propagated_Rdest \
+sim:/processor_phase3_tb/dut/decode_inst/propagated_read_data1 \
+sim:/processor_phase3_tb/dut/decode_inst/Rsrc1 \
+sim:/processor_phase3_tb/dut/decode_inst/Rsrc2 \
+sim:/processor_phase3_tb/dut/decode_inst/Rdest
+
+
 #sim:/processor_phase3_tb/dut/decode_inst/decode_execute_flush \
 #sim:/processor_phase3_tb/dut/decode_inst/branch_prediction_flush \
 #sim:/processor_phase3_tb/dut/decode_inst/exception_handling_flush \
@@ -54,13 +63,17 @@ sim:/processor_phase3_tb/dut/decode_inst/immediate_out
 #sim:/processor_phase3_tb/dut/decode_inst/immediate_stall \
 
 # Execute
-add wave -position insertpoint  \
+add wave -position insertpoint \
+sim:/processor_phase3_tb/dut/excute_inst/destination_address \
+sim:/processor_phase3_tb/dut/excute_inst/address_read1_in \
+sim:/processor_phase3_tb/dut/excute_inst/ALU_result_before_EM \
+sim:/processor_phase3_tb/dut/excute_inst/data1_in \
+sim:/processor_phase3_tb/dut/excute_inst/alu_selectors \
 sim:/processor_phase3_tb/dut/excute_inst/forwarding_mux_selector_op1 \
 sim:/processor_phase3_tb/dut/excute_inst/forwarding_mux_selector_op2 \
 sim:/processor_phase3_tb/dut/excute_inst/overflow_flag_out_exception_handling \
 sim:/processor_phase3_tb/dut/excute_inst/zero_flag_out_controller \
-sim:/processor_phase3_tb/dut/excute_inst/flag_register_out \
-sim:/processor_phase3_tb/dut/excute_inst/alu_out 
+sim:/processor_phase3_tb/dut/excute_inst/flag_register_out
 
 # Memory
 add wave -position insertpoint  \
@@ -77,6 +90,11 @@ sim:/processor_phase3_tb/dut/mem_inst/CCR_in \
 sim:/processor_phase3_tb/dut/mem_inst/mem_read_data \
 sim:/processor_phase3_tb/dut/mem_inst/PC_out_to_exception \
 sim:/processor_phase3_tb/dut/mem_inst/protected_address_access_to_exception 
+
+#WB
+add wave -position insertpoint \
+sim:/processor_phase3_tb/dut/write_back_inst/destination_address_in \
+sim:/processor_phase3_tb/dut/write_back_inst/ALU_result 
 
 
 
