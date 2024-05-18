@@ -343,7 +343,7 @@ BEGIN
         q => decode_execute_out
     );
 
-    immediate_stall <= isImmediate;
+    -- immediate_stall <= isImmediate;
     in_port <= in_port_in;
     out_port <= read_data1_in;
 
