@@ -19,6 +19,7 @@ sim:/processor_phase3_tb/*
 add wave -position insertpoint \
 sim:/processor_phase3_tb/dut/excute_inst/overflow_flag_out_exception_handling \
 sim:/processor_phase3_tb/dut/excute_inst/zero_flag_out_controller \
+sim:/processor_phase3_tb/dut/excute_inst/flag_register_in_temp \
 sim:/processor_phase3_tb/dut/excute_inst/flag_register_out
 
 #sim:/processor_phase3_tb/dut/excute_inst/forwarding_mux_selector_op2 \

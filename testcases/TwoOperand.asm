@@ -11,10 +11,10 @@ FF
 .ORG FF
 
 NOP
-#IN R1             #add 5 in R1
-#IN R2             #add 19 in R2
-#IN R3             #FFFFFFFF
-#IN R4             #FFFFF320
+IN R1             #add 5 in R1
+IN R2             #add 19 in R2
+IN R3             #FFFFFFFF
+IN R4             #FFFFF320
 MOV R5, R3         #R5 = FFFFFFFF , flags no change
 ADD R4,R1,R4      #R4= FFFFF325 , C-->0, N-->1, Z-->0
 SUB R6,R5,R4      #R6= 00000CDA , C-->0, N-->0,Z-->0 here carry is implemented as borrow, you can implement it as not borrow

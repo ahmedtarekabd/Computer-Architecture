@@ -102,6 +102,14 @@ sim:/processor_phase3_tb/dut/mem_inst/protected_address_access_to_exception
 #WB
 add wave -position insertpoint \
 sim:/processor_phase3_tb/dut/write_back_inst/destination_address_in \
+sim:/processor_phase3_tb/dut/excute_inst/address_read1_out \
+sim:/processor_phase3_tb/dut/excute_inst/address_read2_out \
+sim:/processor_phase3_tb/dut/excute_inst/data1_swapping_out \
+sim:/processor_phase3_tb/dut/excute_inst/data2_swapping_out \
+sim:/processor_phase3_tb/dut/mem_inst/read_data1_out \
+sim:/processor_phase3_tb/dut/mem_inst/read_data2_out \
+sim:/processor_phase3_tb/dut/mem_inst/write_address1_out \
+sim:/processor_phase3_tb/dut/mem_inst/write_address2_out \
 sim:/processor_phase3_tb/dut/write_back_inst/read_data1_in \
 sim:/processor_phase3_tb/dut/write_back_inst/read_data2_in \
 sim:/processor_phase3_tb/dut/write_back_inst/read_address1_in \
