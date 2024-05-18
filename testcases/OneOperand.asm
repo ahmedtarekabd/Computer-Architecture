@@ -11,8 +11,8 @@ A0
 .ORG A0
 NOP            #No change
 NOP            #No change
-NOT R1         #R1 =FFFFFFFF , C--> no change, N --> 1, Z --> 0
-INC R3	       #R1 =00000000 , C --> 1 , N --> 0 , Z --> 1
+NOT R1         #R1 =FFFFFFFF , C--> no change, N --> 1, Z --> 0         #--zero / overflow flag /carry / negative flag
+INC R1	       #R1 =00000000 , C --> 1 , N --> 0 , Z --> 1
 IN R1	       #R1= 5,add 5 on the in port,flags no change	
 IN R2          #R2= 10,add 10 on the in port, flags no change
 NOT R2	       #R2= FFFFFFEF, C--> no change, N -->1,Z-->0

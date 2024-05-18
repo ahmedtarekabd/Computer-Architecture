@@ -42,6 +42,9 @@ BEGIN
             IF read_enable = '1' THEN
                 read_data1 <= registers_array(to_integer(unsigned(read_address1)));
                 read_data2 <= registers_array(to_integer(unsigned(read_address2)));
+            ELSE
+                read_data1 <= (OTHERS => '0');
+                read_data2 <= (OTHERS => '0');
             END IF;
         END IF;
     END PROCESS;

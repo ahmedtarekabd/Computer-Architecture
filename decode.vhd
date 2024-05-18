@@ -19,7 +19,7 @@ ENTITY decode IS
         immediate_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
         propagated_pc_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
         propagated_pc_plus_one_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
-        in_port_in : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+        in_port_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
 
         -- Signals
         interrupt_signal : IN STD_LOGIC; -- From Processor file
@@ -343,7 +343,7 @@ BEGIN
         q => decode_execute_out
     );
 
-    immediate_stall <= isImmediate;
+    -- immediate_stall <= isImmediate;
     in_port <= in_port_in;
     out_port <= read_data1_in;
 

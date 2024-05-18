@@ -24,7 +24,7 @@ ARCHITECTURE tb_arch OF processor_phase3_tb IS
     SIGNAL reset : STD_LOGIC := '0';
     SIGNAL RST_signal : STD_LOGIC := '0';
     SIGNAL interrupt_signal : STD_LOGIC := '0';
-    SIGNAL in_port_from_processor : STD_LOGIC_VECTOR(31 DOWNTO 0) := (OTHERS => '0');
+    SIGNAL in_port_from_processor : STD_LOGIC_VECTOR(31 DOWNTO 0) := "00000000000000000000000000000010";
     SIGNAL out_port_to_processor : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL EPC_out_to_processor : STD_LOGIC_VECTOR(32 DOWNTO 0);
 

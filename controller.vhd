@@ -121,7 +121,7 @@ BEGIN
 		END IF;
 	END PROCESS;
 
-	PROCESS (clk) IS -- opcode, interrupt_signal?
+	PROCESS (clk, opcode) IS -- opcode, interrupt_signal?
 	BEGIN
 
 		-- ASSERT (interrupt_signal = '0' AND interrupt_state = instruction AND isImmediate = '1') REPORT "Control" SEVERITY error;
@@ -235,7 +235,7 @@ BEGIN
 				WHEN update_pc =>
 					interrupt_state <= instruction;
 			END CASE;
-		ELSIF (rising_edge(clk) AND interrupt_signal = '0' AND interrupt_state = instruction) THEN
+		ELSIF (interrupt_signal = '0' AND interrupt_state = instruction) THEN
 			-- fetch
 			fetch_pc_mux1 <=
 				"01" WHEN opcode = JZ_INST OR opcode = JMP_INST OR opcode = CALL_INST ELSE
@@ -249,7 +249,7 @@ BEGIN
 
 			-- decode
 			decode_reg_read <=
-				'0' WHEN opcode = NOP_INST OR opcode = POP_INST OR opcode = RET_INST OR opcode = RTI_INST OR opcode = IN_INST ELSE
+				'0' WHEN opcode = NOP_INST OR opcode = POP_INST OR opcode = RET_INST OR opcode = RTI_INST OR opcode = SWAP_INST ELSE
 				'1';
 
 			decode_sign_extend <=
@@ -263,14 +263,14 @@ BEGIN
 
 			-- execute
 			execute_alu_sel <=
-				"011" WHEN opcode = MOV_INST OR opcode = LDM_INST ELSE
+				"000" WHEN opcode = NEG_INST ELSE
 				"001" WHEN opcode = INC_INST OR opcode = ADD_INST OR opcode = ADDI_INST OR opcode = LDD_INST OR opcode = STD_INST ELSE
-				"010" WHEN opcode = DEC_INST OR opcode = NEG_INST OR opcode = SUB_INST OR opcode = SUBI_INST OR opcode = CMP_INST ELSE
+				"010" WHEN opcode = DEC_INST OR opcode = SUB_INST OR opcode = SUBI_INST OR opcode = CMP_INST ELSE
 				"111" WHEN opcode = NOT_INST ELSE
 				"100" WHEN opcode = AND_INST ELSE
 				"101" WHEN opcode = OR_INST ELSE
 				"110" WHEN opcode = XOR_INST ELSE
-				"000";
+				"011"; -- WHEN opcode = MOV_INST OR opcode = LDM_INST ELSE
 
 			execute_alu_src2 <=
 				"01" WHEN opcode = LDM_INST OR opcode = ADDI_INST OR opcode = LDD_INST OR opcode = STD_INST OR opcode = SUBI_INST ELSE
@@ -328,7 +328,7 @@ BEGIN
 				"00";
 
 			write_back_register_write1 <=
-				'1' WHEN opcode = POP_INST OR opcode = SWAP_INST OR opcode = MOV_INST OR opcode = LDM_INST OR opcode = INC_INST OR opcode = ADD_INST OR opcode = ADDI_INST OR opcode = LDD_INST OR opcode = DEC_INST OR opcode = NEG_INST OR opcode = SUB_INST OR opcode = SUBI_INST OR opcode = NOT_INST OR opcode = AND_INST OR opcode = OR_INST OR opcode = XOR_INST ELSE
+				'1' WHEN opcode = POP_INST OR opcode = IN_INST OR opcode = SWAP_INST OR opcode = MOV_INST OR opcode = LDM_INST OR opcode = INC_INST OR opcode = ADD_INST OR opcode = ADDI_INST OR opcode = LDD_INST OR opcode = DEC_INST OR opcode = NEG_INST OR opcode = SUB_INST OR opcode = SUBI_INST OR opcode = NOT_INST OR opcode = AND_INST OR opcode = OR_INST OR opcode = XOR_INST ELSE
 				'0';
 
 			write_back_register_write2 <=

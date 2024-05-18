@@ -19,7 +19,6 @@ END ENTITY processor_phase3;
 ARCHITECTURE arch_processor OF processor_phase3 IS
 
     --**********************************************************COMPONENTS*************************************************--
-
     COMPONENT forwarding_unit
         PORT (
             -- Addresses
@@ -176,7 +175,7 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
             immediate_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
             propagated_pc_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
             propagated_pc_plus_one_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
-            in_port_in : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+            in_port_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
 
             -- Signals
             interrupt_signal : IN STD_LOGIC; -- From Processor file
@@ -257,12 +256,12 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
             destination_address_out : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
             address_read1_out : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
             address_read2_out : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
-            flag_register_out : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);
+            flag_register_out : OUT STD_LOGIC_VECTOR (3 DOWNTO 0);         --zero / overflow flag /carry / negative flag
             alu_out : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
             immediate_enable_out : OUT STD_LOGIC;
             data1_swapping_out : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
             data2_swapping_out : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
-            zero_flag_out_controller : OUT STD_LOGIC;
+            zero_flag_out_controller : OUT STD_LOGIC; 
             overflow_flag_out_exception_handling : OUT STD_LOGIC;
             address1_out_forwarding_unit : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
             address2_out_forwarding_unit : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
@@ -695,16 +694,6 @@ BEGIN
     reg_write_enable2_in_to_wb <= wb_control_signals_out_from_memory(2);
     reg_write_address1_mux_to_wb <= wb_control_signals_out_from_memory(1);
 
-    --* output port
-    --check the control signal and depending on it it will ouput data 1 or no
-    PROCESS (read_data1_out_from_memory, wb_control_signals_out_from_memory(0))
-    BEGIN
-        IF wb_control_signals_out_from_memory(0) = '1' THEN
-            out_port_to_processor <= read_data1_out_from_memory;
-        ELSE
-            out_port_to_processor <= (OTHERS => '-'); -- don't care
-        END IF;
-    END PROCESS;
 
     exception_handling_inst : exception_handling_unit PORT MAP(
         clk => clk,
@@ -792,5 +781,17 @@ BEGIN
         reg_write_enable1_out => reg_write_enable1_from_wb,
         reg_write_enable2_out => reg_write_enable2_from_wb
     );
+
+    --* output port
+    --check the control signal and depending on it it will ouput data 1 or no
+    PROCESS (read_data2_out_from_wb, wb_control_signals_out_from_memory(0))
+    BEGIN
+        IF wb_control_signals_out_from_memory(0) = '1' THEN
+            out_port_to_processor <= read_data2_out_from_wb;
+        ELSE
+            out_port_to_processor <= (OTHERS => '-'); -- don't care
+        END IF;
+    END PROCESS;
+
 
 END ARCHITECTURE arch_processor;

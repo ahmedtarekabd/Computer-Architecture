@@ -30,6 +30,10 @@ sim:/processor_phase3_tb/dut/fetch_inst/imm_flag \
 sim:/processor_phase3_tb/dut/fetch_inst/in_port_out \
 sim:/processor_phase3_tb/dut/fetch_inst/propagated_pc \
 sim:/processor_phase3_tb/dut/fetch_inst/propagated_pc_plus_one \
+sim:/processor_phase3_tb/dut/fetch_inst/immediate_stall \
+sim:/processor_phase3_tb/dut/immediate_stall_to_fetch_and_decode \
+sim:/processor_phase3_tb/dut/fetch_inst/FD_enable_internal \
+sim:/processor_phase3_tb/dut/fetch_inst/FD_enable_imm_internal \
 sim:/processor_phase3_tb/dut/fetch_inst/pc_instruction_address 
 
 # Decode
@@ -42,6 +46,9 @@ sim:/processor_phase3_tb/dut/decode_inst/forwarded_data1_em \
 sim:/processor_phase3_tb/dut/decode_inst/forwarded_data2_em \
 sim:/processor_phase3_tb/dut/decode_inst/branching_op_mux_selector \
 sim:/processor_phase3_tb/dut/decode_inst/branching_or_normal_mux_selector \
+sim:/processor_phase3_tb/dut/decode_inst/Rsrc1 \
+sim:/processor_phase3_tb/dut/decode_inst/Rsrc2 \
+sim:/processor_phase3_tb/dut/decode_inst/Rdest \
 sim:/processor_phase3_tb/dut/decode_inst/execute_control_signals \
 sim:/processor_phase3_tb/dut/decode_inst/memory_control_signals \
 sim:/processor_phase3_tb/dut/decode_inst/wb_control_signals \
@@ -51,10 +58,7 @@ sim:/processor_phase3_tb/dut/decode_inst/propagated_Rsrc2 \
 sim:/processor_phase3_tb/dut/decode_inst/propagated_Rdest \
 sim:/processor_phase3_tb/dut/decode_inst/propagated_read_data1 \
 sim:/processor_phase3_tb/dut/decode_inst/read_data1_in \
-sim:/processor_phase3_tb/dut/decode_inst/decode_reg_read \
-sim:/processor_phase3_tb/dut/decode_inst/Rsrc1 \
-sim:/processor_phase3_tb/dut/decode_inst/Rsrc2 \
-sim:/processor_phase3_tb/dut/decode_inst/Rdest
+sim:/processor_phase3_tb/dut/decode_inst/decode_reg_read
 add wave -position end sim:/processor_phase3_tb/dut/decode_inst/register_file_instance/*
 
 #sim:/processor_phase3_tb/dut/decode_inst/decode_execute_flush \
@@ -98,9 +102,19 @@ sim:/processor_phase3_tb/dut/mem_inst/protected_address_access_to_exception
 #WB
 add wave -position insertpoint \
 sim:/processor_phase3_tb/dut/write_back_inst/destination_address_in \
+sim:/processor_phase3_tb/dut/write_back_inst/read_data1_in \
+sim:/processor_phase3_tb/dut/write_back_inst/read_data2_in \
+sim:/processor_phase3_tb/dut/write_back_inst/read_address1_in \
+sim:/processor_phase3_tb/dut/write_back_inst/read_address2_in \
 sim:/processor_phase3_tb/dut/write_back_inst/ALU_result 
 
-
-
 # RUN Testbench
+run             10 ns
+force -freeze sim:/processor_phase3_tb/in_port_from_processor 00000000000000000000000000000101 0
+run             10 ns
+force -freeze sim:/processor_phase3_tb/in_port_from_processor 00000000000000000000000000001101 0
+run             10 ns
+force -freeze sim:/processor_phase3_tb/in_port_from_processor 11111111111111111111111111111111 0
+run             10 ns
+force -freeze sim:/processor_phase3_tb/in_port_from_processor 11111111111111111111001100100000 0
 run             10 ns
