@@ -51,8 +51,8 @@ ENTITY decode IS
         in_port : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
         out_port : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
         -- Propagated signals
-        execute_control_signals : OUT STD_LOGIC_VECTOR(5 DOWNTO 0);
-        memory_control_signals : OUT STD_LOGIC_VECTOR(10 DOWNTO 0);
+        execute_control_signals : OUT STD_LOGIC_VECTOR(6 DOWNTO 0);
+        memory_control_signals : OUT STD_LOGIC_VECTOR(9 DOWNTO 0);
         wb_control_signals : OUT STD_LOGIC_VECTOR(5 DOWNTO 0);
         propagated_read_data1 : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
         propagated_read_data2 : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
@@ -198,8 +198,8 @@ ARCHITECTURE rtl OF decode IS
 
     -- Outputs holder
     SIGNAL control_signals_in : STD_LOGIC_VECTOR(22 DOWNTO 0);
-    SIGNAL execute_control_signals_in : STD_LOGIC_VECTOR(5 DOWNTO 0); --*Changed thiss
-    SIGNAL memory_control_signals_in : STD_LOGIC_VECTOR(10 DOWNTO 0);
+    SIGNAL execute_control_signals_in : STD_LOGIC_VECTOR(6 DOWNTO 0); --*Changed thiss
+    SIGNAL memory_control_signals_in : STD_LOGIC_VECTOR(9 DOWNTO 0);
     SIGNAL wb_control_signals_in : STD_LOGIC_VECTOR(5 DOWNTO 0); --because it have the out port with it
     SIGNAL read_data1_in : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL read_data2_in : STD_LOGIC_VECTOR(31 DOWNTO 0);
@@ -232,13 +232,13 @@ BEGIN
         decode_sign_extend,
         decode_execute_flush,
 
-        -- execute signals - 6 bits
+        -- execute signals - 7 bits
         execute_alu_sel,
         execute_alu_src2,
         decode_branch,
         conditional_jump,
 
-        -- memory signals - 11 bits
+        -- memory signals - 10 bits
         memory_write,
         memory_read,
         memory_stack_pointer,
@@ -296,20 +296,19 @@ BEGIN
     branch_pc_address <= (OTHERS => '0') WHEN branching_or_normal_mux_selector = '0' ELSE
         forward_mux;
 
-    -- execute signals - 6 bits
+    -- execute signals - 7 bits
     execute_control_signals_in <= execute_alu_sel
         & execute_alu_src2
-        -- & decode_branch
+        & execute_memory_flush
         & conditional_jump;
-    -- memory signals - 11 bits
+    -- memory signals - 10 bits
     memory_control_signals_in <= memory_write
         & memory_read
         & memory_stack_pointer
         & memory_address
         & memory_write_data
         & memory_protected
-        & memory_free
-        & execute_memory_flush;
+        & memory_free;
     -- write back signals - 6 bits
     wb_control_signals_in <= write_back_register_write_data_1
         & write_back_register_write1
@@ -319,9 +318,9 @@ BEGIN
 
     -- output
     control_signals_in <=
-        -- execute signals - 6 bits
+        -- execute signals - 7 bits
         execute_control_signals_in
-        -- memory signals - 11 bits
+        -- memory signals - 10 bits
         & memory_control_signals_in
         -- write back signals - 6 bits
         & wb_control_signals_in;
@@ -348,9 +347,9 @@ BEGIN
 
     -- length = start - end + 1
     -- end = start - length + 1
-    execute_control_signals <= decode_execute_out(192 - 1 DOWNTO 192 - 6);
-    memory_control_signals <= decode_execute_out(192 - 6 - 1 DOWNTO 192 - 6 - 11);
-    wb_control_signals <= decode_execute_out(192 - 6 - 11 - 1 DOWNTO 192 - 23);
+    execute_control_signals <= decode_execute_out(192 - 1 DOWNTO 192 - 7);
+    memory_control_signals <= decode_execute_out(192 - 7 - 1 DOWNTO 192 - 7 - 10);
+    wb_control_signals <= decode_execute_out(192 - 7 - 10 - 1 DOWNTO 192 - 23);
     propagated_read_data1 <= decode_execute_out(192 - 23 - 1 DOWNTO 192 - 23 - 32);
     propagated_read_data2 <= decode_execute_out(192 - 23 - 32 - 1 DOWNTO 192 - 23 - 32 - 32);
     propagated_Rsrc1 <= decode_execute_out(192 - 23 - 32 - 32 - 1 DOWNTO 192 - 23 - 32 - 32 - 3);
