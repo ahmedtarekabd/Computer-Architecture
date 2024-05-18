@@ -72,8 +72,9 @@ BEGIN
                         --default is that the last bit is 0 (free)
                         memory_array(to_integer(unsigned(address))) <= '0' & write_data(31 DOWNTO 16);
                         memory_array(to_integer(unsigned(address) + 1)) <= '0' & write_data (15 DOWNTO 0);
-                        -- ELSE
-                        --what should i output if the protected bit is 1?
+                    ELSE
+                        --if protected address is accessed then output an eception signal
+                        protected_address_access <= '1';
                     END IF;
 
                 END IF;
