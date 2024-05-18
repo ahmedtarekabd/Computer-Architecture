@@ -2,7 +2,6 @@ LIBRARY ieee;
 USE ieee.std_logic_1164.ALL;
 USE ieee.numeric_std.ALL;
 
---TODO: figure out how to add the output port
 ENTITY processor_phase3 IS
     PORT (
         clk : IN STD_LOGIC;
@@ -795,11 +794,3 @@ BEGIN
     );
 
 END ARCHITECTURE arch_processor;
-
---TODO: add output port -> done
---TODO: add exception handling unit -> done
---TODO: add hazard detection unit -> done
---TODO: add forwarding unit -> done
---TODO: check overflow and carry flags in the alu -> done
---TODO: add decode -> done
---TODO: modify the memory
