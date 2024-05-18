@@ -95,7 +95,7 @@ BEGIN
 	-- decode_execute propagates this enable signal
 	PROCESS (clk)
 	BEGIN
-		IF falling_edge(clk) THEN
+		IF rising_edge(clk) THEN
 			-- FSM
 			CASE immediate_state IS
 				WHEN instruction =>

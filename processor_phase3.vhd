@@ -176,7 +176,7 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
             immediate_in : IN STD_LOGIC_VECTOR(15 DOWNTO 0);
             propagated_pc_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
             propagated_pc_plus_one_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
-            in_port_in : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+            in_port_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
 
             -- Signals
             interrupt_signal : IN STD_LOGIC; -- From Processor file
