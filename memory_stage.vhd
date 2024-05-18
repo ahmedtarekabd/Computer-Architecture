@@ -155,7 +155,7 @@ BEGIN
             mem_address_mux_selectors <= "10";
         END IF;
     END PROCESS;
-    
+
     mem_address_mux : mux4x1
     GENERIC MAP(n => 12)
     PORT MAP(
@@ -200,15 +200,14 @@ BEGIN
     PORT MAP(
         clk => clk,
         -- addressing the memory using the 12 bits only
-        address => "000000000000",
-        write_enable => '1',
+        address => mem_address_mux_out(11 DOWNTO 0),
+        write_enable => mem_control_signals_in(9),
         write_data => MW_data_mux_out,
         read_enable => read_enable,
         read_data => mem_read_data_internal,
         protect_signal => mem_control_signals_in(1),
         free_signal => mem_control_signals_in(0),
         protected_address_access => protected_address_access_to_exception
-
     );
 
     wb_control_signals_out <= q_output(142 DOWNTO 137);
