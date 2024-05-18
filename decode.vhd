@@ -5,6 +5,9 @@ ENTITY decode IS
     PORT (
         clk : IN STD_LOGIC;
         reset : IN STD_LOGIC;
+        branch_prediction_flush : IN STD_LOGIC;
+        exception_handling_flush : IN STD_LOGIC;
+        hazard_detection_flush : IN STD_LOGIC;
 
         --* Inputs
         -- instruction 
@@ -205,6 +208,8 @@ ARCHITECTURE rtl OF decode IS
     SIGNAL decode_execute_out : STD_LOGIC_VECTOR(193 - 1 DOWNTO 0);
     SIGNAL forward_mux : STD_LOGIC_VECTOR(31 DOWNTO 0);
 
+    --
+    SIGNAL reg_reset : STD_LOGIC := '0';
 BEGIN
 
     isImmediate <= imm_flag;
@@ -325,11 +330,13 @@ BEGIN
     decode_execute_in <= control_signals_in & read_data1_in & read_data2_in & Rsrc1 & Rsrc2 & Rdest
         & immediate_out & propagated_pc_plus_one_in & propagated_pc_in;
 
+    reg_reset <= reset OR decode_execute_flush OR branch_prediction_flush OR exception_handling_flush OR hazard_detection_flush OR (NOT immediate_stall);
+
     decode_execute : my_nDFF
     GENERIC MAP(193)
     PORT MAP(
         clk => clk,
-        reset => decode_execute_flush,
+        reset => reg_reset,
         enable => isImmediate,
         d => decode_execute_in,
         q => decode_execute_out
