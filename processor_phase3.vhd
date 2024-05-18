@@ -268,7 +268,9 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
             in_port_input : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
             in_port_output : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
             control_signals_memory_out : OUT STD_LOGIC_VECTOR (10 DOWNTO 0);
-            control_signals_write_back_out : OUT STD_LOGIC_VECTOR (5 DOWNTO 0)
+            control_signals_write_back_out : OUT STD_LOGIC_VECTOR (5 DOWNTO 0);
+            ALU_result_before_EM : out STD_LOGIC_VECTOR(31 DOWNTO 0)
+
         );
     END COMPONENT;
 
@@ -279,6 +281,7 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
             clk : IN STD_LOGIC;
             --control signals
             --TODO: confirm this size with tarek (order of bits as the report)
+            MW_flush_from_controller : IN STD_LOGIC;
             mem_control_signals_in : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
             wb_control_signals_in : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
             RST : IN STD_LOGIC;
@@ -390,6 +393,10 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
 
     --*--------Decode----------
 
+    --from forwarding
+    SIGNAL branching_opp_mux_sel_forwarding_to_decode : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    SIGNAL branching_or_normal_sel_forwarding_to_decode: STD_LOGIC;
+
     --output
     SIGNAL in_port_from_Decode : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL immediate_stall_to_fetch_and_decode : STD_LOGIC;
@@ -409,8 +416,10 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
     SIGNAL data2_in_to_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL immediate_in_to_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
 
+    --from execute
+    SIGNAL alu_result_from_Execution_before_EM : STD_LOGIC_VECTOR(31 DOWNTO 0);
+
     --from controller
-    SIGNAL immediate_stall_in_to_execute : STD_LOGIC;
     SIGNAL EM_enable_in_to_execute : STD_LOGIC;
     SIGNAL EM_flush_in_to_execute : STD_LOGIC;
     SIGNAL alu_src2_selector_to_execute : STD_LOGIC_VECTOR(1 DOWNTO 0);
@@ -434,7 +443,6 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
     SIGNAL data2_swapping_out_from_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL flag_register_out_from_execute : STD_LOGIC_VECTOR(3 DOWNTO 0);
     SIGNAL alu_out_from_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
-    SIGNAL immediate_enable_out_from_execute : STD_LOGIC;
     SIGNAL in_port_from_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL pc_out_to_exception_from_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
 
@@ -519,6 +527,8 @@ BEGIN
     );
 
     ----------Decode---------- 
+    --TODO:add MW_flush_from_controller : IN STD_LOGIC; -> MW_flush_to_memory
+    --TODO: add tarek new signals
 
     decode_inst : decode
     PORT MAP(
@@ -559,13 +569,13 @@ BEGIN
         propagated_pc => pc_in_to_excute,
         propagated_pc_plus_one => pc_plus_1_in_to_excute,
         --
-        forwarded_alu_execute = >,
-        forwarded_data1_mw = >,
-        forwarded_data2_mw = >,
-        forwarded_data1_em = >,
-        forwarded_data2_em = >,
-        branching_op_mux_selector = >,
-        branching_or_normal_mux_selector =>
+        forwarded_alu_execute =>alu_result_from_Execution_before_EM, --TODO: check from tarek enha abl el reg msh b3d
+        forwarded_data1_mw => read_data1_out_from_memory,
+        forwarded_data2_mw => read_data2_out_from_memory,
+        forwarded_data1_em => data1_swapping_out_from_execute,
+        forwarded_data2_em => data2_swapping_out_from_execute,
+        branching_op_mux_selector => branching_opp_mux_sel_forwarding_to_decode,
+        branching_or_normal_mux_selector => branching_or_normal_sel_forwarding_to_decode
     );
 
     ----------Execute----------
@@ -576,7 +586,8 @@ BEGIN
         destination_address => destination_address_to_execute,
         address_read1_in => address_read1_in_to_execute,
         address_read2_in => address_read2_in_to_execute,
-        immediate_enable_in => immediate_stall_in_to_execute,
+        alu_result_before_EM => alu_result_from_Execution_before_EM,
+        immediate_enable_in => '0',
         data1_in => data1_in_to_execute,
         data2_in => data2_in_to_execute,
         immediate_in => immediate_in_to_execute,
@@ -602,7 +613,7 @@ BEGIN
         address_read2_out => address_read2_out_from_execute,
         flag_register_out => flag_register_out_from_execute,
         alu_out => alu_out_from_execute,
-        immediate_enable_out => immediate_enable_out_from_execute, --it shouldn't be propagated
+        immediate_enable_out => open,
         data1_swapping_out => data1_swapping_out_from_execute,
         data2_swapping_out => data2_swapping_out_from_execute,
         zero_flag_out_controller => zero_flag_out_controller_from_execute,
@@ -622,6 +633,7 @@ BEGIN
     ----------Memory----------
     mem_inst : memory_stage PORT MAP(
         clk => clk,
+        MW_flush_from_controller => MW_flush_to_memory,
         mem_control_signals_in => control_signals_memory_out_from_execute,
         wb_control_signals_in => control_signals_write_back_out_from_execute,
         RST => RST_signal,
@@ -629,7 +641,7 @@ BEGIN
         MW_flush_from_exception => MW_flush_from_exception_to_memory,
         PC_in => pc_out_from_execute,
         PC_plus_one_in => pc_plus_1_out_from_execute,
-        imm_enable_in => immediate_enable_out_from_execute,
+        imm_enable_in => '0',
         destination_address_in => destination_address_out_from_execute,
         write_address1_in => address_read1_out_from_execute,
         write_address2_in => address_read2_out_from_execute,
@@ -651,7 +663,6 @@ BEGIN
         in_port_out => in_port_from_memory
     );
     --* wb control signals
-    --TODO: check if the control signals are correct from tarek
     -- rscr1_data -> bit(5->4)
     --reg_write_enable1 -> bit (3)
     --reg_write_enable2 -> bit(2)
@@ -687,7 +698,7 @@ BEGIN
         exception_out_port => OPEN, --1 if an exception is detected, 0 otherwise --TODO:do we need it?
         second_pc_mux_out => pc_mux2_selector_to_fetch,
         FD_flush => FD_flush_exception_unit_to_fetch,
-        DE_flush = >,
+        DE_flush =>,
         EM_flush => EM_flush_exception_handling_to_excute,
         MW_flush => MW_flush_from_exception_to_memory,
         EPC_output => EPC_out_to_processor
@@ -696,13 +707,13 @@ BEGIN
     hazard_detection_inst : hazard_detection_unit PORT MAP(
         src_address1_fd => Rsrc1_from_fetch, --from fetch
         src_address2_fd => Rsrc2_from_fetch,
-        dst_address_de = >, --from decode
-        write_back_1_de = >,
-        memory_read_de = >,
-        reg_read_controller = >,
+        dst_address_de => destination_address_to_execute, --from decode
+        write_back_1_de => wb_control_signals_from_decode(3),
+        memory_read_de => memory_control_signals_from_decode(9),
+        reg_read_controller => '0',
         PC_enable => pc_enable_hazard_detection_to_fetch,
         enable_fd => FD_enable_loaduse_to_fetch,
-        reset_de => --from decode
+        reset_de =>  --from decode
     );
 
     forwarding_unit_inst : forwarding_unit PORT MAP(
@@ -725,12 +736,13 @@ BEGIN
         write_back_mw_enable1 => reg_write_enable1_in_to_wb,
         write_back_mw_enable2 => reg_write_enable2_in_to_wb,
 
-        memory_read_em => memory_read_em, --from execute stage
-        memory_read_de => memory_read_de, --from decode stage
+        memory_read_em => control_signals_memory_out_from_execute(9), --from execute stage
+        memory_read_de => memory_control_signals_from_decode(9), --from decode stage
         opp1_ALU_MUX_SEL => forwarding_mux_selector_op1, --outputed to execute
         opp2_ALU_MUX_SEL => forwarding_mux_selector_op2,
-        opp_branching_mux_selector => opp_branching_mux_selector, --to decode
-        opp_branch_or_normal_mux_selector => opp_branch_or_normal_mux_selector,
+        opp_branching_mux_selector => branching_opp_mux_sel_forwarding_to_decode, --to decode
+        opp_branch_or_normal_mux_selector => branching_or_normal_sel_forwarding_to_decode,
+        
         load_use_hazard => OPEN --not used
     );
 
@@ -764,6 +776,6 @@ END ARCHITECTURE arch_processor;
 --TODO: add exception handling unit -> done
 --TODO: add hazard detection unit -> done
 --TODO: add forwarding unit -> done
---TODO: check overflow and carry flags in the alu
---TODO: add decode
+--TODO: check overflow and carry flags in the alu -> done
+--TODO: add decode -> done
 --TODO: modify the memory
