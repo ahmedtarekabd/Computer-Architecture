@@ -33,7 +33,45 @@ sim:/processor_phase3_tb/dut/fetch_inst/pc_instruction_address
 
 # Decode
 add wave -position insertpoint  \
-sim:/processor_phase3_tb/dut/decode_inst/*
+sim:/processor_phase3_tb/dut/decode_inst/interrupt_signal \
+sim:/processor_phase3_tb/dut/decode_inst/forwarded_alu_execute \
+sim:/processor_phase3_tb/dut/decode_inst/forwarded_data1_mw \
+sim:/processor_phase3_tb/dut/decode_inst/forwarded_data2_mw \
+sim:/processor_phase3_tb/dut/decode_inst/forwarded_data1_em \
+sim:/processor_phase3_tb/dut/decode_inst/forwarded_data2_em \
+sim:/processor_phase3_tb/dut/decode_inst/branching_op_mux_selector \
+sim:/processor_phase3_tb/dut/decode_inst/branching_or_normal_mux_selector \
+sim:/processor_phase3_tb/dut/decode_inst/execute_control_signals \
+sim:/processor_phase3_tb/dut/decode_inst/memory_control_signals \
+sim:/processor_phase3_tb/dut/decode_inst/wb_control_signals \
+sim:/processor_phase3_tb/dut/decode_inst/immediate_out 
+
+# Execute
+add wave -position insertpoint  \
+sim:/processor_phase3_tb/dut/excute_inst/forwarding_mux_selector_op1 \
+sim:/processor_phase3_tb/dut/excute_inst/forwarding_mux_selector_op2 \
+sim:/processor_phase3_tb/dut/excute_inst/overflow_flag_out_exception_handling \
+sim:/processor_phase3_tb/dut/excute_inst/zero_flag_out_controller \
+sim:/processor_phase3_tb/dut/excute_inst/flag_register_out \
+sim:/processor_phase3_tb/dut/excute_inst/alu_out 
+
+# Memory
+add wave -position insertpoint  \
+sim:/processor_phase3_tb/dut/mem_inst/mem_control_signals_in \
+sim:/processor_phase3_tb/dut/mem_inst/PC_in \
+sim:/processor_phase3_tb/dut/mem_inst/PC_plus_one_in \
+sim:/processor_phase3_tb/dut/mem_inst/destination_address_in \
+sim:/processor_phase3_tb/dut/mem_inst/write_address1_in \
+sim:/processor_phase3_tb/dut/mem_inst/write_address2_in \
+sim:/processor_phase3_tb/dut/mem_inst/read_data1_in \
+sim:/processor_phase3_tb/dut/mem_inst/read_data2_in \
+sim:/processor_phase3_tb/dut/mem_inst/ALU_result_in \
+sim:/processor_phase3_tb/dut/mem_inst/CCR_in \
+sim:/processor_phase3_tb/dut/mem_inst/mem_read_data \
+sim:/processor_phase3_tb/dut/mem_inst/PC_out_to_exception \
+sim:/processor_phase3_tb/dut/mem_inst/protected_address_access_to_exception 
+
+
 
 # RUN Testbench
 run             10 ns
