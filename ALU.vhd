@@ -61,17 +61,17 @@ BEGIN
         STD_LOGIC_VECTOR(NOT A_integer) WHEN opcode = "111" ELSE --not
         (OTHERS => '0');
 
-    --carry flag
-    carry_flag <= '1' WHEN opcode = "001" AND sum(n) = '1' ELSE
+    --overflow flag
+    overflow_flag <= '1' WHEN opcode = "001" AND sum(n) = '1' ELSE
         '1' WHEN opcode = "010" AND A_integer < B_integer ELSE
         '0' WHEN opcode = "010" OR opcode = "001" ELSE
-        old_carry_flag;
+        old_overflow_flag;
 
-    --overflow flag
-    overflow_flag <= '1' WHEN opcode = "001" AND A_integer(n - 1) = B_integer(n - 1) AND A_integer(n - 1) /= sum(n - 1) ELSE
+    --carry flag
+    carry_flag <= '1' WHEN opcode = "001" AND A_integer(n - 1) = B_integer(n - 1) AND A_integer(n - 1) /= sum(n - 1) ELSE
         '1' WHEN opcode = "010" AND A_integer(n - 1) /= B_integer(n - 1) AND A_integer(n - 1) /= difference(n - 1) ELSE
         '0' WHEN opcode = "001" OR opcode = "010" ELSE
-        old_overflow_flag;
+        old_carry_flag;
 
     --zero and negative flags -> check if its supposed to upadate these flags or no
     zero_neg_flags <= '1' WHEN opcode = "000" OR opcode = "001" OR opcode = "010" OR opcode = "100" OR opcode = "101" OR opcode = "110" OR opcode = "111" ELSE
