@@ -27,11 +27,13 @@ sim:/processor_phase3_tb/dut/fetch_inst/Rsrc1 \
 sim:/processor_phase3_tb/dut/fetch_inst/Rsrc2 \
 sim:/processor_phase3_tb/dut/fetch_inst/Rdest \
 sim:/processor_phase3_tb/dut/fetch_inst/imm_flag \
-sim:/processor_phase3_tb/dut/fetch_inst/in_port_in \
 sim:/processor_phase3_tb/dut/fetch_inst/in_port_out \
 sim:/processor_phase3_tb/dut/fetch_inst/propagated_pc \
 sim:/processor_phase3_tb/dut/fetch_inst/propagated_pc_plus_one \
-sim:/processor_phase3_tb/dut/fetch_inst/fetch_decode_except_instruction/* \
+sim:/processor_phase3_tb/dut/fetch_inst/immediate_stall \
+sim:/processor_phase3_tb/dut/immediate_stall_to_fetch_and_decode \
+sim:/processor_phase3_tb/dut/fetch_inst/FD_enable_internal \
+sim:/processor_phase3_tb/dut/fetch_inst/FD_enable_imm_internal \
 sim:/processor_phase3_tb/dut/fetch_inst/pc_instruction_address 
 
 # Decode

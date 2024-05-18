@@ -201,7 +201,7 @@ BEGIN
 
     --for the three regs
     FD_flush_internal <= reset OR FD_flush OR FD_flush_exception_unit OR RST_signal;
-    FD_enable_internal <= NOT immediate_stall AND FD_enable AND FD_enable_loaduse; -- ay haga not alshan el default enaha be zero
+    FD_enable_internal <= (NOT immediate_stall) AND FD_enable AND FD_enable_loaduse; -- ay haga not alshan el default enaha be zero
     FD_reg : my_nDFF GENERIC MAP(16)
     PORT MAP(
         clk => clk,
