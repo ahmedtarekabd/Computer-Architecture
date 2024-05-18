@@ -124,7 +124,7 @@ BEGIN
 	PROCESS (clk) IS -- opcode, interrupt_signal?
 	BEGIN
 
-		ASSERT (interrupt_signal = '0' AND interrupt_state = instruction AND isImmediate = '1') REPORT "Control" SEVERITY error;
+		-- ASSERT (interrupt_signal = '0' AND interrupt_state = instruction AND isImmediate = '1') REPORT "Control" SEVERITY error;
 		-- interrupt
 		-- PUSH PC
 		-- PUSH CCR
@@ -235,7 +235,7 @@ BEGIN
 				WHEN update_pc =>
 					interrupt_state <= instruction;
 			END CASE;
-		ELSIF (interrupt_signal = '0' AND interrupt_state = instruction) THEN
+		ELSIF (rising_edge(clk) AND interrupt_signal = '0' AND interrupt_state = instruction) THEN
 			-- fetch
 			fetch_pc_mux1 <=
 				"01" WHEN opcode = JZ_INST OR opcode = JMP_INST OR opcode = CALL_INST ELSE

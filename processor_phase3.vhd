@@ -194,6 +194,7 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
 
             -- Forwarding
             forwarded_alu_execute : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+            forwarded_alu_out_em : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
             forwarded_data1_mw : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
             forwarded_data2_mw : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
             forwarded_data1_em : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
@@ -582,6 +583,7 @@ BEGIN
         propagated_pc_plus_one => pc_plus_1_in_to_excute,
         --
         forwarded_alu_execute => alu_result_from_Execution_before_EM,
+        forwarded_alu_out_em => alu_out_from_execute,
         forwarded_data1_mw => read_data1_out_from_memory,
         forwarded_data2_mw => read_data2_out_from_memory,
         forwarded_data1_em => data1_swapping_out_from_execute,

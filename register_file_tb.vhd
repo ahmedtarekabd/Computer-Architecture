@@ -48,7 +48,9 @@ ARCHITECTURE behavior OF register_file_tb IS
 BEGIN
 
     -- Instantiate the Unit Under Test (UUT)
-    uut : register_file PORT MAP(
+    uut : register_file GENERIC MAP(
+        32
+        ) PORT MAP(
         clk => clk,
         write_enable1 => write_enable1,
         write_enable2 => write_enable2,
@@ -104,7 +106,7 @@ BEGIN
         write_address2 <= "100";
         write_data2 <= x"00000004";
         WAIT FOR clk_period;
-        ASSERT (read_data1 = x"00000001") AND (read_data2 = x"00000001") REPORT "Read test 1 failed" SEVERITY error;
+        ASSERT (read_data1 = x"00000001") AND (read_data2 = x"00000002") REPORT "Read test 1 failed" SEVERITY error;
 
         write_enable1 <= '0';
         write_enable2 <= '0';

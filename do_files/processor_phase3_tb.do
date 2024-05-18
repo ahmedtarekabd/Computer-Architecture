@@ -34,7 +34,6 @@ sim:/processor_phase3_tb/dut/fetch_inst/pc_instruction_address
 
 # Decode
 add wave -position insertpoint  \
-sim:/processor_phase3_tb/dut/decode_inst/read_data1_in \
 sim:/processor_phase3_tb/dut/decode_inst/interrupt_signal \
 sim:/processor_phase3_tb/dut/decode_inst/forwarded_alu_execute \
 sim:/processor_phase3_tb/dut/decode_inst/forwarded_data1_mw \
@@ -51,10 +50,12 @@ sim:/processor_phase3_tb/dut/decode_inst/propagated_Rsrc1 \
 sim:/processor_phase3_tb/dut/decode_inst/propagated_Rsrc2 \
 sim:/processor_phase3_tb/dut/decode_inst/propagated_Rdest \
 sim:/processor_phase3_tb/dut/decode_inst/propagated_read_data1 \
+sim:/processor_phase3_tb/dut/decode_inst/read_data1_in \
+sim:/processor_phase3_tb/dut/decode_inst/decode_reg_read \
 sim:/processor_phase3_tb/dut/decode_inst/Rsrc1 \
 sim:/processor_phase3_tb/dut/decode_inst/Rsrc2 \
 sim:/processor_phase3_tb/dut/decode_inst/Rdest
-
+add wave -position end sim:/processor_phase3_tb/dut/decode_inst/register_file_instance/*
 
 #sim:/processor_phase3_tb/dut/decode_inst/decode_execute_flush \
 #sim:/processor_phase3_tb/dut/decode_inst/branch_prediction_flush \
@@ -74,6 +75,9 @@ sim:/processor_phase3_tb/dut/excute_inst/forwarding_mux_selector_op2 \
 sim:/processor_phase3_tb/dut/excute_inst/overflow_flag_out_exception_handling \
 sim:/processor_phase3_tb/dut/excute_inst/zero_flag_out_controller \
 sim:/processor_phase3_tb/dut/excute_inst/flag_register_out
+#sim:/processor_phase3_tb/dut/excute_inst/alu_out_from_execute \
+sim:/processor_phase3_tb/dut/excute_inst/op1_mux_out \
+
 
 # Memory
 add wave -position insertpoint  \

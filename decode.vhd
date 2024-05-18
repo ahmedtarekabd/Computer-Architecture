@@ -37,6 +37,7 @@ ENTITY decode IS
 
         -- Forwarding
         forwarded_alu_execute : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+        forwarded_alu_out_em : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
         forwarded_data1_mw : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
         forwarded_data2_mw : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
         forwarded_data1_em : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
@@ -283,8 +284,8 @@ BEGIN
 
     -- Forwarding
     WITH branching_op_mux_selector SELECT
-        forward_mux <= read_data1_in WHEN "000",
-        forwarded_alu_execute WHEN "001",
+        forward_mux <= forwarded_alu_execute WHEN "000",
+        forwarded_alu_out_em WHEN "001",
         forwarded_data1_mw WHEN "010",
         forwarded_data2_mw WHEN "011",
         forwarded_data1_em WHEN "100",
@@ -293,7 +294,7 @@ BEGIN
         propagated_read_data2 WHEN "111",
         (OTHERS => '0') WHEN OTHERS;
 
-    branch_pc_address <= (OTHERS => '0') WHEN branching_or_normal_mux_selector = '0' ELSE
+    branch_pc_address <= read_data1_in WHEN branching_or_normal_mux_selector = '0' ELSE
         forward_mux;
 
     -- execute signals - 7 bits
@@ -353,6 +354,8 @@ BEGIN
     wb_control_signals <= decode_execute_out(193 - 7 - 11 - 1 DOWNTO 193 - 24);
     propagated_read_data1 <= decode_execute_out(193 - 24 - 1 DOWNTO 193 - 24 - 32);
     propagated_read_data2 <= decode_execute_out(193 - 24 - 32 - 1 DOWNTO 193 - 24 - 32 - 32);
+    -- propagated_read_data1 <= read_data1_in;
+    -- propagated_read_data2 <= read_data2_in;
     propagated_Rsrc1 <= decode_execute_out(193 - 24 - 32 - 32 - 1 DOWNTO 193 - 24 - 32 - 32 - 3);
     propagated_Rsrc2 <= decode_execute_out(193 - 24 - 32 - 32 - 3 - 1 DOWNTO 193 - 24 - 32 - 32 - 3 - 3);
     propagated_Rdest <= decode_execute_out(193 - 24 - 32 - 32 - 3 - 3 - 1 DOWNTO 193 - 24 - 32 - 32 - 3 - 3 - 3);
