@@ -27,9 +27,11 @@ sim:/processor_phase3_tb/dut/fetch_inst/Rsrc1 \
 sim:/processor_phase3_tb/dut/fetch_inst/Rsrc2 \
 sim:/processor_phase3_tb/dut/fetch_inst/Rdest \
 sim:/processor_phase3_tb/dut/fetch_inst/imm_flag \
+sim:/processor_phase3_tb/dut/fetch_inst/in_port_in \
 sim:/processor_phase3_tb/dut/fetch_inst/in_port_out \
 sim:/processor_phase3_tb/dut/fetch_inst/propagated_pc \
 sim:/processor_phase3_tb/dut/fetch_inst/propagated_pc_plus_one \
+sim:/processor_phase3_tb/dut/fetch_inst/fetch_decode_except_instruction/* \
 sim:/processor_phase3_tb/dut/fetch_inst/pc_instruction_address 
 
 # Decode
@@ -42,6 +44,9 @@ sim:/processor_phase3_tb/dut/decode_inst/forwarded_data1_em \
 sim:/processor_phase3_tb/dut/decode_inst/forwarded_data2_em \
 sim:/processor_phase3_tb/dut/decode_inst/branching_op_mux_selector \
 sim:/processor_phase3_tb/dut/decode_inst/branching_or_normal_mux_selector \
+sim:/processor_phase3_tb/dut/decode_inst/Rsrc1 \
+sim:/processor_phase3_tb/dut/decode_inst/Rsrc2 \
+sim:/processor_phase3_tb/dut/decode_inst/Rdest \
 sim:/processor_phase3_tb/dut/decode_inst/execute_control_signals \
 sim:/processor_phase3_tb/dut/decode_inst/memory_control_signals \
 sim:/processor_phase3_tb/dut/decode_inst/wb_control_signals \
@@ -51,10 +56,7 @@ sim:/processor_phase3_tb/dut/decode_inst/propagated_Rsrc2 \
 sim:/processor_phase3_tb/dut/decode_inst/propagated_Rdest \
 sim:/processor_phase3_tb/dut/decode_inst/propagated_read_data1 \
 sim:/processor_phase3_tb/dut/decode_inst/read_data1_in \
-sim:/processor_phase3_tb/dut/decode_inst/decode_reg_read \
-sim:/processor_phase3_tb/dut/decode_inst/Rsrc1 \
-sim:/processor_phase3_tb/dut/decode_inst/Rsrc2 \
-sim:/processor_phase3_tb/dut/decode_inst/Rdest
+sim:/processor_phase3_tb/dut/decode_inst/decode_reg_read
 add wave -position end sim:/processor_phase3_tb/dut/decode_inst/register_file_instance/*
 
 #sim:/processor_phase3_tb/dut/decode_inst/decode_execute_flush \

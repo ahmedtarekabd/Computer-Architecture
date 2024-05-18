@@ -98,7 +98,7 @@ BEGIN
         read_address2 <= "010";
         WAIT FOR clk_period;
 
-        read_enable <= '0';
+        read_enable <= '1';
         write_enable1 <= '1';
         write_address1 <= "011";
         write_data1 <= x"00000003";
