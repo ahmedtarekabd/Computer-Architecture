@@ -14,6 +14,7 @@ ENTITY memory_stage IS
         RST : IN STD_LOGIC;
         MW_enable : IN STD_LOGIC; -- bat3et el register el kber msh el memory
         MW_flush_from_exception : IN STD_LOGIC;
+        MW_flush_from_controller : IN STD_LOGIC;
         --PC
         PC_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
         PC_plus_one_in : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
@@ -118,6 +119,7 @@ ARCHITECTURE memory_stage_arch OF memory_stage IS
     SIGNAL mem_address_mux_selectors : STD_LOGIC_VECTOR(1 DOWNTO 0);
 
     SIGNAL CCR_as_32_bit : STD_LOGIC_VECTOR(31 DOWNTO 0);
+    SIGNAL reset_internal : STD_LOGIC;
 
 BEGIN
 
@@ -185,13 +187,14 @@ BEGIN
     );
 
     -- Output 
+    reset_internal <= RST OR MW_flush_from_exception OR MW_flush_from_controller;
     d_internal <= wb_control_signals_in & destination_address_in & write_address1_in & write_address2_in & read_data1_in & read_data2_in & ALU_result_in & mem_read_data_internal & in_port_in;
     mem_wb_reg : my_nDFF
     GENERIC MAP(n => 175)
     PORT MAP(
         Clk => clk,
         reset => '0',
-        enable => '1',
+        enable => MW_enable,
         d => d_internal,
         q => q_output
     );
