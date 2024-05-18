@@ -283,7 +283,6 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
             clk : IN STD_LOGIC;
             --control signals
             --TODO: confirm this size with tarek (order of bits as the report)
-            MW_flush_from_controller : IN STD_LOGIC;
             mem_control_signals_in : IN STD_LOGIC_VECTOR(9 DOWNTO 0);
             wb_control_signals_in : IN STD_LOGIC_VECTOR(5 DOWNTO 0);
             RST : IN STD_LOGIC;
@@ -514,7 +513,7 @@ BEGIN
         pc_mux1_selector => pc_mux1_selector_to_fetch,
         RST_signal => RST_signal,
         pc_enable_hazard_detection => pc_enable_hazard_detection_to_fetch,
-        read_data_from_memory => read_data_from_memory_to_fetch,
+        read_data_from_memory => mem_read_data_from_memory,
         branch_address => branch_address_to_fetch,
         pc_mux2_selector => pc_mux2_selector_to_fetch,
         interrupt_signal => interrupt_signal,
@@ -650,7 +649,6 @@ BEGIN
     ----------Memory----------
     mem_inst : memory_stage PORT MAP(
         clk => clk,
-        MW_flush_from_controller => '0',
         mem_control_signals_in => control_signals_memory_out_from_execute(10 DOWNTO 1),
         wb_control_signals_in => control_signals_write_back_out_from_execute,
         RST => RST_signal,

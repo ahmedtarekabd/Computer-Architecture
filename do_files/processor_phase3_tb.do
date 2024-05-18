@@ -18,6 +18,7 @@ sim:/processor_phase3_tb/*
 # Fetch
 add wave -position insertpoint  \
 sim:/processor_phase3_tb/dut/fetch_inst/pc_mux1_selector \
+sim:/processor_phase3_tb/dut/fetch_inst/read_data_from_memory \
 sim:/processor_phase3_tb/dut/fetch_inst/FD_reg/q \
 sim:/processor_phase3_tb/dut/fetch_inst/instruction_out_from_instr_cache_to_pc \
 sim:/processor_phase3_tb/dut/fetch_inst/selected_immediate_out \

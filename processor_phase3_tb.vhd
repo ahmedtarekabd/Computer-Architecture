@@ -57,7 +57,7 @@ BEGIN
     BEGIN
 
         -- Add reset here
-        reset <= '1';
+        reset <= '0';
         RST_signal <= '1';
         WAIT FOR clk_period;
         reset <= '0';

@@ -140,12 +140,17 @@ ARCHITECTURE arch_fetch OF fetch IS
 
 BEGIN
     pc_plus_one <= STD_LOGIC_VECTOR(unsigned(pc_instruction_address) + 1);
-    sel_lower_mux1 <= pc_mux1_selector(0) OR RST_signal;
-    sel_higher_mux1 <= pc_mux1_selector(1) OR RST_signal;
-    -- sel_lower_mux1 <= pc_mux1_selector(0) AND (NOT RST_signal);
+    -- sel_lower_mux1 <= pc_mux1_selector(0) OR RST_signal;
     -- sel_higher_mux1 <= pc_mux1_selector(1) OR RST_signal;
+    sel_lower_mux1 <= pc_mux1_selector(0) AND (NOT RST_signal);
+    sel_higher_mux1 <= pc_mux1_selector(1) OR RST_signal;
 
-    instruction_out_from_instr_cache_to_pc <= (31 DOWNTO 16 => '0') & instruction_out_from_instr_cache;
+    PROCESS (clk)
+    BEGIN
+        IF falling_edge(clk) THEN
+            instruction_out_from_instr_cache_to_pc <= (31 DOWNTO 16 => '0') & instruction_out_from_instr_cache;
+        END IF;
+    END PROCESS;
 
     pc_mux1 : mux4x1 GENERIC MAP(32)
     PORT MAP(
@@ -174,7 +179,8 @@ BEGIN
 
     --enabled when the pc enable coming from hazard detection unit is 1 and no interrupt signal (0)
     pc_enable <= pc_enable_hazard_detection AND (NOT interrupt_signal);
-    pc_reset <= reset OR FD_flush OR FD_flush_exception_unit OR RST_signal;
+    -- pc_reset <= reset OR FD_flush OR FD_flush_exception_unit OR RST_signal;
+    pc_reset <= reset OR FD_flush OR FD_flush_exception_unit;
 
     program_counter : my_nDFF GENERIC MAP(
         32) PORT MAP(
