@@ -364,7 +364,7 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
     --*--------Fetch---------- 
     --from controller
     SIGNAL pc_mux1_selector_to_fetch : STD_LOGIC_VECTOR(1 DOWNTO 0);
-    SIGNAL FD_enable_to_fetch : STD_LOGIC;
+    SIGNAL FD_enable_to_fetch : STD_LOGIC := '1';
     SIGNAL FD_flush_to_fetch : STD_LOGIC;
     -- signal immediate_stall_to_fetch : STD_LOGIC;
 
@@ -406,7 +406,7 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
 
     --output
     SIGNAL in_port_from_Decode : STD_LOGIC_VECTOR(31 DOWNTO 0);
-    SIGNAL immediate_stall_to_fetch_and_decode : STD_LOGIC;
+    SIGNAL immediate_stall_to_fetch_and_decode : STD_LOGIC := '0';
     SIGNAL execute_control_signals_from_decode : STD_LOGIC_VECTOR(6 DOWNTO 0);
     SIGNAL memory_control_signals_from_decode : STD_LOGIC_VECTOR(10 DOWNTO 0);
     SIGNAL wb_control_signals_from_decode : STD_LOGIC_VECTOR(5 DOWNTO 0);

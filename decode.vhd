@@ -166,7 +166,7 @@ ARCHITECTURE rtl OF decode IS
         );
     END COMPONENT mux4x1;
 
-    SIGNAL isImmediate : STD_LOGIC;
+    SIGNAL isImmediate : STD_LOGIC := '0';
 
     -- decode signals
     SIGNAL decode_reg_read : STD_LOGIC := '0';

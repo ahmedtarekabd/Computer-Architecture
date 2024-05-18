@@ -101,21 +101,21 @@ BEGIN
 				WHEN instruction =>
 					IF isImmediate = '1' THEN
 						immediate_state <= waitOnce;
-						immediate_stall <= '0';
-					ELSE
 						immediate_stall <= '1';
+					ELSE
+						immediate_stall <= '0';
 					END IF;
 				WHEN waitOnce =>
 					immediate_state <= immediate;
-					immediate_stall <= '1';
+					immediate_stall <= '0';
 				WHEN immediate =>
 					-- check neroh le waitOnce wala la2
 					IF isImmediate = '1' THEN
 						immediate_state <= waitOnce;
-						immediate_stall <= '0';
+						immediate_stall <= '1';
 					ELSE
 						immediate_state <= instruction;
-						immediate_stall <= '1';
+						immediate_stall <= '0';
 					END IF;
 			END CASE;
 		END IF;

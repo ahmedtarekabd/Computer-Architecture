@@ -32,22 +32,17 @@ BEGIN
     PROCESS (src_address1_fd, src_address2_fd, dst_address_de, write_back_1_de, memory_read_de)
     BEGIN
         -- Default values
-        PC_enable <= '0';
-        enable_fd <= '0';
+        PC_enable <= '1';
+        enable_fd <= '1';
         reset_de <= '0';
 
         -- if write back is enabled in decode/execute stage and memory read is enabled in decode/execute stage then we may have a hazard
         IF (write_back_1_de = '1' AND memory_read_de = '1') THEN
             -- if src_address1_fd is equal to dst_address_de then we have a hazard
-            IF (src_address1_fd = dst_address_de) THEN
-                PC_enable <= '1';
-                enable_fd <= '1';
-                reset_de <= '1';
-            END IF;
             -- if src_address2_fd is equal to dst_address_de then we have a hazard
-            IF (src_address2_fd = dst_address_de) THEN
-                PC_enable <= '1';
-                enable_fd <= '1';
+            IF (src_address2_fd = dst_address_de) OR (src_address1_fd = dst_address_de) THEN
+                PC_enable <= '0';
+                enable_fd <= '0';
                 reset_de <= '1';
             END IF;
         END IF;
