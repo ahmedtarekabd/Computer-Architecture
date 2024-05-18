@@ -174,7 +174,8 @@ BEGIN
 
     --enabled when the pc enable coming from hazard detection unit is 1 and no interrupt signal (0)
     pc_enable <= pc_enable_hazard_detection AND (NOT interrupt_signal);
-    pc_reset <= reset OR FD_flush OR FD_flush_exception_unit OR RST_signal;
+    -- pc_reset <= reset OR FD_flush OR FD_flush_exception_unit OR RST_signal;
+    pc_reset <= reset OR FD_flush OR FD_flush_exception_unit;
 
     program_counter : my_nDFF GENERIC MAP(
         32) PORT MAP(
