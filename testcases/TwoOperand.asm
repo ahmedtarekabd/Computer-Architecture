@@ -10,6 +10,7 @@ FF
 
 .ORG FF
 
+NOP
 IN R1             #add 5 in R1
 IN R2             #add 19 in R2
 IN R3             #FFFFFFFF

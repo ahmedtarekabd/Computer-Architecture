@@ -112,7 +112,10 @@ ENTITY execute IS
         in_port_output : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
         control_signals_memory_out : OUT STD_LOGIC_VECTOR(10 DOWNTO 0);
         control_signals_write_back_out : OUT STD_LOGIC_VECTOR(5 DOWNTO 0);
-        ALU_result_before_EM : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
+        ALU_result_before_EM : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+
+        in_port_forwarded_from_EM : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+        in_port_forwarded_from_MW : IN STD_LOGIC_VECTOR(31 DOWNTO 0)
 
     );
 END execute;
@@ -214,6 +217,8 @@ BEGIN
         forwarded_data2_mw WHEN "011",
         forwarded_data1_em WHEN "100",
         forwarded_data2_em WHEN "101",
+        in_port_forwarded_from_EM WHEN "110",
+        in_port_forwarded_from_MW WHEN "111",
         (OTHERS => '0') WHEN OTHERS;
 
     -- forwarding mux 2 8x1
@@ -231,7 +236,10 @@ BEGIN
         forwarded_data2_mw WHEN "011",
         forwarded_data1_em WHEN "100",
         forwarded_data2_em WHEN "101",
+        in_port_forwarded_from_EM WHEN "110",
+        in_port_forwarded_from_MW WHEN "111",
         (OTHERS => '0') WHEN OTHERS;
+
     -- ALU
     ALU1 : ALU PORT MAP(
         A => op1_mux_out,
@@ -270,8 +278,8 @@ BEGIN
     -- 3 bits address 2
     -- 32 bits PC 
     pc_out_exception_handling <= pc_in;
-    overflow_flag_out_exception_handling <= flag_register_out_temp(1);
-    zero_flag_out_controller <= flag_register_out_temp(0);
+    overflow_flag_out_exception_handling <= flag_register_in_temp(1); --TODO:make it in?
+    zero_flag_out_controller <= flag_register_in_temp(0);
     -- address 1 and 2 forwarding unit
     address1_out_forwarding_unit <= address_read1_in;
     address2_out_forwarding_unit <= address_read2_in;
@@ -326,7 +334,8 @@ BEGIN
     data1_swapping_out <= q_output(100 DOWNTO 69);
     data2_swapping_out <= q_output(68 DOWNTO 37);
     alu_out <= q_output(36 DOWNTO 5);
-    flag_register_out <= q_output(4 DOWNTO 1);
+    -- flag_register_out <= q_output(4 DOWNTO 1);
+    flag_register_out <= flag_register_out_temp;
     immediate_enable_out <= q_output(0);
 
 END arch_execute;
