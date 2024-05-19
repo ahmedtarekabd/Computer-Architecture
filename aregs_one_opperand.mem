@@ -2,7 +2,7 @@
 // instance=/processor_tb/processor1/register_file/ram0/ram
 // format=mti addressradix=d dataradix=b version=1.0 wordsperline=1
  0: 00000000
- 1: 00000000
+ 1: 00000001
  2: 00000000
  3: 00000000
  4: 00000000

@@ -68,7 +68,15 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
             -- From Decode/Execute
             -- write_back_de : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
             write_back_de_enable1 : IN STD_LOGIC;
-            write_back_de_enable2 : IN STD_LOGIC
+            write_back_de_enable2 : IN STD_LOGIC;
+
+            --inputs for forwading in port case
+            -- FOR IN instruction I need reg_write_address1_in_select if it is 11 and src1 in execute is same as address 1 from WB then forwarding happens
+            reg_write_address1_in_select_em : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
+            reg_write_address1_in_select_mw : IN STD_LOGIC_VECTOR(1 DOWNTO 0);
+            -- add additional check for presence of out port opcode
+            -- if true and adresses match then we need to forward
+            out_port_enable : IN STD_LOGIC
         );
     END COMPONENT;
 
@@ -245,6 +253,7 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
             forwarding_mux_selector_op1 : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
             control_signals_memory_in : IN STD_LOGIC_VECTOR (10 DOWNTO 0);
             control_signals_write_back_in : IN STD_LOGIC_VECTOR (5 DOWNTO 0);
+            
             alu_selectors : IN STD_LOGIC_VECTOR (2 DOWNTO 0);
             alu_src2_selector : IN STD_LOGIC_VECTOR (1 DOWNTO 0);
             execute_mem_register_enable : IN STD_LOGIC;
@@ -266,12 +275,15 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
             address1_out_forwarding_unit : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
             address2_out_forwarding_unit : OUT STD_LOGIC_VECTOR (2 DOWNTO 0);
             pc_out_exception_handling : OUT STD_LOGIC_VECTOR (31 DOWNTO 0);
-
+            
             in_port_input : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
             in_port_output : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
             control_signals_memory_out : OUT STD_LOGIC_VECTOR (10 DOWNTO 0);
             control_signals_write_back_out : OUT STD_LOGIC_VECTOR (5 DOWNTO 0);
-            ALU_result_before_EM : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
+            ALU_result_before_EM : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
+            --inputs godad
+            in_port_forwarded_from_EM : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+            in_port_forwarded_from_MW : IN STD_LOGIC_VECTOR(31 DOWNTO 0)
 
         );
     END COMPONENT;
@@ -438,6 +450,7 @@ ARCHITECTURE arch_processor OF processor_phase3 IS
     --from forwarding unit
     SIGNAL forwarding_mux_selector_op2 : STD_LOGIC_VECTOR(2 DOWNTO 0);
     SIGNAL forwarding_mux_selector_op1 : STD_LOGIC_VECTOR(2 DOWNTO 0);
+    signal write_back_rsrc1_data_from_execute : STD_LOGIC_VECTOR(1 DOWNTO 0);
 
     --ouputs
     SIGNAL pc_out_from_execute : STD_LOGIC_VECTOR(31 DOWNTO 0);
@@ -626,6 +639,9 @@ BEGIN
         pc_out => pc_out_from_execute,
         pc_plus_1_out => pc_plus_1_out_from_execute,
         destination_address_out => destination_address_out_from_execute,
+        in_port_forwarded_from_EM => in_port_from_execute, --forwaded units
+        in_port_forwarded_from_MW => in_port_from_memory,
+
         address_read1_out => address_read1_out_from_execute,
         address_read2_out => address_read2_out_from_execute,
         flag_register_out => flag_register_out_from_execute,
@@ -643,7 +659,7 @@ BEGIN
         control_signals_memory_out => control_signals_memory_out_from_execute,
         control_signals_write_back_out => control_signals_write_back_out_from_execute
     );
-
+    write_back_rsrc1_data_from_execute <= control_signals_write_back_out_from_execute(5 DOWNTO 4);
     write_back_1_forwarding_from_excute <= control_signals_write_back_out_from_execute(3);
     write_back_2_forwarding_from_excute <= control_signals_write_back_out_from_execute(2);
 
@@ -684,6 +700,7 @@ BEGIN
     --reg_write_enable2 -> bit(2)
     --regw1_address_mux -> bit(1)
     --out_port_enable -> bit(0)
+
     -- signal reg_write_enable1_in_to_wb : STD_LOGIC;
     -- signal reg_write_enable2_in_to_wb : STD_LOGIC;
     -- signal reg_write_address1_mux_to_wb : STD_LOGIC;
@@ -738,6 +755,10 @@ BEGIN
         address1_mw => write_address1_out_from_memory,
         address2_mw => write_address2_out_from_memory,
         dst_address_fd => Rdest_from_fetch,
+  
+        reg_write_address1_in_select_em => write_back_rsrc1_data_from_execute,   --to detect in port
+        reg_write_address1_in_select_mw => rscr1_data_to_wb,
+        out_port_enable => wb_control_signals_from_decode(0),
 
         write_back_de_enable1 => write_back_1_forwarding_from_decode, --from execute
         write_back_de_enable2 => write_back_2_forwarding_from_decode,
