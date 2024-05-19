@@ -114,8 +114,6 @@ ENTITY execute IS
         control_signals_write_back_out : OUT STD_LOGIC_VECTOR(5 DOWNTO 0);
         ALU_result_before_EM : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
 
-        in_port_forwarded_output : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
-
         in_port_forwarded_from_EM : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
         in_port_forwarded_from_MW : IN STD_LOGIC_VECTOR(31 DOWNTO 0)
 
@@ -188,7 +186,6 @@ ARCHITECTURE arch_execute OF execute IS
     SIGNAL execute_mem_enable : STD_LOGIC;
 
 BEGIN
-    in_port_forwarded_output <= in_port_input;
     -- data 2 and immediate mux
     -- MUX2: mux4x1 PORT MAP (
     --     inputA => data2_in,
@@ -281,8 +278,8 @@ BEGIN
     -- 3 bits address 2
     -- 32 bits PC 
     pc_out_exception_handling <= pc_in;
-    overflow_flag_out_exception_handling <= flag_register_out_temp(1);
-    zero_flag_out_controller <= flag_register_out_temp(0);
+    overflow_flag_out_exception_handling <= flag_register_in_temp(1); --TODO:make it in?
+    zero_flag_out_controller <= flag_register_in_temp(0);
     -- address 1 and 2 forwarding unit
     address1_out_forwarding_unit <= address_read1_in;
     address2_out_forwarding_unit <= address_read2_in;
@@ -337,7 +334,8 @@ BEGIN
     data1_swapping_out <= q_output(100 DOWNTO 69);
     data2_swapping_out <= q_output(68 DOWNTO 37);
     alu_out <= q_output(36 DOWNTO 5);
-    flag_register_out <= q_output(4 DOWNTO 1);
+    -- flag_register_out <= q_output(4 DOWNTO 1);
+    flag_register_out <= flag_register_out_temp;
     immediate_enable_out <= q_output(0);
 
 END arch_execute;
