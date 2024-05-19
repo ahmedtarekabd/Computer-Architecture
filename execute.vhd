@@ -294,7 +294,7 @@ BEGIN
         address_read1_in &
         address_read2_in &
         op1_mux_out &  op2_mux_out& --changeddddd by omar desouki
-        alu_out_temp &
+        ALU_result_before_EM &
         flag_register_out_temp &
         immediate_enable_in;
     -- Execute/Mem register enable is the execute memory enable  OR propagated immediate flag

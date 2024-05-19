@@ -581,7 +581,7 @@ BEGIN
         fetch_decode_flush => FD_flush_to_fetch,
         in_port => in_port_from_Decode,
         immediate_stall => immediate_stall_to_fetch_and_decode,
-        execute_control_signals => execute_control_signals_from_decode, --TODO: how is this 23 bits its only around 6
+        execute_control_signals => execute_control_signals_from_decode,
         memory_control_signals => memory_control_signals_from_decode,
         wb_control_signals => wb_control_signals_from_decode,
         propagated_read_data1 => data1_in_to_execute,
@@ -648,7 +648,7 @@ BEGIN
         alu_out => alu_out_from_execute,
         immediate_enable_out => OPEN,
         data1_swapping_out => data1_swapping_out_from_execute,
-        data2_swapping_out => data2_swapping_out_from_execute,
+        data2_swapping_out => data2_swapping_out_from_execute, --problem
         zero_flag_out_controller => zero_flag_out_controller_from_execute,
         overflow_flag_out_exception_handling => overflow_flag_out_exception_handling_from_execute,
         address1_out_forwarding_unit => address1_out_forwarding_unit_from_execute,
@@ -678,7 +678,7 @@ BEGIN
         write_address1_in => address_read1_out_from_execute,
         write_address2_in => address_read2_out_from_execute,
         read_data1_in => data1_swapping_out_from_execute,
-        read_data2_in => data2_swapping_out_from_execute,
+        read_data2_in => data2_swapping_out_from_execute, --problem
         ALU_result_in => alu_out_from_execute,
         CCR_in => flag_register_out_from_execute,
         wb_control_signals_out => wb_control_signals_out_from_memory,
@@ -785,7 +785,7 @@ BEGIN
         reg_write_enable1_in => reg_write_enable1_in_to_wb,
         reg_write_enable2_in => reg_write_enable2_in_to_wb,
         read_data1_in => read_data1_out_from_memory,
-        read_data2_in => read_data2_out_from_memory,
+        read_data2_in => read_data2_out_from_memory, --problemmmm
         read_address1_in => write_address1_out_from_memory,
         read_address2_in => write_address2_out_from_memory,
         destination_address_in => Rdst_from_memory,
