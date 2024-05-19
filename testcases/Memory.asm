@@ -9,6 +9,8 @@
 300
 
 .ORG 300
+NOP
+
 
 IN R2            #R2=19 add 19 in R2
 IN R3            #R3=FFFFFFFF

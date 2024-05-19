@@ -17,6 +17,7 @@ IN R3             #FFFFFFFF
 IN R4             #FFFFF320
 NOP
 NOP
+ADDI R2,R2,FFFF   #R2= 00010018 (C = 0,N,Z= 0) OR R2=18 if implementing sign extend
 MOV R5, R3         #R5 = FFFFFFFF , flags no change
 ADD R4,R1,R4      #R4= FFFFF325 , C-->0, N-->1, Z-->0
 NOP
