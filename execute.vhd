@@ -293,7 +293,7 @@ BEGIN
         pc_plus_1_in &
         address_read1_in &
         address_read2_in &
-        data1_in & data2_in &
+        op1_mux_out &  op2_mux_out& --changeddddd by omar desouki
         alu_out_temp &
         flag_register_out_temp &
         immediate_enable_in;
