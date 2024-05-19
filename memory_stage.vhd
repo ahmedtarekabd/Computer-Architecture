@@ -110,6 +110,7 @@ ARCHITECTURE memory_stage_arch OF memory_stage IS
 
     SIGNAL read_enable : STD_LOGIC;
 
+    SIGNAL SP_in_to_mux_temp : STD_LOGIC_VECTOR(11 DOWNTO 0);
     SIGNAL SP_in_temp : STD_LOGIC_VECTOR(11 DOWNTO 0);
     SIGNAL SP_out_temp : STD_LOGIC_VECTOR(11 DOWNTO 0);
     SIGNAL SP_mux_inputB : STD_LOGIC_VECTOR(11 DOWNTO 0);
@@ -149,20 +150,26 @@ BEGIN
     );
 
     -- mem address mux
-    PROCESS (RST, mem_control_signals_in)
+    PROCESS (clk, RST, mem_control_signals_in, SP_mux_out)
     BEGIN
         IF (RST = '0') THEN
             mem_address_mux_selectors <= mem_control_signals_in(5 DOWNTO 4);
         ELSE
             mem_address_mux_selectors <= "10";
         END IF;
-    END PROCESS;
 
+        IF (mem_control_signals_in(8) = '1' AND mem_control_signals_in(5 DOWNTO 4) = "01") THEN
+            SP_in_to_mux_temp <= STD_LOGIC_VECTOR(UNSIGNED(SP_mux_out) - TO_UNSIGNED(2, SP_mux_out'LENGTH));
+        ELSE
+            SP_in_to_mux_temp <= SP_mux_out;
+        END IF;
+
+    END PROCESS;
     mem_address_mux : mux4x1
     GENERIC MAP(n => 12)
     PORT MAP(
         inputA => ALU_result_in(11 DOWNTO 0),
-        inputB => SP_mux_out,
+        inputB => SP_in_to_mux_temp,
         inputC => "000000000000", --M[0], M[1]
         inputD => "000000000010", --M[2], M[3]
         Sel_lower => mem_address_mux_selectors(0),
@@ -197,7 +204,8 @@ BEGIN
     );
 
     -- Memory
-    read_enable <= mem_control_signals_in(8) OR RST;
+    -- read_enable <= mem_control_signals_in(8) OR RST;
+    read_enable <= mem_control_signals_in(8);
     mem : memory
     PORT MAP(
         clk => clk,

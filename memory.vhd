@@ -51,42 +51,42 @@ BEGIN
         or_to_add_protected_bit := "10000000000000000";
         reset_address_content := "00000000000000000";
 
-        IF rising_edge(clk) THEN
-            --check on protect_signal and free_signal
-            IF protect_signal = '1' THEN
-                memory_array(to_integer(unsigned(address))) <= (or_to_add_protected_bit OR memory_array(to_integer(unsigned(address))));
-                memory_array(to_integer(unsigned(address) + 1)) <= (or_to_add_protected_bit OR memory_array(to_integer(unsigned(address) + 1)));
+        -- IF rising_edge(clk) THEN
+        --check on protect_signal and free_signal
+        IF protect_signal = '1' THEN
+            memory_array(to_integer(unsigned(address))) <= (or_to_add_protected_bit OR memory_array(to_integer(unsigned(address))));
+            memory_array(to_integer(unsigned(address) + 1)) <= (or_to_add_protected_bit OR memory_array(to_integer(unsigned(address) + 1)));
 
-            ELSIF free_signal = '1' THEN
-                memory_array(to_integer(unsigned(address))) <= reset_address_content;
-                memory_array(to_integer(unsigned(address) + 1)) <= reset_address_content;
+        ELSIF free_signal = '1' THEN
+            memory_array(to_integer(unsigned(address))) <= reset_address_content;
+            memory_array(to_integer(unsigned(address) + 1)) <= reset_address_content;
 
-                --both free_signal and protect_signal are '0'
-                --check on write_enable and read_enable
-            ELSE
-                IF write_enable = '1' THEN
-                    --check if the last bit is 1 (protected)
-                    --if it is 1 then don't write on it
+            --both free_signal and protect_signal are '0'
+            --check on write_enable and read_enable
+        ELSE
+            IF write_enable = '1' THEN
+                --check if the last bit is 1 (protected)
+                --if it is 1 then don't write on it
 
-                    IF memory_array(to_integer(unsigned(address)))(16) = '0' THEN
-                        --default is that the last bit is 0 (free)
-                        memory_array(to_integer(unsigned(address))) <= '0' & write_data(31 DOWNTO 16);
-                        memory_array(to_integer(unsigned(address) + 1)) <= '0' & write_data (15 DOWNTO 0);
-                    ELSE
-                        --if protected address is accessed then output an eception signal
-                        protected_address_access <= '1';
-                    END IF;
-
+                IF memory_array(to_integer(unsigned(address)))(16) = '0' THEN
+                    --default is that the last bit is 0 (free)
+                    memory_array(to_integer(unsigned(address))) <= '0' & write_data(31 DOWNTO 16);
+                    memory_array(to_integer(unsigned(address) + 1)) <= '0' & write_data (15 DOWNTO 0);
+                ELSE
+                    --if protected address is accessed then output an eception signal
+                    protected_address_access <= '1';
                 END IF;
 
-                --read the the 16 bits only don't read the last bit
-                IF read_enable = '1' THEN
-                    read_data <= memory_array(to_integer(unsigned(address)))(15 DOWNTO 0) & memory_array(to_integer(unsigned(address) + 1))(15 DOWNTO 0);
-
-                END IF;
             END IF;
 
+            --read the the 16 bits only don't read the last bit
+            IF read_enable = '1' THEN
+                read_data <= memory_array(to_integer(unsigned(address)))(15 DOWNTO 0) & memory_array(to_integer(unsigned(address) + 1))(15 DOWNTO 0);
+
+            END IF;
         END IF;
+
+        -- END IF;
     END PROCESS;
 END memory_arch;
 
