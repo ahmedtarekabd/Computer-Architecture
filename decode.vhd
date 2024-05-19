@@ -172,6 +172,7 @@ ARCHITECTURE rtl OF decode IS
     -- decode signals
     SIGNAL decode_reg_read : STD_LOGIC := '0';
     SIGNAL decode_sign_extend : STD_LOGIC := '0';
+    SIGNAL immediate_out_internal : STD_LOGIC_VECTOR(31 DOWNTO 0);
     SIGNAL decode_execute_flush : STD_LOGIC := '0';
 
     -- execute signals
@@ -279,7 +280,7 @@ BEGIN
     sign_extend_instance : sign_extend PORT MAP(
         enable => decode_sign_extend,
         input => immediate_in,
-        output => immediate_out
+        output => immediate_out_internal
     );
 
     -- Forwarding
@@ -327,9 +328,9 @@ BEGIN
         -- write back signals - 6 bits
         & wb_control_signals_in;
 
-    -- 193 bits: 24 control signals(propagated) + 32 read_data1_in + 32 read_data2_in + 3 read_address1 + 3 read_address2 + 3 destination + 32 immediate_out + 32 pc_plus_1 + 32 pc
+    -- 193 bits: 24 control signals(propagated) + 32 read_data1_in + 32 read_data2_in + 3 read_address1 + 3 read_address2 + 3 destination + 32 immediate_out_internal + 32 pc_plus_1 + 32 pc
     decode_execute_in <= control_signals_in & read_data1_in & read_data2_in & Rsrc1 & Rsrc2 & Rdest
-        & immediate_out & propagated_pc_plus_one_in & propagated_pc_in;
+        & immediate_out_internal & propagated_pc_plus_one_in & propagated_pc_in;
 
     reg_reset <= reset OR decode_execute_flush OR exception_handling_flush OR hazard_detection_flush OR immediate_stall;
 

@@ -648,7 +648,7 @@ BEGIN
         alu_out => alu_out_from_execute,
         immediate_enable_out => OPEN,
         data1_swapping_out => data1_swapping_out_from_execute,
-        data2_swapping_out => data2_swapping_out_from_execute,
+    data2_swapping_out => data2_swapping_out_from_execute,
         zero_flag_out_controller => zero_flag_out_controller_from_execute,
         overflow_flag_out_exception_handling => overflow_flag_out_exception_handling_from_execute,
         address1_out_forwarding_unit => address1_out_forwarding_unit_from_execute,

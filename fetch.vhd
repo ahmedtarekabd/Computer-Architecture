@@ -114,6 +114,7 @@ ARCHITECTURE arch_fetch OF fetch IS
     --internal signals for pc mux_1
     SIGNAL pc_normal : STD_LOGIC_VECTOR(31 DOWNTO 0) := (OTHERS => '0');
     SIGNAL pc_plus_one : STD_LOGIC_VECTOR(31 DOWNTO 0) := (OTHERS => '0');
+    SIGNAL pc_input : STD_LOGIC_VECTOR(31 DOWNTO 0) := (OTHERS => '0');
     SIGNAL sel_lower_mux1 : STD_LOGIC;
     SIGNAL sel_higher_mux1 : STD_LOGIC;
     --internal signals for pc mux_2
@@ -177,6 +178,9 @@ BEGIN
         output => mux2_output
     );
 
+    pc_input <= (31 DOWNTO 2 => '0') & "10" WHEN interrupt_signal ELSE
+        mux2_output;
+
     --enabled when the pc enable coming from hazard detection unit is 1 and no interrupt signal (0)
     pc_enable <= pc_enable_hazard_detection AND (NOT interrupt_signal);
     -- pc_reset <= reset OR FD_flush OR FD_flush_exception_unit OR RST_signal;
@@ -187,7 +191,7 @@ BEGIN
         clk => clk,
         reset => pc_reset,
         enable => pc_enable,
-        d => mux2_output,
+        d => pc_input, -- mux2_output,
         q => pc_instruction_address
     );
 
