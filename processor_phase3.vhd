@@ -803,10 +803,21 @@ BEGIN
         reg_write_enable2_out => reg_write_enable2_from_wb
     );
 
+    -- data1_in_to_execute
+    -- data1_swapping_out_from_execute
+
     --* output port
     --check the control signal and depending on it it will ouput data 1 or no
-    --TODO: check data 1 or data 2
-    PROCESS (read_data2_out_from_wb, wb_control_signals_out_from_memory(0))
+    -- PROCESS (read_data2_out_from_wb,data1_in_to_execute,wb_control_signals_from_decode(0), wb_control_signals_out_from_memory(0))
+    -- BEGIN
+    --     IF wb_control_signals_from_decode(0) = '1' THEN
+    --         out_port_to_processor <= data1_in_to_execute;
+    --     ELSE
+    --         out_port_to_processor <= (OTHERS => '-'); -- don't care
+    --     END IF;
+    -- END PROCESS;
+
+    PROCESS (wb_control_signals_out_from_memory(0),read_data2_out_from_wb)
     BEGIN
         IF wb_control_signals_out_from_memory(0) = '1' THEN
             out_port_to_processor <= read_data2_out_from_wb;
@@ -814,5 +825,4 @@ BEGIN
             out_port_to_processor <= (OTHERS => '-'); -- don't care
         END IF;
     END PROCESS;
-
 END ARCHITECTURE arch_processor;
