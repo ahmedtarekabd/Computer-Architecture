@@ -23,11 +23,6 @@ ADD R4,R1,R4      #R4= FFFFF325 , C-->0, N-->1, Z-->0
 NOP
 NOP
 SUB R6,R5,R4      #R6= 00000CDA , C-->0, N-->0,Z-->0 here carry is implemented as borrow, you can implement it as not borrow
-NOP
-NOP
-NOP
-NOP
-NOP
 AND R4,R7,R4      #R4= 00000000 , C-->no change, N-->0, Z-->1
 SWAP R2, R4  
 ADD R2,R1,R2      #R2= 5 (C,N,Z= 0)
