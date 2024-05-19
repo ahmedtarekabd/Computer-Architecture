@@ -24,7 +24,10 @@ IN R1            #R1=30
 IN R2            #R2=50
 IN R3            #R3=100
 IN R4            #R4=300
-Push R4          #SP=FFD, M[FFE]=300
+#NOP
+#NOP
+#Push R4          #SP=FFD, M[FFE]=300
+MOV R1, R0       #zero flag
 JMP R1           # taken
 INC R1	         # this statement shouldn't be executed
  
