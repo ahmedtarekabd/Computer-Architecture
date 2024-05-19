@@ -815,5 +815,4 @@ BEGIN
         END IF;
     END PROCESS;
 
-
 END ARCHITECTURE arch_processor;
