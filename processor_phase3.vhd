@@ -805,6 +805,7 @@ BEGIN
 
     --* output port
     --check the control signal and depending on it it will ouput data 1 or no
+    --TODO: check data 1 or data 2
     PROCESS (read_data2_out_from_wb, wb_control_signals_out_from_memory(0))
     BEGIN
         IF wb_control_signals_out_from_memory(0) = '1' THEN

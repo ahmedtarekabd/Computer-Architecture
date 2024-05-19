@@ -114,7 +114,9 @@ sim:/processor_phase3_tb/dut/write_back_inst/read_data1_in \
 sim:/processor_phase3_tb/dut/write_back_inst/read_data2_in \
 sim:/processor_phase3_tb/dut/write_back_inst/read_address1_in \
 sim:/processor_phase3_tb/dut/write_back_inst/read_address2_in \
-sim:/processor_phase3_tb/dut/write_back_inst/ALU_result 
+sim:/processor_phase3_tb/dut/write_back_inst/ALU_result \
+sim:/processor_phase3_tb/dut/write_back_inst/WB_selected_data_out1
+
 
 # RUN Testbench
 run             10 ns

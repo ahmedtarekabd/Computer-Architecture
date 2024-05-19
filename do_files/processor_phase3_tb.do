@@ -113,9 +113,7 @@ sim:/processor_phase3_tb/dut/mem_inst/write_address2_out \
 sim:/processor_phase3_tb/dut/write_back_inst/read_data1_in \
 sim:/processor_phase3_tb/dut/write_back_inst/read_data2_in \
 sim:/processor_phase3_tb/dut/write_back_inst/read_address1_in \
-sim:/processor_phase3_tb/dut/write_back_inst/read_address2_in \
-sim:/processor_phase3_tb/dut/write_back_inst/ALU_result 
-
+sim:/processor_phase3_tb/dut/write_back_inst/read_address2_in 
 # RUN Testbench
 run             10 ns
 force -freeze sim:/processor_phase3_tb/in_port_from_processor 00000000000000000000000000000101 0
